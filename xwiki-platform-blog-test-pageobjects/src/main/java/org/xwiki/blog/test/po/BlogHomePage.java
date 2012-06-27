@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!--
- *
+/*
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -19,22 +16,40 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *
--->
+ */
+package org.xwiki.blog.test.po;
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.xwiki.platform</groupId>
-    <artifactId>xwiki-platform-core</artifactId>
-    <version>4.2-SNAPSHOT</version>
-  </parent>
-  <artifactId>xwiki-platform-blog</artifactId>
-  <name>XWiki Platform - Blog</name>
-  <packaging>pom</packaging>
-  <description>Blog application for XWiki</description>
-  <modules>
-    <module>xwiki-platform-blog-ui</module>
-    <module>xwiki-platform-blog-test-pageobjects</module>
-  </modules>
-</project>
+import org.xwiki.test.ui.po.ViewPage;
+
+/**
+ * Represents the blog home page.
+ * 
+ * @version $Id$
+ * @since 3.2M3
+ */
+public class BlogHomePage extends ViewPage
+{
+    /**
+     * The create blog post form.
+     */
+    private final CreateBlogPostPane createBlogPostPane = new CreateBlogPostPane();
+
+    /**
+     * Opens the blog home page.
+     * 
+     * @return the blog home page
+     */
+    public static BlogHomePage gotoPage()
+    {
+        getUtil().gotoPage("Blog", "WebHome");
+        return new BlogHomePage();
+    }
+
+    /**
+     * @return the create blog post form
+     */
+    public CreateBlogPostPane getCreateBlogPostPane()
+    {
+        return createBlogPostPane;
+    }
+}
