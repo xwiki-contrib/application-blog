@@ -45,7 +45,7 @@
     </developer>
   </developers>
   <properties>
-    <platform.version>9.2-rc-1</platform.version>
+    <commons.version>9.2-rc-1</commons.version>
     <xwiki.issueManagement.system>jira</xwiki.issueManagement.system>
     <xwiki.issueManagement.url>https://jira.xwiki.org/browse/BLOG</xwiki.issueManagement.url>
   </properties>
