@@ -59,9 +59,14 @@ public class BlogUpgradeEventListener extends AbstractEventListener
     public static final String NAME = "Blog Upgrade Listener";
 
     /**
-     * ID of the Blog Application.
+     * Current ID of the Blog Application.
      */
-    private static final String EXTENSION_ID = "org.xwiki.platform:xwiki-platform-blog-ui";
+    private static final String EXTENSION_ID = "org.xwiki.contrib.blog:application-blog-ui";
+
+    /**
+     * Previous ID of the Blog Application.
+     */
+    private static final String PREVIOUS_EXTENSION_ID = "org.xwiki.platform:xwiki-platform-blog-ui";
 
     /**
      * The visibility is synchronized since 7.4.6, 8.4.3 and 9.0RC1, so we do the migration only if the previous
@@ -129,7 +134,7 @@ public class BlogUpgradeEventListener extends AbstractEventListener
     private Version getPreviousVersion(Collection<InstalledExtension> previousExtensions)
     {
         for (InstalledExtension extension : previousExtensions) {
-            if (extension.getId().getId().equals(EXTENSION_ID)) {
+            if (extension.getId().getId().equals(PREVIOUS_EXTENSION_ID)) {
                 return extension.getId().getVersion();
             }
         }

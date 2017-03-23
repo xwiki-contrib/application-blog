@@ -23,12 +23,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.xwiki.platform</groupId>
-    <artifactId>xwiki-platform-blog-test</artifactId>
+    <groupId>org.xwiki.contrib.blog</groupId>
+    <artifactId>application-blog-test</artifactId>
     <version>9.3-SNAPSHOT</version>
   </parent>
-  <artifactId>xwiki-platform-blog-test-tests</artifactId>
-  <name>XWiki Platform - Blog - Tests - Functional Tests</name>
+  <artifactId>application-blog-test-tests</artifactId>
+  <name>Blog - Tests - Functional Tests</name>
   <!-- TODO: Move to use "functional-test" in the future when http://jira.codehaus.org/browse/MNG-1911 is fixed,
        see http://jira.xwiki.org/jira/browse/XWIKI-7683 -->
   <packaging>jar</packaging>
@@ -43,14 +43,14 @@
       <!-- Keep the WYSIWYG Editor war before the platform war, otherwise it overwrites web.xml -->
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-wysiwyg-war</artifactId>
-      <version>${project.version}</version>
+      <version>${platform.version}</version>
       <type>war</type>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-web</artifactId>
-      <version>${project.version}</version>
+      <version>${platform.version}</version>
       <type>war</type>
       <scope>runtime</scope>
     </dependency>
@@ -58,7 +58,7 @@
       <!-- Jetty throws an exception if it can't find the root web app -->
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-tool-rootwebapp</artifactId>
-      <version>${project.version}</version>
+      <version>${platform.version}</version>
       <type>war</type>
       <scope>runtime</scope>
     </dependency>
@@ -66,13 +66,13 @@
       <!-- Used to configure the WYSIWYG Editor -->
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-wysiwyg-ui</artifactId>
-      <version>${project.version}</version>
+      <version>${platform.version}</version>
       <type>xar</type>
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-blog-ui</artifactId>
+      <groupId>org.xwiki.contrib.blog</groupId>
+      <artifactId>application-blog-ui</artifactId>
       <version>${project.version}</version>
       <type>xar</type>
     </dependency>
@@ -80,12 +80,12 @@
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-test-ui</artifactId>
-      <version>${project.version}</version>
+      <version>${platform.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-blog-test-pageobjects</artifactId>
+      <groupId>org.xwiki.contrib.blog</groupId>
+      <artifactId>application-blog-test-pageobjects</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
@@ -109,7 +109,7 @@
       <plugin>
         <groupId>org.xwiki.platform</groupId>
         <artifactId>xwiki-platform-tool-packager-plugin</artifactId>
-        <version>${project.version}</version>
+        <version>${platform.version}</version>
         <executions>
           <execution>
             <phase>generate-test-resources</phase>
@@ -145,7 +145,7 @@
           <plugin>
             <groupId>org.xwiki.platform</groupId>
             <artifactId>xwiki-platform-tool-packager-plugin</artifactId>
-            <version>${project.version}</version>
+            <version>${platform.version}</version>
             <dependencies>
               <dependency>
                 <groupId>com.atlassian.clover</groupId>

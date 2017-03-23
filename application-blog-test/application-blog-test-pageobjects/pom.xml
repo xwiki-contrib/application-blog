@@ -23,22 +23,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.xwiki.platform</groupId>
-    <artifactId>xwiki-platform-blog</artifactId>
+    <groupId>org.xwiki.contrib.blog</groupId>
+    <artifactId>application-blog-test</artifactId>
     <version>9.3-SNAPSHOT</version>
   </parent>
-  <artifactId>xwiki-platform-blog-test</artifactId>
-  <name>XWiki Platform - Blog - Tests - Parent POM</name>
-  <packaging>pom</packaging>
-  <description>Tests for the Blog Application</description>
+  <artifactId>application-blog-test-pageobjects</artifactId>
+  <name>Blog - Tests - Page Objects</name>
+  <packaging>jar</packaging>
   <properties>
-    <!-- Don't run backward-compatibility checks in test modules since we don't consider them as public APIs -->
-    <xwiki.revapi.skip>true</xwiki.revapi.skip>
-    <!-- Don't run Checkstyle in test modules -->
+    <!-- None of the classes is valid -->
     <xwiki.checkstyle.skip>true</xwiki.checkstyle.skip>
   </properties>
-  <modules>
-    <module>xwiki-platform-blog-test-pageobjects</module>
-    <module>xwiki-platform-blog-test-tests</module>
-  </modules>
+  <dependencies>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-test-ui</artifactId>
+      <version>${platform.version}</version>
+    </dependency>
+  </dependencies>
 </project>

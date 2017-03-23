@@ -45,9 +45,10 @@ public class BlogUpgradeEventListenerTest
 {
     @Rule
     public MockitoComponentMockingRule<BlogUpgradeEventListener> mocker =
-            new MockitoComponentMockingRule<>(BlogUpgradeEventListener.class);
+        new MockitoComponentMockingRule<>(BlogUpgradeEventListener.class);
 
     private BlogVisibilityMigration blogVisibilityMigration;
+
     private WikiDescriptorManager wikiDescriptorManager;
 
     @Before
@@ -65,16 +66,16 @@ public class BlogUpgradeEventListenerTest
         InstalledExtension installedExtension3 = mock(InstalledExtension.class);
 
         ExtensionUpgradedEvent event = new ExtensionUpgradedEvent(
-                new ExtensionId("org.xwiki.platform:xwiki-platform-blog-ui", "9.0"), "wiki:chocolate");
+            new ExtensionId("org.xwiki.contrib.blog:application-blog-ui", "9.0"), "wiki:chocolate");
 
         when(installedExtension1.getId()).thenReturn(new ExtensionId("foo", "8"));
         when(installedExtension2.getId()).thenReturn(new ExtensionId("bar", "9.0"));
-        when(installedExtension2.getId()).thenReturn(new ExtensionId("org.xwiki.platform:xwiki-platform-blog-ui",
-                version));
+        when(installedExtension3.getId()).thenReturn(new ExtensionId("org.xwiki.platform:xwiki-platform-blog-ui",
+            version));
 
         // Test
         mocker.getComponentUnderTest().onEvent(event, null,
-                Arrays.asList(installedExtension1, installedExtension2, installedExtension3));
+            Arrays.asList(installedExtension1, installedExtension2, installedExtension3));
 
         // Verify
         if (executedExpected) {
@@ -121,7 +122,7 @@ public class BlogUpgradeEventListenerTest
         InstalledExtension installedExtension1 = mock(InstalledExtension.class);
 
         ExtensionUpgradedEvent event = new ExtensionUpgradedEvent(
-                new ExtensionId("org.xwiki.platform:xwiki-platform-blog-ui", "9.0"), "wiki:chocolate");
+            new ExtensionId("org.xwiki.contrib.blog:application-blog-ui", "9.0"), "wiki:chocolate");
 
         when(installedExtension1.getId()).thenReturn(new ExtensionId("foobar", "8"));
 
@@ -139,10 +140,10 @@ public class BlogUpgradeEventListenerTest
         InstalledExtension installedExtension1 = mock(InstalledExtension.class);
 
         ExtensionUpgradedEvent event = new ExtensionUpgradedEvent(
-                new ExtensionId("org.xwiki.platform:xwiki-platform-blog-ui", "9.0"), null);
+            new ExtensionId("org.xwiki.contrib.blog:application-blog-ui", "9.0"), null);
 
         when(installedExtension1.getId()).thenReturn(new ExtensionId("org.xwiki.platform:xwiki-platform-blog-ui",
-                "2.3"));
+            "2.3"));
 
         when(wikiDescriptorManager.getAllIds()).thenReturn(Arrays.asList("wiki1", "wiki2"));
 

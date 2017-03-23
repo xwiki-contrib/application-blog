@@ -23,23 +23,41 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.xwiki.platform</groupId>
-    <artifactId>xwiki-platform-core</artifactId>
-    <version>9.3-SNAPSHOT</version>
+    <groupId>org.xwiki.contrib</groupId>
+    <artifactId>parent-platform</artifactId>
+    <version>8.4-7</version>
   </parent>
-  <artifactId>xwiki-platform-blog</artifactId>
-  <name>XWiki Platform - Blog</name>
+  <groupId>org.xwiki.contrib.blog</groupId>
+  <artifactId>application-blog</artifactId>
+  <version>9.3-SNAPSHOT</version>
+  <name>Blog - Parent POM</name>
   <packaging>pom</packaging>
-  <description>Blog application for XWiki</description>
+  <description>Create and manage blog posts</description>
+  <scm>
+    <connection>scm:git:git://github.com/xwiki-contrib/application-blog.git</connection>
+    <developerConnection>scm:git:git@github.com:xwiki-contrib/application-blog.git</developerConnection>
+    <url>https://github.com/xwiki-contrib/application-blog</url>
+  </scm>
+  <developers>
+    <developer>
+      <id>xwikidev</id>
+      <name>XWiki Development Team</name>
+    </developer>
+  </developers>
+  <properties>
+    <platform.version>9.2-rc-1</platform.version>
+    <xwiki.issueManagement.system>jira</xwiki.issueManagement.system>
+    <xwiki.issueManagement.url>https://jira.xwiki.org/browse/BLOG</xwiki.issueManagement.url>
+  </properties>
   <modules>
-    <module>xwiki-platform-blog-api</module>
-    <module>xwiki-platform-blog-ui</module>
+    <module>application-blog-api</module>
+    <module>application-blog-ui</module>
   </modules>
   <profiles>
     <profile>
       <id>integration-tests</id>
       <modules>
-        <module>xwiki-platform-blog-test</module>
+        <module>application-blog-test</module>
       </modules>
     </profile>
   </profiles>
