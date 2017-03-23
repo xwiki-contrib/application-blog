@@ -40,9 +40,9 @@
   </properties>
   <dependencies>
     <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-blog-api</artifactId>
-      <version>${platform.version}</version>
+      <groupId>org.xwiki.contrib.blog</groupId>
+      <artifactId>application-blog-api</artifactId>
+      <version>${project.version}</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
