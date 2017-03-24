@@ -27,25 +27,29 @@
     <artifactId>application-blog</artifactId>
     <version>9.3-SNAPSHOT</version>
   </parent>
-  <artifactId>application-blog-api</artifactId>
-  <name>Blog - API</name>
+  <artifactId>application-blog-notification</artifactId>
+  <name>Blog - Notifications API</name>
   <properties>
+    <commons.version>9.2-rc-1</commons.version>
     <!-- Test coverage -->
-    <xwiki.jacoco.instructionRatio>0.69</xwiki.jacoco.instructionRatio>
-    <!-- Old names of this module used for retro compatibility when resolving dependencies of old extensions -->
-    <xwiki.extension.features>org.xwiki.platform:xwiki-platform-blog-api</xwiki.extension.features>
+    <!--xwiki.jacoco.instructionRatio>0.69</xwiki.jacoco.instructionRatio-->
     <!-- Name to display by the Extension Manager -->
-    <xwiki.extension.name>Blog API</xwiki.extension.name>
+    <xwiki.extension.name>Blog Notifications API</xwiki.extension.name>
   </properties>
   <dependencies>
     <dependency>
-      <groupId>org.xwiki.commons</groupId>
-      <artifactId>xwiki-commons-observation-api</artifactId>
-      <version>${commons.version}</version>
+      <groupId>org.xwiki.contrib.blog</groupId>
+      <artifactId>application-blog-api</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-oldcore</artifactId>
+      <artifactId>xwiki-platform-eventstream</artifactId>
+      <version>${platform.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-notifications-api</artifactId>
       <version>${platform.version}</version>
     </dependency>
     <dependency>

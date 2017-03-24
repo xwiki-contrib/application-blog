@@ -1,0 +1,3 @@
+org.xwiki.platform.blog.events.BlogPostPublishedEventDescriptor
+org.xwiki.platform.blog.internal.BlogDocumentSavedListener
+org.xwiki.platform.blog.internal.BlogNotificationDisplayer
