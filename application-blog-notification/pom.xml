@@ -35,6 +35,8 @@
     <!--xwiki.jacoco.instructionRatio>0.69</xwiki.jacoco.instructionRatio-->
     <!-- Name to display by the Extension Manager -->
     <xwiki.extension.name>Blog Notifications API</xwiki.extension.name>
+    <!-- Old names of this module used for retro compatibility when resolving dependencies of old extensions -->
+    <xwiki.extension.features>org.xwiki.platform:xwiki-platform-blog-api</xwiki.extension.features>
   </properties>
   <dependencies>
     <dependency>
