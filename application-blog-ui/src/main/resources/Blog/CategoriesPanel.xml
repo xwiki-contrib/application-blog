@@ -125,7 +125,7 @@
       <content>{{include reference="Blog.CategoriesCode"/}}
 
 {{velocity}}
-#panelheader($services.localization.render('xe.blog.categories.paneltitle'))
+#panelheader($services.localization.render('blog.categories.paneltitle'))
 {{html wiki="true"}}
 #getCallingDocument($callingDocument)
 * (% class="blog-category-level" %)((( [[#toolImage('rss')&gt;&gt;Blog.BlogRss||queryString="xpage=plain" title="RSS"]] &lt;span class="wikilink"&gt;&lt;a href="$xwiki.getURL('Blog.WebHome')"&gt;$services.localization.render('blog.categories.all')&lt;/a&gt;&lt;/span&gt;)))
@@ -136,7 +136,7 @@
 #displayCategoriesHierarchy($tree 'simple')
 {{/html}}
 #if($xwiki.hasAdminRights())
-  (% class="edit-categories" %)(((~([[$services.localization.render('xe.blog.categories.edit')&gt;&gt;Blog.ManageCategories]]~))))
+  (% class="edit-categories" %)(((~([[$services.localization.render('blog.categories.edit')&gt;&gt;Blog.ManageCategories]]~))))
 #end
 #panelfooter()
 {{/velocity}}</content>

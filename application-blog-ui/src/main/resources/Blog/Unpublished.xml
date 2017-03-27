@@ -44,7 +44,7 @@
 {{velocity filter="none"}}
 {{html clean="false" wiki="true"}}
 
-= $services.localization.render('xe.blog.unpublished.entries') =
+= $services.localization.render('blog.unpublished.entries') =
 
 #getBlogEntriesBaseQuery($query)
 #getUnpublishedBlogEntries($xwiki.getDocument('Blog.WebHome') $query $entries)

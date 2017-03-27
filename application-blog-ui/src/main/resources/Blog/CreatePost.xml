@@ -47,7 +47,7 @@
 #if($name == '')
   ## If there's also a form_token passed it means the user has entered an empty blog post title, let the user know about it!
   #if ("$!request.form_token" != '')
-    {{error}}$services.localization.render('xe.blog.post.titleEmptyError'){{/error}}
+    {{error}}$services.localization.render('blog.post.titleEmptyError'){{/error}}
 
   #end
   ## First step, display the create form
@@ -64,7 +64,7 @@
     #if($doc.getObject($blogCategoryClassname))
       &lt;input type="hidden" name="category" value="$services.rendering.escape(${escapetool.xml(${doc.fullName})}, $doc.syntax)"/&gt;
     #end
-    $services.icon.renderHTML('add')&lt;label class="createPost" for="entryTitle"&gt;$services.localization.render('xe.blog.post.createpost') &lt;/label&gt;&lt;input type="text" id="entryTitle" name="entryTitle" value="$services.localization.render('xe.blog.post.title')" class="withTip" size="30" /&gt; &lt;span class="buttonwrapper"&gt;&lt;input type="submit" value="${escapetool.xml($services.localization.render('xe.blog.post.create'))}" class="btn btn-success button"/&gt;&lt;/span&gt;
+    $services.icon.renderHTML('add')&lt;label class="createPost" for="entryTitle"&gt;$services.localization.render('blog.post.createpost') &lt;/label&gt;&lt;input type="text" id="entryTitle" name="entryTitle" value="$services.localization.render('blog.post.title')" class="withTip" size="30" /&gt; &lt;span class="buttonwrapper"&gt;&lt;input type="submit" value="${escapetool.xml($services.localization.render('blog.post.create'))}" class="btn btn-success button"/&gt;&lt;/span&gt;
   &lt;/div&gt;
   &lt;/form&gt;
   #elseif("$!request.entryTitle" != '')## !hasEdit &amp;&amp; form submitted

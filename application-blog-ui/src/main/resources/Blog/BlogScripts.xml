@@ -147,10 +147,10 @@ XWiki.Blog = {
       method: "get",
       onSuccess: XWiki.Blog.updateCategoryTree.bindAsEventListener(this, name, parentCategory, parentSpace),
       on1223: function(response) {response.request.options.onSuccess(response)},
-      on409: function() {alert("$escapetool.javascript($services.localization.render('xe.blog.manageCategories.js.add.error.409'))")},
-      on403: function() {alert("$escapetool.javascript($services.localization.render('xe.blog.manageCategories.js.add.error.403'))")},
-      on401: function() {alert("$escapetool.javascript($services.localization.render('xe.blog.manageCategories.js.add.error.401'))")},
-      onFailure: function() {alert("$escapetool.javascript($services.localization.render('xe.blog.manageCategories.js.add.failed'))")}
+      on409: function() {alert("$escapetool.javascript($services.localization.render('blog.manageCategories.js.add.error.409'))")},
+      on403: function() {alert("$escapetool.javascript($services.localization.render('blog.manageCategories.js.add.error.403'))")},
+      on401: function() {alert("$escapetool.javascript($services.localization.render('blog.manageCategories.js.add.error.401'))")},
+      onFailure: function() {alert("$escapetool.javascript($services.localization.render('blog.manageCategories.js.add.failed'))")}
     });
   },
 
@@ -330,15 +330,15 @@ require(['jquery'], function ($) {
     var actions = {
       'show': {
          'icon'       : "$escapetool.javascript($services.icon.renderHTML('unlock'))",
-         'comment'    : "$escapetool.javascript($services.localization.render('xe.blog.code.madevisible'))",
-         'title'      : "$escapetool.javascript($services.localization.render('xe.blog.code.makevisible'))",
+         'comment'    : "$escapetool.javascript($services.localization.render('blog.code.madevisible'))",
+         'title'      : "$escapetool.javascript($services.localization.render('blog.code.makevisible'))",
          'hiddenValue': '1',
          'css'        : 'blog-tool-show'
        },
       'hide': {
         'icon'       : "$escapetool.javascript($services.icon.renderHTML('lock'))",
-        'comment'    : "$escapetool.javascript($services.localization.render('xe.blog.code.hid'))",
-        'title'      : "$escapetool.javascript($services.localization.render('xe.blog.code.hide'))",
+        'comment'    : "$escapetool.javascript($services.localization.render('blog.code.hid'))",
+        'title'      : "$escapetool.javascript($services.localization.render('blog.code.hide'))",
         'hiddenValue': '0',
         'css'        : 'blog-tool-hide'
       }
@@ -364,7 +364,7 @@ require(['jquery'], function ($) {
         warningMessage.show();
       } else {
         warningMessage = $('&lt;div&gt;').addClass('box').addClass('warningmessage');
-        warningMessage.text("$escapetool.javascript($services.localization.render('xe.blog.code.hidden'))");
+        warningMessage.text("$escapetool.javascript($services.localization.render('blog.code.hidden'))");
         warningMessage.insertBefore(entry.find('.entry-content'));
       }
     };
@@ -419,11 +419,11 @@ require(['jquery'], function ($) {
        */
       .fail(function (jqXHR, textStatus, errorThrown) {
         if (jqXHR.statusCode() == 403) {
-          new XWiki.widgets.Notification("$escapetool.javascript($services.localization.render('xe.blog.manageCategories.js.add.error.403'))", 'error');
+          new XWiki.widgets.Notification("$escapetool.javascript($services.localization.render('blog.manageCategories.js.add.error.403'))", 'error');
         } else if (jqXHR.statusCode() == 401) {
-          new XWiki.widgets.Notification("$escapetool.javascript($services.localization.render('xe.blog.manageCategories.js.add.error.401'))", 'error');
+          new XWiki.widgets.Notification("$escapetool.javascript($services.localization.render('blog.manageCategories.js.add.error.401'))", 'error');
         } else {
-          new XWiki.widgets.Notification("$escapetool.javascript($services.localization.render('xe.blog.code.failedToChangeBlogPostVisibility'))", 'error');
+          new XWiki.widgets.Notification("$escapetool.javascript($services.localization.render('blog.code.failedToChangeBlogPostVisibility'))", 'error');
         }
       })
       /**

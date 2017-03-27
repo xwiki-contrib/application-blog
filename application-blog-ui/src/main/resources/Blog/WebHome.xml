@@ -157,7 +157,7 @@
       <itemsPerPage>10</itemsPerPage>
     </property>
     <property>
-      <title>$services.localization.render('xe.blog.code.title')</title>
+      <title>$services.localization.render('blog.code.title')</title>
     </property>
   </object>
 </xwikidoc>

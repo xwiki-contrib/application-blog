@@ -48,7 +48,7 @@ $xwiki.jsx.use('Blog.ManageCategories', {'mode' : 'select'})##
 $xwiki.ssx.use('Blog.ManageCategories')##
 #getEntryObject($doc $entryObj)
 #if("$!entryObj" == '')
-  {{warning}}{{translation key='xe.blog.sheet.notpost'/}}{{/warning}}
+  {{warning}}{{translation key='blog.sheet.notpost'/}}{{/warning}}
 ## Keep testing the inline action for backward compatibility with older blog posts.
 #elseif($xcontext.action != 'edit' &amp;&amp; $xcontext.action != 'inline')
   ## View mode
@@ -63,13 +63,13 @@ $xwiki.ssx.use('Blog.ManageCategories')##
     ## the page title).
     #set ($discard = $entryObj.set('title', $request.title))
   #end
-  ; {{translation key='xe.blog.sheet.title'/}}
+  ; {{translation key='blog.sheet.title'/}}
   : $doc.display('title', 'edit', $entryObj)
-  ; {{translation key='xe.blog.sheet.content'/}}
+  ; {{translation key='blog.sheet.content'/}}
   : $doc.display('content', 'edit', $entryObj)
-  ; {{translation key='xe.blog.sheet.summary'/}}
+  ; {{translation key='blog.sheet.summary'/}}
   : $doc.display('extract', 'edit', $entryObj)
-  ; {{translation key='xe.blog.sheet.category'/}}
+  ; {{translation key='blog.sheet.category'/}}
   : ((({{html clean="false" wiki="true"}}#displayCategoryManagementTree('' 'selectable'){{/html}} (% class="clearfloats" %)((())))))
   #if ($doc.isNew())
     ## We're creating a new blog post. We handle this case differently because #isPublished returns true when the
@@ -85,9 +85,9 @@ $xwiki.ssx.use('Blog.ManageCategories')##
   #end
   #if($isPublished)
     #if($doc.creator == $xcontext.user)
-      #publishMessageBox($services.localization.render('xe.blog.sheet.publicationdate', [${doc.display('publishDate', 'view', $entryObj)}]))
+      #publishMessageBox($services.localization.render('blog.sheet.publicationdate', [${doc.display('publishDate', 'view', $entryObj)}]))
       #set($hideArticle = ${doc.display('hidden', 'edit', $entryObj)})
-      #hideMessageBox($services.localization.render('xe.blog.sheet.hidearticle', [${hideArticle}]))
+      #hideMessageBox($services.localization.render('blog.sheet.hidearticle', [${hideArticle}]))
     #end
   #else
     #set($defaultDate = $xwiki.getDocument($blogPostTemplate).getObject($blogPostClassname).getProperty('publishDate').value.time)
@@ -96,7 +96,7 @@ $xwiki.ssx.use('Blog.ManageCategories')##
       $entryObj.set('publishDate', $doc.creationDate)
     #end
     {{html clean="false" wiki="true"}}
-    #publishMessageBox("$services.localization.render('xe.blog.sheet.notpublished') &lt;label&gt;**$services.localization.render('xe.blog.sheet.publish') ${doc.display('published', 'edit', $entryObj)}**&lt;/label&gt;\\&lt;label&gt;$services.localization.render('xe.blog.sheet.setdate') ${doc.display('publishDate', 'edit', $entryObj)}&lt;/label&gt;")
+    #publishMessageBox("$services.localization.render('blog.sheet.notpublished') &lt;label&gt;**$services.localization.render('blog.sheet.publish') ${doc.display('published', 'edit', $entryObj)}**&lt;/label&gt;\\&lt;label&gt;$services.localization.render('blog.sheet.setdate') ${doc.display('publishDate', 'edit', $entryObj)}&lt;/label&gt;")
     {{/html}}
   #end
 #end
