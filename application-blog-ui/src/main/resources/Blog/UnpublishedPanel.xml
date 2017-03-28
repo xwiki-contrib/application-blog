@@ -125,37 +125,25 @@
       <content>{{include reference="Blog.BlogCode"/}}
 
 {{velocity}}
-#getCategoryAllBlogPostsQuery($query)
-#set($viewAllTarget = 'Blog.Unpublished')
-#if ($doc.space == $defaultBlogSpace &amp;&amp; !$isCategoryPage)
-  ## Get all unpublished posts that are in space 'Blog' or in category 'Blog.%'
-  #set($query = "${query} and (doc.space = '${doc.space}' or catList like '${doc.space}.%')")
-#elseif($isCategoryPage)
-  ## Get all unpublished posts that are in that category aCategorySpace.aCategory
-  #set($query = "${query} and (catList='${doc.fullName}')")
-  #set($viewAllTarget = "${doc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
-#elseif($isCategoriesHomePage)
-  ## Get all unpublished posts that are in a category aCategorySpace.%
-  #set($query = "${query} and (catList like '${doc.space}.%')")
-  #set($viewAllTarget = "${doc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
-#else
-  ## Get all unpublished posts in blog space aBlog
-  #getBlogEntriesBaseQuery($query)
-  #getBlogPostsLocation($doc.space $postsLocation)
-  #set($query = "${query} and doc.space = '${postsLocation}'")
-  #getBlogDocument($doc.space $blogDoc)
-  #set($viewAllTarget = "${blogDoc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
-#end
+#getAllBlogPostsQueryBasedOnDisplayContext($doc $query)
 #set ($query = "$!{query} and isPublished.value = 0 and doc.creator = '$xcontext.user'")
-#set ($unpublishedEntries = $services.query.hql("${query} order by publishDate.value desc").setLimit(5).setOffset(0).execute())
+#set ($unpublishedEntries = $services.query.hql("${query} order by publishDate.value desc").addFilter("unique").setLimit(5).setOffset(0).execute())
 #if ($unpublishedEntries.size() &gt; 0 || $showEmptyPanels)
   #panelheader($services.localization.render('blog.unpublished.entries'))
   #foreach ($entryDoc in $xwiki.wrapDocs($unpublishedEntries))
     #getEntryObject($entryDoc $entryObj)
     * [[$!{entryDoc.display('title', 'view', $entryObj).replaceAll('(\[|\]|\||&gt;)', '~~$1')}&gt;&gt;$!{services.model.serialize($entryDoc.documentReference).replaceAll('(\[|\]|\||&gt;)', '~$1')}]]
   #end
-
-  [[$services.localization.render('blog.unpublished.viewall') (% class="itemCount" %)($services.query.hql($query).count())(%%)&gt;&gt;$viewAllTarget]]
+  #set($viewAllTarget = 'Blog.Unpublished')
+  #if($isCategoryPage)
+    #set($viewAllTarget = "${doc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
+  #elseif($isCategoriesHomePage)
+    #set($viewAllTarget = "${doc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
+  #else
+    #getBlogDocument($doc.space $blogDoc)
+    #set($viewAllTarget = "${blogDoc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
+  #end
+  [[$services.localization.render('blog.unpublished.viewall') (% class="itemCount" %)($services.query.hql($query).addFilter("unique").count())(%%)&gt;&gt;$viewAllTarget]]
   #panelfooter()
 #end
 {{/velocity}}</content>

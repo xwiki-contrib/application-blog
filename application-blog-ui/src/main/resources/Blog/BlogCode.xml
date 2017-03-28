@@ -310,8 +310,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     #setVariable ("$entries" [])
   #end
   #set($query = "${query} and isPublished.value = 0")
-  #set($totalEntries = $services.query.hql($query).count())
-  #set($discard = $entries.addAll($services.query.hql("${query} order by publishDate.value desc").execute()))
+  #set($totalEntries = $services.query.hql($query).addFilter("unique").count())
+  #set($discard = $entries.addAll($services.query.hql("${query} order by publishDate.value desc").addFilter("unique").execute()))
 #end
 ##
 ##
@@ -1007,6 +1007,37 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #getBlogProperty($blogDoc 'categoriesLocation' 'Blog' $result)
   #set ($postsLocation = $NULL)
   #setVariable ("$categoriesLocation" $result)
+#end
+###**
+ * Return the Query for selecting the blog posts based on the context where the posts are displayed.
+ * for example there is 4 different panel contexts: 
+ * aBlog.aPost or aBlog.WebHome
+ * aCategorySpace.aCategory
+ * aCategorySpace.WebHome
+ * Blog.aPost or Blog.WebHome
+ *
+ * @param query The query for selecting blog entries.
+ * @param targetDoc The document in which the articles will be displayed.
+ *###
+#macro(getAllBlogPostsQueryBasedOnDisplayContext $targetDoc $query)
+  #set ($query = $NULL)
+  #getCategoryAllBlogPostsQuery($resultQuery)
+  #if ($targetDoc.space == $defaultBlogSpace &amp;&amp; !$targetDoc.getObject($blogCategoryClassname))
+    ## Get all posts that are in the default blog space('Blog') or in category 'Blog.%'
+    #set($resultQuery = "${resultQuery} and (doc.space = '${targetDoc.space}' or catList like '${targetDoc.space}.%')")
+  #elseif($targetDoc.getObject($blogCategoryClassname))
+    ## Get all posts that are in a category aCategorySpace.aCategory
+    #set($resultQuery = "${resultQuery} and (catList='${targetDoc.fullName}')")
+  #elseif($targetDoc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
+    ## Get all posts that are in a category aCategorySpace.%
+    #set($resultQuery = "${resultQuery} and (catList like '${targetDoc.space}.%')")
+  #else
+    ## Get all posts in blog space aBlog
+    #getBlogEntriesBaseQuery($resultQuery)
+    #getBlogPostsLocation($targetDoc.space $postsLocation)
+    #set($resultQuery = "${resultQuery} and doc.space = '${postsLocation}'")
+  #end
+  #setVariable("$query" $resultQuery)
 #end
 {{/velocity}}</content>
 </xwikidoc>

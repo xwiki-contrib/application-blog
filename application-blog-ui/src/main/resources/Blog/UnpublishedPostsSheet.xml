@@ -46,20 +46,7 @@
 
 = $services.localization.render('blog.unpublished.entries') =
 
-######
-#getCategoryAllBlogPostsQuery($query)
-#if ($doc.space == $defaultBlogSpace &amp;&amp; !$isCategoryPage)
-  ## Get posts that are in space 'Blog' or in category 'Blog.%'
-  #set($query = "${query} and (doc.space = '${doc.space}' or catList like '${doc.space}.%')")
-#elseif($isCategoryPage)
-  #set($query = "${query} and (catList='${doc.fullName}')")
-#elseif($isCategoriesHomePage)
-  #set($query = "${query} and (catList like '${doc.space}.%')")
-#else
-  #getBlogEntriesBaseQuery($query)
-  #getBlogPostsLocation($doc.space $postsLocation)
-  #set($query = "${query} and doc.space = '${postsLocation}'")
-#end
+#getAllBlogPostsQueryBasedOnDisplayContext($doc $query)
 #set ($query = "$!{query} and isPublished.value = 0 and doc.creator = '$xcontext.user'")
 #getUnpublishedBlogEntries($xwiki.getDocument('Blog.WebHome') $query $entries)
 #displayBlog($entries 'unpublished' true true)
