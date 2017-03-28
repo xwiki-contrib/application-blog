@@ -125,16 +125,23 @@
       <content>{{include reference="Blog.BlogCode"/}}
 
 {{velocity}}
-#set ($space = "$!{request.space}")
-#if ($space == '')
-  #set ($space = $doc.space)
+#getAllBlogPostsQueryBasedOnDisplayContext($doc $query $queryParams)
+#set ($discard = $queryParams.put('creator', $xcontext.user))
+#set ($query = "$!{query} and (doc.creator = :creator or (isPublished.value = 1 and hidden.value = 0))")
+#set ($queryObj = $services.query.hql($query).addFilter('unique'))
+#bindQueryParameters($queryObj $queryParams)
+#set ($displayArchivePanel = false)
+#if ($queryObj.count() &gt; 0 || $showEmptyPanels)
+  #set ($displayArchivePanel = true)
 #end
-#getBlogDocument($space $blogDoc)
-#if ($space == $blogDoc.space || $showEmptyPanels)
+#if ($displayArchivePanel)
+  #if ($isCategoryPage || $isCategoriesHomePage)
+    #set ($archivePage = $doc.fullName)
+  #else
+    #getBlogDocument($doc.space $blogDoc)
+    #set ($archivePage = $blogDoc.fullName)
+  #end
   #panelheader($services.localization.render('blog.archive.paneltitle'))
-  #getBlogEntriesBaseQuery($query)
-  #set ($query = "${query} and (doc.space = ? or doc.parent = ?)")
-  #set ($queryParams = [$blogDoc.space, $blogDoc.fullName])
   ## Create a Jodatime date formatter that will be used to format dates
   #set ($monthFormatter = $xwiki.jodatime.getDateTimeFormatterForPattern('MMMM'))
   #set ($tempDate = $xwiki.jodatime.mutableDateTime)
@@ -142,13 +149,17 @@
   #set ($currentMonth = $xwiki.formatDate($datetool.date, 'M'))
   #set ($firstYear = '')
   #set ($lastYear = '')
-  #foreach ($firstEntry in $services.query.hql("${query} order by year(publishDate.value)").setLimit(1).bindValues($queryParams).execute())
+  #set ($firstYearQueryObj = $services.query.hql("${query} order by year(publishDate.value)").setLimit(1).addFilter('unique'))
+  #bindQueryParameters($firstYearQueryObj $queryParams)
+  #foreach ($firstEntry in $firstYearQueryObj.execute())
     #set ($discard = $xwiki.getDocument($firstEntry))
     #getEntryObject($discard $entryObj)
     #getEntryDate($discard $entryObj $firstYear)
     #set ($firstYear = $mathtool.toInteger($xwiki.formatDate($firstYear, 'yyyy')))
   #end
-  #foreach ($lastEntry in $services.query.hql("${query} order by year(publishDate.value) desc").setLimit(1).bindValues($queryParams).execute())
+  #set ($lastYearQueryObj = $services.query.hql("${query} order by year(publishDate.value) desc").setLimit(1).addFilter('unique'))
+  #bindQueryParameters($lastYearQueryObj $queryParams)
+  #foreach ($lastEntry in $lastYearQueryObj.execute())
     #set ($discard = $xwiki.getDocument($lastEntry))
     #getEntryObject($discard $entryObj)
     #getEntryDate($discard $entryObj $lastYear)
@@ -156,18 +167,22 @@
   #end
   #if ("$!{firstYear}" != '') ## At least one entry exists
     #foreach ($year in [$firstYear..$lastYear])
-      #set ($yearArticleCount = $services.query.hql("${query} and year(publishDate.value) = $year").bindValues($queryParams).count())
+      #set ($yearArticleCountQueryObj = $services.query.hql("${query} and year(publishDate.value) = $year").addFilter('unique'))
+      #bindQueryParameters($yearArticleCountQueryObj $queryParams)
+      #set ($yearArticleCount = $yearArticleCountQueryObj.count())
       #if ($yearArticleCount &gt; 0)
-        #set ($queryString = "space=$escapetool.url($blogDoc.space)&amp;year=${year}")
-        * [[$year (% class="itemCount" %)(${yearArticleCount})(%%)&gt;&gt;Blog.Archive||queryString="${queryString}"]]
+        #set ($queryString = "sheet=Blog.ArchiveSheet&amp;year=${year}")
+        * [[$year (% class="itemCount" %)(${yearArticleCount})(%%)&gt;&gt;${archivePage}||queryString="${queryString}"]]
         #if ($year == $currentYear)
           #foreach ($month in [1..12])
             #set ($statement = "${query} and year(publishDate.value) = $year and month(publishDate.value) = $month")
-            #set ($monthArticleCount = $services.query.hql($statement).bindValues($queryParams).count())
+            #set ($monthArticleCountQueryObj = $services.query.hql($statement).addFilter("unique"))
+            #bindQueryParameters($monthArticleCountQueryObj $queryParams)
+            #set ($monthArticleCount = $monthArticleCountQueryObj.count())
             #if ($monthArticleCount &gt; 0)
               $tempDate.setMonthOfYear($month)##
-              #set($queryString = "space=${escapetool.url($blogDoc.space)}&amp;year=${year}&amp;month=${month}")
-              ** [[$monthFormatter.print($tempDate) (% class="itemCount" %)(${monthArticleCount})(%%)&gt;&gt;Blog.Archive||queryString="${queryString}"]]
+              #set($queryString = "sheet=Blog.ArchiveSheet&amp;year=${year}&amp;month=${month}")
+              ** [[$monthFormatter.print($tempDate) (% class="itemCount" %)(${monthArticleCount})(%%)&gt;&gt;${archivePage}||queryString="${queryString}"]]
             #end
           #end
         #end
