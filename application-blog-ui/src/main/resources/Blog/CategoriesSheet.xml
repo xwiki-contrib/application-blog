@@ -43,12 +43,18 @@
 
 {{velocity filter="none"}}
 {{html clean="false" wiki="true"}}
-$xwiki.ssx.use('Blog.ManageCategories')
-$xwiki.jsx.use('Blog.ManageCategories', {'minify':false})
+#if ("$!request.action" == 'manage')
+  $xwiki.ssx.use('Blog.ManageCategories')
+  $xwiki.jsx.use('Blog.ManageCategories', {'minify':false})
 
-#set ($categoriesLocation = $doc.space)
-#set ($defaultCategoryParent = $doc.fullName)
-#displayCategoryManagementTree($categoriesLocation 'editable')
+  #set ($categoriesLocation = $doc.space)
+  #set ($defaultCategoryParent = $doc.fullName)
+  #displayCategoryManagementTree($categoriesLocation 'editable')
+#else
+  #set ($discard = $xwiki.ssx.use("Blog.ManageCategories"))
+  #set ($discard = $xwiki.jsx.use("Blog.ManageCategories"))
+  #displayCategoryPosts($doc $NULL)
+#end
 {{/html}}
 {{/velocity}}
 </content>

@@ -97,7 +97,7 @@
 ##
 #**
  * Builds a tree of categories, respecting the parent&lt;-&gt;subcategory relation. Each node holds the
- * full name of the category's document. The root of the tree is 'Blog.Categories'.
+ * full name of the category's document. The root of the tree is 'Blog.Categories' or 'aCategorySpace.WebHome'.
  * 
  * @param space The space where to search for categories. If this parameter is an emptry string or
  *        null, all the categories in the wiki are returned.
@@ -564,6 +564,48 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
     $categoryDoc.getObject('Blog.CategoryClass').set('name', $newCategoryName)
     $categoryDoc.save($services.localization.render('blog.manageCategories.comment.updatedCategory'), true)
     $categoryDoc.rename($newCategoryFullName)
+  #end
+#end
+##
+##
+##
+#**
+ * Dipslay posts of a given category or a categories space.
+ * This macro is used in Blog.CategorySheet and Blog.CategoriesSheet pages
+ * 
+ * @param catDoc The document containing the category or the WebHome page of a categories space.
+ * @param catObj The Blog.CategoryClass object attached to the category document, this parameter is null in case of categories space WebHome.
+ *###
+#macro(displayCategoryPosts $catDoc $catObj)
+  #getEntriesForCategory($catDoc.fullName $discard $totalEntries)
+  #if ($catObj)
+  = Category: $services.rendering.escape($catObj.getValue('name'), $catDoc.syntax) ($totalEntries posts) [[#toolImage('feed')&gt;&gt;Blog.CategoryRss||queryString="xpage=plain&amp;category=$escapetool.url($catDoc.fullName)" title="RSS"]] =
+  #end
+  ## Keep testing the inline action for backward compatibility with older categories.
+  #if ($xcontext.action != 'edit' &amp;&amp; $xcontext.action != 'inline')
+    #getCategoriesHierarchy($catDoc.space $tree)
+    #if ("$!tree.get($catDoc.fullName)" != '')
+      (% class="blog-categories-list subcategories" %)
+      (((
+        (((
+          **Subcategories**
+        )))
+        (((
+          #displayCategoriesHierarchyRecursive($tree $catDoc.fullName 1 'simple')
+        )))
+      )))
+    #end
+    (% class="clearfloats" %)((()))
+
+    #getEntriesForCategory($catDoc.fullName $entries $totalEntries)
+    #if ($totalEntries == 0)
+      {{info}}{{translation key="blog.categories.noentries"/}}{{/info}}
+    #else
+      #displayBlog($entries 'category' true true)
+      ## displayNavigationLinks requires a blog document, to determine how should the entries be split into pages. Return this
+      ## document, as the macro fallbacks to 'paginated' in case the right setting cannot be determined.
+      #displayNavigationLinks($catDoc)
+    #end
   #end
 #end
 {{/velocity}}</content>
