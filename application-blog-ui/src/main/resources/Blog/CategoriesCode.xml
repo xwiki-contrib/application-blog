@@ -470,7 +470,8 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
         'xaction' : 'showAddCategory',
         'parentCategory' : '',
         'entry' : $entryParam,
-        'entryObjNb' : $entryObjNbParam
+        'entryObjNb' : $entryObjNbParam,
+        'categoriesSpace': $space
       })))
     #end
     * &lt;span class="blog-add-category-label"&gt;$services.icon.renderHTML('add')&amp;nbsp;&lt;a href="$escapetool.xml($addCategURL)"&gt;$services.localization.render('blog.categories.addcategory')&lt;/a&gt;&lt;/span&gt;
