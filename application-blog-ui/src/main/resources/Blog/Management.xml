@@ -264,15 +264,20 @@
     <property>
       <code>require(['jquery'], function($){
   function updateCategoriesLocation(){
-    $('#blogCategoriesLocation').html($('#blogLocation').html());
-    $('#blogCategoriesLocation li.preview').removeClass('active');
-    $('#blogCategoriesLocation li:last').html('&lt;a href="javascript:;"&gt;' + $('#blogCategoriesLocation li:last').html()+ '&lt;/a&gt;');
-    $('#blogCategoriesLocation').append('&lt;li class="active"&gt;Categories&lt;/li&gt;');
+    var catLocation = $('#blogCategoriesLocation');
+    catLocation.html($('#newBlog ol.breadcrumb:first').html());
+    if($('#newBlog ol.breadcrumb:first li:last').html() == ''){
+      $('li:last', catLocation).remove();
+    }
+    else
+    {
+      $('li:last', catLocation).html('&lt;a href="javascript:;"&gt;' + $('li:last', catLocation).html() + '&lt;/a&gt;');
+    }
+    catLocation.append('&lt;li class="active"&gt;Categories&lt;/li&gt;');
   }
-  $(document).on('input', '#blogLocationName, #blogLocationTitle', function() {
+  $(document).on('DOMSubtreeModified', '#newBlog ol.breadcrumb:first', function() {
     updateCategoriesLocation();
   });
-  updateCategoriesLocation();
 });</code>
     </property>
     <property>
