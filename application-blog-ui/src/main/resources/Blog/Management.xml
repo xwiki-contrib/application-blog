@@ -98,7 +98,9 @@
           #set ($discard = $blogObj.set('displayType', 'paginated'))
           #set ($discard = $blogObj.set('itemsPerPage', 10))
           #set ($categoriesLocation = "${blogDocName}.Categories")
+          #set ($postsLocation = "${blogDocName}.Posts")
           #set ($discard = $blogObj.set('categoriesLocation', $categoriesLocation))
+          #set ($discard = $blogObj.set('postsLocation', $postsLocation))
           #set ($discard = $blogDoc.save())
 
           ## Create the categories page
