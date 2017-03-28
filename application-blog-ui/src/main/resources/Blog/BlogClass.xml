@@ -49,28 +49,19 @@
     <defaultWeb/>
     <nameField/>
     <validationScript/>
-    <blogType>
-      <cache>0</cache>
+    <categoriesLocation>
       <customDisplay/>
       <disabled>0</disabled>
-      <displayType>select</displayType>
-      <multiSelect>0</multiSelect>
-      <name>blogType</name>
+      <name>categoriesLocation</name>
       <number>5</number>
       <picker>0</picker>
-      <prettyName>Blog type</prettyName>
-      <relationalStorage>0</relationalStorage>
-      <separator> </separator>
-      <separators> ,|</separators>
-      <size>1</size>
-      <sort>none</sort>
-      <tooltip/>
+      <prettyName>Categories location</prettyName>
+      <size>30</size>
       <unmodifiable>0</unmodifiable>
       <validationMessage/>
       <validationRegExp/>
-      <values>local=Space blog (aggregates posts from its space only)|global=Global blog (aggregates posts from the entire wiki)</values>
-      <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-    </blogType>
+      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+    </categoriesLocation>
     <description>
       <contenttype>FullyRenderedText</contenttype>
       <customDisplay/>
