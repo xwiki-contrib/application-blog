@@ -113,10 +113,14 @@
     #set ($result = {})
     #set($query = ', BaseObject obj where ')
     #if("$!space" != '')
-      #set($query = "${query}doc.space = '${space}' and ")
+      #set($query = "${query}doc.space = :space and ")
     #end
     #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogCategoryClassname}' order by doc.name")
-    #foreach($category in $services.query.hql($query).execute())
+    #set($queryObj = $services.query.hql($query))
+    #if("$!space" != '')
+      #set($queryObj = $queryObj.bindValue('space', $space))
+    #end
+    #foreach($category in $queryObj.execute())
       #set($categoryDoc = $xwiki.getDocument($category))
       #set($categoryParent = "$!categoryDoc.parent")
       #if($categoryParent == '')
@@ -281,7 +285,7 @@
  * control for choosing the parent category among existing categories.
  *###
 ## DO NOT CHANGE INDENTATION
-#macro(addCategoryForm) #set($addCategURL = $doc.getURL()) #if("$!request.entry" != '') #set($addCategURL = "${addCategURL}?entry=$escapetool.url($request.entry)&amp;amp;entryObjNb=$escapetool.url($!request.entryObjNb)")#end&lt;form action="${addCategURL}" method="post" class="category-add-form"&gt;&lt;div class='create-category'&gt; &lt;input type="hidden" name="form_token" value="$!{services.csrf.getToken()}" /&gt; &lt;input type="hidden" name="xaction" value="create"/&gt; &lt;label&gt;$services.localization.render('blog.categories.new')&lt;br/&gt; &lt;input type="text" name="newCategoryName" class="category-name-input" /&gt;&lt;/label&gt;&lt;br/&gt;#if("$!{request.parentCategory}" == "")&lt;label&gt;#* $services.localization.render('blog.categories.parent')*# Subcategory of:&lt;br/&gt; &lt;select name="newCategoryParent" id="blog_category_selectBox" class="category-add-input"&gt; &lt;option value="${defaultCategoryParent}" selected="selected"&gt;None&lt;/option&gt; $!processedCategories.clear() #displayCategoriesHierarchy($tree 'option') &lt;/select&gt; &lt;br/&gt;&lt;/label&gt;#else&lt;input type="hidden" name="newCategoryParent" value="${escapetool.xml($request.parentCategory)}"/&gt;#end&lt;span class="buttonwrapper"&gt;&lt;input class="button" type="submit" value="Add" /&gt;&lt;/span&gt; &lt;a class="btn btn-default" href="$doc.getURL()"&gt;Cancel&lt;/a&gt; &lt;/div&gt;&lt;/form&gt; #end
+#macro(addCategoryForm) #set($addCategURL = $doc.getURL()) #if("$!request.entry" != '') #set($addCategURL = "${addCategURL}?entry=$escapetool.url($request.entry)&amp;amp;entryObjNb=$escapetool.url($!request.entryObjNb)")#end&lt;form action="${addCategURL}" method="post" class="category-add-form"&gt;&lt;div class='create-category'&gt; &lt;input type="hidden" name="form_token" value="$!{services.csrf.getToken()}" /&gt; &lt;input type="hidden" name="xaction" value="create"/&gt; &lt;label&gt;$services.localization.render('blog.categories.new')&lt;br/&gt; &lt;input type="text" name="newCategoryName" class="category-name-input" /&gt;&lt;/label&gt;&lt;br/&gt;#if("$!{request.parentCategory}" == "")&lt;label&gt;#* $services.localization.render('blog.categories.parent')*# Subcategory of:&lt;br/&gt; &lt;select name="newCategoryParent" id="blog_category_selectBox" class="category-add-input"&gt; &lt;option value="${escapetool.xml($defaultCategoryParent)}" selected="selected"&gt;None&lt;/option&gt; $!processedCategories.clear() #displayCategoriesHierarchy($tree 'option') &lt;/select&gt; &lt;br/&gt;&lt;/label&gt;#else&lt;input type="hidden" name="newCategoryParent" value="${escapetool.xml($request.parentCategory)}"/&gt;#end&lt;span class="buttonwrapper"&gt;&lt;input class="button" type="submit" value="Add" /&gt;&lt;/span&gt; &lt;a class="btn btn-default" href="$doc.getURL()"&gt;Cancel&lt;/a&gt; &lt;/div&gt;&lt;/form&gt; #end
 ##
 ##
 ##
