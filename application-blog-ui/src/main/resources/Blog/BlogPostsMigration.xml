@@ -42,6 +42,7 @@
   <content>{{info}}In order to not break the actual blog use cases and to be able to aggregate posts of blogs using the same categories location we need to set the category property of the old blog posts to a default value when the post category is not set by the user.{{/info}}
 
 {{velocity}}
+#if ($hasAdmin)
 #set ($excludedPostsQuery = "select doc1.fullName from XWikiDocument doc1, BaseObject as obj1, DBStringListProperty as category left join category.list catList 
 where doc1.fullName &lt;&gt; 'Blog.BlogPostTemplate' and
 obj1.name=doc1.fullName and obj1.className='Blog.BlogPostClass' and obj1.id=category.id.id and category.id.name='category' and catList Like '%.%'")
@@ -83,6 +84,9 @@ obj.name=doc.fullName and obj.className='Blog.BlogPostClass' and doc.fullName no
 
 #if ("$!request.confirm" != 'true' &amp;&amp; $results.size() &gt; 0)
   {{html}}&lt;a href="$doc.getURL('view', 'confirm=true')" class='button'&gt;Start&lt;/a&gt;{{/html}}
+#end
+#else
+{{error}}You are not allowed to execute the blog posts migration{{/error}}
 #end
 {{/velocity}}
 </content>
