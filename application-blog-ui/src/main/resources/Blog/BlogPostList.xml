@@ -208,30 +208,30 @@
 
 ## Year parameter
 #if ("$!yearParam" != '')
-  #set ($whereQuery = "${whereQuery} and year(publishDateProp.value)=:year")
+  #set ($whereQuery = "${whereQuery} and year(publishDate.value)=:year")
 #end
 
 ## Month parameter
 #if ("$!monthParam" != '')
-  #set ($whereQuery = "${whereQuery} and month(publishDateProp.value)=:month")
+  #set ($whereQuery = "${whereQuery} and month(publishDate.value)=:month")
 #end
 
 #if ("$!publishedParam" == 'no')
-  #set ($whereQuery = "${whereQuery} and publishedProp.value=0")
+  #set ($whereQuery = "${whereQuery} and isPublished.value=0")
 #elseif("$!publishedParam" != 'all')
-  #set ($whereQuery = "${whereQuery} and publishedProp.value=1")
+  #set ($whereQuery = "${whereQuery} and isPublished.value=1")
 #end
 
 #if ("$!hiddenParam" == 'yes')
-  #set ($whereQuery = "${whereQuery} and hiddenProp.value=1")
+  #set ($whereQuery = "${whereQuery} and hidden.value=1")
 #elseif("$!hiddenParam" != 'all')
-  #set ($whereQuery = "${whereQuery} and hiddenProp.value=0")
+  #set ($whereQuery = "${whereQuery} and hidden.value=0")
 #end
 
 #set ($hql = "${hql} ${whereQuery}")
 
 ## Ordering
-#set ($hql = "${hql} order by publishDateProp.value desc")
+#set ($hql = "${hql} order by publishDate.value desc")
 
 #set($query = $services.query.hql($hql))
 

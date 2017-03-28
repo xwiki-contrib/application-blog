@@ -173,9 +173,13 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     #setVariable ("$entries" [])
   #end
   #getBlogEntriesBaseQuery($query)
-  #isBlogGlobal($blogDoc $isGlobal)
-  #if(!$isGlobal)
-    #set($query = "${query} and (doc.space = '${blogDoc.space}' or doc.parent = '${blogDoc.fullName}')")
+  #isDefaultBlog($blogDoc $isDefault)
+  #if ($isDefault)
+    #getCategoryAllBlogPostsQuery($query)
+    #set($query = "${query} and (doc.creator = '$xcontext.user' or (isPublished.value = 1 and hidden.value = 0)) and (doc.space = '${blogDoc.space}' or catList like '${blogDoc.space}.%')")
+  #else
+    #set ($blogSpace = $blogDoc.space.replaceAll('([%_!])', '!$1'))
+    #set($query = "${query} and (doc.space = '${blogSpace}' or doc.parent = '${blogDoc.fullName}')")
   #end
   #getBlogDisplayType($blogDoc $displayType)
   #if($displayType == 'weekly')
@@ -206,12 +210,12 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #if (!$entries)
     #setVariable ("$entries" [])
   #end
-  #set($totalEntries = $services.query.hql($query).count())
+  #set($totalEntries = $services.query.hql($query).addFilter("unique").count())
   #getBlogProperty($blogDoc 'itemsPerPage' '10' $defaultItemsPerPage)
   #set($defaultItemsPerPage = $mathtool.toInteger($defaultItemsPerPage))
   ## This macro is defined in the default macros.vm library. It also sets $itemsPerPage and $startAt.
   #preparePagedViewParams($totalEntries $defaultItemsPerPage)
-  #set($discard = $entries.addAll($services.query.hql("${query} order by publishDate.value desc").setLimit($itemsPerPage).setOffset($startAt).execute()))
+  #set($discard = $entries.addAll($services.query.hql("${query} order by publishDate.value desc").setLimit($itemsPerPage).setOffset($startAt).addFilter("unique").execute()))
 #end
 ##
 ##
@@ -235,8 +239,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #set($minDay = $dateFormatter.print($weekDate.toMutableDateTime().weekOfWeekyear().roundFloor()))
   #set($maxDay = $dateFormatter.print($weekDate.toMutableDateTime().weekOfWeekyear().roundCeiling()))
   #set($query = "${query} and publishDate.value &gt;= '$minDay' and publishDate.value &lt; '$maxDay'")
-  #set($totalEntries = $services.query.hql($query).count())
-  #set($discard = $entries.addAll($services.query.hql("${query} order by publishDate.value desc").execute()))
+  #set($totalEntries = $services.query.hql($query).addFilter("unique").count())
+  #set($discard = $entries.addAll($services.query.hql("${query} order by publishDate.value desc").addFilter("unique").execute()))
 #end
 ##
 ##
@@ -260,8 +264,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #set($minDay = $dateFormatter.print($monthDate.toMutableDateTime().monthOfYear().roundFloor()))
   #set($maxDay = $dateFormatter.print($monthDate.toMutableDateTime().monthOfYear().roundCeiling()))
   #set($query = "${query} and publishDate.value &gt;= '$minDay' and publishDate.value &lt; '$maxDay'")
-  #set($totalEntries = $services.query.hql($query).count())
-  #set($discard = $entries.addAll($services.query.hql("${query} order by publishDate.value desc").execute()))
+  #set($totalEntries = $services.query.hql($query).addFilter("unique").count())
+  #set($discard = $entries.addAll($services.query.addFilter("unique").hql("${query} order by publishDate.value desc").addFilter("unique").execute()))
 #end
 ##
 ##
@@ -278,8 +282,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #if (!$entries)
     #setVariable ("$entries" [])
   #end
-  #set($totalEntries = $services.query.hql($query).count())
-  #set($discard = $entries.addAll($services.query.hql("${query} order by publishDate.value desc").execute()))
+  #set($totalEntries = $services.query.hql($query).addFilter("unique").count())
+  #set($discard = $entries.addAll($services.query.hql("${query} order by publishDate.value desc").addFilter("unique").execute()))
 #end
 ##
 ##
@@ -347,13 +351,13 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  *###
 #macro(getAllBlogPostsQuery $query)
   #set ($query = $NULL)
-  #setVariable("$query" ", BaseObject as obj, IntegerProperty publishedProp, 
-   IntegerProperty hiddenProp, DateProperty publishDateProp 
+  #setVariable("$query" ", BaseObject as obj, IntegerProperty isPublished, 
+   IntegerProperty hidden, DateProperty publishDate 
    where doc.fullName &lt;&gt; '$blogPostTemplate' and
    obj.name=doc.fullName and obj.className='$blogPostClassname' and 
-   publishedProp.id.id = obj.id and publishedProp.id.name = 'published' and
-   hiddenProp.id.id = obj.id and hiddenProp.id.name='hidden' and
-   publishDateProp.id.id = obj.id and publishDateProp.id.name='publishDate'")
+   isPublished.id.id = obj.id and isPublished.id.name = 'published' and
+   hidden.id.id = obj.id and hidden.id.name='hidden' and
+   publishDate.id.id = obj.id and publishDate.id.name='publishDate'")
 #end
 ##
 ##
@@ -366,8 +370,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
 #macro(getCategoryAllBlogPostsQuery $query)
   #set ($query = $NULL)
   #getAllBlogPostsQuery($baseQuery)
-  #set ($baseQuery = $baseQuery.replace('DateProperty publishDateProp', 'DateProperty publishDateProp, DBStringListProperty as categoryProp join categoryProp.list catList'))
-  #setVariable("$query" "${baseQuery} and obj.id=categoryProp.id.id and categoryProp.id.name='category'")
+  #set ($baseQuery = $baseQuery.replace('DateProperty publishDate', 'DateProperty publishDate, DBStringListProperty as category left join category.list catList'))
+  #setVariable("$query" "${baseQuery} and obj.id=category.id.id and category.id.name='category'")
 #end
 ##
 ##
@@ -948,6 +952,22 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #else
     {{error}}$services.localization.render($text, $!parameters){{/error}}
   #end
+#end
+##
+##
+##
+#**
+ * Check if a blog is the Default blog (The one in the 'Blog' space).
+ * 
+ * @param blogDoc The blog document. It should contain a &lt;tt&gt;Blog.BlogClass&lt;/tt&gt; object.
+ * @param isDefault The resulting boolean.
+ *###
+#macro(isDefaultBlog $blogDoc $isDefault)
+  #set ($result = false)
+  #if ($blogDoc.space == 'Blog')
+    #set ($result = true)
+  #end
+  #setVariable("$isDefault" $result)
 #end
 {{/velocity}}</content>
 </xwikidoc>
