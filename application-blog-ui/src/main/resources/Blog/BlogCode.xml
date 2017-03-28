@@ -347,7 +347,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  *###
 #macro(getAllBlogPostsQuery $query)
   #set ($query = $NULL)
-  #setVariable("$query" "select distinct doc.fullName from XWikiDocument doc, BaseObject as obj, IntegerProperty publishedProp,  
+  #setVariable("$query" ", BaseObject as obj, IntegerProperty publishedProp, 
    IntegerProperty hiddenProp, DateProperty publishDateProp 
    where doc.fullName &lt;&gt; '$blogPostTemplate' and
    obj.name=doc.fullName and obj.className='$blogPostClassname' and 

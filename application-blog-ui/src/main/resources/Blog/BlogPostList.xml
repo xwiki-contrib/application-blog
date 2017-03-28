@@ -229,6 +229,10 @@
 #end
 
 #set ($hql = "${hql} ${whereQuery}")
+
+## Ordering
+#set ($hql = "${hql} order by publishDateProp.value desc")
+
 #set($query = $services.query.hql($hql))
 
 #if ("$!blogSpaceParam" != '')
@@ -263,7 +267,7 @@
   #set ($blogPostLayoutMacro = "${blogPostLayoutPrefix}${layoutParam.substring(0, 1).toUpperCase()}${layoutParam.substring(1)}")
 #end
 
-#set ($results = $query.execute())
+#set ($results = $query.addFilter("unique").execute())
 
 #set ($XDOMList = [])
 #foreach($result in $results)
