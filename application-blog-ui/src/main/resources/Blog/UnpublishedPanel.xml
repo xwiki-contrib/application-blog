@@ -125,8 +125,28 @@
       <content>{{include reference="Blog.BlogCode"/}}
 
 {{velocity}}
-#getBlogEntriesBaseQuery($query)
-#set ($query = "$!{query} and isPublished.value = 0")
+#getCategoryAllBlogPostsQuery($query)
+#set($viewAllTarget = 'Blog.Unpublished')
+#if ($doc.space == $defaultBlogSpace &amp;&amp; !$isCategoryPage)
+  ## Get all unpublished posts that are in space 'Blog' or in category 'Blog.%'
+  #set($query = "${query} and (doc.space = '${doc.space}' or catList like '${doc.space}.%')")
+#elseif($isCategoryPage)
+  ## Get all unpublished posts that are in that category aCategorySpace.aCategory
+  #set($query = "${query} and (catList='${doc.fullName}')")
+  #set($viewAllTarget = "${doc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
+#elseif($isCategoriesHomePage)
+  ## Get all unpublished posts that are in a category aCategorySpace.%
+  #set($query = "${query} and (catList like '${doc.space}.%')")
+  #set($viewAllTarget = "${doc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
+#else
+  ## Get all unpublished posts in blog space aBlog
+  #getBlogEntriesBaseQuery($query)
+  #getBlogPostsLocation($doc.space $postsLocation)
+  #set($query = "${query} and doc.space = '${postsLocation}'")
+  #getBlogDocument($doc.space $blogDoc)
+  #set($viewAllTarget = "${blogDoc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
+#end
+#set ($query = "$!{query} and isPublished.value = 0 and doc.creator = '$xcontext.user'")
 #set ($unpublishedEntries = $services.query.hql("${query} order by publishDate.value desc").setLimit(5).setOffset(0).execute())
 #if ($unpublishedEntries.size() &gt; 0 || $showEmptyPanels)
   #panelheader($services.localization.render('blog.unpublished.entries'))
@@ -135,7 +155,7 @@
     * [[$!{entryDoc.display('title', 'view', $entryObj).replaceAll('(\[|\]|\||&gt;)', '~~$1')}&gt;&gt;$!{services.model.serialize($entryDoc.documentReference).replaceAll('(\[|\]|\||&gt;)', '~$1')}]]
   #end
 
-  [[$services.localization.render('blog.unpublished.viewall') (% class="itemCount" %)($services.query.hql($query).count())(%%)&gt;&gt;Blog.Unpublished]]
+  [[$services.localization.render('blog.unpublished.viewall') (% class="itemCount" %)($services.query.hql($query).count())(%%)&gt;&gt;$viewAllTarget]]
   #panelfooter()
 #end
 {{/velocity}}</content>
