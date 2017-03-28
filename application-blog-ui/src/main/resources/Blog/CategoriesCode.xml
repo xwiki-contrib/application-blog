@@ -73,9 +73,9 @@
     #end
     #getBlogEntriesBaseQuery ($query)
     #set ($query = ", DBStringListProperty as categories join categories.list as category${query} and obj.id = categories.id.id and categories.id.name='category' and category in (${parameters})")
-    #set ($totalResult = $services.query.hql($query).bindValues($categories).count())
+    #set ($totalResult = $services.query.hql($query).bindValues($categories).addFilter("unique").count())
     #preparePagedViewParams ($totalResult 10)
-    #set ($result = $services.query.hql("${query} order by publishDate.value desc").setLimit($itemsPerPage).setOffset($startAt).bindValues($categories).execute())
+    #set ($result = $services.query.hql("${query} order by publishDate.value desc").setLimit($itemsPerPage).setOffset($startAt).bindValues($categories).addFilter("unique").execute())
     #if ("$!{blogCategoryEntriesCache.containsKey($!{category})}" == '')
       #set ($blogCategoryEntriesCache = {})
     #end
