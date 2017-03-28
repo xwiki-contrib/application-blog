@@ -125,9 +125,12 @@
       <content>{{include reference="Blog.BlogCode"/}}
 
 {{velocity}}
-#getAllBlogPostsQueryBasedOnDisplayContext($doc $query)
-#set ($query = "$!{query} and isPublished.value = 0 and doc.creator = '$xcontext.user'")
-#set ($unpublishedEntries = $services.query.hql("${query} order by publishDate.value desc").addFilter("unique").setLimit(5).setOffset(0).execute())
+#getAllBlogPostsQueryBasedOnDisplayContext($doc $query $queryParams)
+#set ($discard = $queryParams.put('creator', $xcontext.user))
+#set ($query = "$!{query} and isPublished.value = 0 and doc.creator = :creator")
+#set ($queryObj = $services.query.hql("${query} order by publishDate.value desc").addFilter("unique"))
+#bindQueryParameters($queryObj $queryParams)
+#set ($unpublishedEntries = $queryObj.setLimit(5).setOffset(0).execute())
 #if ($unpublishedEntries.size() &gt; 0 || $showEmptyPanels)
   #panelheader($services.localization.render('blog.unpublished.entries'))
   #foreach ($entryDoc in $xwiki.wrapDocs($unpublishedEntries))
@@ -143,7 +146,7 @@
     #getBlogDocument($doc.space $blogDoc)
     #set($viewAllTarget = "${blogDoc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
   #end
-  [[$services.localization.render('blog.unpublished.viewall') (% class="itemCount" %)($services.query.hql($query).addFilter("unique").count())(%%)&gt;&gt;$viewAllTarget]]
+  [[$services.localization.render('blog.unpublished.viewall') (% class="itemCount" %)($queryObj.count())(%%)&gt;&gt;$viewAllTarget]]
   #panelfooter()
 #end
 {{/velocity}}</content>

@@ -46,9 +46,10 @@
 
 = $services.localization.render('blog.unpublished.entries') =
 
-#getAllBlogPostsQueryBasedOnDisplayContext($doc $query)
-#set ($query = "$!{query} and isPublished.value = 0 and doc.creator = '$xcontext.user'")
-#getUnpublishedBlogEntries($xwiki.getDocument('Blog.WebHome') $query $entries)
+#getAllBlogPostsQueryBasedOnDisplayContext($doc $query $queryParams)
+#set ($discard = $queryParams.put('creator', $xcontext.user))
+#set ($query = "$!{query} and isPublished.value = 0 and doc.creator = :creator")
+#getUnpublishedBlogEntries($xwiki.getDocument('Blog.WebHome') $query $queryParams $entries)
 #displayBlog($entries 'unpublished' true true)
 {{/html}}
 {{/velocity}}</content>

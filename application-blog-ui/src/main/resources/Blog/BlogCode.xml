@@ -198,9 +198,9 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #end
   #getBlogDisplayType($blogDoc $displayType)
   #if($displayType == 'weekly')
-    #getWeeklyBlogEntries($blogDoc $query $entries)
+    #getWeeklyBlogEntries($blogDoc $query $entries $queryParams)
   #elseif($displayType == 'monthly')
-    #getMonthlyBlogEntries($blogDoc $query $entries)
+    #getMonthlyBlogEntries($blogDoc $query $entries $queryParams)
   #elseif($displayType == 'all')
     #getAllBlogEntries($blogDoc $query $entries $queryParams)
   #else
@@ -228,10 +228,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #end
   #set($countQueryObj = $services.query.hql($query).addFilter("unique"))
   #set($queryObj = $services.query.hql("${query} order by publishDate.value desc"))
-  #foreach( $key in $queryParams.keySet() )
-    #set($countQueryObj = $countQueryObj.bindValue($key, $queryParams.get($key)))
-    #set($queryObj = $queryObj.bindValue($key, $queryParams.get($key)))
-  #end
+  #bindQueryParameters($countQueryObj $queryParams)
+  #bindQueryParameters($queryObj $queryParams)
   #set($totalEntries = $countQueryObj.count())
   #getBlogProperty($blogDoc 'itemsPerPage' '10' $defaultItemsPerPage)
   #set($defaultItemsPerPage = $mathtool.toInteger($defaultItemsPerPage))
@@ -253,7 +251,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param entries The resulting list of entries to display, a list of XDocument names.
  * @param queryParams The parameters to bind with the query.
  *###
-#macro(getWeeklyBlogEntries $blogDoc $query $entries)
+#macro(getWeeklyBlogEntries $blogDoc $query $entries $queryParams)
   #if (!$entries)
     #setVariable ("$entries" [])
   #end
@@ -264,10 +262,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #set($query = "${query} and publishDate.value &gt;= '$minDay' and publishDate.value &lt; '$maxDay'")
   #set($countQueryObj = $services.query.hql($query).addFilter("unique"))
   #set($queryObj = $services.query.hql("${query} order by publishDate.value desc").addFilter("unique"))
-  #foreach( $key in $queryParams.keySet() )
-    #set($countQueryObj = $countQueryObj.bindValue($key, $queryParams.get($key)))
-    #set($queryObj = $queryObj.bindValue($key, $queryParams.get($key)))
-  #end
+  #bindQueryParameters($countQueryObj $queryParams)
+  #bindQueryParameters($queryObj $queryParams)
   #set($totalEntries = $countQueryObj.count())
   #set($discard = $entries.addAll($queryObj.execute()))
 #end
@@ -296,10 +292,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #set($query = "${query} and publishDate.value &gt;= '$minDay' and publishDate.value &lt; '$maxDay'")
   #set($countQueryObj = $services.query.hql($query).addFilter("unique"))
   #set($queryObj = $services.query.hql("${query} order by publishDate.value desc").addFilter("unique"))
-  #foreach( $key in $queryParams.keySet() )
-    #set($countQueryObj = $countQueryObj.bindValue($key, $queryParams.get($key)))
-    #set($queryObj = $queryObj.bindValue($key, $queryParams.get($key)))
-  #end
+  #bindQueryParameters($countQueryObj $queryParams)
+  #bindQueryParameters($queryObj $queryParams)
   #set($totalEntries = $countQueryObj.count())
   #set($discard = $entries.addAll($queryObj.execute()))
 #end
@@ -321,10 +315,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #end
   #set($countQueryObj = $services.query.hql($query).addFilter("unique"))
   #set($queryObj = $services.query.hql("${query} order by publishDate.value desc").addFilter("unique"))
-  #foreach( $key in $queryParams.keySet() )
-    #set($countQueryObj = $countQueryObj.bindValue($key, $queryParams.get($key)))
-    #set($queryObj = $queryObj.bindValue($key, $queryParams.get($key)))
-  #end
+  #bindQueryParameters($countQueryObj $queryParams)
+  #bindQueryParameters($queryObj $queryParams)
   #set($totalEntries = $countQueryObj.count())
   #set($discard = $entries.addAll($queryObj.execute()))
 #end
@@ -337,15 +329,20 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param blogDoc The blog document. It should contain a &lt;tt&gt;Blog.BlogClass&lt;/tt&gt; object.
  * @param query The base query for selecting entries. Apart from the base query that selects entries, it can further be
  *        refined to restrict to a given space, or to a given search criteria, etc.
+ * @param queryParams The parameters to bind with the query.
  * @param entries The resulting list of entries to display, a list of XDocument names.
  *###
-#macro(getUnpublishedBlogEntries $blogDoc $query $entries)
+#macro(getUnpublishedBlogEntries $blogDoc $query $queryParams $entries)
   #if (!$entries)
     #setVariable ("$entries" [])
   #end
   #set($query = "${query} and isPublished.value = 0")
-  #set($totalEntries = $services.query.hql($query).addFilter("unique").count())
-  #set($discard = $entries.addAll($services.query.hql("${query} order by publishDate.value desc").addFilter("unique").execute()))
+  #set ($countQueryObj = $services.query.hql($query).addFilter("unique"))
+  #set ($queryObj = $services.query.hql("${query} order by publishDate.value desc").addFilter("unique"))
+  #bindQueryParameters($countQueryObj $queryParams)
+  #bindQueryParameters($queryObj $queryParams)
+  #set($totalEntries = $countQueryObj.count())
+  #set($discard = $entries.addAll($queryObj.execute()))
 #end
 ##
 ##
@@ -1051,27 +1048,51 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * Blog.aPost or Blog.WebHome
  *
  * @param query The query for selecting blog entries.
+ * @param queryParams The parameters to bind with the generated query.
  * @param targetDoc The document in which the articles will be displayed.
  *###
-#macro(getAllBlogPostsQueryBasedOnDisplayContext $targetDoc $query)
+#macro(getAllBlogPostsQueryBasedOnDisplayContext $targetDoc $query $queryParams)
   #set ($query = $NULL)
+  #set ($queryParams = $NULL)
   #getCategoryAllBlogPostsQuery($resultQuery)
+  #set ($resultQueryParams = {})
+  #set($sanitizedSpace = $targetDoc.space.replaceAll('([%_!])', '!$1').concat('.%'))
   #if ($targetDoc.space == $defaultBlogSpace &amp;&amp; !$targetDoc.getObject($blogCategoryClassname))
     ## Get all posts that are in the default blog space('Blog') or in category 'Blog.%'
-    #set($resultQuery = "${resultQuery} and (doc.space = '${targetDoc.space}' or catList like '${targetDoc.space}.%')")
+    #set ($discard = $resultQueryParams.put('space', $targetDoc.space))
+    #set ($discard = $resultQueryParams.put('catList', $sanitizedSpace))
+    #set($resultQuery = "${resultQuery} and (doc.space = :space or catList like :catList escape '!')")
   #elseif($targetDoc.getObject($blogCategoryClassname))
     ## Get all posts that are in a category aCategorySpace.aCategory
-    #set($resultQuery = "${resultQuery} and (catList='${targetDoc.fullName}')")
+    #set ($discard = $resultQueryParams.put('catList', $targetDoc.fullName))
+    #set($resultQuery = "${resultQuery} and (catList=:catList)")
   #elseif($targetDoc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
     ## Get all posts that are in a category aCategorySpace.%
-    #set($resultQuery = "${resultQuery} and (catList like '${targetDoc.space}.%')")
+    #set ($discard = $resultQueryParams.put('catList', $sanitizedSpace))
+    #set($resultQuery = "${resultQuery} and (catList like :catList escape '!')")
   #else
     ## Get all posts in blog space aBlog
     #getBlogEntriesBaseQuery($resultQuery)
     #getBlogPostsLocation($targetDoc.space $postsLocation)
-    #set($resultQuery = "${resultQuery} and doc.space = '${postsLocation}'")
+    #set ($discard = $resultQueryParams.put('space', $postsLocation))
+    #set($resultQuery = "${resultQuery} and doc.space = :space")
   #end
   #setVariable("$query" $resultQuery)
+  #setVariable("$queryParams" $resultQueryParams)
+#end
+##
+##
+##
+#**
+ * Bind parameters to a query object.
+ *
+ * @param queryObj The query object (org.xwiki.query.internal.ScriptQuery object)
+ * @param queryParams the query parameters.
+ *###
+#macro(bindQueryParameters $queryObj $queryParams)
+  #foreach( $key in $queryParams.keySet() )
+    #set($queryObj = $queryObj.bindValue($key, $queryParams.get($key)))
+  #end
 #end
 {{/velocity}}</content>
 </xwikidoc>
