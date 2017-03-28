@@ -449,11 +449,15 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
 #macro(displayCategoryManagementTree $space $displayType)
 &lt;div class="blog-categories-list"&gt;
   #getCategoriesHierarchy("$!{space}" $tree)
+  #if ("$!space" != $defaultBlogSpace)
+    #set ($defaultCategoryParent = "${space}.WebHome")
+  #end
   #displayCategoriesHierarchy($tree $displayType)
   #if($xwiki.hasAccessLevel('edit', $xcontext.user, $doc.fullName))
     #set($addCategURL = $doc.getURL('view', $escapetool.url({
       'xaction' : 'showAddCategory',
-      'parentCategory' : ''
+      'parentCategory' : '',
+      'categoriesSpace': $space
     })))
     #if($isBlogPost || ("$!request.entry" != '' &amp;&amp; "$!request.entryObjNb" != ''))
       #set($entryParam = $!doc.fullName)
@@ -530,7 +534,11 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
  *###
 #macro(renameCategory $category $newCategoryName)
   #set($categoryDoc = $xwiki.getDocument($category))
-  #set($newCategoryDoc = $xwiki.getDocument($newCategoryName))
+  #set ($newCategoryFullName = $newCategoryName)
+  #if ($category.space != $defaultBlogSpace)
+    #set ($newCategoryFullName = "${categoryDoc.space}.${newCategoryName}")
+  #end
+  #set($newCategoryDoc = $xwiki.getDocument($newCategoryFullName))
   #set($parameterValues = ["$!{category}"])
   #set($query = ', BaseObject obj where ')
   #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogCategoryClassname}' and doc.fullName &lt;&gt; 'Blog.CategoryTemplate' and doc.parent = ? order by doc.name")
@@ -554,7 +562,7 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
   #if ($!{services.csrf.isTokenValid("$!{request.getParameter('form_token')}")})
     $categoryDoc.getObject('Blog.CategoryClass').set('name', $newCategoryName)
     $categoryDoc.save($services.localization.render('blog.manageCategories.comment.updatedCategory'), true)
-    $categoryDoc.rename($newCategoryName)
+    $categoryDoc.rename($newCategoryFullName)
   #end
 #end
 {{/velocity}}</content>

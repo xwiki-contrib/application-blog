@@ -39,8 +39,17 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{velocity}}
-Manage categories here
+  <content>{{include reference="Blog.CategoriesCode"/}}
+
+{{velocity filter="none"}}
+{{html clean="false" wiki="true"}}
+$xwiki.ssx.use('Blog.ManageCategories')
+$xwiki.jsx.use('Blog.ManageCategories', {'minify':false})
+
+#set ($categoriesLocation = $doc.space)
+#set ($defaultCategoryParent = $doc.fullName)
+#displayCategoryManagementTree($categoriesLocation 'editable')
+{{/html}}
 {{/velocity}}
 </content>
 </xwikidoc>

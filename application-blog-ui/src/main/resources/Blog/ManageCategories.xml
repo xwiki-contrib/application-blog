@@ -69,6 +69,9 @@
 #elseif("$!request.xaction" == 'create')
   #set($title = "$!{request.newCategoryName}")
   #set($name = "${doc.space}.${title}")
+  #if ("$!request.newCategoryParent" != '')
+    #set ($name = "${xwiki.getDocument($request.newCategoryParent).space}.${title}")
+  #end
   #if ($title.trim().equals(''))
     #blog__actionResponseError(400, 'blog.manageCategories.create.error.emptyName', [])
   #elseif (!$xwiki.getDocument($name).isNew())
@@ -106,14 +109,29 @@
 #####################################################
 ## Action execution done
 #####################################################
+#set($categoriesLocation = $defaultBlogSpace)
+#if ("$!request.root" != '')
+  #set ($categoriesLocation = $xwiki.getDocument($request.root).space)
+#elseif ("$!request.categoriesSpace" != '')
+  #set ($categoriesLocation = $request.categoriesSpace)
+#elseif ("$!request.categoryParent" != '')
+  #set ($categoriesLocation = $xwiki.getDocument($request.categoryParent).space)
+  #set ($defaultCategoryParent = $request.categoryParent)
+#elseif ("$!request.category" != '')
+  #set ($categoriesLocation = $xwiki.getDocument($request.category).space)
+#end
+#if ("$!categoriesLocation" != $defaultBlogSpace &amp;&amp; "$!defaultCategoryParent" != '')
+  #set($defaultCategoryParent = "${categoriesLocation}.WebHome")
+#end
+
 #if ("$!request.display" == 'list')
   #set($displayType = "$!{request.listType}")
   #if($displayType == '')
     #set($displayType = 'editable')
   #end
-  #displayCategoryManagementTree('' $displayType)
+  #displayCategoryManagementTree($categoriesLocation $displayType)
 #elseif ("$!request.display" == 'addForm')
-  #getCategoriesHierarchy('' $tree)
+  #getCategoriesHierarchy($categoriesLocation $tree)
   #addCategoryForm()
 #elseif ("$!request.display" == 'renameForm')
   #renameCategoryForm()
@@ -122,7 +140,7 @@
 $xwiki.ssx.use('Blog.ManageCategories')##
 $xwiki.jsx.use('Blog.ManageCategories', {'minify':false})##
 ##
-#displayCategoryManagementTree('' 'editable')
+#displayCategoryManagementTree($defaultBlogSpace 'editable')
 #end
 {{/html}}
 {{/velocity}}</content>
@@ -404,6 +422,14 @@ XWiki.blog.Categories = Class.create({
     var entryObjNb = urlParams.entryObjNb;
     if(entryObjNb &amp;&amp; entryObjNb != '') {
       ajaxParams['entryObjNb'] = entryObjNb;
+    }
+    var categoriesSpace = urlParams.categoriesSpace;
+    if(categoriesSpace &amp;&amp; categoriesSpace != '') {
+      ajaxParams['categoriesSpace'] = categoriesSpace;
+    }
+    var categoryParent = urlParams.parentCategory;
+    if(categoryParent &amp;&amp; categoryParent != '') {
+      ajaxParams['categoryParent'] = categoryParent;
     }
     if (!parent._x_add_form) {
       if (!parent.disabled) {

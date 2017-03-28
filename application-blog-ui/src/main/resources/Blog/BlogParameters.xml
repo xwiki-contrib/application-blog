@@ -65,6 +65,7 @@
 ## Misc
 #set($thisURL = $doc.getURL($xcontext.action, $request.queryString))
 #set($isBlogPost = $doc.getObject($blogPostClassname))
+#set($defaultBlogSpace = 'Blog')
 ##
 ##
 ##
