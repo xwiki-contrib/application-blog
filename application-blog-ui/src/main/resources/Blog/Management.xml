@@ -112,6 +112,9 @@
           ## Create the Default categories
           #foreach($categoryName in ['News', 'Other', 'Personal'])
             #set ($discard = $xwiki.copyDocument("Blog.${categoryName}", "${categoriesLocation}.${categoryName}"))
+            #set ($categoryDoc = $xwiki.getDocument("${categoriesLocation}.${categoryName}"))
+            #set ($discard = $categoryDoc.setParent("${categoriesLocation}.WebHome"))
+            #set ($discard = $categoryDoc.save())
           #end
 
           ## Create the WebPreferences page
