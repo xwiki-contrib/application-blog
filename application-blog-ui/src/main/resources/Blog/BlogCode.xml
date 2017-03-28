@@ -340,6 +340,37 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
 #end
 ##
 ##
+###**
+ * Return the Query for selecting the all wiki blog posts without filtering
+ * 
+ * @param query The basic query for selecting blog entries.
+ *###
+#macro(getAllBlogPostsQuery $query)
+  #set ($query = $NULL)
+  #setVariable("$query" "select distinct doc.fullName from XWikiDocument doc, BaseObject as obj, IntegerProperty publishedProp,  
+   IntegerProperty hiddenProp, DateProperty publishDateProp 
+   where doc.fullName &lt;&gt; '$blogPostTemplate' and
+   obj.name=doc.fullName and obj.className='$blogPostClassname' and 
+   publishedProp.id.id = obj.id and publishedProp.id.name = 'published' and
+   hiddenProp.id.id = obj.id and hiddenProp.id.name='hidden' and
+   publishDateProp.id.id = obj.id and publishDateProp.id.name='publishDate'")
+#end
+##
+##
+##
+###**
+ * Return the Query for selecting the all wiki blog posts with categories filtering
+ * 
+ * @param query The basic query for selecting blog entries.
+ *###
+#macro(getCategoryAllBlogPostsQuery $query)
+  #set ($query = $NULL)
+  #getAllBlogPostsQuery($baseQuery)
+  #set ($baseQuery = $baseQuery.replace('DateProperty publishDateProp', 'DateProperty publishDateProp, DBStringListProperty as categoryProp join categoryProp.list catList'))
+  #setVariable("$query" "${baseQuery} and obj.id=categoryProp.id.id and categoryProp.id.name='category'")
+#end
+##
+##
 ##
 #**
  * Checks if the provided blog is global or in-space.
