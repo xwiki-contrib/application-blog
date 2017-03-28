@@ -115,12 +115,20 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     #set($result = $xwiki.getDocument("${space}.Blog"))
     #if(!$result.getObject($blogClassname))
       ## Third, try searching for a blog document in the current space
-      #set($blogDocs = $services.query.hql(", BaseObject obj where doc.space = ? and obj.name = doc.fullName and obj.className = '$blogClassname' order by doc.name").setLimit(1).setOffset(0).bindValues([${space}]).execute())
+      ## Prevent the query fail when the space contains dots '.'
+      #set ($escapedSpace = $space.replaceAll('([%_!])', '!$1'))
+      #set($blogDocs = $services.query.hql(", BaseObject obj where doc.space = ? and obj.name = doc.fullName and obj.className = '$blogClassname' order by doc.name").setLimit(1).setOffset(0).bindValues([${escapedSpace}]).execute())
       #if($blogDocs.size() &gt; 0)
         #set($result = $xwiki.getDocument($blogDocs.get(0)))
       #else
-        ## Last, fallback to Blog.WebHome, the default blog
-        #set($result = $xwiki.getDocument('Blog.WebHome'))
+        ## Fourth, try searching for a blog document that have the its 'postsLocation' set to the current space
+        #set($blogDocs = $services.query.hql(", BaseObject obj, StringProperty as postsLocationProp where obj.name = doc.fullName and obj.className = '$blogClassname' and obj.id=postsLocationProp.id.id and postsLocationProp.id.name='postsLocation' and postsLocationProp.value=:postsLocation order by doc.name").setLimit(1).setOffset(0).bindValue('postsLocation', $escapedSpace).execute())
+        #if($blogDocs.size() &gt; 0)
+          #set($result = $xwiki.getDocument($blogDocs.get(0)))
+        #else
+          ## Last, fallback to Blog.WebHome, the default blog
+          #set($result = $xwiki.getDocument('Blog.WebHome'))
+        #end
       #end
     #end
   #end
@@ -178,8 +186,9 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     #getCategoryAllBlogPostsQuery($query)
     #set($query = "${query} and (doc.creator = '$xcontext.user' or (isPublished.value = 1 and hidden.value = 0)) and (doc.space = '${blogDoc.space}' or catList like '${blogDoc.space}.%')")
   #else
-    #set ($blogSpace = $blogDoc.space.replaceAll('([%_!])', '!$1'))
-    #set($query = "${query} and (doc.space = '${blogSpace}' or doc.parent = '${blogDoc.fullName}')")
+    #getBlogPostsLocation($blogDoc.space $blogPostsLocation)
+    #set ($blogPostsLocation = $blogPostsLocation.replaceAll('([%_!])', '!$1'))
+    #set($query = "${query} and (doc.space = '${blogPostsLocation}' or doc.parent = '${blogDoc.fullName}')")
   #end
   #getBlogDisplayType($blogDoc $displayType)
   #if($displayType == 'weekly')
@@ -968,6 +977,36 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     #set ($result = true)
   #end
   #setVariable("$isDefault" $result)
+#end
+##
+##
+##
+#**
+ * Retrieve the blog posts location (space).
+ *
+ * @param blogSpace The blog space. It should contain a document with a &lt;tt&gt;Blog.BlogClass&lt;/tt&gt; object
+ * @param postsLocation The resulting location.
+ *###
+#macro(getBlogPostsLocation $blogSpace $postsLocation)
+  #getBlogDocument($blogSpace $blogDoc)
+  #getBlogProperty($blogDoc 'postsLocation' $blogDoc.space $result)
+  #set ($postsLocation = $NULL)
+  #setVariable ("$postsLocation" $result)
+#end
+##
+##
+##
+#**
+ * Retrieve the blog categories location (space).
+ *
+ * @param blogSpace The blog space. It should contain a document with a &lt;tt&gt;Blog.BlogClass&lt;/tt&gt; object
+ * @param categoriesLocation The resulting location.
+ *###
+#macro(getBlogCategoriesLocation $blogSpace $categoriesLocation)
+  #getBlogDocument($blogSpace $blogDoc)
+  #getBlogProperty($blogDoc 'categoriesLocation' 'Blog' $result)
+  #set ($postsLocation = $NULL)
+  #setVariable ("$categoriesLocation" $result)
 #end
 {{/velocity}}</content>
 </xwikidoc>

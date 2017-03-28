@@ -63,6 +63,7 @@ $xwiki.ssx.use('Blog.ManageCategories')##
     ## the page title).
     #set ($discard = $entryObj.set('title', $request.title))
   #end
+  #getBlogCategoriesLocation($doc.space $categoriesLocation)
   ; {{translation key='blog.sheet.title'/}}
   : $doc.display('title', 'edit', $entryObj)
   ; {{translation key='blog.sheet.content'/}}
@@ -70,7 +71,7 @@ $xwiki.ssx.use('Blog.ManageCategories')##
   ; {{translation key='blog.sheet.summary'/}}
   : $doc.display('extract', 'edit', $entryObj)
   ; {{translation key='blog.sheet.category'/}}
-  : ((({{html clean="false" wiki="true"}}#displayCategoryManagementTree('' 'selectable'){{/html}} (% class="clearfloats" %)((())))))
+  : ((({{html clean="false" wiki="true"}}#displayCategoryManagementTree($categoriesLocation 'selectable'){{/html}} (% class="clearfloats" %)((())))))
   #if ($doc.isNew())
     ## We're creating a new blog post. We handle this case differently because #isPublished returns true when the
     ## property is not set (object missing) and thus the new blog post will appear as published. See also the comment

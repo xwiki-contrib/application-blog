@@ -73,11 +73,12 @@
 #else
   ## Second step, form submitted, create the document
   #set($space = "$!request.entrySpace")
-  #if($space == '')
-    #set($space = 'Main')
+  #getBlogPostsLocation($space $blogPostsLocation)
+  #if($blogPostsLocation == '')
+    #set($blogPostsLocation = 'Main')
   #end
   ## Remove . and : from the document name, as they have a special meaning in XWiki document names
-  #set($postDocName = "${space}.${name.replaceAll('[.:]', '')}")
+  #set($postDocName = "${blogPostsLocation}.${name.replaceAll('[.:]', '')}")
   ## Get the target blog document, to set it as the parent
   #getBlogDocument($space $blogDoc)
   #set($parent = "$!{escapetool.url($blogDoc.fullName)}")
