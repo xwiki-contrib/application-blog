@@ -29,7 +29,7 @@
   </parent>
   <groupId>org.xwiki.contrib.blog</groupId>
   <artifactId>application-blog</artifactId>
-  <version>9.3-SNAPSHOT</version>
+  <version>9.3</version>
   <name>Blog - Parent POM</name>
   <packaging>pom</packaging>
   <description>Create and manage blog posts</description>
@@ -37,6 +37,7 @@
     <connection>scm:git:git://github.com/xwiki-contrib/application-blog.git</connection>
     <developerConnection>scm:git:git@github.com:xwiki-contrib/application-blog.git</developerConnection>
     <url>https://github.com/xwiki-contrib/application-blog</url>
+    <tag>application-blog-9.3</tag>
   </scm>
   <developers>
     <developer>
