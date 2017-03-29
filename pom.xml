@@ -36,7 +36,7 @@
   <scm>
     <connection>scm:git:git://github.com/xwiki-contrib/application-blog.git</connection>
     <developerConnection>scm:git:git@github.com:xwiki-contrib/application-blog.git</developerConnection>
-    <url>https://github.com/xwiki-contrib/application-blog</url>
+    <url>https://github.com/xwiki-contrib/application-blog/tree/master</url>
     <tag>HEAD</tag>
   </scm>
   <developers>
