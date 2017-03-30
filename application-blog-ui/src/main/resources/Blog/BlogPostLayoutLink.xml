@@ -161,9 +161,11 @@
     </class>
     <property>
       <code>{{velocity}}
+{{html clean='false'}}
 #set ($postDoc = $xwiki.getDocument($xcontext.macro.params.reference))
-#getEntryObject($postDoc $postObj)
-[[$!{postDoc.display('title', 'view', $postObj)}&gt;&gt;$xcontext.macro.params.reference]]
+#set ($postObj = $postDoc.getObject('Blog.BlogPostClass'))
+&lt;div&gt;&lt;a href="$postDoc.getURL()"&gt;$!{postDoc.display('title', 'view', $postObj)}&lt;/a&gt;&lt;/div&gt;
+{{/html}}
 {{/velocity}}</code>
     </property>
     <property>

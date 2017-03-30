@@ -397,7 +397,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
    obj.name=doc.fullName and obj.className='$blogPostClassname' and 
    isPublished.id.id = obj.id and isPublished.id.name = 'published' and
    hidden.id.id = obj.id and hidden.id.name='hidden' and
-   publishDate.id.id = obj.id and publishDate.id.name='publishDate'")
+   publishDate.id.id = obj.id and publishDate.id.name='publishDate' and 
+   (doc.creator = '$xcontext.user' or (isPublished.value = 1 and hidden.value = 0))")
 #end
 ##
 ##
@@ -1079,6 +1080,44 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #end
   #setVariable("$query" $resultQuery)
   #setVariable("$queryParams" $resultQueryParams)
+#end
+##
+##
+##
+###**
+ * Display blog posts based on the context where the posts are displayed.
+ * for example there is 4 different panel contexts: 
+ * aBlog.aPost or aBlog.WebHome
+ * aCategorySpace.aCategory
+ * aCategorySpace.WebHome
+ * Blog.aPost or Blog.WebHome
+ *
+ * @param targetDoc The document in which the articles will be displayed.
+ * @param postsVisiblity The visibility of the posts to display: recent, unpublished, ...
+ *###
+#macro(displayBlogPostsBasedOnContext $targetDoc $postsVisiblity)
+  #if ($targetDoc.space == $defaultBlogSpace &amp;&amp; !$targetDoc.getObject($blogCategoryClassname))
+    ## Display all posts that are in the default blog space('Blog') or in category 'Blog.%'
+    #if ($postsVisiblity == 'recent')
+    {{blogpostlist blog="${defaultBlogSpace}.WebHome" published='yes' hidden='no' limit=10 /}}
+    #end
+  #elseif($targetDoc.getObject($blogCategoryClassname))
+    ## display all posts that are in a category aCategorySpace.aCategory
+    #if ($postsVisiblity == 'recent')
+    {{blogpostlist category="$targetDoc.fullName" published='yes' hidden='no' limit=10 /}}
+    #end
+  #elseif($targetDoc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
+    ## Dispaly all posts that are in a category aCategorySpace.%
+    #if ($postsVisiblity == 'recent')
+    {{blogpostlist category="$targetDoc.space" published='yes' hidden='no' limit=10 /}}
+    #end
+  #else
+    ## Display all posts in blog space aBlog
+    #getBlogDocument($targetDoc.space $blogDoc)
+    #if ($postsVisiblity == 'recent')
+    {{blogpostlist blog="$blogDoc.fullName" published='yes' hidden='no' limit=10 /}}
+    #end
+  #end
 #end
 ##
 ##

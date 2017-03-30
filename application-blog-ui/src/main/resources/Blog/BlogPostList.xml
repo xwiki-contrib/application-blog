@@ -163,9 +163,9 @@
       <code>{{include reference='Blog.BlogCode' /}}
 {{velocity output='no'}}
 #if ("$!xcontext.macro.params.blog" == '' &amp;&amp; "$!xcontext.macro.params.category" == '')
-  #set ($blogSpaceParam = 'Blog') ## Default Blog space
+  #set ($blogDescriptorParam = 'Blog.WebHome') ## Default Blog descriptor
 #else
-  #set ($blogSpaceParam = $xcontext.macro.params.blog)
+  #set ($blogDescriptorParam = $xcontext.macro.params.blog)
 #end
 
 #set ($categoryParam = $xcontext.macro.params.category)
@@ -176,106 +176,130 @@
 #set ($limitParam = $xcontext.macro.params.limit)
 #set ($layoutParam = $xcontext.macro.params.layout)
 #set ($blogPostLayoutPrefix = 'blogPostLayout')
+#set ($isValidBlog = false)
+#set ($isAggregatorBlog = false)
+#set ($blogCategoriesLocation = $defaultBlogSpace)
+#set ($blogPostsLocation = $defaultBlogSpace)
 #set ($resutls = [])
 
 #getAllBlogPostsQuery($hql)
+#set ($queryParams = {})
 #set ($whereQuery = "")
 
-## blog space parameter
-#if ("$!blogSpaceParam" != '')
-  #set ($whereQuery = " and doc.fullName like :space")
-#end
-
-## category parameter
-#if("$!categoryParam" != '')
-  #getCategoryAllBlogPostsQuery($hql)
-
-  ## Check if it is a category or space
-  #set ($isCategoriesSpace = true)
-  #set ($categoryDoc = $xwiki.getDocument($categoryParam))
-  #if (!$categoryDoc.isNew())
-    #set ($categoryObj = $categoryDoc.getObject('Blog.CategoryClass'))
-    #if ("$!categoryObj" != '')
-      #set ($isCategoriesSpace = false)
+## blog descriptor parameter
+#if ("$!blogDescriptorParam" != '')
+  ## Get information from the blog descriptor
+  #set ($blogDescriptorDoc = $xwiki.getDocument($blogDescriptorParam))
+  #set ($blogDescriptorObj = $blogDescriptorDoc.getObject($blogClassname))
+  #if ("$!blogDescriptorObj" != '')
+    #set ($isValidBlog = true)
+    ## For backwards compatibility the default blog (under 'Blog' space) is considered as an aggregator blog
+    #if ($blogDescriptorDoc.space == $defaultBlogSpace)
+      #set ($isAggregatorBlog = true)
+    #end
+    #if ("$!blogDescriptorObj.getProperty('categoriesLocation').value" != '')
+      #set ($blogCategoriesLocation = $blogDescriptorObj.getProperty('categoriesLocation').value)
+    #end
+    #if ("$!blogDescriptorObj.getProperty('postsLocation').value" != '')
+      #set ($blogPostsLocation = $blogDescriptorObj.getProperty('postsLocation').value)
+    #elseif($blogDescriptorDoc.space != $defaultBlogSpace)
+      #set ($blogPostsLocation = $blogDescriptorDoc.space)
     #end
   #end
-  #if ($isCategoriesSpace)
-    #set ($whereQuery = "${whereQuery} and catList like :category")
+  #set($sanitizedCategoriesLocation = $blogCategoriesLocation.replaceAll('([%_!])', '!$1').concat('.%'))
+  #if ($isAggregatorBlog)
+    #getCategoryAllBlogPostsQuery($hql)
+    #set ($discard = $queryParams.put('catList', $sanitizedCategoriesLocation))
+    #set ($discard = $queryParams.put('space', $blogPostsLocation))
+    #set ($whereQuery = " and (doc.space = :space or catList like :catList escape '!')")
   #else
-    #set ($whereQuery = "${whereQuery} and catList=:category")
+    #set ($discard = $queryParams.put('space', $blogPostsLocation))
+    #set ($whereQuery = " and doc.space =:space")
   #end
 #end
 
-## Year parameter
-#if ("$!yearParam" != '')
-  #set ($whereQuery = "${whereQuery} and year(publishDate.value)=:year")
-#end
-
-## Month parameter
-#if ("$!monthParam" != '')
-  #set ($whereQuery = "${whereQuery} and month(publishDate.value)=:month")
-#end
-
-#if ("$!publishedParam" == 'no')
-  #set ($whereQuery = "${whereQuery} and isPublished.value=0")
-#elseif("$!publishedParam" != 'all')
-  #set ($whereQuery = "${whereQuery} and isPublished.value=1")
-#end
-
-#if ("$!hiddenParam" == 'yes')
-  #set ($whereQuery = "${whereQuery} and hidden.value=1")
-#elseif("$!hiddenParam" != 'all')
-  #set ($whereQuery = "${whereQuery} and hidden.value=0")
-#end
-
-#set ($hql = "${hql} ${whereQuery}")
-
-## Ordering
-#set ($hql = "${hql} order by publishDate.value desc")
-
-#set($query = $services.query.hql($hql))
-
-#if ("$!blogSpaceParam" != '')
-  ## Added to fix a pitfall on mysql when we have spaces with points '.'
-  #set ($spaceLike = $blogSpaceParam.replaceAll('([%_!])', '!$1').concat('.%'))
-  #set ($query = $query.bindValue('space', $spaceLike))
-#end
-
-#if ("$!categoryParam" != '')
-  #set ($categoryLike = $categoryParam.replaceAll('([%_!])', '!$1'))
-  #if ($isCategoriesSpace)
-    #set ($categoryLike = $categoryLike.concat('.%'))
-    #set ($query = $query.bindValue('category', $categoryLike))
-  #else
-    #set ($query = $query.bindValue('category', $categoryParam))
-  #end
-#end
-
-#if ("$!yearParam" != '')
-  #set ($query = $query.bindValue('year', $mathtool.toInteger("$yearParam")))
-#end
-
-#if ("$!monthParam" != '')
-  #set ($query = $query.bindValue('month', $mathtool.toInteger("$monthParam")))
-#end
-
-#if ("$!limitParam" != '')
-  #set ($query = $query.setLimit($mathtool.toInteger("$limitParam")))
-#end
-
-#if ("$!layoutParam" != '')
-  #set ($blogPostLayoutMacro = "${blogPostLayoutPrefix}${layoutParam.substring(0, 1).toUpperCase()}${layoutParam.substring(1)}")
-#end
-
-#set ($results = $query.addFilter("unique").execute())
-
-#set ($XDOMList = [])
-#foreach($result in $results)
-  #set ($toParse = "{{${blogPostLayoutMacro} reference=${escapetool.getQuote()}${result}${escapetool.getQuote()}/}}")
+#if ("$!blogDescriptorParam" != '' &amp;&amp; !$isValidBlog)
+  #set ($XDOMList = [])
+  #set ($toParse = "{{error}}${services.localization.render('blog.blogpostlist.descriptor_not_found', [$blogDescriptorParam])}{{/error}}")
   #set ($xdom = $services.rendering.parse($toParse, $xwiki.getCurrentContentSyntaxId()).getChildren())
   #set ($discard = $XDOMList.addAll($xdom))
+  #set($xcontext.macro.result = $XDOMList)
+#else
+  ## category parameter
+  #if("$!categoryParam" != '')
+    #getCategoryAllBlogPostsQuery($hql)
+    ## Check if it is a category or space
+    #set ($isCategoriesSpace = true)
+    #set ($categoryDoc = $xwiki.getDocument($categoryParam))
+    #if (!$categoryDoc.isNew())
+      #set ($categoryObj = $categoryDoc.getObject('Blog.CategoryClass'))
+      #if ("$!categoryObj" != '')
+        #set ($isCategoriesSpace = false)
+      #end
+    #end
+    #if ($isCategoriesSpace)
+      #set($sanitizedCategoryParam = $categoryParam.replaceAll('([%_!])', '!$1').concat('.%'))
+      #set ($whereQuery = "${whereQuery} and catList like :category escape '!'")
+      #set ($discard = $queryParams.put('category', $sanitizedCategoryParam))
+    #else
+      #set ($whereQuery = "${whereQuery} and catList=:category")
+      #set ($discard = $queryParams.put('category', $categoryParam))
+    #end
+  #end
+
+  ## Year parameter
+  #if ("$!yearParam" != '')
+    #set ($whereQuery = "${whereQuery} and year(publishDate.value)=:year")
+    #set ($discard = $queryParams.put('year', $mathtool.toInteger("$yearParam")))
+  #end
+
+  ## Month parameter
+  #if ("$!monthParam" != '')
+    #set ($whereQuery = "${whereQuery} and month(publishDate.value)=:month")
+    #set ($discard = $queryParams.put('month', $mathtool.toInteger("$monthParam")))
+  #end
+
+  #if ("$!publishedParam" != '')
+    #if ("$!publishedParam" == 'no')
+      #set ($whereQuery = "${whereQuery} and isPublished.value=0")
+    #elseif("$!publishedParam" == 'yes')
+      #set ($whereQuery = "${whereQuery} and isPublished.value=1")
+    #end
+  #end
+
+  #if ("$!hiddenParam" != '')
+    #if ("$!hiddenParam" == 'yes')
+      #set ($whereQuery = "${whereQuery} and hidden.value=1")
+    #elseif("$!hiddenParam" == 'no')
+      #set ($whereQuery = "${whereQuery} and hidden.value=0")
+    #end
+  #end
+
+  #set ($hql = "${hql} ${whereQuery}")
+
+  ## Ordering
+  #set ($hql = "${hql} order by publishDate.value desc")
+  #set($query = $services.query.hql($hql))
+
+  #if ("$!limitParam" != '')
+    #set ($query = $query.setLimit($mathtool.toInteger("$limitParam")))
+  #end
+
+  #if ("$!layoutParam" != '')
+    #set ($blogPostLayoutMacro = "${blogPostLayoutPrefix}${layoutParam.substring(0, 1).toUpperCase()}${layoutParam.substring(1)}")
+  #end
+
+  #bindQueryParameters($query $queryParams)
+  #set ($results = $query.addFilter("unique").execute())
+
+  #set ($XDOMList = [])
+  #foreach($result in $results)
+    #set ($toParse = "{{${blogPostLayoutMacro} reference=${escapetool.getQuote()}${result}${escapetool.getQuote()}/}}")
+    #set ($xdom = $services.rendering.parse($toParse, $xwiki.getCurrentContentSyntaxId()).getChildren())
+    #set ($discard = $XDOMList.addAll($xdom))
+  #end
+  #set($xcontext.macro.result = $XDOMList)
 #end
-#set($xcontext.macro.result = $XDOMList)
 {{/velocity}}</code>
     </property>
     <property>
@@ -621,7 +645,7 @@
       </name>
     </class>
     <property>
-      <defaultValue>yes</defaultValue>
+      <defaultValue/>
     </property>
     <property>
       <description>(yes), no, all</description>
@@ -687,7 +711,7 @@
       </name>
     </class>
     <property>
-      <defaultValue>no</defaultValue>
+      <defaultValue/>
     </property>
     <property>
       <description>(no), yes, all</description>
