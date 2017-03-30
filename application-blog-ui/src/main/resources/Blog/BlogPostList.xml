@@ -238,9 +238,15 @@
       #end
     #end
     #if ($isCategoriesSpace)
+      ## Exclude uncetagorized posts
+      #set ($exculdedCategory = "${categoryParam}.WebHome")
+      #if ($categoryParam == $defaultBlogSpace)
+        #set ($exculdedCategory = "${categoryParam}.Categories.WebHome")
+      #end
       #set($sanitizedCategoryParam = $categoryParam.replaceAll('([%_!])', '!$1').concat('.%'))
-      #set ($whereQuery = "${whereQuery} and catList like :category escape '!'")
+      #set ($whereQuery = "${whereQuery} and catList&lt;&gt;:excludedCategory and catList like :category escape '!'")
       #set ($discard = $queryParams.put('category', $sanitizedCategoryParam))
+      #set ($discard = $queryParams.put('excludedCategory', $exculdedCategory))
     #else
       #set ($whereQuery = "${whereQuery} and catList=:category")
       #set ($discard = $queryParams.put('category', $categoryParam))

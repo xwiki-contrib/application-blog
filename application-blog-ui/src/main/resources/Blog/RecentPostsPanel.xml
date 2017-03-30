@@ -131,7 +131,7 @@
 #bindQueryParameters($queryObj $queryParams)
 #if($queryObj.setLimit(10).setOffset(0).count() &gt; 0 || $showEmptyPanels)
   #panelheader($services.localization.render('blog.recentposts.paneltitle'))
-  #displayBlogPostsBasedOnContext($doc 'recent')
+  #displayBlogPostsBasedOnContext($doc 'recent' 10)
   #panelfooter()
 #end
 {{/velocity}}</content>
