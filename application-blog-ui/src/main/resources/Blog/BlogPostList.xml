@@ -161,6 +161,7 @@
     </class>
     <property>
       <code>{{include reference='Blog.BlogCode' /}}
+
 {{velocity output='no'}}
 #if ("$!xcontext.macro.params.blog" == '' &amp;&amp; "$!xcontext.macro.params.category" == '')
   #set ($blogDescriptorParam = 'Blog.WebHome') ## Default Blog descriptor
@@ -175,6 +176,7 @@
 #set ($hiddenParam = $xcontext.macro.params.hidden)
 #set ($limitParam = $xcontext.macro.params.limit)
 #set ($layoutParam = $xcontext.macro.params.layout)
+#set ($layoutAdditionalParams = $xcontext.macro.params.layoutParams)
 #set ($blogPostLayoutPrefix = 'blogPostLayout')
 #set ($isValidBlog = false)
 #set ($isAggregatorBlog = false)
@@ -299,10 +301,13 @@
   #set ($results = $query.addFilter("unique").execute())
 
   #set ($XDOMList = [])
+  #set ($previousPostReference = '')
   #foreach($result in $results)
-    #set ($toParse = "{{${blogPostLayoutMacro} reference=${escapetool.getQuote()}${result}${escapetool.getQuote()}/}}")
+    #set ($layoutAdditionalParams = "${layoutAdditionalParams}|postIndex=${foreach.index}|previousPostReference=$!{previousPostReference}")
+    #set ($toParse = "{{${blogPostLayoutMacro} reference=${escapetool.getQuote()}${result}${escapetool.getQuote()} params=${escapetool.getQuote()}$!layoutAdditionalParams${escapetool.getQuote()}/}}")
     #set ($xdom = $services.rendering.parse($toParse, $xwiki.getCurrentContentSyntaxId()).getChildren())
     #set ($discard = $XDOMList.addAll($xdom))
+    #set ($previousPostReference = $result)
   #end
   #set($xcontext.macro.result = $XDOMList)
 #end
@@ -863,6 +868,72 @@ The naming convention for the layout macros is: "BlogPostLayout${macroName}"</de
     </property>
     <property>
       <name>layout</name>
+    </property>
+  </object>
+  <object>
+    <name>Blog.BlogPostList</name>
+    <number>8</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>f38c0b26-e37a-4f1b-b421-3cb8b232140f</guid>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <property>
+      <defaultValue/>
+    </property>
+    <property>
+      <description>Additional parameters of the blog post layout</description>
+    </property>
+    <property>
+      <mandatory/>
+    </property>
+    <property>
+      <name>layoutParams</name>
     </property>
   </object>
 </xwikidoc>
