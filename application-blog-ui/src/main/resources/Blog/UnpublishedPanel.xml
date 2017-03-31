@@ -133,7 +133,7 @@
 #set ($count = $queryObj.count())
 #if ($count &gt; 0 || $showEmptyPanels)
   #panelheader($services.localization.render('blog.unpublished.entries'))
-  #displayBlogPostsBasedOnContext($doc 'unpublished' 5)
+  #displayBlogPostsBasedOnContext($doc 'unpublished' 'link' '' 5)
 
   #set($viewAllTarget = 'Blog.Unpublished')
   #if($isCategoryPage)
