@@ -165,7 +165,7 @@
 {{velocity}}
 #set ($postDoc = $xwiki.getDocument($xcontext.macro.params.reference))
 #set ($postObj = $postDoc.getObject($blogPostClassname))
-#set ($onlyExtract = false)
+#set ($useSummary = false)
 #set ($displayTitle = true)
 #set ($displayCalendar = true)
 #set ($displayCalendarImage = true)
@@ -181,8 +181,8 @@
   #end
 #end
 ##
-#if ("$!macroAdditionalParams.get('onlyExtract')" == 'true')
-    #set ($onlyExtract = true)
+#if ("$!macroAdditionalParams.get('useSummary')" == 'true')
+    #set ($useSummary = true)
 #end
 ##
 #if ("$!macroAdditionalParams.get('displayTitle')" == 'false')
@@ -211,7 +211,7 @@
 #end
 #if ($displayCalendar)(% class="blogDay" %)(((#end
 #if ($displayCalendarImage)#displayBlogDate($postDate)#end
-#displayEntry($postDoc $postObj $onlyExtract $displayTitle)
+#displayEntry($postDoc $postObj $useSummary $displayTitle)
 #if ($displayCalendar))))#end
 {{/velocity}}</code>
     </property>
