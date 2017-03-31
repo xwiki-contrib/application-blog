@@ -164,6 +164,7 @@ blog.publisher.published = Published article
 blog.recentposts.paneltitle = Recent Blog Posts
 blog.unpublished.entries = Unpublished articles
 blog.unpublished.viewall = View all
+blog.blogspanel.title = Blogs
 
 blog.templateProvider.blogpost.name=Blog Post
 blog.templateProvider.blogpost.description=Communicate news
