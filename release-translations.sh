@@ -51,17 +51,19 @@ function do_all() {
 }
 
 function check_clean() {
-    if [[ "`git status | grep 'nothing to commit (working directory clean)'`" == "" ]]; then
-        git status
-        echo -e "\033[1;31mPlease do something with these changes first.\033[0m"
-        echo "in `pwd`"
-        exit -1;
-    fi
-    git reset --hard &&
-    git checkout ${BRANCH} &&
-    git reset --hard &&
-    git clean -dxf &&
-    git pull origin ${BRANCH} || exit -1
+	if [[ `git status --porcelain` ]]; then
+    	# changes
+    	git status
+    	echo -e "\033[1;31mPlease do something with these changes first.\033[0m"
+    	echo "in `pwd`"
+     	exit -1;
+  	else
+	    git reset --hard &&
+    	git checkout ${BRANCH} &&
+    	git reset --hard &&
+    	git clean -dxf &&
+    	git pull origin ${BRANCH} || exit -1
+	fi
 }
 
 function commit() {
