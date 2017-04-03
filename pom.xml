@@ -65,27 +65,4 @@
       </modules>
     </profile>
   </profiles>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.revapi</groupId>
-        <artifactId>revapi-maven-plugin</artifactId>
-        <configuration>
-          <analysisConfiguration><![CDATA[
-            {
-              "revapi": {
-                "ignore" : [
-                  {
-                    "code": "java.class.removed",
-                    "old": "class org.xwiki.platform.blog.events.BlogPostPublishedEventDescriptor",
-                    "justification": "Internal component that was wrongly put in a user-public package"
-                  }
-                ]
-              }
-            }
-          ]]></analysisConfiguration>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>
