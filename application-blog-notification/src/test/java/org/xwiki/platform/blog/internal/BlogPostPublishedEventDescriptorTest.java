@@ -17,12 +17,12 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.plaform.blog.events;
+package org.xwiki.platform.blog.internal;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.xwiki.platform.blog.events.BlogPostPublishedEvent;
-import org.xwiki.platform.blog.events.BlogPostPublishedEventDescriptor;
+import org.xwiki.platform.blog.internal.BlogPostPublishedEventDescriptor;
 import org.xwiki.test.mockito.MockitoComponentMockingRule;
 
 import static org.junit.Assert.assertEquals;

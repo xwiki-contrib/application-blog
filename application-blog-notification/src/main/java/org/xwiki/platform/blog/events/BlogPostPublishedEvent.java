@@ -20,6 +20,7 @@
 package org.xwiki.platform.blog.events;
 
 import org.xwiki.eventstream.RecordableEvent;
+import org.xwiki.stability.Unstable;
 
 /**
  * Event sent when a blog post has been published.
@@ -27,6 +28,7 @@ import org.xwiki.eventstream.RecordableEvent;
  * @version $Id$
  * @since 9.2RC1
  */
+@Unstable
 public class BlogPostPublishedEvent implements RecordableEvent
 {
     @Override

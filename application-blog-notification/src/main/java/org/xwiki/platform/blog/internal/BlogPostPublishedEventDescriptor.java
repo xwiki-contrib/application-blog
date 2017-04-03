@@ -17,13 +17,14 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.platform.blog.events;
+package org.xwiki.platform.blog.internal;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
 import org.xwiki.eventstream.RecordableEventDescriptor;
+import org.xwiki.platform.blog.events.BlogPostPublishedEvent;
 
 /**
  * Descriptor for the event {@link BlogPostPublishedEvent}.
