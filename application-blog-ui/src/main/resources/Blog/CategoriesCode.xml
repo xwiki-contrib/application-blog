@@ -65,11 +65,20 @@
     #getCategoriesHierarchy ('' $tree)
     #set ($subcategories = [])
     #getSubcategories ($tree $category $subcategories)
-    #set ($categories = [${category}])
+    #set ($categories = [])
+    #set ($parameters = '')
+    ## check if it a categories space
+    #set ($categoryDoc = $xwiki.getDocument($category))
+    #if ("$!categoryDoc.getObject($blogCategoryClassname)" != '')
+      #set ($discard = $categories.add($category))
+      #set ($parameters = '?')
+    #end
     #set ($discard = $categories.addAll(${subcategories}))
-    #set ($parameters = '?')
     #foreach ($subcategory in $subcategories)
-      #set ($parameters = $parameters.concat(', ?'))
+      #if ($parameters != '')
+        #set ($parameters = $parameters.concat(', '))
+      #end
+      #set ($parameters = $parameters.concat('?'))
     #end
     #getBlogEntriesBaseQuery ($query)
     #set ($query = ", DBStringListProperty as categories join categories.list as category${query} and obj.id = categories.id.id and categories.id.name='category' and category in (${parameters})")
@@ -85,11 +94,9 @@
   #end
 #end
 #macro(getSubcategories $tree $category $subcategories)
-  #if(!$subcategories.contains($category))
-    #foreach($subcategory in $tree.get($category))
-      #set($discard = $subcategories.add($subcategory))
-      #getSubcategories($tree $subcategory $subcategories)
-    #end
+  #foreach($subcategory in $tree.get($category))
+    #set($discard = $subcategories.add($subcategory))
+    #getSubcategories($tree $subcategory $subcategories)
   #end
 #end
 ##
