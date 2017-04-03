@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc reference="Blog.Translations" locale="nl">
+  <web>Blog</web>
+  <name>Translations</name>
+  <language>nl</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>Main.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1466137391000</creationDate>
+  <date>1490616853000</date>
+  <contentUpdateDate>1490616821000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Translations</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>## XWiki Translation for language nl generated from http://www.l10n.xwiki.org
+blog.application.name=Blog
+blog.archive.hidden=(verborgen)
+blog.archive.noarticle=Nog geen artikelen...
+blog.archive.noarticlesmonth=Geen artikelen uit deze maand...
+blog.archive.noarticlesyear=Geen artikelen uit dit jaar...
+blog.archive.paneltitle=Blogarchief
+blog.archive.postsfor=Blogs van
+blog.archive.postsyear=Blogs van {0}
+blog.archive.unpublished=(niet gepubliceerd)
+blog.categories.add=Toevoegen
+blog.categories.addcategory=Categorie toevoegen
+blog.categories.addsubcategory=Nieuwe subcategorie toevoegen
+blog.categories.articles=Artikelen van deze categorie
+blog.categories.deleteselected=Geselecteerde categorieën verwijderen
+blog.categories.description=Omschrijving\:
+blog.categories.edit=Categorieën wijzigen
+blog.categories.existingcategories=Bestaande categorieën
+blog.categories.name=Naam\:
+blog.categories.new=Nieuwe categorie\:
+blog.categories.newName=Nieuwe categorienaam\:
+blog.categories.noentries=Geen artikelen in deze categorie
+blog.categories.none=Geen
+blog.categories.notcategory=Dit is geen blogcategorie\!
+blog.categories.paneltitle=Blogcategorieën
+blog.categories.parent=Ouder\:
+blog.categories.parentcategory=Bovenliggende categorie\:
+blog.categories.remove=Verwijderde categorie weghalen
+blog.categories.sheet=Categorie sheet
+blog.categories.sheetmessage=Deze stylesheet wordt gebruikt voor de weergave van blogcategorieën.
+blog.categories.subcategories=Subcategorieën
+blog.category.created=De {0} categorie is gemaakt.
+blog.category.exists=De {0} categorie bestaat al.
+blog.code.blogcategories=Blogcategorieën
+blog.code.blogsheet=Blog sheet
+blog.code.categories=Categorieën\:
+blog.code.comments=Opmerkingen
+blog.code.createdby=Gemaakt door
+blog.code.deletepost=Blogartikel verwijderen
+blog.code.description.category=Meest recente blogartikelen in de {0} categorie
+blog.code.description.space=Meest recente blogartikelen in de {0} paginaruimte
+blog.code.description.wiki=Meest recente blogartikelen in de wiki
+blog.code.editpost=Blogartikel wijzigen
+blog.code.failedToChangeBlogPostVisibility=Wijzigen van de zichtbaarheid van het Blog-artikel mislukt.
+blog.code.hid=Verborgen%20Blogartikel
+blog.code.hidden=Dit blogartikel is verborgen.
+blog.code.hide=Verberg dit blogartikel voor andere gebruikers.
+blog.code.in=in
+blog.code.loading=Laden...
+blog.code.madevisible=Blogartikel%20zichtbaar%20gemaakt
+blog.code.makevisible=Dit blogartikel is niet zichtbaar voor andere gebruikers. Maak het zichtbaar.
+blog.code.modifiedby=Gewijzigd door
+blog.code.newerposts=Nieuwere artikelen
+blog.code.nextmonth=Volgende maand
+blog.code.nextweek=Volgende week
+blog.code.notblog=Dit is geen blog-document\!
+blog.code.notpublished=Dit blogartikel is nog niet gepubliceerd. Publiceer het.
+blog.code.olderposts=Oudere artikelen
+blog.code.permalink=Permalink
+blog.code.postedby=Geplaatst door
+blog.code.previousmonth=Vorige maand
+blog.code.previousweek=Vorige week
+blog.code.published=Dit blogartikel is nog niet gepubliceerd.
+blog.code.readpost=Lees het volledige artikel
+blog.code.sheetexplanation=Deze stylesheet wordt gebruikt voor de weergave van blogartikelen.
+blog.code.title=De Wiki Blog
+blog.code.warning=Waarschuwing\:
+blog.manage.blogtitle=Blog titel
+blog.manage.blogtype=Blog type\:
+blog.manage.create=Maken
+blog.manage.createnew=Nieuwe blog maken
+blog.manage.existing=Bestaande blogs
+blog.manage.inside=blog binnen een bestaande paginaruimte
+blog.manage.main=blog als de enige inhoud van een paginaruimte
+blog.manage.nospace=Geen paginaruimte opgegeven. Geef alstublieft een geldige naam op voor de paginaruimte waarin de blog moet worden gemaakt.
+blog.manage.space=Paginaruime\:
+blog.manage.title=Titel\:
+blog.manageCategories.comment.removedDeletedCategory=Verwijderde categorie weggehaald
+blog.manageCategories.comment.updatedCategory=Categorienaam bijgewerkt
+blog.manageCategories.comment.updatedParent=Categorie Ouder gewijzigd
+blog.manageCategories.comment.updatedRenamedCategory=Hernoemde categorie bijgewerkt
+blog.manageCategories.create.error.alreadyExists=Document bestaat al, kies alstublieft een andere naam
+blog.manageCategories.create.error.emptyName=Voer een geldige categorienaam in
+blog.manageCategories.create.error.notExists=De gevraagde pagina kon niet worden gevonden.
+blog.manageCategories.create.error.targetNotWritable=U heeft onvoldoende rechten om de doelpagina aan te maken.
+blog.manageCategories.js.add.error.401=U bent uitgelogd. Herlaad de pagina en log in.
+blog.manageCategories.js.add.error.403=U heeft onvoldoende rechten om het document te maken
+blog.manageCategories.js.add.error.409=Document bestaat al, kies alstublieft een andere naam
+blog.manageCategories.js.add.inProgress=Categorie toevoegen...
+blog.manageCategories.js.delete.confirm=Deze actie is onomkeerbaar. Weet u zeker dat u deze categorie wilt verwijderen?
+blog.manageCategories.js.delete.done=Verwijderd
+blog.manageCategories.js.delete.failed=Categorie verwijderen mislukt
+blog.manageCategories.js.delete.inProgress=Categorie verwijderen...
+blog.manageCategories.js.error.noServer=Server reageert niet
+blog.manageCategories.js.fetchingForm=Formulier ophalen...
+blog.manageCategories.js.rename.error.403=U heeft onvoldoende rechten om het document te maken
+blog.manageCategories.js.rename.error.404=Ongeldige categorie, ververs de pagina om de hiërarchie van categorieën te herladen
+blog.manageCategories.js.rename.error.409=Document bestaat al, kies alstublieft een andere naam
+blog.manageCategories.js.rename.inProgress=Categorie hernoemen...
+blog.manageCategories.rename.error.emptyName=Voer een geldige categorienaam in
+blog.manageCategories.title=Blogcategorieën beheren
+blog.migration.backtoblog=Terug naar het blog
+blog.migration.confirm=Bevestigen
+blog.migration.done=Klaar.
+blog.migration.inspace=in paginaruimte
+blog.migration.migrated=Oud blogartikel gemigreerd naar de nieuwe blogapplicatie
+blog.migration.pleaseconfirm=Bevestig alstublieft dat u oude artikelen wilt migreren naar de nieuwe blogapplicatie\:
+blog.migration.skipping=Beschermd document overgeslagen
+blog.migration.updated=Gewijzigd
+blog.post.create=Maken
+blog.post.createpost=Maak een nieuw artikel
+blog.post.title=Titel
+blog.post.titleEmptyError=De titel van het artikel mag niet leeg zijn\!
+blog.publisher.published=Artikel gepubliceerd
+blog.recentposts.paneltitle=Recente Blogartikelen
+blog.sheet.category=Categorie\:
+blog.sheet.content=Inhoud\:
+blog.sheet.hidearticle=Verberg artikel {0}
+blog.sheet.notpost=Dit is geen blogartikel\!
+blog.sheet.notpublished=Dit artikel is nog niet gepubliceerd.
+blog.sheet.publicationdate=Dit artikel is gepubliceerd op {0}
+blog.sheet.publish=Publiceren
+blog.sheet.setdate=Stel de publicatiedatum in op\:
+blog.sheet.summary=Samenvatting (optioneel)\:
+blog.sheet.title=Titel\:
+blog.unpublished.entries=Niet-gepubliceerde artikelen
+blog.unpublished.viewall=Bekijk alles
+</content>
+</xwikidoc>

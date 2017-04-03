@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc reference="Blog.Translations" locale="es">
+  <web>Blog</web>
+  <name>Translations</name>
+  <language>es</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>Main.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1466137391000</creationDate>
+  <date>1490616853000</date>
+  <contentUpdateDate>1490616821000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Translations</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>## XWiki Translation for language es generated from http://www.l10n.xwiki.org
+blog.application.name=Blog
+blog.archive.hidden=(oculto)
+blog.archive.noarticle=Todavía no hay artículos...
+blog.archive.noarticlesmonth=Este mes no hay artículos...
+blog.archive.noarticlesyear=Ningún artículo este año...
+blog.archive.paneltitle=Archivo del Blog
+blog.archive.postsfor=Entradas de blog para
+blog.archive.postsyear=Entradas de blog para {0}
+blog.archive.unpublished=(no publicado)
+blog.categories.add=Añadir
+blog.categories.addcategory=Añadir categoría
+blog.categories.addsubcategory=Añadir nueva subcategoría
+blog.categories.articles=Artículos de esta categoría
+blog.categories.deleteselected=Categorías seleccionadas eliminadas
+blog.categories.description=Descripción\:
+blog.categories.edit=Editar categorías
+blog.categories.existingcategories=Categorías existentes
+blog.categories.name=Nombre\:
+blog.categories.new=Nueva categoría\:
+blog.categories.newName=Nuevo nombre de categoría\:
+blog.categories.none=Ninguna
+blog.categories.notcategory=¡Esto no es una categoría de blog\!
+blog.categories.paneltitle=Categorías del Blog
+blog.categories.parent=Padre\:
+blog.categories.parentcategory=Categoría padre\:
+blog.categories.remove=Eliminar categoría borrada
+blog.categories.sheet=Hoja de categoría
+blog.categories.sheetmessage=Esta hoja debería usarse para mostrar categorías de blog
+blog.categories.subcategories=Subcategorías
+blog.category.created=La categoría {0} ha sido creada
+blog.category.exists=La categoría {0} ya existe.
+blog.code.blogsheet=Hoja de blog
+blog.code.categories=Categorías\:
+blog.code.comments=Comentario(s)
+blog.code.createdby=Creado por
+blog.code.deletepost=Borrar esta entrada de blog
+blog.code.editpost=Editar esta entrada de blog
+blog.code.hid=Entrada oculta
+blog.code.hidden=Esta entrada de blog esta oculta.
+blog.code.hide=Ocultar esta entrada de blog a otros usuarios
+blog.code.in=en
+blog.code.madevisible=Entrada%20hecha%20visible    
+blog.code.makevisible=Esta entrada de blog no está visible para otros usuarios. Hacerla visible.
+blog.code.modifiedby=Modificada por
+blog.code.newerposts=Nuevas entradas
+blog.code.nextmonth=Próximo mes
+blog.code.nextweek=Próxima semana
+blog.code.notblog=¡Esto no es un documento de blog\!
+blog.code.notpublished=La entrada de blog no ha sido publicada todavía. Publicarla.
+blog.code.olderposts=Entradas más viejas
+blog.code.permalink=Permalink
+blog.code.postedby=Creado por
+blog.code.previousmonth=Mes anterior
+blog.code.previousweek=Semana anterior
+blog.code.published=Esta entrada de blog todavía no se ha publicado.
+blog.code.readpost=Leer la entrada completa
+blog.code.sheetexplanation=Esta hoja debería ser usada para mostrar documentos del blog
+blog.manage.blogtitle=Título del blog
+blog.manage.blogtype=Tipo de blog\:
+blog.manage.create=Crear
+blog.manage.createnew=Crear un nuevo blog
+blog.manage.existing=Blogs existentes
+blog.manage.inside=Blog dentro de un espacio existente
+blog.manage.main=blog como el contenido principal de un espacio
+blog.manage.nospace=No se ha proporcionado espacio. Por favor, introduzca un espacio válido donde se pueda crear el blog.
+blog.manage.space=Espacio
+blog.manage.title=Título\:
+blog.manageCategories.comment.removedDeletedCategory=Se ha eliminado una categoría borrada
+blog.manageCategories.comment.updatedCategory=Se ha actualizado el nombre de la categoría
+blog.manageCategories.comment.updatedParent=Se ha actualizado el padre de la categoría
+blog.manageCategories.comment.updatedRenamedCategory=Se ha actualizado la categoría renombrada
+blog.manageCategories.create.error.alreadyExists=Ya existe el documento destino, por favor, escoja un nombre diferente
+blog.manageCategories.create.error.emptyName=Por favor, introduzca un nombre de categoría válido
+blog.manageCategories.js.add.error.401=Ha sido desconectado, por favor, refresque y vuelva a identificarse
+blog.manageCategories.js.add.error.403=Usted no tiene privilegios para crear el documento destino
+blog.manageCategories.js.add.error.409=Ya existe el documento destino, por favor, escoja un nombre diferente
+blog.manageCategories.js.add.inProgress=Añadiendo categoría...
+blog.manageCategories.js.delete.confirm=¿Está seguro(a) de borrar esta categoría?. Esta acción no es reversible.
+blog.manageCategories.js.delete.done=Borrada
+blog.manageCategories.js.delete.failed=Fallo al borrar la categoría
+blog.manageCategories.js.delete.inProgress=Borrando categoría...
+blog.manageCategories.js.fetchingForm=Obteniendo formulario...
+blog.manageCategories.js.rename.error.403=No tiene permisos para crear el documento destino
+blog.manageCategories.js.rename.error.404=Catgoría inválida, por favor, refresque la página y actualice el árbol de categorías
+blog.manageCategories.js.rename.error.409=Ya existe el documento destino, por favor, escoja un nombre diferente
+blog.manageCategories.js.rename.inProgress=Renombrando categoría...
+blog.manageCategories.rename.error.emptyName=Por favor, introduzca un nombre de categoría válido
+blog.manageCategories.title=Administrar categorías del blog
+blog.migration.backtoblog=Volver al blog
+blog.migration.confirm=Confirmar
+blog.migration.done=Hecho.
+blog.migration.inspace=en el espacio
+blog.migration.migrated=Migrar artículo de blog antiguo a la nueva aplicación de blog
+blog.migration.pleaseconfirm=Por favor, confirme que desea migrar los artículos antiguos a la nueva aplicación de blog\:
+blog.migration.skipping=Saltar documentos protegidos
+blog.migration.updated=Actualizado
+blog.post.create=Crear
+blog.post.createpost=Crear una nueva entrada
+blog.post.title=Título de la entrada
+blog.publisher.published=Artículo publicado
+blog.sheet.category=Categoría\:
+blog.sheet.content=Contenido\:
+blog.sheet.hidearticle=Ocultar artículo {0}
+blog.sheet.notpost=¡Esto no es una entrada de blog\!
+blog.sheet.notpublished=Este artículo no ha sido todavía publicado.
+blog.sheet.publicationdate=Este artículo se publicó el {0}
+blog.sheet.publish=Publicar
+blog.sheet.setdate=Poner la fecha de publicación a\:
+blog.sheet.summary=Resumen (opcional)\:
+blog.sheet.title=Título
+blog.unpublished.entries=Artículos no publicados
+blog.unpublished.viewall=Ver todas
+</content>
+</xwikidoc>

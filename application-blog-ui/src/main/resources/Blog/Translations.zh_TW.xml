@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc reference="Blog.Translations" locale="zh_TW">
+  <web>Blog</web>
+  <name>Translations</name>
+  <language>zh_TW</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>Main.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1466137391000</creationDate>
+  <date>1490616853000</date>
+  <contentUpdateDate>1490616821000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Translations</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>## XWiki Translation for language zh_TW generated from http://www.l10n.xwiki.org
+blog.application.name=部落格
+blog.archive.hidden=(隱藏)
+blog.archive.noarticle=目前沒有文章...
+blog.archive.noarticlesmonth=本月沒有文章...
+blog.archive.noarticlesyear=本年沒有文章...
+blog.archive.postsfor=部落格文章
+blog.archive.postsyear={0} 部落格文章
+blog.archive.unpublished=(尚未發佈)
+blog.categories.add=新增
+blog.categories.addcategory=新增類別
+blog.categories.addsubcategory=新增子類別
+blog.categories.articles=類別文章
+blog.categories.deleteselected=刪除所選類別
+blog.categories.description=描述\:
+blog.categories.edit=管理部落格類別
+blog.categories.existingcategories=已存在類別
+blog.categories.name=名稱\:
+blog.categories.new=新增類別\:
+blog.categories.newName=新增類別名稱\:
+blog.categories.none=無
+blog.categories.notcategory=這不是部落格類別\!
+blog.categories.parent=父類別\:
+blog.categories.parentcategory=父類別\:
+blog.categories.remove=移除已刪除類別
+blog.categories.sheet=類別 sheet
+blog.categories.sheetmessage=此 sheet 用來顯示部落格類別
+blog.categories.subcategories=子類別
+blog.category.created=類別 {0} 已新增
+blog.category.exists=類別 {0} 已存在
+blog.code.blogsheet=部落格 sheet
+blog.code.categories=類別\:
+blog.code.comments=評論
+blog.code.createdby=建立者
+blog.code.deletepost=刪除此部落格文章
+blog.code.editpost=編輯此部落格文章
+blog.code.hid=隱藏項目
+blog.code.hidden=此部落格文章已隱藏
+blog.code.hide=讓其他使用者看不到這篇部落格文章
+blog.code.in=在\n
+blog.code.madevisible=公開它
+blog.code.makevisible=其他使用者看不到這篇部落格文章. 公開它.
+blog.code.modifiedby=修改者
+blog.code.newerposts=更新的文章
+blog.code.nextmonth=下個月
+blog.code.nextweek=下一週
+blog.code.notblog=這不是一個部落格文件\!
+blog.code.notpublished=此部落格文章尚未發佈. 發佈它\!
+blog.code.olderposts=更舊的文章
+blog.code.permalink=永久鏈結
+blog.code.postedby=發佈者
+blog.code.previousmonth=上個月
+blog.code.previousweek=上一週
+blog.code.published=此部落格文章尚未發佈
+blog.code.readpost=讀取所有項目
+blog.code.sheetexplanation=此 sheet 用來顯示部落格文件
+blog.manage.blogtitle=部落格標題
+blog.manage.blogtype=部落格類型\:
+blog.manage.create=新增
+blog.manage.createnew=新增部落格
+blog.manage.existing=已存在的部落格
+blog.manage.inside=現存空間內的部落格
+blog.manage.main=作為空間主內容的部落格
+blog.manage.nospace=未提供空間. 請輸入一個合法的部落格空間
+blog.manage.space=空間\:
+blog.manage.title=標題\:
+blog.manageCategories.comment.removedDeletedCategory=移除已刪除的類別
+blog.manageCategories.comment.updatedCategory=已更新類別名稱
+blog.manageCategories.comment.updatedParent=已更新父類別
+blog.manageCategories.comment.updatedRenamedCategory=已更名的類別
+blog.manageCategories.create.error.emptyName=請輸入合法的類別名稱
+blog.manageCategories.js.add.error.401=您已登出. 請登入
+blog.manageCategories.js.add.error.403=您不被允許新增目標文件
+blog.manageCategories.js.add.error.409=目標文件已存在，請選擇其他的名稱
+blog.manageCategories.js.add.inProgress=新增類別中...
+blog.manageCategories.js.delete.confirm=確定要刪除此類別? 此操作不可回復.
+blog.manageCategories.js.delete.done=已刪除
+blog.manageCategories.js.delete.failed=刪除類別失敗
+blog.manageCategories.js.delete.inProgress=刪除類別中...
+blog.manageCategories.js.fetchingForm=擷取
+blog.manageCategories.js.rename.error.403=您不被允許新增目標文件
+blog.manageCategories.js.rename.error.404=錯誤的類別，請更新頁面以更新類別樹
+blog.manageCategories.js.rename.error.409=目標文件已存在，請選擇其他名稱
+blog.manageCategories.js.rename.inProgress=類別更名中...
+blog.manageCategories.rename.error.emptyName=請輸入合法類別名稱
+blog.manageCategories.title=管理部落格類別
+blog.migration.backtoblog=回到部落格
+blog.migration.confirm=確定
+blog.migration.done=已完成
+blog.migration.inspace=在空間
+blog.migration.migrated=搬移舊的文章到新的部落格系統
+blog.migration.pleaseconfirm=請確認您要將舊的文章搬移到新的部落格系統中
+blog.migration.skipping=略過受保護文件
+blog.migration.updated=已修改
+blog.post.create=新增
+blog.post.createpost=新增文章
+blog.post.title=文章標題
+blog.publisher.published=已發佈文章
+blog.sheet.category=類別\:
+blog.sheet.content=內容\:
+blog.sheet.hidearticle=隱藏文章 {0}
+blog.sheet.notpost=這不是部落格文章
+blog.sheet.notpublished=此文章尚未發佈
+blog.sheet.publicationdate=此文章發佈於 {0}
+blog.sheet.publish=發佈
+blog.sheet.setdate=設定發佈日期至\:
+blog.sheet.summary=摘要 (非必填)\:
+blog.sheet.title=標題\:
+blog.unpublished.entries=未發佈的文章
+blog.unpublished.viewall=顯示全部
+</content>
+</xwikidoc>

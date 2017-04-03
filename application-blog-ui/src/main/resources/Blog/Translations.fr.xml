@@ -32,8 +32,8 @@
   <customClass/>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <creationDate>1466137391000</creationDate>
-  <date>1467882999000</date>
-  <contentUpdateDate>1467882999000</contentUpdateDate>
+  <date>1490616853000</date>
+  <contentUpdateDate>1490616821000</contentUpdateDate>
   <version>1.1</version>
   <title>Translations</title>
   <defaultTemplate/>
@@ -43,9 +43,135 @@
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
   <content>## XWiki Translation for language fr generated from http://www.l10n.xwiki.org
+blog.application.name=Blog
+blog.archive.hidden=(caché)
+blog.archive.noarticle=Pas d'articles pour le moment...
+blog.archive.noarticlesmonth=Pas d'articles pour ce mois...
+blog.archive.noarticlesyear=Pas d'articles pour cette année...
+blog.archive.paneltitle=Archives
+blog.archive.postsfor=Articles de blog pour
+blog.archive.postsyear=Articles de blog pour {0}
+blog.archive.unpublished=(non publié)
+blog.categories.add=Ajouter
+blog.categories.addcategory=Ajouter une catégorie
+blog.categories.addsubcategory=Ajouter une nouvelle sous-catégorie
+blog.categories.articles=Articles de cette catégorie
+blog.categories.deleteselected=Effacer les catégories sélectionnées
+blog.categories.description=Description \:
+blog.categories.edit=Modifier les catégories
+blog.categories.existingcategories=Catégories existantes
+blog.categories.name=Nom\:
+blog.categories.new=Nouvelle catégorie\:
+blog.categories.newName=Nouveau nom de catégorie \:
+blog.categories.noentries=Aucune entrée pour cette catégorie
+blog.categories.none=Aucune
+blog.categories.notcategory=Ceci n'est pas une catégorie de blog\!
+blog.categories.paneltitle=Catégories
+blog.categories.parent=Parent\:
+blog.categories.parentcategory=Catégorie parente
+blog.categories.remove=Enlever la catégorie supprimée
+blog.categories.sheet=Sheet des Catégories
+blog.categories.sheetmessage=Cette sheet doit être utilisée afin d'afficher des catégories de blog
+blog.categories.subcategories=Sous-catégories
+blog.category.created=La catégorie {0} a été créée.
+blog.category.exists=La catégorie {0} existe déjà.
 blog.changeVisibility.changing=Modifier la visibilité
 blog.changeVisibility.success=La visibilité du blog a été modifiée avec succès
+blog.code.blogcategories=Catégories du Blog
+blog.code.blogsheet=Sheet du blog
+blog.code.categories=Catégories \:
+blog.code.comments=Commentaire(s)
+blog.code.createdby=Créé par
+blog.code.deletepost=Supprimer cet article de blog
+blog.code.description.category=Articles récents pour la catégorie {0}
+blog.code.description.space=Derniers articles de blog pour l''espace {0}
+blog.code.description.wiki=Derniers articles de blog pour le wiki
+blog.code.editpost=Modifier cet article de blog
+blog.code.failedToChangeBlogPostVisibility=La modification de la visibilité du billet de blog a échoué.
+blog.code.hid=Entrée%20cachée
+blog.code.hidden=Cet article de blog est caché.
+blog.code.hide=Cacher cet article aux autres utilisateurs
+blog.code.in=dans
+blog.code.loading=Chargement en cours...
+blog.code.madevisible=Rendu%20Article%20Visible
+blog.code.makevisible=Cet article de blog n'est pas visible pour les autres utilisateurs. Le rendre visible.
+blog.code.modifiedby=Modifié par
+blog.code.newerposts=Nouveaux articles
+blog.code.nextmonth=Mois suivant
+blog.code.nextweek=Semaine suivante
+blog.code.notblog=Ceci n'est pas un article de blog\!
+blog.code.notpublished=Cet article de blog n'a pas encore été publié. Publier l'article.
+blog.code.olderposts=Articles plus anciens
+blog.code.permalink=Lien permanent
+blog.code.postedby=Publié par
+blog.code.previousmonth=Mois précédent
+blog.code.previousweek=Semaine précédente
+blog.code.published=Cet article de blog n'a pas encore été publié.
+blog.code.readpost=Lire l’article complet
+blog.code.sheetexplanation=Cette sheet doit être utilisée afin d'afficher un article de blog.
+blog.code.title=Blog
+blog.code.warning=Attention \: 
+blog.manage.blogtitle=Titre du Billet
+blog.manage.blogtype=Type de blog \:
+blog.manage.create=Créer
+blog.manage.createnew=Créer un nouveau blog
+blog.manage.existing=Blogs existant
+blog.manage.inside=blog au sein d'un espace existant
+blog.manage.main=blog qui sera la seule application de l'espace
+blog.manage.nospace=Vous n'avez pas donné le nom d'un espace. Veuillez entrer le nom de l'espace dans lequel vous souhitez que le blog soit créé.
+blog.manage.space=Espace \:
+blog.manage.title=Titre \:
+blog.manageCategories.comment.removedDeletedCategory=La catégorie a été définitivement supprimée
+blog.manageCategories.comment.updatedCategory=Le nom de la catégorie a été mis à jour
+blog.manageCategories.comment.updatedParent=Le parent de la catégorie a été mis à jour
+blog.manageCategories.comment.updatedRenamedCategory=La catégorie renommée a été mise à jour
+blog.manageCategories.create.error.alreadyExists=Le document cible existe déjà. Veuillez choisir un autre nom.
+blog.manageCategories.create.error.emptyName=Veuillez entrer un nom de catégorie valide
+blog.manageCategories.create.error.notExists=La page demandée est introuvable
+blog.manageCategories.create.error.targetNotWritable=Vous ne détenez pas les droits nécessaires de créer cette page.
+blog.manageCategories.js.add.error.401=Vous avez été déconnecté, veuillez rafraîchir la page et vous reconnecter.
+blog.manageCategories.js.add.error.403=Vous n'avez pas les droits vous permettant de créer le document cible
+blog.manageCategories.js.add.error.409=Le document cible existe déjà, veuillez choisir un autre nom
+blog.manageCategories.js.add.inProgress=Ajout d'une catégorie...
+blog.manageCategories.js.delete.confirm=Êtes-vous sur de vouloir supprimer cette catégorie ? Il sera impossible d'annuler cette action.
+blog.manageCategories.js.delete.done=Supprimée
+blog.manageCategories.js.delete.failed=La catégorie n'a pas pu être supprimée
+blog.manageCategories.js.delete.inProgress=Suppression de la catégorie
+blog.manageCategories.js.error.noServer=Le serveur ne répond pas
+blog.manageCategories.js.fetchingForm=Formulaire en cours de chargement...
+blog.manageCategories.js.rename.error.403=Vous n'avez pas les droits vous permettant de créer le document cible
+blog.manageCategories.js.rename.error.404=Catégorie invalide, veuillez rafraichir la page pour mettre à jour l'arbre des catégories
+blog.manageCategories.js.rename.error.409=Le document cible existe déjà, veuillez choisir un autre nom
+blog.manageCategories.js.rename.inProgress=Renommage de la catégorie...
+blog.manageCategories.rename.error.emptyName=Veuillez entrer un nom de catégorie valide
+blog.manageCategories.title=Administrer les catégories du blog
+blog.migration.backtoblog=Retour au blog
+blog.migration.confirm=Confirmer
+blog.migration.done=Terminé.
+blog.migration.inspace=dans l'espace
+blog.migration.migrated=Les articles de l'ancienne application de blgo ont été migrés vers la nouvelle version de l'application
+blog.migration.pleaseconfirm=Veuillez confirmer que vous souhaitez migrer les anciens articles vers la nouvelle application de blog.
+blog.migration.skipping=Ignorer les documents protégés
+blog.migration.updated=Mis à jour
+blog.post.create=Créer
+blog.post.createpost=Créer un nouvel article
+blog.post.title=Titre de l'article
+blog.post.titleEmptyError=Le titre est obligatoire \!
+blog.publisher.published=Article publié
+blog.recentposts.paneltitle=Articles récents
+blog.sheet.category=Catégorie \:
+blog.sheet.content=Contenu\:
+blog.sheet.hidearticle=Cacher l''article {0}
+blog.sheet.notpost=Ceci n'est pas un artice de blog\!
+blog.sheet.notpublished=Cet article n'a pas encore été publié.
+blog.sheet.publicationdate=Cet article a été publié le {0}
+blog.sheet.publish=Publier
+blog.sheet.setdate=Date de publication \: 
+blog.sheet.summary=Résumé (optionnel) \:
+blog.sheet.title=Titre \:
 blog.templateProvider.blogpost.description=Nouvelle postée sur un blog
 blog.templateProvider.blogpost.name=Article de Blog
+blog.unpublished.entries=Articles non publiés
+blog.unpublished.viewall=Voir tout
 </content>
 </xwikidoc>

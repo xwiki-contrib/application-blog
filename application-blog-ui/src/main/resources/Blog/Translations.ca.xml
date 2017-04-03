@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc reference="Blog.Translations" locale="ca">
+  <web>Blog</web>
+  <name>Translations</name>
+  <language>ca</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>Main.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1466137391000</creationDate>
+  <date>1490616853000</date>
+  <contentUpdateDate>1490616821000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Translations</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>## XWiki Translation for language ca generated from http://www.l10n.xwiki.org
+blog.application.name=Blog
+blog.archive.hidden=(ocult)
+blog.archive.noarticle=Encara sense articles...
+blog.archive.noarticlesmonth=Sense articles en aquest mes...
+blog.archive.noarticlesyear=Sense articles en aquest any...
+blog.archive.postsfor=Entrades al Blog per
+blog.archive.postsyear=Entrades al Blog per {0}
+blog.archive.unpublished=(no publicat)
+blog.categories.add=Afegir
+blog.categories.addcategory=Afegir una categoria
+blog.categories.addsubcategory=Afegir nova subcategoria
+blog.categories.articles=Articles d'aquesta categoria
+blog.categories.deleteselected=Eliminar categories seleccionades
+blog.categories.description=Descripció\:
+blog.categories.edit=Editar categories
+blog.categories.existingcategories=Categories existents
+blog.categories.name=Nom\:
+blog.categories.new=Nova categoria\:
+blog.categories.newName=Nom nova categoria\:
+blog.categories.none=Sense
+blog.categories.notcategory=Això no és una categoria del blog\!
+blog.categories.parent=Superior\:
+blog.categories.parentcategory=Categoria superior\:
+blog.categories.remove=Eliminar la categoria seleccionada
+blog.categories.sheet=Full categoria
+blog.categories.sheetmessage=Aquest full ha d'utilitzar-se per a mostrar les categories del blog.
+blog.categories.subcategories=Subcategories
+blog.category.created=S''ha creat la categoria {0}.
+blog.category.exists=Ja existeix la categoria {0}.
+blog.code.blogsheet=Full del Blog
+blog.code.categories=Categories\:
+blog.code.comments=Comentari(s)
+blog.code.createdby=Creat per
+blog.code.deletepost=Eliminar aquesta entrada al blog
+blog.code.editpost=Editar aquesta entrada al blog
+blog.code.hid=Entrada%20oculta
+blog.code.hidden=Aquesta entrada al blog està oculta.
+blog.code.hide=Ocultar als altres usuaris aquesta entrada al blog.
+blog.code.in=en
+blog.code.madevisible=Fer%20que%20les%20entrades%20siguin%20visibles
+blog.code.makevisible=Aquesta entrada al blog no és visible als altres usuaris. Fer-la visible.
+blog.code.modifiedby=Modificat per
+blog.code.newerposts=Entrades recents
+blog.code.nextmonth=Mes següent
+blog.code.nextweek=Setmana següent
+blog.code.notblog=Això no és un document blog\!
+blog.code.notpublished=Aquesta entrada al blog encara no ha estat publicada. Publicar-la.
+blog.code.olderposts=Entrades antigues
+blog.code.permalink=Enllaç permanent
+blog.code.postedby=Enviat per
+blog.code.previousmonth=Mes anterior
+blog.code.previousweek=Setmana anterior
+blog.code.published=Aquesta entrada al blog encara no ha estat publicada.
+blog.code.readpost=Llegir tota l'entrada
+blog.code.sheetexplanation=Aquest full ha d'utilitzar-se per mostrar els documents al blog.
+blog.manage.blogtitle=Titol del blog
+blog.manage.blogtype=Tipus de blog\:
+blog.manage.create=Crear
+blog.manage.createnew=Crear un nou blog
+blog.manage.existing=Blogs existents
+blog.manage.inside=blog a l'interior d'un espai existent
+blog.manage.main=blog com a contingut principal de l'espai
+blog.manage.nospace=Cap espai proporcionat. Introduïu un espai vàlid on el blog ha d'estar creat.
+blog.manage.space=Espai\:
+blog.manage.title=Títol\:
+blog.manageCategories.comment.removedDeletedCategory=Categoria eliminada treta
+blog.manageCategories.comment.updatedCategory=Nom de la categoria actualitzada
+blog.manageCategories.comment.updatedParent=Categoria superior actualitzada
+blog.manageCategories.comment.updatedRenamedCategory=Categoria reanomenada actualitzada
+blog.manageCategories.create.error.emptyName=Introduïu el nom d'una categoria vàlida
+blog.manageCategories.js.add.error.401=Heu tancat la sessió, refresqueu i inicieu una sessió
+blog.manageCategories.js.add.error.403=No se us permet crear el document destí
+blog.manageCategories.js.add.error.409=El document destí ja existeix, trieu un nom diferent
+blog.manageCategories.js.add.inProgress=Afegint categoria...
+blog.manageCategories.js.delete.confirm=Esteu segurs que voleu eliminar aquesta categoria? Aquesta acció no és reversible.
+blog.manageCategories.js.delete.done=Eliminada
+blog.manageCategories.js.delete.failed=Error en eliminar la categoria
+blog.manageCategories.js.delete.inProgress=Eliminant categoria...
+blog.manageCategories.js.fetchingForm=Capturant de...
+blog.manageCategories.js.rename.error.403=No se us permet crear el document destí
+blog.manageCategories.js.rename.error.404=Categoria no vàlida, refresqueu la pàgina per a actualitzar l'arbre de categories
+blog.manageCategories.js.rename.error.409=El document destí ja existeix, trueu un nom diferent
+blog.manageCategories.js.rename.inProgress=Reanomenat categoria...
+blog.manageCategories.rename.error.emptyName=Introduïu el nom d'una categoria vàlida
+blog.manageCategories.title=Gestionar categories del blog
+blog.migration.backtoblog=Tornar al blog
+blog.migration.confirm=Confirmar
+blog.migration.done=Fet.
+blog.migration.inspace=en l'espai
+blog.migration.migrated=Article del blog antic migrat a la nova aplicació del blog
+blog.migration.pleaseconfirm=Confirmeu que voleu migrar els articles antics a la nova aplicació del blog\:
+blog.migration.skipping=Saltant-se document protegit
+blog.migration.updated=Actualitzar
+blog.post.create=Crear
+blog.post.createpost=Crear una nova entrada
+blog.post.title=Títol de l'entrada
+blog.publisher.published=Article publicat
+blog.sheet.category=Categoria\:
+blog.sheet.content=Contingut\:
+blog.sheet.hidearticle=Ocultar l''article {0}
+blog.sheet.notpost=Aquesta no és una entrada vàlida al blog\!
+blog.sheet.notpublished=Encara no s'ha publicat aquest article.
+blog.sheet.publicationdate=Aquest article va publicar-se el {0}
+blog.sheet.publish=Publicar
+blog.sheet.setdate=Establir la data de publicació el\:
+blog.sheet.summary=Resum (opcional)\:
+blog.sheet.title=Títol\:
+blog.unpublished.entries=Article sense publicar
+blog.unpublished.viewall=Visualitzar tot
+</content>
+</xwikidoc>

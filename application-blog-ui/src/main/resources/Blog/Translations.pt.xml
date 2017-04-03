@@ -20,10 +20,10 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc reference="Blog.Translations" locale="pl">
+<xwikidoc reference="Blog.Translations" locale="pt">
   <web>Blog</web>
   <name>Translations</name>
-  <language>pl</language>
+  <language>pt</language>
   <defaultLanguage>en</defaultLanguage>
   <translation>1</translation>
   <parent>Main.WebHome</parent>
@@ -42,34 +42,10 @@
   <minorEdit>false</minorEdit>
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
-  <content>## XWiki Translation for language pl generated from http://www.l10n.xwiki.org
-blog.categories.add=Dodaj
-blog.categories.addcategory=Dodaj kategorię
-blog.categories.addsubcategory=Dodaj podkategorię
-blog.categories.description=Opis\:
-blog.categories.name=Nazwa\:
-blog.categories.new=Nowa kategoria\:
-blog.categories.newName=Nazwa nowej kategorii\:
-blog.categories.subcategories=Podkategorie
-blog.code.categories=Kategorie
-blog.code.createdby=Utworzone przez
-blog.code.deletepost=Usuń ten wpis
-blog.code.editpost=Edytuj ten wpis
-blog.code.modifiedby=Zmodyfikowany przez
-blog.code.nextmonth=Następny miesiąc
-blog.code.nextweek=Następny tydzień
-blog.code.postedby=Wysłane przez
-blog.code.previousmonth=Poprzedni miesiąc
-blog.code.previousweek=Poprzedni tydzień
-blog.code.readpost=Czytaj całość
-blog.post.create=Utwórz
-blog.post.createpost=Utwórz nowy wpis
-blog.post.title=Tytuł
-blog.sheet.category=Kategoria\:
-blog.sheet.content=Treść\:
-blog.sheet.publish=Publikuj
-blog.sheet.title=Tytuł\:
-blog.templateProvider.blogpost.name=Post na blogu
-blog.unpublished.viewall=Pokaż wszystkie
+  <content>## XWiki Translation for language pt generated from http://www.l10n.xwiki.org
+blog.categories.add=Incluir
+blog.categories.addcategory=Incluir uma categoria
+blog.categories.addsubcategory=Incluir nova subcategoria
+blog.categories.none=Nenhum
 </content>
 </xwikidoc>

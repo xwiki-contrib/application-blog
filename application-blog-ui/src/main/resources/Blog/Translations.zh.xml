@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc reference="Blog.Translations" locale="zh">
+  <web>Blog</web>
+  <name>Translations</name>
+  <language>zh</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>Main.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1466137391000</creationDate>
+  <date>1490616853000</date>
+  <contentUpdateDate>1490616821000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Translations</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>## XWiki Translation for language zh generated from http://www.l10n.xwiki.org
+blog.application.name=博客
+blog.archive.hidden=（隐藏）
+blog.archive.noarticle=当前没有文章......
+blog.archive.noarticlesmonth=本月没有文章......
+blog.archive.noarticlesyear=本年没有文章......
+blog.archive.unpublished=（未发布）
+blog.categories.add=添加
+blog.categories.addcategory=添加一个类别
+blog.categories.addsubcategory=添加新的子类
+blog.categories.articles=此类别的文章
+blog.categories.deleteselected=删除选中类别
+blog.categories.description=描述：
+blog.categories.edit=编辑类别
+blog.categories.existingcategories=存在的类别
+blog.categories.name=名字：
+blog.categories.new=新类别：
+blog.categories.newName=新类名：
+blog.categories.none=没有
+blog.categories.notcategory=不是一个类别！
+blog.categories.parent=父：
+blog.categories.parentcategory=父类：
+blog.categories.remove=彻底删除类别
+blog.categories.sheet=类别样式
+blog.categories.sheetmessage=该样式将用于显示博客类别
+blog.categories.subcategories=子类
+blog.category.created={0}类已创建。
+blog.category.exists={0}类已存在。
+blog.code.blogsheet=博客样式
+blog.code.categories=类别：
+blog.code.comments=评论
+blog.code.createdby=由谁创建
+blog.code.deletepost=删除该博客评论
+blog.code.editpost=编辑该博客评论
+blog.code.hid=隐藏此文
+blog.code.hidden=博客评论已隐藏
+blog.code.hide=对其他用户隐藏该博客评论
+blog.code.in=在
+blog.code.makevisible=此博文对其他用户不可见。使它可见。
+blog.code.modifiedby=由谁修改
+blog.code.newerposts=新评论
+blog.code.nextmonth=下月
+blog.code.nextweek=下周
+blog.code.notblog=不是博客文档
+blog.code.notpublished=该博客评论当前没有发布。发布它。
+blog.code.olderposts=其他评论
+blog.code.postedby=由谁评论
+blog.code.previousmonth=上个月
+blog.code.previousweek=上个星期
+blog.code.published=该博客评论当前没有发布。
+blog.code.readpost=阅读全文
+blog.code.sheetexplanation=该样式将用于显示博客文档。
+blog.manage.blogtitle=博客标题
+blog.manage.blogtype=博客类型：
+blog.manage.create=创建
+blog.manage.createnew=创建新博客
+blog.manage.existing=存在的博客
+blog.manage.inside=空间中存在的博客
+blog.manage.nospace=没有给定空间。请选择有效的空间后博客才可以被创建。
+blog.manage.space=空间：
+blog.manage.title=标题
+blog.manageCategories.comment.removedDeletedCategory=彻底删除类别
+blog.manageCategories.comment.updatedCategory=更新类名
+blog.manageCategories.comment.updatedParent=更新父类
+blog.manageCategories.comment.updatedRenamedCategory=更新重命名的类别
+blog.manageCategories.js.add.error.401=您已注销，请刷新后登录
+blog.manageCategories.js.add.error.403=您不能创建目标文档
+blog.manageCategories.js.add.error.409=目标文档已存在，请选择其他名
+blog.manageCategories.js.add.inProgress=添加类别......
+blog.manageCategories.js.delete.confirm=您确定要删除该类别吗？该操作不可逆。
+blog.manageCategories.js.delete.done=已删除
+blog.manageCategories.js.delete.failed=删除类别失败
+blog.manageCategories.js.delete.inProgress=删除类别中......
+blog.manageCategories.js.fetchingForm=取得表单......
+blog.manageCategories.js.rename.error.403=您不能创建目标文档
+blog.manageCategories.js.rename.error.404=无效类别，请刷新该页同时刷新类别树
+blog.manageCategories.js.rename.error.409=目标文档一寸在，请选择其他的名字。
+blog.manageCategories.js.rename.inProgress=重命名中......
+blog.manageCategories.title=管理博客列类别
+blog.migration.backtoblog=返回博客
+blog.migration.confirm=确定
+blog.migration.done=已完成
+blog.migration.inspace=空间中
+blog.migration.migrated=迁移旧的文章至新的应用
+blog.migration.pleaseconfirm=请确定您想要将旧的文章转移至新的博客应用：
+blog.migration.skipping=跳过被保护的文档
+blog.migration.updated=已更新
+blog.post.create=创建
+blog.post.createpost=创建新的评论
+blog.post.title=评论标题
+blog.publisher.published=发表的文章
+blog.sheet.category=类别：
+blog.sheet.content=内容：
+blog.sheet.hidearticle=隐藏文章{0}
+blog.sheet.notpost=不是一个博客评论！
+blog.sheet.notpublished=该文章当前尚未发表。
+blog.sheet.publicationdate=文章发表在{0}
+blog.sheet.publish=发布
+blog.sheet.setdate=设置发布日期：
+blog.sheet.summary=概括（可选）
+blog.sheet.title=标题：
+blog.unpublished.entries=未发表的文章
+blog.unpublished.viewall=查看全部
+</content>
+</xwikidoc>
