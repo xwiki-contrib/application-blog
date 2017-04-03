@@ -18,14 +18,14 @@ function do_one() {
 
 function read_user_and_password() {
     if [[ -z "$USER" || -z "$PASS" ]]; then
-        echo -e "\033[0;32mEnter your l10n.xwiki.org credentials:\033[0m"
+        printf "\033[0;32mEnter your l10n.xwiki.org credentials:\033[0m\n"
         read -e -p "user> " USER
         read -e -s -p "pass> " PASS
-        echo ""
+        printf "\n"
     fi
 
     if [[ -z "$USER" || -z "$PASS" ]]; then
-      echo -e "\033[1;31mPlease provide both user and password in order to be able to get the translations from l10n.xwiki.org.\033[0m"
+      printf "\033[1;31mPlease provide both user and password in order to be able to get the translations from l10n.xwiki.org.\033[0m\n"
       exit -1
     fi
 }
@@ -47,15 +47,15 @@ function do_all() {
     cd ${XWIKI_TRUNKS}/application-blog-ui/ && format_xar
 
     git status
-    echo -e "\033[0;32mIf there are untracked files, something probably went wrong.\033[0m"
+    printf "\033[0;32mIf there are untracked files, something probably went wrong.\033[0m\n"
 }
 
 function check_clean() {
 	if [[ `git status --porcelain` ]]; then
     	# changes
     	git status
-    	echo -e "\033[1;31mPlease do something with these changes first.\033[0m"
-    	echo "in `pwd`"
+    	printf "\033[1;31mPlease do something with these changes first.\033[0m\n"
+    	printf "\033[1;31min `pwd`\033[0m\n"
      	exit -1;
   	else
 	    git reset --hard &&
