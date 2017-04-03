@@ -119,7 +119,7 @@
       <name>platform.panels.blogApplication</name>
     </property>
     <property>
-      <parameters>label=$services.localization.render('panels.quicklinks.blog')
+      <parameters>label=$services.localization.render('blog.application.name')
 target=Blog.WebHome
 icon=icon:transmit</parameters>
     </property>
