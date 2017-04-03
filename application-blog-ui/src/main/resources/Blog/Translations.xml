@@ -178,7 +178,11 @@ blog.manage.unallowed_page=The blog location is already used, please enter anoth
 blog.manage.location.title=Blog title
 blog.manage.location.title.hint=Title of the new blog
 blog.manage.location.title.placeholder=New blog
-xe.blog.manage.categories_location=Categories location
+blog.manage.categories_location=Categories location
+blog.manage.enable_panels=Enable blog panels
+blog.manage.create_default_categories=Create default categories
+blog.manage.locationPreview.hint=Location in the page hierarchy where this new blog will be created.
+blog.manage.categoriesLocationPreview.hint=Location in the page hierarchy where this new blog categories will be created.
 blog.blogpostlist.descriptor_not_found=Unable to found a blog descriptor in document [{0}]</content>
   <object>
     <name>Blog.Translations</name>
