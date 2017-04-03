@@ -68,9 +68,10 @@
   #end
 #elseif("$!request.xaction" == 'create')
   #set($title = "$!{request.newCategoryName}")
-  #set($name = "${doc.space}.${title}")
+  #set ($escapedTitle = $title.replaceAll('\.', '\\.')) ## Escape categories with dots
+  #set($name = "${doc.space}.${escapedTitle}")
   #if ("$!request.newCategoryParent" != '')
-    #set ($name = "${xwiki.getDocument($request.newCategoryParent).space}.${title}")
+    #set ($name = "${xwiki.getDocument($request.newCategoryParent).space}.${escapedTitle}")
   #end
   #if ($title.trim().equals(''))
     #blog__actionResponseError(400, 'blog.manageCategories.create.error.emptyName', [])
