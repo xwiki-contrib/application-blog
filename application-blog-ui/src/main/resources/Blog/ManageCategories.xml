@@ -625,11 +625,13 @@ XWiki.blog.Categories = Class.create({
 document.observe('xwiki:dom:loaded', function() {
   new XWiki.blog.Categories();
   $$(".blog-categories-list.subcategories").each(function(item) {
-    var toggler = new Element("a", {style : "display: block; cursor: pointer; float: right; font-style: italic;"}).update("show »");
+    var downIcon = '&lt;span class="glyphicon glyphicon-chevron-down" aria-hidden="true"&gt;&lt;/span&gt;';
+    var upIcon = '&lt;span class="glyphicon glyphicon-chevron-up" aria-hidden="true"&gt;&lt;/span&gt;'
+    var toggler = new Element("a", {class : "subcat-toggle-link"}).update(downIcon);
     var list = item.down("div", 1);
     toggler.observe("click", function() {
       list.toggle();
-      toggler.update(list.visible() ? "« hide" : "show »");
+      toggler.update(list.visible() ? upIcon : downIcon);
     });
     item.down("strong").insert({after : toggler});
     item.down("strong").insert({after : "&amp;nbsp;&amp;nbsp;"});
@@ -822,6 +824,23 @@ input.category-name-input {
   height: 80%;
   margin-right: 3px;
   width: 16em;
+}
+.cat-posts-count {
+  display: inline-block;
+  float: left;
+  margin-top: 0px;
+  padding-bottom: 20px;
+}
+.subcat-toggle-link {
+  cursor: pointer;
+  display: block;
+  float: left;
+  font-style: italic;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+.blog-categories-list.subcategories.cat-count{
+  padding-top: 0;
 }</code>
     </property>
     <property>

@@ -589,17 +589,19 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
  *###
 #macro(displayCategoryPosts $catDoc $catObj)
   #getEntriesForCategory($catDoc.fullName $discard $totalEntries)
-  #if ($catObj)
-  = Category: $services.rendering.escape($catObj.getValue('name'), $catDoc.syntax) ($totalEntries posts) [[#toolImage('feed')&gt;&gt;Blog.CategoryRss||queryString="xpage=plain&amp;category=$escapetool.url($catDoc.fullName)" title="RSS"]] =
+  #if ($catObj || $catDoc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
+
+  (% class="cat-posts-count" %)
+  ==== [[#toolImage('feed')&gt;&gt;Blog.CategoryRss||queryString="xpage=plain&amp;category=$escapetool.url($catDoc.fullName)" title="RSS"]] $services.localization.render('blog.category.posts.count', [$totalEntries]) ====
   #end
   ## Keep testing the inline action for backward compatibility with older categories.
   #if ($xcontext.action != 'edit' &amp;&amp; $xcontext.action != 'inline')
     #getCategoriesHierarchy($catDoc.space $tree)
     #if ("$!tree.get($catDoc.fullName)" != '')
-      (% class="blog-categories-list subcategories" %)
+      (% class="blog-categories-list subcategories cat-count" %)
       (((
         (((
-          **Subcategories**
+          **&amp;nbsp;**
         )))
         (((
           #displayCategoriesHierarchyRecursive($tree $catDoc.fullName 1 'simple')
