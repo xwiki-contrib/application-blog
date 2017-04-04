@@ -124,6 +124,19 @@
       <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
     </hidden>
+    <image>
+      <customDisplay/>
+      <disabled>0</disabled>
+      <name>image</name>
+      <number>8</number>
+      <picker>0</picker>
+      <prettyName>image</prettyName>
+      <size>30</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+    </image>
     <publishDate>
       <customDisplay/>
       <dateFormat>dd/MM/yyyy HH:mm:ss</dateFormat>

@@ -69,14 +69,24 @@ $xwiki.ssx.use('Blog.ManageCategories')##
     #set ($defaultPostCategory = "Blog.Categories.WebHome")
   #end
   #set($discard = $xwiki.jsx.use('Blog.BlogPostSheet'))
+  #set($discard = $xwiki.ssx.use('Blog.BlogPostSheet'))
   ; {{translation key='blog.sheet.title'/}}
   : $doc.display('title', 'edit', $entryObj)
   ; {{translation key='blog.sheet.content'/}}
   : $doc.display('content', 'edit', $entryObj)
   ; {{translation key='blog.sheet.summary'/}}
   : $doc.display('extract', 'edit', $entryObj)
-  ; {{translation key='blog.sheet.category'/}}
-  : ((({{html clean="false" wiki="true"}}#displayCategoryManagementTree($categoriesLocation 'selectable') &lt;input type="hidden" name="Blog.BlogPostClass_0_category" id="defaultPostCategory"/&gt;&lt;input type="hidden" id="blogCategoriesWebHome" value="${escapetool.xml($defaultPostCategory)}"/&gt;{{/html}} (% class="clearfloats" %)((())))))
+  : ((({{html clean="false" wiki="true"}}
+  &lt;div class="col-md-5 thumbnail-col"&gt;
+    &lt;div&gt;&lt;strong&gt;$services.localization.render('blog.sheet.image')&lt;/strong&gt;&lt;/div&gt;
+    {{attachmentSelector classname="Blog.BlogPostClass" property="image" filter="png,jpg,gif" displayImage="true" width="400"/}}
+  &lt;/div&gt;
+  &lt;div class="col-md-7"&gt;
+  &lt;div&gt;**{{translation key='blog.sheet.category'/}}**&lt;/div&gt;
+  #displayCategoryManagementTree($categoriesLocation 'selectable') &lt;input type="hidden" name="Blog.BlogPostClass_0_category" id="defaultPostCategory"/&gt;&lt;input type="hidden" id="blogCategoriesWebHome" value="${escapetool.xml($defaultPostCategory)}"/&gt;
+  &lt;/div&gt;
+  {{/html}}
+  (% class="clearfloats" %)((())))))
   #if ($doc.isNew())
     ## We're creating a new blog post. We handle this case differently because #isPublished returns true when the
     ## property is not set (object missing) and thus the new blog post will appear as published. See also the comment
@@ -212,6 +222,122 @@ $xwiki.ssx.use('Blog.ManageCategories')##
     }
   });
 });</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse/>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
+  <object>
+    <name>Blog.BlogPostSheet</name>
+    <number>0</number>
+    <className>XWiki.StyleSheetExtension</className>
+    <guid>30f486cb-fd42-45e5-9cf3-8690b38716bc</guid>
+    <class>
+      <name>XWiki.StyleSheetExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>6</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>3</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <contentType>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>contentType</name>
+        <number>1</number>
+        <prettyName>Content Type</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>CSS|LESS</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </contentType>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>2</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>5</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>4</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>.thumbnail-col {
+  margin-bottom: 10px;
+  margin-left: -15px;
+}</code>
+    </property>
+    <property>
+      <contentType>CSS</contentType>
     </property>
     <property>
       <name/>

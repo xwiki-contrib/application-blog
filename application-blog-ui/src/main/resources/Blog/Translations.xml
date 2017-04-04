@@ -91,6 +91,7 @@ blog.sheet.hidearticle = Hide article {0}
 blog.sheet.notpublished = This article is not published yet.
 blog.sheet.publish = Publish
 blog.sheet.setdate = Set the publication date to:
+blog.sheet.image=Image thumbnail
 blog.category.created = The {0} category has been created.
 blog.category.exists = The {0} category already exists.
 blog.categories.paneltitle = Blog Categories
