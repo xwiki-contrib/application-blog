@@ -164,11 +164,12 @@
 
 {{velocity}}
 #set ($postDoc = $xwiki.getDocument($xcontext.macro.params.reference))
-#set ($postObj = $postDoc.getObject($blogPostClassname))
+#getEntryObject($postDoc $postObj)
 #set ($useSummary = false)
 #set ($displayTitle = true)
 #set ($displayCalendar = true)
 #set ($displayCalendarImage = true)
+#set ($displayImage = false)## display post image
 #set ($previousPostReference = '')
 #set ($macroAdditionalParams = {})
 #if ($xcontext.macro.params != '')
@@ -189,8 +190,13 @@
     #set ($displayTitle = false)
 #end
 ##
+#if ("$!macroAdditionalParams.get('displayImage')" == 'true')
+  #set ($displayImage = true)
+#end
+##
 #if ("$!macroAdditionalParams.get('displayCalendar')" == 'false')
   #set ($displayCalendar = false)
+  #set ($displayImage = false)## DisplayCalendar has the priority
 #end
 ##
 #if ("$!macroAdditionalParams.get('previousPostReference')" != '')
@@ -209,10 +215,59 @@
     #end
   #end
 #end
-#if ($displayCalendar)(% class="blogDay" %)(((#end
-#if ($displayCalendarImage)#displayBlogDate($postDate)#end
-#displayEntry($postDoc $postObj $useSummary $displayTitle)
-#if ($displayCalendar))))#end
+#if (!$displayImage)
+  #if ($displayCalendar)(% class="blogDay" %)(((#end
+  #if ($displayCalendar &amp;&amp; $displayCalendarImage)#displayBlogDate($postDate)#end
+  #displayEntry($postDoc $postObj $useSummary $displayTitle)
+  #if ($displayCalendar))))#end
+#else
+$!xwiki.ssx.use($blogStyleDocumentName)
+#set($scaleWidth = 300)
+#set($scaleHeight = 225)
+#set($imgQs="width=$scaleWidth")
+{{html clean="false" wiki="true"}}
+&lt;div class="row blog-list"&gt;
+  &lt;div class="col-xs-12 col-sm-3 col-lg-2 blog-left"&gt;
+    &lt;a href="$postDoc.uRL"&gt;
+      #set ($imageAtt = $postDoc.getAttachment($postObj.getValue('image')))
+      #if ($imageAtt)
+        &lt;img class="blog-image" src="$postDoc.getAttachmentURL($postObj.getValue('image'),'download',$imgQs)"&gt;
+      #else
+        #getEntryDate($postDoc $postObj $postDate)
+        #displayBlogDate($postDate)
+      #end
+    &lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="col-xs-12 col-sm-9 col-lg-10 hentry"&gt;
+    &lt;div class="entry-date"&gt;
+     #set($dateStr = $datetool.format('medium', $postDate, $xcontext.locale))
+     #if ("$!dateStr" != '')
+       #set ($dateArr = $dateStr.split(' '))
+       #if ($dateArr.size() &gt; 3)
+         #set ($dateStr = "")
+         #foreach($s in $dateArr.subList(0, 3))
+           #set ($dateStr = "${dateStr}${s} ")
+         #end
+       #end
+     #end
+     $!dateStr
+   &lt;/div&gt;
+    &lt;h3 class="entry-title"&gt;&lt;span class="wikilink"&gt;&lt;a href="$postDoc.uRL"&gt;#if($displayTitle)$postDoc.display('title', 'view', $postObj)#end&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
+    &lt;p&gt;
+    #set ($postContent = "")
+    #if ($useSummary)
+      #set ($postContent = $postObj.getProperty('extract').value)
+    #end
+    #if ("$!postContent" == '')
+      #set ($postContent = $postObj.getProperty('content').value)
+    #end
+    $!postContent
+    &lt;/p&gt;
+    #displayEntryFooter($postDoc $postObj)
+  &lt;/div&gt;
+&lt;/div&gt;
+{{/html}}
+#end
 {{/velocity}}</code>
     </property>
     <property>

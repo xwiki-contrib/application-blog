@@ -288,7 +288,31 @@ div.edit-categories {
 .blog-category-tools .tool {
     padding-left: 0.25em;
 }
-</code>
+/* Image thumbnail display */
+.blog-list {
+  margin: 10px -15px;
+}
+.blog-list .blog-image {
+  min-width: 100%;
+}
+.blog-list .blog-left {
+  margin-bottom: 10px;
+}
+.blog-list .blogdate {
+  font-size: 140%;
+  float: none;
+  margin: 0;
+  line-height: inherit;
+  width: 100%;
+}
+.blog-list .blogdate .year {
+  display: block !important;
+}
+.blog-list .entry-date {
+  float: right;
+  font-size: 90%;
+  color: #AAAAAA;
+}</code>
     </property>
     <property>
       <contentType>CSS</contentType>

@@ -767,26 +767,26 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  *###
 #macro(getEntryContent $entryDoc $entryObj $onlyExtract $entryContent)
   #if ($onlyExtract)
-    #set ($result = $entryObj.getProperty('extract').value)
+    #set ($macro.result = $entryObj.getProperty('extract').value)
   #end
-  #if("$!result" == '')
-    #set($result = $entryObj.getProperty('content').value)
+  #if("$!macro.result" == '')
+    #set($macro.result = $entryObj.getProperty('content').value)
 #* Disabled until the content can be cleanly cut.
 *    #if($onlyExtract &amp;&amp; $result.length()&gt;$maxchars)
-*      #set($i = $result.lastIndexOf(" ", $maxchars))
+*      #set($i = $macro.result.lastIndexOf(" ", $maxchars))
 *      #set($i = $i + 1)
-*      #set($result = "${result.substring(0,$i)} *[...&gt;${entryDoc.fullName}]*")
+*      #set($macro.result = "${macro.result.substring(0,$i)} *[...&gt;${entryDoc.fullName}]*")
 *    #end
 ## *###
   #else
     #if($entryDoc.syntax.toIdString() == 'xwiki/1.0')
-      #set($result = "${result} &lt;a href='${entryDoc.getURL()}' title='$services.localization.render('blog.code.readpost')'&gt;...&lt;/a&gt;")
+      #set($macro.result = "${macro.result} &lt;a href='${entryDoc.getURL()}' title='$services.localization.render('blog.code.readpost')'&gt;...&lt;/a&gt;")
     #else
-      #set($result = "${result} [[...&gt;&gt;${entryDoc}||title='$services.localization.render('blog.code.readpost')']]")
+      #set($macro.result = "${macro.result} [[...&gt;&gt;${entryDoc}||title='$services.localization.render('blog.code.readpost')']]")
     #end
   #end
   #set ($entryContent = $NULL)
-  #setVariable ("$entryContent" $result)
+  #setVariable ("$entryContent" $macro.result)
 #end
 ##
 ##
