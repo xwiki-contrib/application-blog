@@ -133,11 +133,14 @@
 #end
 #if ($categoriesLocation != $defaultBlogSpace)
   #set ($defaultCategoryParent = "${categoriesLocation}.WebHome")
+  #set ($rssQueryString = "&amp;sheet=Blog.CategoryRss")
+#else
+  #set ($rssQueryString = "&amp;sheet=Blog.BlogRss")
 #end
 #set ($allLink = $xwiki.getURL("${categoriesLocation}.WebHome"))
 {{html wiki="true"}}
 #getCallingDocument($callingDocument)
-* (% class="blog-category-level" %)((( [[#toolImage('rss')&gt;&gt;Blog.BlogRss||queryString="xpage=plain" title="RSS"]] &lt;span class="wikilink"&gt;&lt;a href="$allLink"&gt;$services.localization.render('blog.categories.all')&lt;/a&gt;&lt;/span&gt;)))
+* (% class="blog-category-level" %)((( [[#toolImage('rss')&gt;&gt;${categoriesLocation}.WebHome||queryString="xpage=plain${rssQueryString}" title="RSS"]] &lt;span class="wikilink"&gt;&lt;a href="$allLink"&gt;$services.localization.render('blog.categories.all')&lt;/a&gt;&lt;/span&gt;)))
 {{/html}}
 
 #getCategoriesHierarchy($categoriesLocation $tree)

@@ -48,7 +48,11 @@ $response.setContentType('application/rss+xml')
 ##
 ##
 ##
-#getTargetBlog($blogDoc)
+#if ("$!doc.getObject($blogClassname)" != '')
+  #set ($blogDoc = $doc)
+#else
+  #getTargetBlog($blogDoc)
+#end
 #getBlogEntries($blogDoc $entries)
 #set($entries = $xwiki.wrapDocs($entries))
 #displayBlogRss($blogDoc $entries)

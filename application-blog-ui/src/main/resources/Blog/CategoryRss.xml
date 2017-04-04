@@ -53,7 +53,11 @@ $response.setContentType('application/rss+xml')
 #macro(getTargetCategory $categoryDoc)
   #set($category = "$!{request.category}")
   #if($category == '')
-    #set($category = $defaultCategoryParent)
+    #if("$!doc.getObject($blogCategoryClassname)" != '' || $doc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
+      #set ($category = $doc.fullName)
+    #else
+      #set($category = $defaultCategoryParent)
+    #end
   #end
   #set ($categoryDoc = $NULL)
   #setVariable ("$categoryDoc" $xwiki.getDocument($category))
