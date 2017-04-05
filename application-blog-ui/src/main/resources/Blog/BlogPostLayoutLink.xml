@@ -161,11 +161,15 @@
     </class>
     <property>
       <code>{{velocity}}
-{{html clean='false'}}
 #set ($postDoc = $xwiki.getDocument($xcontext.macro.params.reference))
 #set ($postObj = $postDoc.getObject('Blog.BlogPostClass'))
+#if ("$!postObj" != '')
+{{html clean='false'}}
 &lt;div&gt;&lt;a href="$postDoc.getURL()"&gt;$!{postDoc.display('title', 'view', $postObj)}&lt;/a&gt;&lt;/div&gt;
 {{/html}}
+#else
+{{error}}$services.localization.render('blog.blogpostlayout.notpost', [$xcontext.macro.params.reference]){{/error}}
+#end
 {{/velocity}}</code>
     </property>
     <property>

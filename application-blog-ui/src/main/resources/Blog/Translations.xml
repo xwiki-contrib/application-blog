@@ -186,7 +186,8 @@ blog.manage.locationPreview.hint=Location in the page hierarchy where this new b
 blog.manage.categoriesLocationPreview.hint=Location in the page hierarchy where this new blog categories will be created.
 blog.blogpostlist.descriptor_not_found=Unable to found a blog descriptor in document [{0}]
 blog.categories.webhome.title=All categories
-blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}</content>
+blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
+blog.blogpostlayout.notpost=[{0}] is not a blog post!</content>
   <object>
     <name>Blog.Translations</name>
     <number>0</number>

@@ -165,6 +165,7 @@
 {{velocity}}
 #set ($postDoc = $xwiki.getDocument($xcontext.macro.params.reference))
 #getEntryObject($postDoc $postObj)
+#if ("$!postObj" != '')
 #set ($useSummary = false)
 #set ($displayTitle = true)
 #set ($displayCalendar = true)
@@ -267,6 +268,9 @@ $!xwiki.ssx.use($blogStyleDocumentName)
   &lt;/div&gt;
 &lt;/div&gt;
 {{/html}}
+#end
+#else
+{{error}}$services.localization.render('blog.blogpostlayout.notpost', [$xcontext.macro.params.reference]){{/error}}
 #end
 {{/velocity}}</code>
     </property>
