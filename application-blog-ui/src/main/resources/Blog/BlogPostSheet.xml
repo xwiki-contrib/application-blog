@@ -70,23 +70,39 @@ $xwiki.ssx.use('Blog.ManageCategories')##
   #end
   #set($discard = $xwiki.jsx.use('Blog.BlogPostSheet'))
   #set($discard = $xwiki.ssx.use('Blog.BlogPostSheet'))
-  ; {{translation key='blog.sheet.title'/}}
+  (% class="xform" %)(((
+  {{html clean="false" wiki="true"}}
+  ; &lt;label&gt;{{translation key='blog.sheet.title'/}}&lt;/label&gt;
   : $doc.display('title', 'edit', $entryObj)
-  ; {{translation key='blog.sheet.content'/}}
+  ; &lt;label&gt;{{translation key='blog.sheet.content'/}}&lt;/label&gt;
   : $doc.display('content', 'edit', $entryObj)
-  ; {{translation key='blog.sheet.summary'/}}
+  ; &lt;label&gt;{{translation key='blog.sheet.summary'/}}&lt;/label&gt;
   : $doc.display('extract', 'edit', $entryObj)
-  : ((({{html clean="false" wiki="true"}}
-  &lt;div class="col-md-5 thumbnail-col"&gt;
-    &lt;div&gt;&lt;strong&gt;$services.localization.render('blog.sheet.image')&lt;/strong&gt;&lt;/div&gt;
-    {{attachmentSelector classname="Blog.BlogPostClass" property="image" filter="png,jpg,gif" displayImage="true" width="400"/}}
-  &lt;/div&gt;
-  &lt;div class="col-md-7"&gt;
-  &lt;div&gt;**{{translation key='blog.sheet.category'/}}**&lt;/div&gt;
-  #displayCategoryManagementTree($categoriesLocation 'selectable') &lt;input type="hidden" name="Blog.BlogPostClass_0_category" id="defaultPostCategory"/&gt;&lt;input type="hidden" id="blogCategoriesWebHome" value="${escapetool.xml($defaultPostCategory)}"/&gt;
+
+  &lt;div class="row"&gt;
+    &lt;div class="col-xs-12 col-sm-4 col-lg-3"&gt;
+      &lt;dl&gt;
+        &lt;dt&gt;&lt;label&gt;$services.localization.render('blog.sheet.image'):&lt;/label&gt;&lt;/dt&gt;
+        &lt;dd&gt;
+{{/html}}
+
+{{attachmentSelector classname="Blog.BlogPostClass" property="image" filter="png,jpg,gif" displayImage="true" buttontext="$services.localization.render('blog.sheet.choose_image')" width="300" cssClass="blogImageSelector"/}}
+
+{{html clean="false" wiki="true"}}
+        &lt;/dd&gt;
+      &lt;/dl&gt;
+    &lt;/div&gt;
+    &lt;div class="col-xs-12 col-sm-8 col-lg-9"&gt;
+      &lt;dl&gt;
+        &lt;dt&gt;&lt;label&gt;{{translation key='blog.sheet.category'/}}&lt;/label&gt;&lt;/dt&gt;
+        &lt;dd&gt;
+          #displayCategoryManagementTree($categoriesLocation 'selectable') &lt;input type="hidden" name="Blog.BlogPostClass_0_category" id="defaultPostCategory"/&gt;&lt;input type="hidden" id="blogCategoriesWebHome" value="${escapetool.xml($defaultPostCategory)}"/&gt;
+        &lt;/dd&gt;
+      &lt;/dl&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
   {{/html}}
-  (% class="clearfloats" %)((())))))
+)))
   #if ($doc.isNew())
     ## We're creating a new blog post. We handle this case differently because #isPublished returns true when the
     ## property is not set (object missing) and thus the new blog post will appear as published. See also the comment
@@ -100,10 +116,12 @@ $xwiki.ssx.use('Blog.ManageCategories')##
     #isPublished($originalEntryObj $isPublished)
   #end
   #if($isPublished)
-    #if($doc.creator == $xcontext.user)
-      #publishMessageBox($services.localization.render('blog.sheet.publicationdate', [${doc.display('publishDate', 'view', $entryObj)}]))
+    #if($hasEdit)
       #set($hideArticle = ${doc.display('hidden', 'edit', $entryObj)})
-      #hideMessageBox($services.localization.render('blog.sheet.hidearticle', [${hideArticle}]))
+      (% class="post-state-blk plainmessage" %)(((
+      (% class="publish-message" %)((($services.icon.render('world') $services.localization.render('blog.sheet.publicationdate', [${doc.display('publishDate', 'view', $entryObj)}]))))
+      (% class="hide-message" %)((($services.icon.render('unlock') $services.localization.render('blog.sheet.hidearticle', [${hideArticle}]))))
+      )))
     #end
   #else
     #set($defaultDate = $xwiki.getDocument($blogPostTemplate).getObject($blogPostClassname).getProperty('publishDate').value.time)

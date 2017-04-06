@@ -227,14 +227,14 @@ $!xwiki.ssx.use($blogStyleDocumentName)
 #set($scaleHeight = 225)
 #set($imgQs="width=$scaleWidth")
 #isPublished($postObj $isPublished)
-#isHidden($posObj $isHidden)
+#isHidden($postObj $isHidden)
 {{html clean="false" wiki="true"}}
-&lt;div class="row blog-list"&gt;
+&lt;div class="row blog-list #if(!$isPublished) unpublished-article#elseif($isHidden) hidden-article#end"&gt;
   &lt;div class="col-xs-12 col-sm-3 col-lg-2 blog-left"&gt;
     &lt;a href="$postDoc.uRL"&gt;
       #set ($imageAtt = $postDoc.getAttachment($postObj.getValue('image')))
       #if ($imageAtt)
-        &lt;img class="blog-image" src="$postDoc.getAttachmentURL($postObj.getValue('image'),'download',$imgQs)"&gt;
+        {{/html}}{{html clean="false"}}&lt;img class="blog-image" src="$postDoc.getAttachmentURL($postObj.getValue('image'),'download',$imgQs)"&gt;{{/html}}{{html clean="false" wiki="true"}}
       #else
         #getEntryDate($postDoc $postObj $postDate)
         #displayBlogDate($postDate)
@@ -242,21 +242,23 @@ $!xwiki.ssx.use($blogStyleDocumentName)
     &lt;/a&gt;
   &lt;/div&gt;
   &lt;div class="col-xs-12 col-sm-9 col-lg-10 hentry"&gt;
-   #displayEntryTools($postDoc $postObj)
-    &lt;div class="entry-date"&gt;
-     #set($dateStr = $datetool.format('medium', $postDate, $xcontext.locale))
-     #if ("$!dateStr" != '')
-       #set ($dateArr = $dateStr.split(' '))
-       #if ($dateArr.size() &gt; 3)
-         #set ($dateStr = "")
-         #foreach($s in $dateArr.subList(0, 3))
-           #set ($dateStr = "${dateStr}${s} ")
-         #end
-       #end
-     #end
-     $!dateStr
-   &lt;/div&gt;
-    #if($displayTitle)&lt;h3 class="entry-title #if(!$isPublished) unpublished-article#elseif($isHidden) hidden-article#end"&gt;&lt;span class="wikilink"&gt;&lt;a href="$postDoc.uRL"&gt;$!postDoc.display('title', 'view', $postObj)&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;#end
+    &lt;div class="pull-right"&gt;
+      #displayEntryTools($postDoc $postObj)
+      &lt;div class="entry-date"&gt;
+        #set($dateStr = $datetool.format('medium', $postDate, $xcontext.locale))
+        #if ("$!dateStr" != '')
+          #set ($dateArr = $dateStr.split(' '))
+          #if ($dateArr.size() &gt; 3)
+            #set ($dateStr = "")
+            #foreach($s in $dateArr.subList(0, 3))
+              #set ($dateStr = "${dateStr}${s} ")
+            #end
+          #end
+        #end
+        $!dateStr
+      &lt;/div&gt;
+    &lt;/div&gt;
+    #if($displayTitle)&lt;h3 class="entry-title"&gt;&lt;span class="wikilink"&gt;&lt;a href="$postDoc.uRL"&gt;$!postDoc.display('title', 'view', $postObj)&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;#end
     &lt;p&gt;
     #set ($postContent = "")
     #if ($useSummary)

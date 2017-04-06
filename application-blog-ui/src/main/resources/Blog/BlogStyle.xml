@@ -254,7 +254,7 @@
 .hentry .entry-footer {
   border-top: 1px solid $borderColor;
   margin: 0px 0px 2em;
-  font-size: 75%;
+  font-size: 90%;
   font-weight: normal;
 }
 .entry-author-label {
@@ -309,9 +309,21 @@ div.edit-categories {
   display: block !important;
 }
 .blog-list .entry-date {
-  float: right;
   font-size: 90%;
   color: #AAAAAA;
+  clear: both;
+}
+#newBlogPost{
+  margin-bottom: 40px;
+}
+.post-state-blk.plainmessage {
+  padding: 0;
+}
+.post-state-blk .publish-message {
+  padding: 10px 20px;
+}
+.post-state-blk .hide-message {
+  padding: 0 20px;
 }</code>
     </property>
     <property>
