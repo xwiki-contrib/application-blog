@@ -176,6 +176,7 @@
 #set ($hiddenParam = $xcontext.macro.params.hidden)
 #set ($limitParam = $xcontext.macro.params.limit)
 #set ($layoutParam = $xcontext.macro.params.layout)
+#set ($paginatedParam = $xcontext.macro.params.paginated)
 #set ($layoutAdditionalParams = $xcontext.macro.params.layoutParams)
 #set ($blogPostLayoutPrefix = 'blogPostLayout')
 #set ($isValidBlog = false)
@@ -288,7 +289,21 @@
   ## Ordering
   #set ($hql = "${hql} order by publishDate.value desc")
   #set($query = $services.query.hql($hql))
+  #bindQueryParameters($query $queryParams)
 
+  #if ("$!paginatedParam" == 'yes')
+    #if ("$!limitParam" == '')
+      #if ($isValidBlog) ## Get the blog itemsPerPage parameter
+        #getBlogProperty($blogDescriptorDoc 'itemsPerPage' '10' $limitParam)
+      #else
+        #set ($limitParam = 10)
+      #end
+    #end
+    #set ($totalPosts = $query.count())
+    ## This macro is defined in the default macros.vm library. It also sets $itemsPerPage and $startAt.
+    #preparePagedViewParams($totalPosts $mathtool.toInteger("$limitParam"))
+    #set ($query = $query.setOffset($startAt))
+  #end
   #if ("$!limitParam" != '')
     #set ($query = $query.setLimit($mathtool.toInteger("$limitParam")))
   #end
@@ -297,7 +312,6 @@
     #set ($blogPostLayoutMacro = "${blogPostLayoutPrefix}${layoutParam.substring(0, 1).toUpperCase()}${layoutParam.substring(1)}")
   #end
 
-  #bindQueryParameters($query $queryParams)
   #set ($results = $query.addFilter("unique").execute())
 
   #set ($XDOMList = [])
@@ -308,6 +322,11 @@
     #set ($xdom = $services.rendering.parse($toParse, $xwiki.getCurrentContentSyntaxId()).getChildren())
     #set ($discard = $XDOMList.addAll($xdom))
     #set ($previousPostReference = $result)
+  #end
+  ## Pagination
+  #if ("$!paginatedParam" == 'yes')
+    #set ($xdom = $services.rendering.parse("{{html wiki='true'}}#displayNavigationLinks($NULL){{/html}}", $xwiki.getCurrentContentSyntaxId()).getChildren())
+    #set ($discard = $XDOMList.addAll($xdom))
   #end
   #set($xcontext.macro.result = $XDOMList)
 #end
@@ -788,7 +807,7 @@
       </name>
     </class>
     <property>
-      <defaultValue>10</defaultValue>
+      <defaultValue/>
     </property>
     <property>
       <description>number of post to display</description>
@@ -934,6 +953,72 @@ The naming convention for the layout macros is: "BlogPostLayout${macroName}"</de
     </property>
     <property>
       <name>layoutParams</name>
+    </property>
+  </object>
+  <object>
+    <name>Blog.BlogPostList</name>
+    <number>9</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>926468bd-6f1d-421e-8375-28b7feb31c19</guid>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <property>
+      <defaultValue>no</defaultValue>
+    </property>
+    <property>
+      <description>Used to enble/disable the pagination of the the blogPostList macro result</description>
+    </property>
+    <property>
+      <mandatory/>
+    </property>
+    <property>
+      <name>paginated</name>
     </property>
   </object>
 </xwikidoc>

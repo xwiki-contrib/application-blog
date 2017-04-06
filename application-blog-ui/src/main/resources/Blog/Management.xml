@@ -102,6 +102,9 @@
           #set ($postsLocation = "${blogDocName}")
           #set ($discard = $blogObj.set('categoriesLocation', $categoriesLocation))
           #set ($discard = $blogObj.set('postsLocation', $postsLocation))
+          #if ("$!request.postsLayout" != '')
+            #set ($discard = $blogObj.set('postsLayout', $request.postsLayout))
+          #end
           #set ($discard = $blogDoc.save())
 
           ## Create the categories page
@@ -193,6 +196,14 @@
   &lt;dl&gt;
     &lt;dt&gt;&lt;label for="blogSpace"&gt;$services.localization.render('blog.manage.create_default_categories')&lt;/label&gt;
       &lt;input type="checkbox" name="createDefaultCategories" value="1" checked="checked" /&gt;
+    &lt;/dt&gt;
+  &lt;/dl&gt;
+  &lt;dl&gt;
+    &lt;dt&gt;&lt;label for="blogSpace"&gt;$services.localization.render('blog.manage.post.layout')&lt;/label&gt;
+      &lt;select name="postsLayout"&gt;
+        &lt;option value=''&gt;$services.localization.render('blog.manage.post.layout.default')&lt;/option&gt;
+        &lt;option value='image'&gt;$services.localization.render('blog.manage.post.layout.image')&lt;/option&gt;
+      &lt;/select&gt;
     &lt;/dt&gt;
   &lt;/dl&gt;
   &lt;input class="button" type="submit" value="${escapetool.xml($services.localization.render('blog.manage.create'))}"/&gt;

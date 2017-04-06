@@ -58,9 +58,28 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  *###
 #macro(printBlog $blogDoc)
   {{include reference='Blog.CreatePost'/}}
-  #getBlogEntries($blogDoc $entries)
-  #displayBlog($entries 'index' true true)
-  #displayNavigationLinks($blogDoc)
+
+  ## Use the blogPostList macro to display the blogposts
+  ## The blogPostList is used only in case of 'all' or 'paged' blog display type because the blogPostList macro 
+  ## do not support FTM the monthly and weekly blog display types
+  #getBlogDisplayType($blogDoc $displayType)
+  #if ($displayType == 'weekly' || $displayType == 'monthly')
+    #getBlogEntries($blogDoc $entries)
+    #displayBlog($entries 'index' true true)
+    #displayNavigationLinks($blogDoc)
+  #else
+    #getBlogDisplayType($blogDoc $displayType)
+    #set ($paginated = 'no')
+    #if ($displayType == 'paginated')
+      #set ($paginated = 'yes')
+    #end
+    #set ($macro.layoutParams = 'displayTitle=true|useSummary=true')
+    #getBlogPostsLayout($blogDoc $postsLayout)
+    #if ($postsLayout == 'image')
+      #set ($macro.layoutParams = "${macro.layoutParams}|displayImage=true")
+    #end
+    (% class="hfeed index" %)((({{blogpostlist blog="$blogDoc.fullName" paginated="$paginated" layout='full' layoutParams="$!macro.layoutParams" /}})))
+  #end
 #end
 ##
 ##
@@ -1151,6 +1170,21 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     #set($output = $queryObj.bindValue($key, $queryParams.get($key)))
   #end
   #setVariable("$queryObj" $output)
+#end
+##
+##
+##
+#**
+ * Determines the blogposts layout: Default layout (Calendar), Image thumbnail
+ * 
+ * @param blogDoc The blog document. It should contain a &lt;tt&gt;Blog.BlogClass&lt;/tt&gt; object with the &lt;tt&gt;postsLayout&lt;/tt&gt;
+ *        property set.
+ * @param postsLayout The resulting string. If the blog object does not define anything, it is considered default.
+ *###
+#macro(getBlogPostsLayout $blogDoc $postsLayout)
+  #getBlogProperty($blogDoc 'postsLayout' 'default' $res)
+  #set ($postsLayout = $NULL)
+  #setVariable ("$postsLayout" $res)
 #end
 {{/velocity}}</content>
 </xwikidoc>

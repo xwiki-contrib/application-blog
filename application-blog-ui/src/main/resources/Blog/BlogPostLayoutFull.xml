@@ -226,6 +226,8 @@ $!xwiki.ssx.use($blogStyleDocumentName)
 #set($scaleWidth = 300)
 #set($scaleHeight = 225)
 #set($imgQs="width=$scaleWidth")
+#isPublished($postObj $isPublished)
+#isHidden($posObj $isHidden)
 {{html clean="false" wiki="true"}}
 &lt;div class="row blog-list"&gt;
   &lt;div class="col-xs-12 col-sm-3 col-lg-2 blog-left"&gt;
@@ -240,6 +242,7 @@ $!xwiki.ssx.use($blogStyleDocumentName)
     &lt;/a&gt;
   &lt;/div&gt;
   &lt;div class="col-xs-12 col-sm-9 col-lg-10 hentry"&gt;
+   #displayEntryTools($postDoc $postObj)
     &lt;div class="entry-date"&gt;
      #set($dateStr = $datetool.format('medium', $postDate, $xcontext.locale))
      #if ("$!dateStr" != '')
@@ -253,7 +256,7 @@ $!xwiki.ssx.use($blogStyleDocumentName)
      #end
      $!dateStr
    &lt;/div&gt;
-    &lt;h3 class="entry-title"&gt;&lt;span class="wikilink"&gt;&lt;a href="$postDoc.uRL"&gt;#if($displayTitle)$postDoc.display('title', 'view', $postObj)#end&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
+    #if($displayTitle)&lt;h3 class="entry-title #if(!$isPublished) unpublished-article#elseif($isHidden) hidden-article#end"&gt;&lt;span class="wikilink"&gt;&lt;a href="$postDoc.uRL"&gt;$!postDoc.display('title', 'view', $postObj)&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;#end
     &lt;p&gt;
     #set ($postContent = "")
     #if ($useSummary)
