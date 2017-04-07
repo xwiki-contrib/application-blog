@@ -44,10 +44,11 @@
 {{velocity filter="none"}}
 {{html clean="false" wiki="true"}}
 
-= $services.localization.render('blog.unpublished.entries') =
+(% class="blog-sub-title" %)
+== $services.localization.render('blog.unpublished.entries') ==
 
-(% class="hfeed unpublished" %)(((
-#displayBlogPostsBasedOnContext($doc 'unpublished' 'full' 'useSummary=true|displayTitle=true' 0)
+(% class="hfeed index" %)(((
+#displayBlogPostsBasedOnContext($doc 'unpublished' 'full' 'useSummary=true|displayTitle=true' '')
 )))
 {{/html}}
 {{/velocity}}</content>

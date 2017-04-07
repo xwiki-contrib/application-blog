@@ -324,6 +324,10 @@ div.edit-categories {
 }
 .post-state-blk .hide-message {
   padding: 0 20px;
+}
+h2.blog-sub-title {
+  margin-bottom: 30px;
+  margin-top: 0;
 }</code>
     </property>
     <property>

@@ -41,7 +41,7 @@
   <hidden>true</hidden>
   <content>{{include reference="Blog.BlogCode"/}}
 
-{{velocity filter="none"}}
+{{velocity}}
 {{html clean="false" wiki="true"}}
 ##
 ##
@@ -146,7 +146,8 @@
   #set($tempDate = $xwiki.jodatime.mutableDateTime)
   $tempDate.setYear($mathtool.toInteger($year))##
   $tempDate.setMonthOfYear($mathtool.toInteger($month))##
-= $services.localization.render('blog.archive.postsfor') $dateFormatter.print($tempDate) =
+(% class="blog-sub-title" %)
+== $services.localization.render('blog.archive.postsfor') $dateFormatter.print($tempDate) ==
   #getAllBlogPostsQueryBasedOnDisplayContext($targetDocument $query $queryParams)
   #set ($discard = $queryParams.put('creator', $xcontext.user))
   #set ($query = "$!{query} and (doc.creator = :creator or (isPublished.value = 1 and hidden.value = 0))")
@@ -157,11 +158,34 @@
   #bindQueryParameters($monthArticleCountQueryObj $queryParams)
   #set($monthArticleCount = $monthArticleCountQueryObj.count())
   #if($monthArticleCount &gt; 0)
-    #set ($monthArticleQueryObj = $services.query.hql("${query} order by publishDate.value").addFilter('unique'))
-    #bindQueryParameters($monthArticleQueryObj $queryParams)
-    #foreach($entryDoc in $xwiki.wrapDocs($monthArticleQueryObj.execute()))
-      #getEntryObject($entryDoc $entryObj)
-      #displayEntry($entryDoc $entryObj true true)
+    #set ($layoutParams = "useSummary=true|displayTitle=true")
+    #if ($targetDocument.space == $defaultBlogSpace &amp;&amp; !$targetDocument.getObject($blogCategoryClassname))
+      #getBlogPostsLayout($xwiki.getDocument("${defaultBlogSpace}.WebHome") $postsLayout)
+      #if ($postsLayout == 'image')
+        #set ($layoutParams = "$!{layoutParams}|displayImage=true")
+      #end
+      {{blogpostlist blog="${defaultBlogSpace}.WebHome" year="$year" month="$month" layout='full' layoutParams="$!layoutParams" paginated='yes' /}}
+    #elseif($targetDocument.getObject($blogCategoryClassname))
+      #getBlogDocumentForCategoriesSpace($targetDocument.space $blogDoc)
+      #getBlogPostsLayout($blogDoc $postsLayout)
+      #if ($postsLayout == 'image')
+        #set ($layoutParams = "$!{layoutParams}|displayImage=true")
+      #end
+      {{blogpostlist category="$targetDocument.fullName" year="$year" month="$month" layout='full' layoutParams="$!layoutParams" paginated='yes' /}}
+    #elseif($targetDocument.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
+      #getBlogDocumentForCategoriesSpace($targetDocument.space $blogDoc)
+      #getBlogPostsLayout($blogDoc $postsLayout)
+      #if ($postsLayout == 'image')
+        #set ($layoutParams = "$!{layoutParams}|displayImage=true")
+      #end
+      {{blogpostlist category="$targetDocument.space" year="$year" month="$month" layout='full' layoutParams="$!layoutParams" paginated='yes' /}}
+    #else
+      #getBlogDocument($targetDocument.space $blogDoc)
+      #getBlogPostsLayout($blogDoc $postsLayout)
+      #if ($postsLayout == 'image')
+        #set ($layoutParams = "$!{layoutParams}|displayImage=true")
+      #end
+      {{blogpostlist blog="$blogDoc.fullName" year="$year" month="$month" layout='full' layoutParams="$!layoutParams" paginated='yes' /}}
     #end
   #else
     #info($services.localization.render('blog.archive.noarticlesmonth'))
@@ -182,7 +206,9 @@
     #displayBlogYearArchive($doc $year)
   #else
     ## Show all entries in the month (extract)
+    (% class="hfeed index" %)(((
     #displayBlogMonthArchive($doc $year $month)
+    )))
   #end
 #end
 {{/html}}

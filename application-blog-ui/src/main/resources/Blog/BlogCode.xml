@@ -1124,34 +1124,55 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param limit the number of posts to display
  *###
 #macro(displayBlogPostsBasedOnContext $targetDoc $postsVisiblity $postLayout $layoutParams $limit)
+  #if ($postLayout == 'full')
+    #set ($macro.paginated = 'yes')
+  #end
   #if ($targetDoc.space == $defaultBlogSpace &amp;&amp; !$targetDoc.getObject($blogCategoryClassname))
     ## Display all posts that are in the default blog space('Blog') or in category 'Blog.%'
+    #getBlogPostsLayout($xwiki.getDocument("${defaultBlogSpace}.WebHome") $postsLayout)
+    #if ($postsLayout == 'image')
+      #set ($layoutParams="$!{layoutParams}|displayImage=true")
+    #end
     #if ($postsVisiblity == 'recent')
     {{blogpostlist blog="${defaultBlogSpace}.WebHome" published='yes' hidden='no' layout="$!postLayout" layoutParams="$!layoutParams" limit=$limit /}}
     #elseif($postsVisiblity == 'unpublished')
-    {{blogpostlist blog="${defaultBlogSpace}.WebHome" published='no' layout="$!postLayout" layoutParams="$!layoutParams" limit=$limit /}}
+    {{blogpostlist blog="${defaultBlogSpace}.WebHome" published='no' layout="$!postLayout" layoutParams="$!layoutParams" paginated="$!macro.paginated" limit=$limit /}}
     #end
   #elseif($targetDoc.getObject($blogCategoryClassname))
     ## display all posts that are in a category aCategorySpace.aCategory
+    #getBlogDocumentForCategoriesSpace($targetDoc.space $blogDoc)
+    #getBlogPostsLayout($blogDoc $postsLayout)
+    #if ($postsLayout == 'image')
+      #set ($layoutParams="$!{layoutParams}|displayImage=true")
+    #end
     #if ($postsVisiblity == 'recent')
     {{blogpostlist category="$targetDoc.fullName" published='yes' hidden='no' layout="$!postLayout" layoutParams="$!layoutParams" limit=$limit /}}
     #elseif($postsVisiblity == 'unpublished')
-    {{blogpostlist category="$targetDoc.fullName" published='no' layout="$!postLayout" layoutParams="$!layoutParams" limit=$limit /}}
+    {{blogpostlist category="$targetDoc.fullName" published='no' layout="$!postLayout" layoutParams="$!layoutParams" paginated="$!macro.paginated" limit=$limit /}}
     #end
   #elseif($targetDoc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
     ## Dispaly all posts that are in a category aCategorySpace.%
+    #getBlogDocumentForCategoriesSpace($targetDoc.space $blogDoc)
+    #getBlogPostsLayout($blogDoc $postsLayout)
+    #if ($postsLayout == 'image')
+      #set ($layoutParams="$!{layoutParams}|displayImage=true")
+    #end
     #if ($postsVisiblity == 'recent')
     {{blogpostlist category="$targetDoc.space" published='yes' hidden='no' layout="$!postLayout" layoutParams="$!layoutParams" limit=$limit /}}
     #elseif($postsVisiblity == 'unpublished')
-    {{blogpostlist category="$targetDoc.space" published='no' layout="$!postLayout" layoutParams="$!layoutParams" limit=$limit /}}
+    {{blogpostlist category="$targetDoc.space" published='no' layout="$!postLayout" layoutParams="$!layoutParams" paginated="$!macro.paginated" limit=$limit /}}
     #end
   #else
     ## Display all posts in blog space aBlog
     #getBlogDocument($targetDoc.space $blogDoc)
+    #getBlogPostsLayout($blogDoc $postsLayout)
+    #if ($postsLayout == 'image')
+      #set ($layoutParams="$!{layoutParams}|displayImage=true")
+    #end
     #if ($postsVisiblity == 'recent')
     {{blogpostlist blog="$blogDoc.fullName" published='yes' hidden='no' layout="$!postLayout" limit=$limit /}}
     #elseif($postsVisiblity == 'unpublished')
-    {{blogpostlist blog="$blogDoc.fullName" published='no' layout="$!postLayout" layoutParams="$!layoutParams" limit=$limit /}}
+    {{blogpostlist blog="$blogDoc.fullName" published='no' layout="$!postLayout" layoutParams="$!layoutParams" paginated="$!macro.paginated" limit=$limit /}}
     #end
   #end
 #end
@@ -1185,6 +1206,26 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #getBlogProperty($blogDoc 'postsLayout' 'default' $res)
   #set ($postsLayout = $NULL)
   #setVariable ("$postsLayout" $res)
+#end
+##
+##
+##
+#**
+ * Retrieve the blog document of a categories space, which is the blog descriptor that have its categoriesLocation property set to the categories space
+ * 
+ * @param categoriesSpace A &lt;tt&gt;String&lt;/tt&gt;, the name of the space.
+ * @param blogDoc The resulting XDocument.
+ *###
+#macro(getBlogDocumentForCategoriesSpace $categoriesSpace $blogDoc)
+  #set($macro.blogDocs = $services.query.hql(", BaseObject obj, StringProperty as categoriesLocationProp where obj.name = doc.fullName and obj.className = '$blogClassname' and obj.id=categoriesLocationProp.id.id and categoriesLocationProp.id.name='categoriesLocation' and categoriesLocationProp.value=:categoriesLocation order by doc.creationDate").setLimit(1).setOffset(0).bindValue('categoriesLocation', $categoriesSpace).execute())
+  #if($macro.blogDocs.size() &gt; 0 &amp;&amp; $categoriesSpace != $defaultBlogSpace)
+    #set($macro.result = $xwiki.getDocument($macro.blogDocs.get(0)))
+  #else
+    ## Fallback to Blog.WebHome, the default blog
+    #set($macro.result = $xwiki.getDocument('Blog.WebHome'))
+  #end
+  #set ($blogDoc = $NULL)
+  #setVariable ("$blogDoc" $macro.result)
 #end
 {{/velocity}}</content>
 </xwikidoc>

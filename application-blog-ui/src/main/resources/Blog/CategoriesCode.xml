@@ -589,7 +589,8 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
  *###
 #macro(displayCategoryPosts $catDoc $catObj)
   #getEntriesForCategory($catDoc.fullName $discard $totalEntries)
-  #if ($catObj || $catDoc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
+  #set ($macro.isCategoriesSpace = $catDoc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
+  #if ($catObj || $macro.isCategoriesSpace)
 
   (% class="cat-posts-count" %)
   ==== [[#toolImage('feed')&gt;&gt;Blog.CategoryRss||queryString="xpage=plain&amp;category=$escapetool.url($catDoc.fullName)" title="RSS"]] $services.localization.render('blog.category.posts.count', [$totalEntries]) ====
@@ -614,10 +615,17 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
     #if ($totalEntries == 0)
       {{info}}{{translation key="blog.categories.noentries"/}}{{/info}}
     #else
-      #displayBlog($entries 'category' true true)
-      ## displayNavigationLinks requires a blog document, to determine how should the entries be split into pages. Return this
-      ## document, as the macro fallbacks to 'paginated' in case the right setting cannot be determined.
-      #displayNavigationLinks($catDoc)
+      #set ($macro.layoutParams = 'displayTitle=true|useSummary=true')
+      #getBlogDocumentForCategoriesSpace($catDoc.space $blogDoc)
+      #getBlogPostsLayout($blogDoc $postsLayout)
+      #if ($postsLayout == 'image')
+        #set ($macro.layoutParams = "${macro.layoutParams}|displayImage=true")
+      #end
+      #set ($category = $catDoc.fullName)
+      #if ($macro.isCategoriesSpace)
+        #set ($category = $catDoc.space)
+      #end
+      (% class="hfeed category" %)((({{blogpostlist category=$category paginated="yes" layout='full' layoutParams="$!macro.layoutParams" /}})))
     #end
   #end
 #end

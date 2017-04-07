@@ -160,7 +160,7 @@
       </visibility>
     </class>
     <property>
-      <code>{{include reference='Blog.BlogCode' /}}
+      <code>{{include reference='Blog.CategoriesCode' /}}
 
 {{velocity output='no'}}
 #if ("$!xcontext.macro.params.blog" == '' &amp;&amp; "$!xcontext.macro.params.category" == '')
@@ -251,8 +251,17 @@
       #set ($discard = $queryParams.put('category', $sanitizedCategoryParam))
       #set ($discard = $queryParams.put('excludedCategory', $exculdedCategory))
     #else
-      #set ($whereQuery = "${whereQuery} and catList=:category")
+      ## Get all posts of the category and its sub categories
+      #getCategoriesHierarchy ($categoryDoc.space $catTree)
+      #set ($subcategories = [])
+      #getSubcategories ($catTree $categoryParam $subcategories)
+      #set ($whereQuery = "${whereQuery} and (catList=:category")
       #set ($discard = $queryParams.put('category', $categoryParam))
+      #foreach($subCategory in $subcategories)
+        #set ($whereQuery = "${whereQuery} or catList=:category${foreach.count}")
+        #set ($discard = $queryParams.put("category${foreach.count}", $subCategory))
+      #end
+      #set ($whereQuery = "${whereQuery} )")
     #end
   #end
 
@@ -301,7 +310,8 @@
     #end
     #set ($totalPosts = $query.count())
     ## This macro is defined in the default macros.vm library. It also sets $itemsPerPage and $startAt.
-    #preparePagedViewParams($totalPosts $mathtool.toInteger("$limitParam"))
+    #set ($itemsPerPage = $mathtool.toInteger("$limitParam"))
+    #preparePagedViewParams($totalPosts $itemsPerPage)
     #set ($query = $query.setOffset($startAt))
   #end
   #if ("$!limitParam" != '')
