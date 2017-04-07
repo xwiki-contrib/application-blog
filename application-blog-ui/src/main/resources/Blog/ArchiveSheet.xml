@@ -34,7 +34,7 @@
   <date>1490563371000</date>
   <contentUpdateDate>1490563265000</contentUpdateDate>
   <version>1.1</version>
-  <title>Blog Archive</title>
+  <title>$services.localization.render("blog.archive.pagetitle")</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
@@ -102,7 +102,7 @@
 ##
 ##
 #macro(displayBlogYearArchive $targetDocument $year)
-= $services.localization.render('blog.archive.postsyear', [$year]) =
+  #displayBlogYearArchiveSubTitle($targetDocument $year)
   #getAllBlogPostsQueryBasedOnDisplayContext($targetDocument $query $queryParams)
   #set ($discard = $queryParams.put('creator', $xcontext.user))
   #set ($query = "$!{query} and (doc.creator = :creator or (isPublished.value = 1 and hidden.value = 0))")
@@ -122,7 +122,8 @@
       #if($monthArticleCount &gt; 0)
         $tempDate.setMonthOfYear($month)
         #set($queryString = "sheet=Blog.ArchiveSheet&amp;year=${year}&amp;month=${month}")
-== [[$monthFormatter.print($tempDate) (${monthArticleCount})&gt;&gt;${targetDocument.fullName}||queryString="${queryString}"]] ==
+(% class="blog-sub-title" %)
+=== [[$monthFormatter.print($tempDate) (${monthArticleCount})&gt;&gt;${targetDocument.fullName}||queryString="${queryString}"]] ===
         #set ($monthArticleQueryObj = $services.query.hql("${query} and month(publishDate.value) = $month order by publishDate.value").addFilter('unique'))
         #bindQueryParameters($monthArticleQueryObj $queryParams)
         #foreach($entryDoc in $xwiki.wrapDocs($monthArticleQueryObj.execute()))
@@ -146,8 +147,7 @@
   #set($tempDate = $xwiki.jodatime.mutableDateTime)
   $tempDate.setYear($mathtool.toInteger($year))##
   $tempDate.setMonthOfYear($mathtool.toInteger($month))##
-(% class="blog-sub-title" %)
-== $services.localization.render('blog.archive.postsfor') $dateFormatter.print($tempDate) ==
+  #displayBlogMonthArchiveSubTitle($targetDocument $tempDate)
   #getAllBlogPostsQueryBasedOnDisplayContext($targetDocument $query $queryParams)
   #set ($discard = $queryParams.put('creator', $xcontext.user))
   #set ($query = "$!{query} and (doc.creator = :creator or (isPublished.value = 1 and hidden.value = 0))")
@@ -190,6 +190,49 @@
   #else
     #info($services.localization.render('blog.archive.noarticlesmonth'))
   #end
+#end
+##
+##
+##
+##
+#macro(getPageTitleBasedOnDisplayContext $targetDocument $theTitle)
+  #if($targetDocument.getObject($blogCategoryClassname) || $targetDocument.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
+    #getBlogDocumentForCategoriesSpace($targetDocument.space $blogDoc)
+    #set ($categoryTitle = $targetDocument.display('name'))
+    #if ("$!categoryTitle" == '' &amp;&amp; !$targetDocument.getObject($blogCategoryClassname)) ## Categories space WebHome
+      #set ($categoryTitle = $services.localization.render('blog.categories.webhome.title'))
+    #end
+  #else
+    #getBlogDocument($targetDocument.space $blogDoc)
+  #end
+  #set ($macro.title = $blogDoc.display('title'))
+  #if ($blogDoc.fullName == 'Blog.WebHome')
+    #set($macro.title = $services.localization.render('blog.code.title'))
+  #end
+  #if ("$!categoryTitle" != '')
+    #set ($macro.title = "$!{macro.title} - ${categoryTitle}")
+  #end
+  #setVariable("$theTitle" $macro.title)
+#end
+##
+##
+##
+##
+#macro(displayBlogYearArchiveSubTitle $targetDocument $theYear)
+  #getPageTitleBasedOnDisplayContext($targetDocument $theTitle)
+  
+ (% class="blog-sub-title" %)
+  == #if("$!theTitle" != '')${theTitle} -#end $services.localization.render('blog.archive.postsyear', [$theYear]) ==
+#end
+##
+##
+##
+##
+#macro(displayBlogMonthArchiveSubTitle $targetDocument $theDate)
+  #getPageTitleBasedOnDisplayContext($targetDocument $theTitle)
+  
+ (% class="blog-sub-title" %)
+  == #if("$!theTitle" != '')${theTitle} -#end $services.localization.render('blog.archive.postsfor') $dateFormatter.print($tempDate) ==
 #end
 ##
 ##

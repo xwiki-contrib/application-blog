@@ -328,6 +328,10 @@ div.edit-categories {
 h2.blog-sub-title {
   margin-bottom: 30px;
   margin-top: 0;
+}
+h3.blog-sub-title {
+  margin-bottom: 5px;
+  margin-top: -10px;
 }</code>
     </property>
     <property>

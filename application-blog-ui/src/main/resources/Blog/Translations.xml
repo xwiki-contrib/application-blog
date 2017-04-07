@@ -40,15 +40,14 @@
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
   <content>blog.archive.paneltitle = Blog Archive
+blog.archive.pagetitle = Archive
 blog.archive.noarticle = No articles yet...
-blog.archive.postsyear = Blog posts for {0}
+blog.archive.postsyear = posts for {0}
 blog.archive.unpublished = (unpublished)
 blog.archive.hidden = (hidden)
 blog.archive.noarticlesyear = No articles in this year...
-blog.archive.postsfor = Blog posts for
+blog.archive.postsfor = posts for
 blog.archive.noarticlesmonth = No articles in this month...
-blog.archive.pagetitle={0} archive
-blog.archive.categorytitle={0} category archive
 blog.code.blogsheet = Blog sheet
 blog.code.sheetexplanation = This sheet should be used to display blog pages.
 blog.code.notblog = This is not a blog page!
