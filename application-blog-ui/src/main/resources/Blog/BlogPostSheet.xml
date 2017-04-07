@@ -52,10 +52,13 @@ $xwiki.ssx.use('Blog.ManageCategories')##
 ## Keep testing the inline action for backward compatibility with older blog posts.
 #elseif($xcontext.action != 'edit' &amp;&amp; $xcontext.action != 'inline')
   ## View mode
-  #isPublished($entryObj $isPublished)
-  #isHidden($entryObj $isHidden)
-  ## displayBlog requires a list of documents, and whether to display only an extract or the full entry.
-  #displayBlog([$tdoc] 'single' false false)
+  #getBlogDocument ($doc.space $blogDoc)
+  #getBlogPostsLayout($blogDoc $postsLayout)
+  #set ($layoutParams="useSummary=false|displayTitle=false")
+  #if ($postsLayout == 'image')
+    #set ($layoutParams="$!{layoutParams}|displayCalendar=false")
+  #end
+  {{blogPostLayoutFull reference="$doc.fullName"  params="$!layoutParams" /}}
 #else
   #if ("$!request.title" != '')
     ## Use the page title specified on the request, if available, as blog post title. This is needed for instance when
