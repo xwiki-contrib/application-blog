@@ -176,6 +176,7 @@ blog.categories.all=All
 blog.changeVisibility.changing=Changing the visibility
 blog.changeVisibility.success=The visibility of the blog entry has been successfully changed
 
+blog.manage.pagetitle=Manage blogs on this wiki
 blog.manage.notitle=No blog title provided. Please enter the blog title.
 blog.manage.nopage=No page provided. Please enter a valid page where the blog should be created.
 blog.manage.unallowed_page=The blog location is already used, please enter another location.
