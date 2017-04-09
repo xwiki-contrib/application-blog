@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc reference="Blog.Translations" locale="vi">
+  <web>Blog</web>
+  <name>Translations</name>
+  <language>vi</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>Main.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1466137391000</creationDate>
+  <date>1490616853000</date>
+  <contentUpdateDate>1490616821000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Translations</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>## XWiki Translation for language vi generated from http://www.l10n.xwiki.org
+blog.application.name=Blog
+blog.archive.hidden=(ẩn)
+blog.archive.noarticle=Không có bài viết nào...
+blog.archive.noarticlesmonth=Không có bài viết trong tháng này...
+blog.archive.noarticlesyear=Không có bài viết trong năm này...
+blog.archive.postsfor=Bài viết blog cho
+blog.archive.postsyear=Bài viêt blog cho {0}
+blog.archive.unpublished=(Không công bố)
+blog.categories.add=Thêm
+blog.categories.addcategory=Thêm một danh mục
+blog.categories.addsubcategory=Thêm mới danh mục con
+blog.categories.articles=Những bài viết từ danh mục này
+blog.categories.deleteselected=Xóa lựa chọn những danh mục
+blog.categories.description=Mô tả\:
+blog.categories.edit=Chỉnh sửa những danh mục
+blog.categories.existingcategories=Những danh mục đang tồn tại
+blog.categories.name=Tên\:
+blog.categories.new=Danh mục mới\:
+blog.categories.newName=Tên danh mục mới\:
+blog.categories.none=Không cái nào
+blog.categories.notcategory=Đây không phải danh mục blog\!
+blog.categories.parent=Cha\:
+blog.categories.parentcategory=Danh mục cha\:
+blog.categories.remove=Hủy bỏ xóa danh mục
+blog.categories.sheet=Category sheet
+blog.categories.sheetmessage=Dải này nên sử dụng hiển thị danh mục blog.
+blog.categories.subcategories=Danh mục con
+blog.category.created=Danh mục {0} đã được tạo.
+blog.category.exists=Danh mục {0} đã tồn tại.
+blog.code.blogsheet=Blog sheet
+blog.code.categories=Những danh mục\:
+blog.code.comments=Những bình luận
+blog.code.createdby=Tạo bởi
+blog.code.deletepost=Xóa bài viết blog này
+blog.code.editpost=Chỉnh sửa bài viết blog này
+blog.code.hid=Hidden%20entry
+blog.code.hidden=Bài viết blog này ẩn
+blog.code.hide=Ẩn bài viết blog này từ những người dùng khác
+blog.code.in=trong
+blog.code.madevisible=Made%20entry%20visible
+blog.code.makevisible=Đây là bài đăng blog không hiển thị cho người khác. Làm cho nó hiển thị.
+blog.code.modifiedby=Đã thay đổi bởi
+blog.code.newerposts=Bài viết mới hơn
+blog.code.nextmonth=Tháng tới
+blog.code.nextweek=Tuần tới
+blog.code.notblog=Đây không phải là một tài liệu blog\!
+blog.code.notpublished=Đây là bài viết blog không công bố. Công bố nó.
+blog.code.olderposts=Bài viết cũ hơn
+blog.code.permalink=Permalink
+blog.code.postedby=Đăng bởi
+blog.code.previousmonth=Tháng trước
+blog.code.previousweek=Tuần trước
+blog.code.published=Đây là bài đăng blog không công bố
+blog.code.readpost=Đọc các mục nhập đầy đủ
+blog.code.sheetexplanation=Dải này nên được sử dụng để hiển thị văn bản trên blog.
+blog.manage.blogtitle=Tiêu đề blog
+blog.manage.blogtype=Loại blog \:
+blog.manage.create=Tạo
+blog.manage.createnew=Tạo mới blog
+blog.manage.existing=blog đang tồn tại
+blog.manage.inside=blog bên trong không gian đang tồn tại
+blog.manage.main=blog như là nội dung chính của một không gian
+blog.manage.nospace=Không có space cung cấp. Xin nhập vào một space hợp lệ nơi blog nên được tạo ra.
+blog.manage.space=Space\:
+blog.manage.title=Tựa đề\:
+blog.manageCategories.comment.removedDeletedCategory=Đã xóa danh mục
+blog.manageCategories.comment.updatedCategory=Cập nhật tên danh mục
+blog.manageCategories.comment.updatedParent=Cập nhật danh mục cha
+blog.manageCategories.comment.updatedRenamedCategory=Cập nhật đổi tên danh mục
+blog.manageCategories.create.error.emptyName=Làm ơn nhập đúng tên danh mục
+blog.manageCategories.js.add.error.401=Bạn đã được thoát khỏi, hãy làm mới và đăng nhập
+blog.manageCategories.js.add.error.403=Bạn không được phép tạo tài liệu đích
+blog.manageCategories.js.add.error.409=Tài liệu đích đã tồn tại, làm ơn chọn một tên khác
+blog.manageCategories.js.add.inProgress=Đang thêm danh mục...
+blog.manageCategories.js.delete.confirm=Bạn có chắc chắn muốn xóa danh mục này? Hành động này là không thể đảo ngược.
+blog.manageCategories.js.delete.done=Đã xóa
+blog.manageCategories.js.delete.failed=Không thể xóa danh mục
+blog.manageCategories.js.delete.inProgress=Đang xóa danh mục...
+blog.manageCategories.js.fetchingForm=Đang lấy mẫu...
+blog.manageCategories.js.rename.error.403=Bạn không được phép tạo tài liệu đích
+blog.manageCategories.js.rename.error.404=Danh mục không hợp lệ, làm ơn làm mới trang để cập nhật cây danh mục
+blog.manageCategories.js.rename.error.409=Tài liệu đích đã tồn tại, làm ơn chọn tên khác
+blog.manageCategories.js.rename.inProgress=Đang đổi tên danh mục...
+blog.manageCategories.rename.error.emptyName=Làm ơn nhập vào đúng tên danh mục
+blog.manageCategories.title=Quản lý danh mục blog
+blog.migration.backtoblog=Quay lại blog
+blog.migration.confirm=Xác nhận
+blog.migration.done=Hoàn tất.
+blog.migration.inspace=trong space
+blog.migration.migrated=Di cư bài viết blog cũ tới ứng dụng blog mới
+blog.migration.pleaseconfirm=Xin vui lòng xác nhận rằng bạn muốn di chuyển các bài báo cũ để ứng dụng blog mới\:
+blog.migration.skipping=Bỏ qua các tài liệu bảo vệ
+blog.migration.updated=Đã cập nhật
+blog.post.create=Tạo
+blog.post.createpost=Tạo một bài mới
+blog.post.title=Post title
+blog.publisher.published=Đã công bố bài viết
+blog.sheet.category=Thể loại\:
+blog.sheet.content=Nội dung\:
+blog.sheet.hidearticle=Ẩn bài viết {0}
+blog.sheet.notpost=Đây không phải là một bài đăng blog\!
+blog.sheet.notpublished=Bài viết này chưa được công bố.
+blog.sheet.publicationdate=Bài viết này đã công bố trên {0}
+blog.sheet.publish=Công bố
+blog.sheet.setdate=Thiết lập từ ngày công bố để \:
+blog.sheet.summary=Tóm tắt (tùy chọn)\:
+blog.sheet.title=Tiêu đề\:
+blog.unpublished.entries=Bài viết chưa được công bố
+blog.unpublished.viewall=Hiển thị tất cả
+</content>
+</xwikidoc>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc reference="Blog.Translations" locale="sk">
+  <web>Blog</web>
+  <name>Translations</name>
+  <language>sk</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>Main.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1466137391000</creationDate>
+  <date>1490616853000</date>
+  <contentUpdateDate>1490616821000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Translations</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>## XWiki Translation for language sk generated from http://www.l10n.xwiki.org
+blog.application.name=Blog
+blog.archive.hidden=(skrytý)
+blog.archive.noarticle=Žiadne články zatiaľ...
+blog.archive.noarticlesmonth=Žiadne články tento mesiac... 
+blog.archive.noarticlesyear=Žiadne články tento rok...
+blog.archive.paneltitle=Blog Archív
+blog.archive.postsfor=Blog príspevky - 
+blog.archive.postsyear=Blog príspevky - {0} 
+blog.archive.unpublished=(nepublikované)
+blog.categories.add=Pridať
+blog.categories.addcategory=Pridať kategóriu
+blog.categories.addsubcategory=Pridať novú podkategóriu
+blog.categories.articles=Články z tejto kategórie
+blog.categories.deleteselected=Odstrániť vybrané kategórie
+blog.categories.description=Popis
+blog.categories.edit=Upraviť Kategórie
+blog.categories.existingcategories=Existujúce Kategórie
+blog.categories.name=Názov\:
+blog.categories.new=Nová kategória\:
+blog.categories.newName=Názov novej kategórie\:
+blog.categories.none=Žiadny
+blog.categories.notcategory=Toto nie je kategória blogu\!
+blog.categories.paneltitle=Blog Kategórie
+blog.categories.parent=Nadradený\:
+blog.categories.parentcategory=Nadradená kategória\:
+blog.categories.remove=Odstrániť zmazanú kategóriu
+blog.categories.sheet=List Kategórie
+blog.categories.sheetmessage=Tento vzor by mal byť použitý za zobrazenie kategórií blogu.
+blog.categories.subcategories=Podkategórie
+blog.category.created=Kategória {0} bola vytvorená.
+blog.category.exists=Kategória {0} už existuje.
+blog.code.blogcategories=Blog Kategórie
+blog.code.blogsheet=List Blogu
+blog.code.categories=Kategórie\:
+blog.code.comments=Komentár(e)
+blog.code.createdby=Vytvoril
+blog.code.deletepost=Zmazať tento blog príspevok
+blog.code.description.wiki=Najnovšie blog príspevky.
+blog.code.editpost=Upraviť tento blog príspevok
+blog.code.hid=Skrytý%20vstup
+blog.code.hidden=Tento blog príspevok je skrytý.
+blog.code.hide=Skryť tento blog príspevok pre ostatných používateľov.
+blog.code.in=v
+blog.code.madevisible=Nastaviť%20vstup%20viditeľný 
+blog.code.makevisible=Tento blog príspevok nie je viditeľný pre ostatných používateľov. Nastav ho viditeľný.
+blog.code.modifiedby=Zmenil - 
+blog.code.newerposts=Novšie príspevky
+blog.code.nextmonth=Ďalší mesiac
+blog.code.nextweek=Ďalší týždeň
+blog.code.notblog=Toto nie je blog dokument\! 
+blog.code.notpublished=Tento príspevok ešte nebol publikovaný. Publikujte ho.
+blog.code.olderposts=Staršie príspevky
+blog.code.permalink=Permanentná URL
+blog.code.postedby=Publikoval
+blog.code.previousmonth=Predchádzajúci mesiac
+blog.code.previousweek=Predchádzajúci týždeň
+blog.code.published=Tento blog príspevok ešte nebol publikovaný
+blog.code.readpost=Čítať celé ...
+blog.code.sheetexplanation=Tento list by mal byť použitý na zobrazenie blog dokumentov
+blog.code.title=Blog
+blog.manage.blogtitle=Názov Blogu
+blog.manage.blogtype=Typ Blogu\:
+blog.manage.create=Vytvoriť
+blog.manage.createnew=Vytvoriť nový blog
+blog.manage.existing=Existujúce blogy
+blog.manage.inside=Blog v existujúcom priestore
+blog.manage.main=blog ako hlavný obsah priestoru
+blog.manage.nospace=Priestor neurčený. Prosím zadajte správny priestor kde bude blog vytvorený.
+blog.manage.space=Priestor\:
+blog.manage.title=Názov\:
+blog.manageCategories.comment.removedDeletedCategory=Zmazané kategórie odstránené
+blog.manageCategories.comment.updatedCategory=Názov kategórie aktualizovaný
+blog.manageCategories.comment.updatedParent=Nadradená kategória aktualizovaná
+blog.manageCategories.comment.updatedRenamedCategory=Premenované kategórie aktualizované
+blog.manageCategories.create.error.alreadyExists=Cieľový dokument už existuje, prosím zvoľte si iný názov.
+blog.manageCategories.create.error.emptyName=Zadajte prosím správny názov kategórie
+blog.manageCategories.js.add.error.401=Boli ste odhlásení, prihláste sa znovu.
+blog.manageCategories.js.add.error.403=Nemáte právo na vytvorenie cieľového dokumentu
+blog.manageCategories.js.add.error.409=Dokument s týmto názvom už existuje, zadajte iné meno.
+blog.manageCategories.js.add.inProgress=Pridávam kategóriu...
+blog.manageCategories.js.delete.confirm=Naozaj chcete odstrániť túto kategóriu? Akcia je nevratná.
+blog.manageCategories.js.delete.done=Zmazané
+blog.manageCategories.js.delete.failed=Chyba pri odstraňovaní kategórie
+blog.manageCategories.js.delete.inProgress=Odstraňujem kategórie...
+blog.manageCategories.js.fetchingForm=Napĺňam formu...
+blog.manageCategories.js.rename.error.403=Nemáte práva na vytvorenie dokumentu
+blog.manageCategories.js.rename.error.404=Chyba kategórie, obnovte stránku na obnovenie stromu kategórií
+blog.manageCategories.js.rename.error.409=Dokument s týmto názvom už existuje, zadajte iné meno.
+blog.manageCategories.js.rename.inProgress=Premenovanie kategórie...
+blog.manageCategories.rename.error.emptyName=Zadajte prosím správne meno kategórie
+blog.manageCategories.title=Správa kategórií blogu
+blog.migration.backtoblog=Späť do blogu
+blog.migration.confirm=Potvrdiť
+blog.migration.done=Hotovo.
+blog.migration.inspace=v priestore
+blog.migration.migrated=Prenesené články starého blogu do novej aplikácie
+blog.migration.pleaseconfirm=Potvrďte, že chcete preniesť staré články do novej Blog aplikácie
+blog.migration.skipping=Preskočenie chránených dokumentov
+blog.migration.updated=Aktualizované
+blog.post.create=Vytvoriť
+blog.post.createpost=Vytvoriť nový príspevok
+blog.post.title=Názov príspevku
+blog.post.titleEmptyError=Názov príspevku nemôže byť prázdny.
+blog.publisher.published=Publikované články
+blog.recentposts.paneltitle=Najnovšie blog príspevky
+blog.sheet.category=Kategórie\:
+blog.sheet.content=Obsah\:
+blog.sheet.hidearticle=Skryť článok {0}
+blog.sheet.notpost=Toto nie je blog príspevok\!
+blog.sheet.notpublished=Tento článok ešte nebol publikovaný.
+blog.sheet.publicationdate=Tento článok bol publikovaný 
+blog.sheet.publish=Publikovať
+blog.sheet.setdate=Nastaviť dátum publikovania\:
+blog.sheet.summary=Sumarizácia (voliteľné)\:
+blog.sheet.title=Názov\:
+blog.unpublished.entries=Nepublikované články
+blog.unpublished.viewall=Pozrieť všetko
+</content>
+</xwikidoc>

@@ -25,12 +25,12 @@
   <parent>
     <groupId>org.xwiki.contrib.blog</groupId>
     <artifactId>application-blog</artifactId>
-    <version>9.3-SNAPSHOT</version>
+    <version>9.4-SNAPSHOT</version>
   </parent>
   <artifactId>application-blog-notification</artifactId>
   <name>Blog - Notifications API</name>
   <properties>
-    <commons.version>9.2-rc-1</commons.version>
+    <commons.version>9.2</commons.version>
     <!-- Test coverage -->
     <xwiki.jacoco.instructionRatio>0.87</xwiki.jacoco.instructionRatio>
     <!-- Name to display by the Extension Manager -->

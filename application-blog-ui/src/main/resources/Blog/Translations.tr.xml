@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc reference="Blog.Translations" locale="tr">
+  <web>Blog</web>
+  <name>Translations</name>
+  <language>tr</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>Main.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1466137391000</creationDate>
+  <date>1490616853000</date>
+  <contentUpdateDate>1490616821000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Translations</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>## XWiki Translation for language tr generated from http://www.l10n.xwiki.org
+blog.application.name=Blog
+blog.archive.noarticle=Henüz haberler ...
+blog.archive.noarticlesmonth=bu ayda yok makaleler ...
+blog.archive.noarticlesyear=bu yıl yok makaleler ...
+blog.archive.paneltitle=Blog Arşivi
+blog.archive.unpublished=( yayımlanmamış )
+blog.categories.add=Ekle
+blog.categories.addcategory=Bir kategori ekle
+blog.categories.addsubcategory=new subcategory ekle
+blog.categories.deleteselected=Seçili kategorileri sil
+blog.categories.description=Açıklama \:
+blog.categories.edit=düzenle Kategoriler
+blog.categories.existingcategories=Mevcut kategoriler
+blog.categories.name=Adı\:
+blog.categories.new=Yeni kategori \:
+blog.categories.newName=Yeni kategori adı \:
+blog.categories.none=Yok
+blog.categories.notcategory=Bu bir blog kategori değildir \!
+blog.categories.paneltitle=Blog Kategorileri
+blog.categories.parent=Veli\:
+blog.categories.parentcategory=ana kategori \:
+blog.categories.remove=Kaldır silindi kategori
+blog.categories.sheet=Kategori levha
+blog.categories.sheetmessage=Bu levha blog kategorileri görüntülemek için kullanılmalıdır .
+blog.categories.subcategories=Alt
+blog.code.blogsheet=Blog levha
+blog.code.categories=Kategoriler \:
+blog.code.comments=Yorumlar
+blog.code.createdby=tarafından düzenlendi
+blog.code.deletepost=Bu blog yazısı sil
+blog.code.editpost=Bu blog yazısı düzenle
+blog.code.hid=Gizli % 20entry
+blog.code.hide=diğer kullanıcılardan bu blog yazısı gizle .
+blog.code.in=içinde
+blog.code.madevisible=% 20entry % 20visible Malı
+blog.code.makevisible=Bu blog yazısı, diğer kullanıcılar için görünmez . Görünür olun .
+blog.code.modifiedby=tarafından Modifiye
+blog.code.newerposts=Yeni mesajlar
+blog.code.nextmonth=Sonraki ay
+blog.code.nextweek=Gelecek hafta
+blog.code.notblog=Bu bir blog belge değildir \!
+blog.code.notpublished=Bu blog yazı henüz yayınlanmadı . Yayınlayın .
+blog.code.olderposts=Eski mesajlar
+blog.code.permalink=here
+blog.code.postedby=tarafından gönderildi
+blog.code.previousmonth=Önceki ay
+blog.code.previousweek=Önceki hafta
+blog.code.published=Bu blog yazı henüz yayınlanmadı .
+blog.code.sheetexplanation=Bu levha blog belgeleri görüntülemek için kullanılmalıdır .
+blog.manage.blogtitle=Blog başlığı
+blog.manage.blogtype=Blog türü \:
+blog.manage.create=Oluştur
+blog.manage.createnew=Yeni bir blog yaratın
+blog.manage.existing=Mevcut bloglar
+blog.manage.nospace=Resim alanı. Blog oluşturulmalıdır geçerli bir boşluk girin .
+blog.manage.space=Boşluk \:
+blog.manage.title=Başlık \:
+blog.manageCategories.comment.removedDeletedCategory=kaldırıldı silindi kategori
+blog.manageCategories.comment.updatedCategory=Güncelleme kategori adı
+blog.manageCategories.comment.updatedParent=Güncelleme kategori ebeveyn
+blog.manageCategories.comment.updatedRenamedCategory=Güncelleme değiştirildi kategori
+blog.manageCategories.create.error.alreadyExists=Hedef belge zaten var , başka bir isim seçiniz
+blog.manageCategories.create.error.emptyName=geçerli bir kategori adı girin
+blog.manageCategories.js.add.error.401=Dışarı çıktınız , yenileme ve oturum açın
+blog.manageCategories.js.add.error.403=Senhedef belge oluşturmak için izin verilmez
+blog.manageCategories.js.add.error.409=Hedef belge zaten var , başka bir isim seçiniz
+blog.manageCategories.js.add.inProgress=kategori ekleme ...
+blog.manageCategories.js.delete.confirm=Bu kategoriyi silmek istediğinizden emin misiniz ? Bu eylem geri alınamaz.
+blog.manageCategories.js.delete.done=Silindi
+blog.manageCategories.js.delete.failed=kategori silinemedi
+blog.manageCategories.js.delete.inProgress=kategoriyi silmek ...
+blog.manageCategories.js.fetchingForm=getiriliyor formu ...
+blog.manageCategories.js.rename.error.403=Senhedef belge oluşturmak için izin verilmez
+blog.manageCategories.js.rename.error.404=Geçersiz kategori ,kategori ağacını güncellemek içinsayfayı yenileyin lütfen
+blog.manageCategories.js.rename.error.409=Hedef belge zaten var , başka bir isim seçiniz
+blog.manageCategories.js.rename.inProgress=kategorisini yeniden adlandırma ...
+blog.manageCategories.rename.error.emptyName=geçerli bir kategori adı girin
+blog.manageCategories.title=yönet blog kategorileri
+blog.migration.backtoblog=Geribloga
+blog.migration.confirm=Onayla
+blog.migration.done=Bitti .
+blog.migration.inspace=uzayda
+blog.migration.pleaseconfirm=Eğeryeni blog uygulamasına eski yazı geçirmek istediğinizi teyit edin\:
+blog.migration.skipping=Atlama korumalı belge
+blog.migration.updated=Güncelleme
+blog.post.create=Oluştur
+blog.post.createpost=yeni bir yazı oluşturun
+blog.post.title=Mesaj başlığı
+blog.publisher.published=Yayınlandı makale
+blog.recentposts.paneltitle=Son Blog Yazıları
+blog.sheet.category=Kategori \:
+blog.sheet.content=İçerik \:
+blog.sheet.hidearticle=gizle makale {0}
+blog.sheet.notpost=Bu bir blog yazısı değil\!
+blog.sheet.notpublished=Bu makale henüz yayınlanmadı .
+blog.sheet.publicationdate=Bu makale yayınlandı {0}
+blog.sheet.publish=Yayınla
+blog.sheet.summary=Özeti ( isteğe bağlı ) \:
+blog.sheet.title=Başlık \:
+blog.unpublished.entries=Yayınlanmamış haberler
+blog.unpublished.viewall=Tüm
+</content>
+</xwikidoc>

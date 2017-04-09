@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc reference="Blog.Translations" locale="ru">
+  <web>Blog</web>
+  <name>Translations</name>
+  <language>ru</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>Main.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1466137391000</creationDate>
+  <date>1490616853000</date>
+  <contentUpdateDate>1490616821000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Translations</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>## XWiki Translation for language ru generated from http://www.l10n.xwiki.org
+blog.application.name=Блог
+blog.archive.hidden=(скрыто)
+blog.archive.noarticle=Нет статей...
+blog.archive.noarticlesmonth=Нет статей за этот месяц...
+blog.archive.noarticlesyear=Нет статей за этот год...
+blog.archive.paneltitle=Архив Блога
+blog.archive.postsfor=Публикации блога
+blog.archive.postsyear=Публикации за {0}
+blog.archive.unpublished=(неопубликовано)
+blog.categories.add=Добавить
+blog.categories.addcategory=Добавить категорию
+blog.categories.addsubcategory=Добавить новую подкатегорию
+blog.categories.articles=Статьи в этой категории
+blog.categories.deleteselected=Удалить выбранные категории
+blog.categories.description=Описание\:
+blog.categories.edit=Редактировать категории
+blog.categories.existingcategories=Доступные категории
+blog.categories.name=Имя\:
+blog.categories.new=Новая категория\:
+blog.categories.newName=Название новой категории\:
+blog.categories.none=Нет
+blog.categories.notcategory=Это не категория блога\!
+blog.categories.paneltitle=Категории Блога
+blog.categories.parent=Родитель\:
+blog.categories.parentcategory=Родительская категория\:
+blog.categories.remove=Убрать удаленную категорию
+blog.categories.sheet=Лист категории
+blog.categories.sheetmessage=Данный лист должен быть использован для отображения категорий блога.
+blog.categories.subcategories=Подкатегриии
+blog.category.created=Категория {0} успешно создана.
+blog.category.exists=Категория {0} уже существует.
+blog.code.blogsheet=Лист блога
+blog.code.categories=Категории\:
+blog.code.comments=Комментарии
+blog.code.createdby=Created by
+blog.code.deletepost=Удалить публикацию
+blog.code.editpost=Изменить публикацию
+blog.code.hid=Скрытая%20запись
+blog.code.hidden=Данная публикация скрыта.
+blog.code.hide=Скрыть публикацию от других пользователей.
+blog.code.in=in
+blog.code.madevisible=Сделать%20запись%20видимой
+blog.code.makevisible=Данная публикация не доступна другим пользователям. Сделайте ее доступной.
+blog.code.modifiedby=Modified by
+blog.code.newerposts=Newer posts
+blog.code.nextmonth=Следующий месяц
+blog.code.nextweek=Следующая неделя
+blog.code.notblog=Это не документ блога\!
+blog.code.notpublished=Данная публикация еще не опубликована. Опубликуйте ее.
+blog.code.olderposts=Старые публикации
+blog.code.permalink=Permalink
+blog.code.postedby=Posted by
+blog.code.previousmonth=Предыдущий месяц
+blog.code.previousweek=Предыдущая неделя
+blog.code.published=Данная публикация еще не опубликована.
+blog.code.readpost=Открыть всю статью
+blog.code.sheetexplanation=Этот лист должен использоваться для отображения документа блога.
+blog.manage.blogtitle=Заголовок блога
+blog.manage.blogtype=Тип блога\:
+blog.manage.create=Создать
+blog.manage.createnew=Создать новый блог
+blog.manage.existing=Существующие блоги
+blog.manage.inside=блог внутри существующего раздела
+blog.manage.main=блог, как главное содержимое раздела
+blog.manage.nospace=Неуказан раздел. Пожалуйста укажите существующий раздел, в котором будет создан блог.
+blog.manage.space=Раздел\:
+blog.manage.title=Заголовок\:
+blog.manageCategories.comment.removedDeletedCategory=Категории удалены
+blog.manageCategories.comment.updatedCategory=Измененное название категории
+blog.manageCategories.comment.updatedParent=Изменена категория верхнего уровня
+blog.manageCategories.comment.updatedRenamedCategory=Обновлены переименованные категории
+blog.manageCategories.create.error.alreadyExists=Такой документ уже существует, пожалуйста, выберите другое имя
+blog.manageCategories.create.error.emptyName=Введите корректное название категории
+blog.manageCategories.js.add.error.401=Вы вышли из системы, пожалуйста, обновите страницу и войдите снова
+blog.manageCategories.js.add.error.403=Создание документа запрещено
+blog.manageCategories.js.add.error.409=Документ с таким названием уже существует, пожалуйста, выберите другое
+blog.manageCategories.js.add.inProgress=Добавление категории...
+blog.manageCategories.js.delete.confirm=Вы действительно хотите удалить эту категорию? Это необратимо\!
+blog.manageCategories.js.delete.done=Удалено
+blog.manageCategories.js.delete.failed=Неудача при удалении категории
+blog.manageCategories.js.delete.inProgress=Удаление категории...
+blog.manageCategories.js.fetchingForm=Получение формы...
+blog.manageCategories.js.rename.error.403=Переименование документа запрещено
+blog.manageCategories.js.rename.error.404=Некорректная категория, обновите страницу для получения дерева категорий
+blog.manageCategories.js.rename.error.409=Такой документ уже существует, выберите другое имя
+blog.manageCategories.js.rename.inProgress=Переименование категории...
+blog.manageCategories.rename.error.emptyName=Введите корректное название категории
+blog.manageCategories.title=Управление категориями блога
+blog.migration.backtoblog=Вернуться в блог
+blog.migration.confirm=Подтвердить
+blog.migration.done=Готово.
+blog.migration.inspace=в раздел
+blog.migration.migrated=Старая статья блога перенесена в новое приложение
+blog.migration.pleaseconfirm=Пожалуйста подтвердите перенос старых статей в новое приложение блога\:
+blog.migration.skipping=Пропуск защищенного документа
+blog.migration.updated=Обновлено
+blog.post.create=Создать
+blog.post.createpost=Создать новую публикацию
+blog.post.title=Заголовок публикации
+blog.post.titleEmptyError=Название сообщения не должно быть пустым\!
+blog.publisher.published=Опубликованая статья
+blog.recentposts.paneltitle=Последние сообщения в Блоге
+blog.sheet.category=Категория\:
+blog.sheet.content=Содержимое\:
+blog.sheet.hidearticle=Скрыть статью {0}
+blog.sheet.notpost=Это не статья блога\!
+blog.sheet.notpublished=Статья еще не опубликована.
+blog.sheet.publicationdate=Статья была опубликована в {0}
+blog.sheet.publish=Опубликовать
+blog.sheet.setdate=Установить дату публикации\:
+blog.sheet.summary=Резюме (необязательно)\:
+blog.sheet.title=Заголовок\:
+blog.unpublished.entries=Неопубликованные статьи
+blog.unpublished.viewall=Показать все
+</content>
+</xwikidoc>

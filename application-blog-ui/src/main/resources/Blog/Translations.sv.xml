@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc reference="Blog.Translations" locale="sv">
+  <web>Blog</web>
+  <name>Translations</name>
+  <language>sv</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>Main.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1466137391000</creationDate>
+  <date>1490616853000</date>
+  <contentUpdateDate>1490616821000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Translations</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>## XWiki Translation for language sv generated from http://www.l10n.xwiki.org
+blog.application.name=Blogg
+blog.archive.hidden=(gömt)
+blog.archive.noarticle=Inga artiklar ännu...
+blog.archive.noarticlesmonth=Inga artiklar den här månaden...
+blog.archive.noarticlesyear=Inga artiklar det här året...
+blog.archive.paneltitle=Bloggarkiv
+blog.archive.postsfor=Blogginlägg för
+blog.archive.postsyear=Blogginlägg för {0}
+blog.archive.unpublished=(opublicerat)
+blog.categories.add=Lägg till
+blog.categories.addcategory=Lägg till en kategori
+blog.categories.addsubcategory=Lägg till ny underkategori
+blog.categories.articles=Artiklar i den här kategorin
+blog.categories.deleteselected=Radera valda kategorier
+blog.categories.description=Beskrivning\:
+blog.categories.edit=Redigera kategorier
+blog.categories.existingcategories=Befintliga kategorier
+blog.categories.name=Namn\:
+blog.categories.new=Ny kategori\:
+blog.categories.newName=Nytt kategorinamn\:
+blog.categories.none=Ingen
+blog.categories.notcategory=Det här är ingen bloggkategori\!
+blog.categories.paneltitle=Bloggkategorier
+blog.categories.parent=Förälder
+blog.categories.parentcategory=Förälderkategori\:
+blog.categories.remove=Ta bort raderad kategori
+blog.categories.sheet=Kategorimall
+blog.categories.sheetmessage=Den här mallen skall användas för att visa bloggkategorier.
+blog.categories.subcategories=Underkategorier
+blog.category.created=Kategorin {0} har skapats.
+blog.category.exists=Kategorin {0} finns redan.
+blog.code.blogsheet=Bloggmall
+blog.code.categories=Kategorier\:
+blog.code.comments=Kommentarer
+blog.code.createdby=Skapat av
+blog.code.deletepost=Radera det här blogginlägget
+blog.code.editpost=Redigera det här blogginlägget
+blog.code.hid=Gömt%20inlägg
+blog.code.hidden=Det här blogginlägget är gömt.
+blog.code.hide=Göm det här blogginlägget för andra användare.
+blog.code.in=i
+blog.code.madevisible=Synliggjorde%20inlägget
+blog.code.makevisible=Det här blogginlägget är inte synligt för andra användare.  Synliggjör det.
+blog.code.modifiedby=Ändrat av
+blog.code.newerposts=Nyare inlägg
+blog.code.nextmonth=Nästa månad
+blog.code.nextweek=Nästa vecka
+blog.code.notblog=Det här är inte ett bloggdokument\!
+blog.code.notpublished=Det här blogginlägget är inte ännu publicerat.  Publicera det.
+blog.code.olderposts=Äldre inlägg
+blog.code.permalink=Permalänk
+blog.code.postedby=Publicerat av
+blog.code.previousmonth=Föregående månad
+blog.code.previousweek=Föregående vecka
+blog.code.published=Det här blogginlägget har ännu inte publicerats.
+blog.code.readpost=Läs hela inlägget
+blog.code.sheetexplanation=Den här mallen skall användas för att visa bloggdokument.
+blog.manage.blogtitle=Bloggtitel
+blog.manage.blogtype=Bloggtyp\:
+blog.manage.create=Skapa
+blog.manage.createnew=Skapa en ny blogg
+blog.manage.existing=Befintliga bloggar
+blog.manage.inside=blogg inuti befintligt rum
+blog.manage.main=blogg som det huvudsakligen innehållet i ett rum
+blog.manage.nospace=Inget rum angavs.  Var god och ange ett rum där bloggen skall skapas.
+blog.manage.space=Rum\:
+blog.manage.title=Titel\:
+blog.manageCategories.comment.removedDeletedCategory=Tog bort raderad kategori
+blog.manageCategories.comment.updatedCategory=Uppdaterade kategorinamn
+blog.manageCategories.comment.updatedParent=Uppdaterade kategoriförälder
+blog.manageCategories.comment.updatedRenamedCategory=Uppdaterade namnbytt kategori
+blog.manageCategories.create.error.alreadyExists=Måldokumentet finns redan, ange ett annat namn.
+blog.manageCategories.create.error.emptyName=Var god att mata in ett korrekt kategorinamn
+blog.manageCategories.js.add.error.401=Du har loggats ut.  Var god att uppdatera sidan och logga in
+blog.manageCategories.js.add.error.403=Du har inte rättighet att skapa måldokumentet
+blog.manageCategories.js.add.error.409=Måldokumentet finns redan.  Var god att välj ett annat namn
+blog.manageCategories.js.add.inProgress=Lägger till kategori...
+blog.manageCategories.js.delete.confirm=Är du säker på att du vill radera den här kategorin?  Den här operationen går ej att ångra.
+blog.manageCategories.js.delete.done=Raderad
+blog.manageCategories.js.delete.failed=Misslyckades att radera kategori
+blog.manageCategories.js.delete.inProgress=Raderar kategori...
+blog.manageCategories.js.fetchingForm=Hämtar formulär...
+blog.manageCategories.js.rename.error.403=Du har inte rättighet att skapa måldokumentet
+blog.manageCategories.js.rename.error.404=Ogiltig kategori, var god att uppdatera sidan för att uppdatera kategoriträdet
+blog.manageCategories.js.rename.error.409=Måldokumentet finns readan.  Var god och välj ett annat namn
+blog.manageCategories.js.rename.inProgress=Byter namn på kategori...
+blog.manageCategories.rename.error.emptyName=Var god att mata in ett korrekt kategorinamn
+blog.manageCategories.title=Hantera bloggkategorier
+blog.migration.backtoblog=Tillbaka till bloggen
+blog.migration.confirm=Bekräfta
+blog.migration.done=Klar.
+blog.migration.inspace=i rum
+blog.migration.migrated=Migrerade gammal bloggartikel till den nya bloggapplikationen
+blog.migration.pleaseconfirm=Var god att bekräfta att du vill migrera gamla artiklar till den nya bloggapplikationen
+blog.migration.skipping=Hoppar över skyddat dokument
+blog.migration.updated=Uppdaterade
+blog.post.create=Skapa
+blog.post.createpost=Skapa nytt inlägg
+blog.post.title=Titel på inlägg
+blog.post.titleEmptyError=Inläggets titel får ej utelämnas\!
+blog.publisher.published=Publicerade artikel
+blog.recentposts.paneltitle=Nya blogginlägg
+blog.sheet.category=Kategori\:
+blog.sheet.content=Innehåll\:
+blog.sheet.hidearticle=Göm artikel {0}
+blog.sheet.notpost=Det här är inte ett blogginlägg\!
+blog.sheet.notpublished=Den här artikeln är ännu inte publicerad.
+blog.sheet.publicationdate=Den här artikeln publicerades {0}
+blog.sheet.publish=Publicera
+blog.sheet.setdate=Sätt publiceringsdatum till\:
+blog.sheet.summary=Sammanfattning (kan utelämnas)\:
+blog.sheet.title=Titel\:
+blog.unpublished.entries=Opublicerade artiklar
+blog.unpublished.viewall=Visa alla
+</content>
+</xwikidoc>
