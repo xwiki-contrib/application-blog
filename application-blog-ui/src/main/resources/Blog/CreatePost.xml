@@ -42,6 +42,10 @@
   <content>{{include reference="Blog.BlogCode"/}}
 
 {{velocity}}
+## In case this page is called from  the blogPostCreate macro
+#if ("$!targetBlogDoc" != '')
+  #set ($doc = $targetBlogDoc)
+#end
 {{html clean="false" wiki="true"}}
 #set($name = "$!request.entryTitle")
 #if($name == '')

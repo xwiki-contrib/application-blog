@@ -196,5 +196,5 @@ blog.manage.post.layout=Layout des articles
 blog.manage.post.layout.default=Default (Calendrier)
 blog.manage.post.layout.image=Image miniature
 blog.archive.pagetitle=Archives
-</content>
+blog.blogpostcreate.wrong_blog=Descripteur de blog incorrecte</content>
 </xwikidoc>
