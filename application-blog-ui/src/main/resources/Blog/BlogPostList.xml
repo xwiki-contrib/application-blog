@@ -424,7 +424,7 @@
       <defaultValue/>
     </property>
     <property>
-      <description>space of the blog to display only post of it (not mandatory, at least blog or category mandatory)</description>
+      <description>The  descriptor document of a given blog (It should contain a document with a Blog.BlogClass object)</description>
     </property>
     <property>
       <mandatory>0</mandatory>
@@ -556,7 +556,7 @@
       <defaultValue/>
     </property>
     <property>
-      <description>limit post to a given year</description>
+      <description>limit posts to a given year</description>
     </property>
     <property>
       <mandatory>0</mandatory>
@@ -622,7 +622,7 @@
       <defaultValue/>
     </property>
     <property>
-      <description>limit post to a given month</description>
+      <description>limit posts to a given month</description>
     </property>
     <property>
       <mandatory>0</mandatory>
@@ -820,7 +820,7 @@
       <defaultValue/>
     </property>
     <property>
-      <description>number of post to display</description>
+      <description>Number of posts to display</description>
     </property>
     <property>
       <mandatory/>
@@ -886,9 +886,9 @@
       <defaultValue>link</defaultValue>
     </property>
     <property>
-      <description>The name of the macro that will be used to display the results. The default layout is the 'link' macro. That is displaying the posts as links.
+      <description>The name of the macro that will be used to display the results. The default layout is the 'link' (blogPostLayoutLink macro) used to display posts as links.
 
-The layout macro have a parameter 'reference' that contains the doument full name of the layout macro.
+The layout macro has a parameter: 'reference' that contains the document full name of the blog posts to display.
 
 The naming convention for the layout macros is: "BlogPostLayout${macroName}"</description>
     </property>
@@ -1022,7 +1022,7 @@ The naming convention for the layout macros is: "BlogPostLayout${macroName}"</de
       <defaultValue>no</defaultValue>
     </property>
     <property>
-      <description>Used to enble/disable the pagination of the the blogPostList macro result</description>
+      <description>Used to enble/disable the pagination of the the blogPostList macro results</description>
     </property>
     <property>
       <mandatory/>
