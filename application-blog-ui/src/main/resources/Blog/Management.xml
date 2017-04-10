@@ -130,7 +130,7 @@
             #set ($discard = $webPreferencesDoc.setHidden(true))
             #set ($xwikiPreferencesObj = $webPreferencesDoc.getObject('XWiki.XWikiPreferences', true))
             #set ($discard = $xwikiPreferencesObj.set('showRightPanels', 1))
-            #set ($discard = $xwikiPreferencesObj.set('rightPanels', 'Blog.RecentPostsPanel,Blog.UnpublishedPanel,Blog.CategoriesPanel,Blog.ArchivePanel'))
+            #set ($discard = $xwikiPreferencesObj.set('rightPanels', 'Blog.RecentPostsPanel,Blog.UnpublishedPanel,Blog.CategoriesPanel,Blog.ArchivePanel,Blog.BlogPanel'))
             #set ($discard = $webPreferencesDoc.save())
           #end
 
