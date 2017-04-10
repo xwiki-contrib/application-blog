@@ -171,6 +171,7 @@
 #set ($displayCalendar = true)
 #set ($displayCalendarImage = true)
 #set ($displayImage = false)## display post image
+#set ($displayActions = true)
 #set ($previousPostReference = '')
 #set ($macroAdditionalParams = {})
 #if ($xcontext.macro.params != '')
@@ -203,6 +204,10 @@
 #if ("$!macroAdditionalParams.get('previousPostReference')" != '')
   #set ($previousPostReference = $macroAdditionalParams.get('previousPostReference'))
 #end
+##S
+#if ("$!macroAdditionalParams.get('displayActions')" == 'false')
+    #set ($displayActions = false)
+#end
 #if ($displayCalendar)
   #getEntryDate($postDoc $postObj $postDate)
   #set($postDateStr = $xwiki.formatDate($postDate, 'yyyyMMMMdd'))
@@ -219,7 +224,7 @@
 #if (!$displayImage)
   #if ($displayCalendar)(% class="blogDay" %)(((#end
   #if ($displayCalendar &amp;&amp; $displayCalendarImage)#displayBlogDate($postDate)#end
-  #displayEntry($postDoc $postObj $useSummary $displayTitle)
+  #displayEntry($postDoc $postObj $useSummary $displayTitle $displayActions)
   #if ($displayCalendar))))#end
 #else
 $!xwiki.ssx.use($blogStyleDocumentName)
@@ -243,7 +248,9 @@ $!xwiki.ssx.use($blogStyleDocumentName)
   &lt;/div&gt;
   &lt;div class="col-xs-12 col-sm-9 col-lg-10 hentry"&gt;
     &lt;div class="pull-right"&gt;
-      #displayEntryTools($postDoc $postObj)
+      #if ($displayActions)
+        #displayEntryTools($postDoc $postObj)
+      #end
       &lt;div class="entry-date"&gt;
         #set($dateStr = $datetool.format('medium', $postDate, $xcontext.locale))
         #if ("$!dateStr" != '')

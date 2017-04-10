@@ -501,7 +501,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
         #set ($blogDay = $entryDateStr)
       #end
       ## Finally, display the entry.
-      #displayEntry($entryDoc $entryObj $onlyExtract $shouldDisplayTitles)
+      #displayEntry($entryDoc $entryObj $onlyExtract $shouldDisplayTitles true)
     #end
   #end
   )))## blogDay
@@ -572,8 +572,9 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param onlyExtract If &lt;tt&gt;true&lt;/tt&gt;, try to display only a summary of the entry, instead of the full content.
  * @param shouldDisplayTitle If &lt;tt&gt;true&lt;/tt&gt;, display the blog title (blog posts shouldn't display the title 
  *        when they're displayed alone on their page since it's the page title which is used in this case)
+ * @param shouldDisplayActions If &lt;tt&gt;true&lt;/tt&gt;, display the blog post actions buttons
  *###
-#macro(displayEntry $entryDoc $entryObj $onlyExtract $shouldDisplayTitle)
+#macro(displayEntry $entryDoc $entryObj $onlyExtract $shouldDisplayTitle $shouldDisplayActions)
   ## Only articles with an explicit hidden setting or an explicit unpublished setting are hidden
   #isPublished($entryObj $isPublished)
   #isHidden($entryObj $isHidden)
@@ -582,7 +583,9 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #else
     (% class="hentry#if(!$isPublished) unpublished-article#elseif($isHidden) hidden-article#end" %)(((
   #end
-  #displayEntryTools($entryDoc $entryObj)
+  #if ($shouldDisplayActions)
+    #displayEntryTools($entryDoc $entryObj)
+  #end
   #if($shouldDisplayTitle)
     #displayEntryTitle($entryDoc $entryObj)
   #end

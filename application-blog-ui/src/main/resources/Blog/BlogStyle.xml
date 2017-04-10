@@ -172,7 +172,7 @@
 }
 /* Calendar sheet display of a blogging day */
 .blogdate {
-  font-size: 70%;
+  font-size: 90%;
   width: 48px;
   text-align: center;
   background: $hbgColor;
@@ -312,9 +312,13 @@ div.edit-categories {
   font-size: 90%;
   color: #AAAAAA;
   clear: both;
+  font-variant: small-caps;
 }
-#newBlogPost{
-  margin-bottom: 40px;
+.blog-list .blog-entry-toolbox {
+  margin-top: -10px;
+}
+.newBlogPostForm{
+  margin-bottom: 20px;
 }
 .post-state-blk.plainmessage {
   padding: 0;
