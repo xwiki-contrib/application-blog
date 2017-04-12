@@ -185,7 +185,7 @@
       <defaultCategory/>
     </property>
     <property>
-      <description>The Blog Post Create macro is used to insert a post creation form. The macro take a blog descriptor document as parameter. The new blog posts will belongs to the blog specified in the parameter.</description>
+      <description>The Blog Post Create macro is used to insert a post creation form. The macro takes a blog descriptor document as parameter. The new blog posts will belongs to the blog specified in the parameter.</description>
     </property>
     <property>
       <id>blogpostcreate</id>
@@ -257,7 +257,7 @@
       <defaultValue/>
     </property>
     <property>
-      <description>Reference of the blog descriptor when posts will created.</description>
+      <description>Reference of the blog descriptor where posts will be created.</description>
     </property>
     <property>
       <mandatory/>

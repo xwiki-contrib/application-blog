@@ -343,10 +343,10 @@
 {{/velocity}}</code>
     </property>
     <property>
-      <contentDescription>template to display a single post, if no content display post as list of link. Binding provided $blogPostName = full name of the post, $blogPostCount = index du post.</contentDescription>
+      <contentDescription/>
     </property>
     <property>
-      <contentType>Optional</contentType>
+      <contentType>No content</contentType>
     </property>
     <property>
       <defaultCategory/>
@@ -688,7 +688,11 @@
       <defaultValue/>
     </property>
     <property>
-      <description>(yes), no, all</description>
+      <description>Limit results to published posts.
+
+Possible values: yes, no, all.
+
+Default value: yes.</description>
     </property>
     <property>
       <mandatory>0</mandatory>
@@ -754,7 +758,11 @@
       <defaultValue/>
     </property>
     <property>
-      <description>(no), yes, all</description>
+      <description>Limit results to hidden posts.
+
+Possible values: no, yes, all.
+
+Default value: no.</description>
     </property>
     <property>
       <mandatory>0</mandatory>
