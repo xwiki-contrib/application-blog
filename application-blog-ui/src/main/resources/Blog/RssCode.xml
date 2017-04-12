@@ -212,7 +212,14 @@
  *###
 #macro(printBlogCategoryRssChannelDescription $categoryDoc $entries)
   &lt;channel rdf:about="$categoryDoc.getURL()"&gt;
-    &lt;title&gt;$services.localization.render($categoryDoc.getValue('name'))&lt;/title&gt;
+    #set ($macro.rssFeedTitle = $services.localization.render($categoryDoc.getValue('name')))
+    #if ($categoryDoc.getObject('XWiki.DocumentSheetBinding').sheet == $blogCategoriesSheet)## Categories home page
+      #set ($macro.rssFeedTitle = $categoryDoc.title)
+      #if ("$!macro.rssFeedTitle" == '')
+        #set ($macro.rssFeedTitle = $services.localization.render('blog.categories.webhome.title'))
+      #end
+    #end
+    &lt;title&gt;$!macro.rssFeedTitle&lt;/title&gt;
     &lt;link&gt;$categoryDoc.getExternalURL()&lt;/link&gt;
     ## TODO: Add a Description field in the blog class
     &lt;description&gt;$services.localization.render('blog.code.description.category', [$categoryDoc.display('name')])&lt;/description&gt;
