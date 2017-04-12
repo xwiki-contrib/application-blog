@@ -54,6 +54,7 @@
 #set($blogCategoryClassname = 'Blog.CategoryClass')
 #set($blogCategoryTemplate = 'Blog.CategoryTemplate')
 #set($blogCategorySheet = 'Blog.CategorySheet')
+#set($blogCategoriesSheet = 'Blog.CategoriesSheet')
 #set($oldBlogCategoryClassname = 'Blog.Categories')
 #set($defaultCategoryParent = 'Blog.Categories')
 ## Style

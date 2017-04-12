@@ -72,6 +72,7 @@ blog.categories.parentcategory=Catégorie parente
 blog.categories.remove=Enlever la catégorie supprimée
 blog.categories.sheet=Sheet des Catégories
 blog.categories.sheetmessage=Cette sheet doit être utilisée afin d'afficher des catégories de blog
+blog.categories.webhome_sheetmessage=Implémente l'affichage des articles de blog dans la page d'accueil des catégories (Blog.CategoriesSheet).
 blog.categories.subcategories=Sous-catégories
 blog.category.created=La catégorie {0} a été créée.
 blog.category.exists=La catégorie {0} existe déjà.

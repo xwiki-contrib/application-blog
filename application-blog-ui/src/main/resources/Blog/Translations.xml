@@ -113,6 +113,7 @@ blog.categories.addsubcategory = Add new subcategory
 blog.categories.articles = Articles from this category
 blog.categories.sheet = Category sheet
 blog.categories.sheetmessage = This sheet should be used to display blog categories.
+blog.categories.webhome_sheetmessage=Implement the display of blog posts inside the categories home page (Blog.CategoriesSheet).
 blog.categories.notcategory = This is not a blog category!
 blog.categories.noentries = No entries in this category
 blog.manageCategories.title = Manage blog categories

@@ -42,6 +42,9 @@
   <content>{{include reference="Blog.CategoriesCode"/}}
 
 {{velocity filter="none"}}
+#if ($doc.fullName == $blogCategoriesSheet)
+  {{translation key="blog.categories.webhome_sheetmessage"/}}
+#else
 {{html clean="false" wiki="true"}}
 #if ("$!request.action" == 'manage')
   $xwiki.ssx.use('Blog.ManageCategories')
@@ -56,6 +59,7 @@
   #displayCategoryPosts($doc $NULL)
 #end
 {{/html}}
+#end
 {{/velocity}}
 </content>
 </xwikidoc>
