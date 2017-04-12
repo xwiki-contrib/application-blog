@@ -124,7 +124,7 @@
       <name>postsLayout</name>
       <number>7</number>
       <picker>0</picker>
-      <prettyName>postsLayout</prettyName>
+      <prettyName>Posts Layout</prettyName>
       <relationalStorage>0</relationalStorage>
       <separator> </separator>
       <separators>|, </separators>

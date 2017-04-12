@@ -101,9 +101,9 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       #end
       #displayProperty($blogDoc 'title')
       #displayProperty($blogDoc 'description')
-      #displayProperty($blogDoc 'blogType')
       #displayProperty($blogDoc 'displayType')
       #displayProperty($blogDoc 'itemsPerPage')
+      #displayProperty($blogDoc 'postsLayout')
     #else
       $blogDoc.display('description')
     #end
