@@ -163,6 +163,7 @@
       <code>{{include reference='Blog.BlogCode' /}}
 
 {{velocity}}
+#if ($services.security.authorization.hasAccess('view', $xcontext.macro.params.reference))
 #set ($postDoc = $xwiki.getDocument($xcontext.macro.params.reference))
 #getEntryObject($postDoc $postObj)
 #if ("$!postObj" != '')
@@ -283,6 +284,9 @@ $!xwiki.ssx.use($blogStyleDocumentName)
 #end
 #else
 {{error}}$services.localization.render('blog.blogpostlayout.notpost', [$xcontext.macro.params.reference]){{/error}}
+#end
+#else
+{{error}}$services.localization.render('blog.blogpostlayout.post_view_not_allowed', [$xcontext.macro.params.reference]){{/error}}
 #end
 {{/velocity}}</code>
     </property>

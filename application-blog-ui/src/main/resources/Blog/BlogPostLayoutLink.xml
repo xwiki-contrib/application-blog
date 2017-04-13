@@ -287,14 +287,18 @@
     </class>
     <property>
       <code>{{velocity}}
-#set ($postDoc = $xwiki.getDocument($xcontext.macro.params.reference))
-#set ($postObj = $postDoc.getObject('Blog.BlogPostClass'))
-#if ("$!postObj" != '')
-#set ($discard = $xwiki.ssx.use('Blog.BlogPostLayoutLink'))
-(% class='blog-post-layout-link' %)
-* $services.icon.render('right') [[$!{postDoc.display('title', 'view', $postObj)}&gt;&gt;$!{services.model.serialize($postDoc.documentReference)}]]
+#if ($services.security.authorization.hasAccess('view', $xcontext.macro.params.reference))
+  #set ($postDoc = $xwiki.getDocument($xcontext.macro.params.reference))
+  #set ($postObj = $postDoc.getObject('Blog.BlogPostClass'))
+  #if ("$!postObj" != '')
+    #set ($discard = $xwiki.ssx.use('Blog.BlogPostLayoutLink'))
+    (% class='blog-post-layout-link' %)
+    * $services.icon.render('right') [[$!{postDoc.display('title', 'view', $postObj)}&gt;&gt;$!{services.model.serialize($postDoc.documentReference)}]]
+  #else
+    {{error}}$services.localization.render('blog.blogpostlayout.notpost', [$xcontext.macro.params.reference]){{/error}}
+  #end
 #else
-{{error}}$services.localization.render('blog.blogpostlayout.notpost', [$xcontext.macro.params.reference]){{/error}}
+  {{error}}$services.localization.render('blog.blogpostlayout.post_view_not_allowed', [$xcontext.macro.params.reference]){{/error}}
 #end
 {{/velocity}}</code>
     </property>

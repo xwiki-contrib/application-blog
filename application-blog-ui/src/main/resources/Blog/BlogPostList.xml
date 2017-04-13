@@ -327,11 +327,13 @@
   #set ($XDOMList = [])
   #set ($previousPostReference = '')
   #foreach($result in $results)
-    #set ($layoutAdditionalParams = "${layoutAdditionalParams}|postIndex=${foreach.index}|previousPostReference=$!{previousPostReference}")
-    #set ($toParse = "{{${blogPostLayoutMacro} reference=${escapetool.getQuote()}${result}${escapetool.getQuote()} params=${escapetool.getQuote()}$!layoutAdditionalParams${escapetool.getQuote()}/}}")
-    #set ($xdom = $services.rendering.parse($toParse, $xwiki.getCurrentContentSyntaxId()).getChildren())
-    #set ($discard = $XDOMList.addAll($xdom))
-    #set ($previousPostReference = $result)
+    #if ($services.security.authorization.hasAccess('view', $result))
+      #set ($layoutAdditionalParams = "${layoutAdditionalParams}|postIndex=${foreach.index}|previousPostReference=$!{previousPostReference}")
+      #set ($toParse = "{{${blogPostLayoutMacro} reference=${escapetool.getQuote()}${result}${escapetool.getQuote()} params=${escapetool.getQuote()}$!layoutAdditionalParams${escapetool.getQuote()}/}}")
+      #set ($xdom = $services.rendering.parse($toParse, $xwiki.getCurrentContentSyntaxId()).getChildren())
+      #set ($discard = $XDOMList.addAll($xdom))
+      #set ($previousPostReference = $result)
+    #end
   #end
   ## Pagination
   #if ("$!paginatedParam" == 'yes')
