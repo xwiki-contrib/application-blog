@@ -275,7 +275,7 @@ $!xwiki.ssx.use($blogStyleDocumentName)
     #if ("$!postContent" == '')
       #set ($postContent = $postObj.getProperty('content').value)
     #end
-    $!postContent
+    {{html wiki="false"}}$!postDoc.getRenderedContent($postContent, $postDoc.syntax.toIdString()){{/html}}
     &lt;/p&gt;
     #displayEntryFooter($postDoc $postObj)
   &lt;/div&gt;
