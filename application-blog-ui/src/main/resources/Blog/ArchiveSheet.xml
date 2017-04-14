@@ -42,7 +42,6 @@
   <content>{{include reference="Blog.BlogCode"/}}
 
 {{velocity}}
-{{html clean="false" wiki="true"}}
 ##
 ##
 ##
@@ -254,6 +253,5 @@
     )))
   #end
 #end
-{{/html}}
 {{/velocity}}</content>
 </xwikidoc>

@@ -42,7 +42,6 @@
   <content>{{include reference="Blog.BlogCode"/}}
 
 {{velocity filter="none"}}
-{{html clean="false" wiki="true"}}
 
 (% class="blog-sub-title" %)
 == $services.localization.render('blog.unpublished.entries') ==
@@ -50,6 +49,5 @@
 (% class="hfeed index" %)(((
 #displayBlogPostsBasedOnContext($doc 'unpublished' 'full' 'useSummary=true|displayTitle=true' '')
 )))
-{{/html}}
 {{/velocity}}</content>
 </xwikidoc>

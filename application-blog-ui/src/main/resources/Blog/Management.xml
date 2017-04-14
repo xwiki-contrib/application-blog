@@ -34,16 +34,16 @@
   <date>1227680561000</date>
   <contentUpdateDate>1227680561000</contentUpdateDate>
   <version>1.1</version>
-  <title>Manage blogs on this wiki</title>
+  <title>$services.localization.render("blog.manage.pagetitle")</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.0</syntaxId>
   <hidden>true</hidden>
   <content>{{include reference="Blog.BlogCode"/}}
+
 {{template name="locationPicker_macros.vm" /}}
 
 {{velocity}}
-{{html clean="false" wiki="true"}}
 #if($hasAdmin)
 ##
 ##
@@ -52,15 +52,13 @@
 ## TODO: Provide some management links: delete, edit title, configure...
 ##
 #set ($discard = $xwiki.jsx.use('Blog.Management'))
-= $services.localization.render('blog.manage.existing') =
-
+== $services.localization.render('blog.manage.existing') ==
 #foreach($item in $xwiki.wrapDocs($services.query.hql(", BaseObject obj where obj.name = doc.fullName and obj.className = '$blogClassname' and doc.fullName &lt;&gt; '$blogTemplate' ").execute()))
   #getBlogTitle($item $title)
   #if($title != '')
     * [[$title&gt;&gt;$item.fullName]]
   #else
     * [[$item.displayTitle&gt;&gt;$item.fullName]]
-&lt;p/&gt;
   #end
 #end
 ##
@@ -68,7 +66,7 @@
 ## New blog
 ##
 
-= $services.localization.render('blog.manage.createnew') =
+== $services.localization.render('blog.manage.createnew') ==
 
 #if ("$!request.createBlog" != '')
   #set($title = "$!request.blogTitle")
@@ -145,6 +143,7 @@
 #end
 ##
 ## Show the form
+{{html clean="false" wiki="true"}}
 &lt;form action="${xwiki.getURL('Blog.Management')}" id="newBlog" method="post" class="xform"&gt;
 #locationPicker({
     'id': 'blogLocation',
