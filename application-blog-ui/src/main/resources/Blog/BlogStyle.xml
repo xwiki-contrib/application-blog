@@ -227,7 +227,6 @@
   position: relative;
   z-index: 2;
   margin-left: 1.5em;
-  
 }
 /* Add a space between icons of toolbox */
 .blog-entry-toolbox .wikiinternallink {
