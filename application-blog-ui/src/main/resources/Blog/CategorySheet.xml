@@ -58,7 +58,7 @@
       (% class="blog-categories-list subcategories" %)
       (((
         (((
-          **Subcategories**
+          **$services.localization.render('xe.blog.categories.subcategories')**
         )))
         (((
           #displayCategoriesHierarchyRecursive($tree $doc.fullName 1 'simple')
