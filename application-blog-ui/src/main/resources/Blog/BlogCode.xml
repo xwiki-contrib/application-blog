@@ -132,13 +132,12 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     #if(!$result.getObject($blogClassname))
       ## Third, try searching for a blog document in the current space
       ## Prevent the query fail when the space contains dots '.'
-      #set ($escapedSpace = $space.replaceAll('([%_!])', '!$1'))
-      #set($blogDocs = $services.query.hql(", BaseObject obj where doc.space = ? and obj.name = doc.fullName and obj.className = '$blogClassname' order by doc.name").setLimit(1).setOffset(0).bindValues([${escapedSpace}]).execute())
+      #set($blogDocs = $services.query.hql(", BaseObject obj where doc.space = ? and obj.name = doc.fullName and obj.className = '$blogClassname' order by doc.name").setLimit(1).setOffset(0).bindValues([${space}]).execute())
       #if($blogDocs.size() &gt; 0)
         #set($result = $xwiki.getDocument($blogDocs.get(0)))
       #else
         ## Fourth, try searching for a blog document that have the its 'postsLocation' set to the current space
-        #set($blogDocs = $services.query.hql(", BaseObject obj, StringProperty as postsLocationProp where obj.name = doc.fullName and obj.className = '$blogClassname' and obj.id=postsLocationProp.id.id and postsLocationProp.id.name='postsLocation' and postsLocationProp.value=:postsLocation order by doc.name").setLimit(1).setOffset(0).bindValue('postsLocation', $escapedSpace).execute())
+        #set($blogDocs = $services.query.hql(", BaseObject obj, StringProperty as postsLocationProp where obj.name = doc.fullName and obj.className = '$blogClassname' and obj.id=postsLocationProp.id.id and postsLocationProp.id.name='postsLocation' and postsLocationProp.value=:postsLocation order by doc.name").setLimit(1).setOffset(0).bindValue('postsLocation', $space).execute())
         #if($blogDocs.size() &gt; 0)
           #set($result = $xwiki.getDocument($blogDocs.get(0)))
         #else
