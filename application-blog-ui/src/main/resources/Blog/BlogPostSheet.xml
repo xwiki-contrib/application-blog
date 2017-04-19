@@ -55,7 +55,7 @@ $xwiki.ssx.use('Blog.ManageCategories')##
   #getBlogDocument ($doc.space $blogDoc)
   #getBlogPostsLayout($blogDoc $postsLayout)
   #set ($layoutParams="useSummary=false|displayTitle=false")
-  #if ($postsLayout == 'image')
+  #if ($postsLayout != 'full')
     #set ($layoutParams="$!{layoutParams}|displayCalendar=false")
   #end
   {{blogPostLayoutFull reference="$doc.fullName"  params="$!layoutParams" /}}
