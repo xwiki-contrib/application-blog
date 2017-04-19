@@ -599,11 +599,11 @@ XWiki.blog.Categories = Class.create({
 document.observe('xwiki:dom:loaded', function() {
   new XWiki.blog.Categories();
   $$(".blog-categories-list.subcategories").each(function(item) {
-    var toggler = new Element("a", {style : "display: block; cursor: pointer; float: right; font-style: italic;"}).update("show »");
+    var toggler = new Element("a", {style : "display: block; cursor: pointer; float: right; font-style: italic;"}).update("$services.localization.render('blog.manageCategories.js.show') »");
     var list = item.down("div", 1);
     toggler.observe("click", function() {
       list.toggle();
-      toggler.update(list.visible() ? "« hide" : "show »");
+      toggler.update(list.visible() ? "« $services.localization.render('blog.manageCategories.js.hide')" : "$services.localization.render('blog.manageCategories.js.show') »");
     });
     item.down("strong").insert({after : toggler});
     item.down("strong").insert({after : "&amp;nbsp;&amp;nbsp;"});
