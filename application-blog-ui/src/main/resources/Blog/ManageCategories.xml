@@ -68,7 +68,11 @@
   #end
 #elseif("$!request.xaction" == 'create')
   #set($title = "$!{request.newCategoryName}")
-  #set($name = "${doc.space}.${title}")
+  #set ($escapedTitle = $title.replaceAll('\.', '\\.')) ## Escape categories with dots
+  #set($name = "${doc.space}.${escapedTitle}")
+  #if ("$!request.newCategoryParent" != '')
+    #set ($name = "${xwiki.getDocument($request.newCategoryParent).space}.${escapedTitle}")
+  #end
   #if ($title.trim().equals(''))
     #blog__actionResponseError(400, 'blog.manageCategories.create.error.emptyName', [])
   #elseif (!$xwiki.getDocument($name).isNew())
@@ -106,14 +110,29 @@
 #####################################################
 ## Action execution done
 #####################################################
+#set($categoriesLocation = $defaultBlogSpace)
+#if ("$!request.root" != '')
+  #set ($categoriesLocation = $xwiki.getDocument($request.root).space)
+#elseif ("$!request.categoriesSpace" != '')
+  #set ($categoriesLocation = $request.categoriesSpace)
+#elseif ("$!request.categoryParent" != '')
+  #set ($categoriesLocation = $xwiki.getDocument($request.categoryParent).space)
+  #set ($defaultCategoryParent = $request.categoryParent)
+#elseif ("$!request.category" != '')
+  #set ($categoriesLocation = $xwiki.getDocument($request.category).space)
+#end
+#if ("$!categoriesLocation" != $defaultBlogSpace &amp;&amp; "$!defaultCategoryParent" != '')
+  #set($defaultCategoryParent = "${categoriesLocation}.WebHome")
+#end
+
 #if ("$!request.display" == 'list')
   #set($displayType = "$!{request.listType}")
   #if($displayType == '')
     #set($displayType = 'editable')
   #end
-  #displayCategoryManagementTree('' $displayType)
+  #displayCategoryManagementTree($categoriesLocation $displayType)
 #elseif ("$!request.display" == 'addForm')
-  #getCategoriesHierarchy('' $tree)
+  #getCategoriesHierarchy($categoriesLocation $tree)
   #addCategoryForm()
 #elseif ("$!request.display" == 'renameForm')
   #renameCategoryForm()
@@ -122,7 +141,7 @@
 $xwiki.ssx.use('Blog.ManageCategories')##
 $xwiki.jsx.use('Blog.ManageCategories', {'minify':false})##
 ##
-#displayCategoryManagementTree('' 'editable')
+#displayCategoryManagementTree($defaultBlogSpace 'editable')
 #end
 {{/html}}
 {{/velocity}}</content>
@@ -405,6 +424,14 @@ XWiki.blog.Categories = Class.create({
     if(entryObjNb &amp;&amp; entryObjNb != '') {
       ajaxParams['entryObjNb'] = entryObjNb;
     }
+    var categoriesSpace = urlParams.categoriesSpace;
+    if(categoriesSpace &amp;&amp; categoriesSpace != '') {
+      ajaxParams['categoriesSpace'] = categoriesSpace;
+    }
+    var categoryParent = urlParams.parentCategory;
+    if(categoryParent &amp;&amp; categoryParent != '') {
+      ajaxParams['categoryParent'] = categoryParent;
+    }
     if (!parent._x_add_form) {
       if (!parent.disabled) {
         new Ajax.Request(
@@ -599,11 +626,13 @@ XWiki.blog.Categories = Class.create({
 document.observe('xwiki:dom:loaded', function() {
   new XWiki.blog.Categories();
   $$(".blog-categories-list.subcategories").each(function(item) {
-    var toggler = new Element("a", {style : "display: block; cursor: pointer; float: right; font-style: italic;"}).update("show »");
+    var downIcon = '&lt;span class="glyphicon glyphicon-chevron-down" aria-hidden="true"&gt;&lt;/span&gt;';
+    var upIcon = '&lt;span class="glyphicon glyphicon-chevron-up" aria-hidden="true"&gt;&lt;/span&gt;'
+    var toggler = new Element("a", {class : "subcat-toggle-link"}).update(downIcon);
     var list = item.down("div", 1);
     toggler.observe("click", function() {
       list.toggle();
-      toggler.update(list.visible() ? "« hide" : "show »");
+      toggler.update(list.visible() ? upIcon : downIcon);
     });
     item.down("strong").insert({after : toggler});
     item.down("strong").insert({after : "&amp;nbsp;&amp;nbsp;"});
@@ -796,6 +825,23 @@ input.category-name-input {
   height: 80%;
   margin-right: 3px;
   width: 16em;
+}
+.cat-posts-count {
+  display: inline-block;
+  float: left;
+  margin-top: 0px;
+  padding-bottom: 20px;
+}
+.subcat-toggle-link {
+  cursor: pointer;
+  display: block;
+  float: left;
+  font-style: italic;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+.blog-categories-list.subcategories.cat-count{
+  padding-top: 0;
 }</code>
     </property>
     <property>

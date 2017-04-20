@@ -58,9 +58,25 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  *###
 #macro(printBlog $blogDoc)
   {{include reference='Blog.CreatePost'/}}
-  #getBlogEntries($blogDoc $entries)
-  #displayBlog($entries 'index' true true)
-  #displayNavigationLinks($blogDoc)
+
+  ## Use the blogPostList macro to display the blogposts
+  ## The blogPostList is used only in case of 'all' or 'paged' blog display type because the blogPostList macro 
+  ## do not support FTM the monthly and weekly blog display types
+  #getBlogDisplayType($blogDoc $displayType)
+  #if ($displayType == 'weekly' || $displayType == 'monthly')
+    #getBlogEntries($blogDoc $entries)
+    #displayBlog($entries 'index' true true)
+    #displayNavigationLinks($blogDoc)
+  #else
+    #getBlogDisplayType($blogDoc $displayType)
+    #set ($paginated = 'no')
+    #if ($displayType == 'paginated')
+      #set ($paginated = 'yes')
+    #end
+    #set ($macro.layoutParams = 'displayTitle=true|useSummary=true')
+    #getBlogPostsLayout($blogDoc $postsLayout)
+    (% class="hfeed index" %)((({{blogpostlist blog="$blogDoc.fullName" paginated="$paginated" layout="$postsLayout" layoutParams="$!macro.layoutParams" /}})))
+  #end
 #end
 ##
 ##
@@ -82,9 +98,9 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       #end
       #displayProperty($blogDoc 'title')
       #displayProperty($blogDoc 'description')
-      #displayProperty($blogDoc 'blogType')
       #displayProperty($blogDoc 'displayType')
       #displayProperty($blogDoc 'itemsPerPage')
+      #displayProperty($blogDoc 'postsLayout')
     #else
       $blogDoc.display('description')
     #end
@@ -115,12 +131,19 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     #set($result = $xwiki.getDocument("${space}.Blog"))
     #if(!$result.getObject($blogClassname))
       ## Third, try searching for a blog document in the current space
+      ## Prevent the query fail when the space contains dots '.'
       #set($blogDocs = $services.query.hql(", BaseObject obj where doc.space = ? and obj.name = doc.fullName and obj.className = '$blogClassname' order by doc.name").setLimit(1).setOffset(0).bindValues([${space}]).execute())
       #if($blogDocs.size() &gt; 0)
         #set($result = $xwiki.getDocument($blogDocs.get(0)))
       #else
-        ## Last, fallback to Blog.WebHome, the default blog
-        #set($result = $xwiki.getDocument('Blog.WebHome'))
+        ## Fourth, try searching for a blog document that have the its 'postsLocation' set to the current space
+        #set($blogDocs = $services.query.hql(", BaseObject obj, StringProperty as postsLocationProp where obj.name = doc.fullName and obj.className = '$blogClassname' and obj.id=postsLocationProp.id.id and postsLocationProp.id.name='postsLocation' and postsLocationProp.value=:postsLocation order by doc.name").setLimit(1).setOffset(0).bindValue('postsLocation', $space).execute())
+        #if($blogDocs.size() &gt; 0)
+          #set($result = $xwiki.getDocument($blogDocs.get(0)))
+        #else
+          ## Last, fallback to Blog.WebHome, the default blog
+          #set($result = $xwiki.getDocument('Blog.WebHome'))
+        #end
       #end
     #end
   #end
@@ -173,19 +196,30 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     #setVariable ("$entries" [])
   #end
   #getBlogEntriesBaseQuery($query)
-  #isBlogGlobal($blogDoc $isGlobal)
-  #if(!$isGlobal)
-    #set($query = "${query} and (doc.space = '${blogDoc.space}' or doc.parent = '${blogDoc.fullName}')")
+  #isDefaultBlog($blogDoc $isDefault)
+  #set($queryParams = {})
+  #if ($isDefault)
+    #getCategoryAllBlogPostsQuery($query)
+    #set($query = "${query} and (doc.creator = :creator or (isPublished.value = 1 and hidden.value = 0)) and (doc.space = :space or catList like :catList escape '!')")
+    #set($discard = $queryParams.put('creator', $xcontext.user))
+    #set($discard = $queryParams.put('space', $blogDoc.space))
+    #set($sanitizedBlogSpace = $blogDoc.space.replaceAll('([%_!])', '!$1').concat('.%'))
+    #set($discard = $queryParams.put('catList', $sanitizedBlogSpace))
+  #else
+    #set($query = "${query} and (doc.space = :space or doc.parent = :parent)")
+    #getBlogPostsLocation($blogDoc.space $blogPostsLocation)
+    #set($discard = $queryParams.put('space', $blogPostsLocation))
+    #set($discard = $queryParams.put('parent', $blogDoc.space))
   #end
   #getBlogDisplayType($blogDoc $displayType)
   #if($displayType == 'weekly')
-    #getWeeklyBlogEntries($blogDoc $query $entries)
+    #getWeeklyBlogEntries($blogDoc $query $entries $queryParams)
   #elseif($displayType == 'monthly')
-    #getMonthlyBlogEntries($blogDoc $query $entries)
+    #getMonthlyBlogEntries($blogDoc $query $entries $queryParams)
   #elseif($displayType == 'all')
-    #getAllBlogEntries($blogDoc $query $entries)
+    #getAllBlogEntries($blogDoc $query $entries $queryParams)
   #else
-    #getPagedBlogEntries($blogDoc $query $entries)
+    #getPagedBlogEntries($blogDoc $query $entries $queryParams)
   #end
 #end
 ##
@@ -201,17 +235,22 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param query The base query for selecting entries. Apart from the base query that selects entries, it can further be
  *        refined to restrict to a given space, or to a given search criteria, etc.
  * @param entries The resulting list of entries to display, a list of XDocument names.
+ * @param queryParams The parameters to bind with the query.
  *###
-#macro(getPagedBlogEntries $blogDoc $query $entries)
+#macro(getPagedBlogEntries $blogDoc $query $entries $queryParams)
   #if (!$entries)
     #setVariable ("$entries" [])
   #end
-  #set($totalEntries = $services.query.hql($query).count())
+  #set($countQueryObj = $services.query.hql($query).addFilter("unique"))
+  #set($queryObj = $services.query.hql("${query} order by publishDate.value desc"))
+  #bindQueryParameters($countQueryObj $queryParams)
+  #bindQueryParameters($queryObj $queryParams)
+  #set($totalEntries = $countQueryObj.count())
   #getBlogProperty($blogDoc 'itemsPerPage' '10' $defaultItemsPerPage)
   #set($defaultItemsPerPage = $mathtool.toInteger($defaultItemsPerPage))
   ## This macro is defined in the default macros.vm library. It also sets $itemsPerPage and $startAt.
   #preparePagedViewParams($totalEntries $defaultItemsPerPage)
-  #set($discard = $entries.addAll($services.query.hql("${query} order by publishDate.value desc").setLimit($itemsPerPage).setOffset($startAt).execute()))
+  #set($discard = $entries.addAll($queryObj.setLimit($itemsPerPage).setOffset($startAt).addFilter("unique").execute()))
 #end
 ##
 ##
@@ -225,8 +264,9 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param query The base query for selecting entries. Apart from the base query that selects entries, it can further be
  *        refined to restrict to a given space, or to a given search criteria, etc.
  * @param entries The resulting list of entries to display, a list of XDocument names.
+ * @param queryParams The parameters to bind with the query.
  *###
-#macro(getWeeklyBlogEntries $blogDoc $query $entries)
+#macro(getWeeklyBlogEntries $blogDoc $query $entries $queryParams)
   #if (!$entries)
     #setVariable ("$entries" [])
   #end
@@ -235,8 +275,12 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #set($minDay = $dateFormatter.print($weekDate.toMutableDateTime().weekOfWeekyear().roundFloor()))
   #set($maxDay = $dateFormatter.print($weekDate.toMutableDateTime().weekOfWeekyear().roundCeiling()))
   #set($query = "${query} and publishDate.value &gt;= '$minDay' and publishDate.value &lt; '$maxDay'")
-  #set($totalEntries = $services.query.hql($query).count())
-  #set($discard = $entries.addAll($services.query.hql("${query} order by publishDate.value desc").execute()))
+  #set($countQueryObj = $services.query.hql($query).addFilter("unique"))
+  #set($queryObj = $services.query.hql("${query} order by publishDate.value desc").addFilter("unique"))
+  #bindQueryParameters($countQueryObj $queryParams)
+  #bindQueryParameters($queryObj $queryParams)
+  #set($totalEntries = $countQueryObj.count())
+  #set($discard = $entries.addAll($queryObj.execute()))
 #end
 ##
 ##
@@ -250,6 +294,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param query The base query for selecting entries. Apart from the base query that selects entries, it can further be
  *        refined to restrict to a given space, or to a given search criteria, etc.
  * @param entries The resulting list of entries to display, a list of XDocument names.
+ * @param queryParams The parameters to bind with the query.
  *###
 #macro(getMonthlyBlogEntries $blogDoc $query $entries)
   #if (!$entries)
@@ -260,8 +305,12 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #set($minDay = $dateFormatter.print($monthDate.toMutableDateTime().monthOfYear().roundFloor()))
   #set($maxDay = $dateFormatter.print($monthDate.toMutableDateTime().monthOfYear().roundCeiling()))
   #set($query = "${query} and publishDate.value &gt;= '$minDay' and publishDate.value &lt; '$maxDay'")
-  #set($totalEntries = $services.query.hql($query).count())
-  #set($discard = $entries.addAll($services.query.hql("${query} order by publishDate.value desc").execute()))
+  #set($countQueryObj = $services.query.hql($query).addFilter("unique"))
+  #set($queryObj = $services.query.hql("${query} order by publishDate.value desc").addFilter("unique"))
+  #bindQueryParameters($countQueryObj $queryParams)
+  #bindQueryParameters($queryObj $queryParams)
+  #set($totalEntries = $countQueryObj.count())
+  #set($discard = $entries.addAll($queryObj.execute()))
 #end
 ##
 ##
@@ -273,13 +322,18 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param query The base query for selecting entries. Apart from the base query that selects entries, it can further be
  *        refined to restrict to a given space, or to a given search criteria, etc.
  * @param entries The resulting list of entries to display, a list of XDocument names.
+ * @param queryParams The parameters to bind with the query.
  *###
-#macro(getAllBlogEntries $blogDoc $query $entries)
+#macro(getAllBlogEntries $blogDoc $query $entries $queryParams)
   #if (!$entries)
     #setVariable ("$entries" [])
   #end
-  #set($totalEntries = $services.query.hql($query).count())
-  #set($discard = $entries.addAll($services.query.hql("${query} order by publishDate.value desc").execute()))
+  #set($countQueryObj = $services.query.hql($query).addFilter("unique"))
+  #set($queryObj = $services.query.hql("${query} order by publishDate.value desc").addFilter("unique"))
+  #bindQueryParameters($countQueryObj $queryParams)
+  #bindQueryParameters($queryObj $queryParams)
+  #set($totalEntries = $countQueryObj.count())
+  #set($discard = $entries.addAll($queryObj.execute()))
 #end
 ##
 ##
@@ -290,15 +344,20 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param blogDoc The blog document. It should contain a &lt;tt&gt;Blog.BlogClass&lt;/tt&gt; object.
  * @param query The base query for selecting entries. Apart from the base query that selects entries, it can further be
  *        refined to restrict to a given space, or to a given search criteria, etc.
+ * @param queryParams The parameters to bind with the query.
  * @param entries The resulting list of entries to display, a list of XDocument names.
  *###
-#macro(getUnpublishedBlogEntries $blogDoc $query $entries)
+#macro(getUnpublishedBlogEntries $blogDoc $query $queryParams $entries)
   #if (!$entries)
     #setVariable ("$entries" [])
   #end
   #set($query = "${query} and isPublished.value = 0")
-  #set($totalEntries = $services.query.hql($query).count())
-  #set($discard = $entries.addAll($services.query.hql("${query} order by publishDate.value desc").execute()))
+  #set ($countQueryObj = $services.query.hql($query).addFilter("unique"))
+  #set ($queryObj = $services.query.hql("${query} order by publishDate.value desc").addFilter("unique"))
+  #bindQueryParameters($countQueryObj $queryParams)
+  #bindQueryParameters($queryObj $queryParams)
+  #set($totalEntries = $countQueryObj.count())
+  #set($discard = $entries.addAll($queryObj.execute()))
 #end
 ##
 ##
@@ -337,6 +396,38 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       isPublished.id.id = obj.id and isPublished.id.name = 'published' and
       hidden.id.id = obj.id and hidden.id.name = 'hidden' and
       (doc.creator = '$xcontext.user' or (isPublished.value = 1 and hidden.value = 0))")
+#end
+##
+##
+###**
+ * Return the Query for selecting the all wiki blog posts without filtering
+ * 
+ * @param query The basic query for selecting blog entries.
+ *###
+#macro(getAllBlogPostsQuery $query)
+  #set ($query = $NULL)
+  #setVariable("$query" ", BaseObject as obj, IntegerProperty isPublished, 
+   IntegerProperty hidden, DateProperty publishDate 
+   where doc.fullName &lt;&gt; '$blogPostTemplate' and
+   obj.name=doc.fullName and obj.className='$blogPostClassname' and 
+   isPublished.id.id = obj.id and isPublished.id.name = 'published' and
+   hidden.id.id = obj.id and hidden.id.name='hidden' and
+   publishDate.id.id = obj.id and publishDate.id.name='publishDate' and 
+   (doc.creator = '$xcontext.user' or (isPublished.value = 1 and hidden.value = 0))")
+#end
+##
+##
+##
+###**
+ * Return the Query for selecting the all wiki blog posts with categories filtering
+ * 
+ * @param query The basic query for selecting blog entries.
+ *###
+#macro(getCategoryAllBlogPostsQuery $query)
+  #set ($query = $NULL)
+  #getAllBlogPostsQuery($baseQuery)
+  #set ($baseQuery = $baseQuery.replace('DateProperty publishDate', 'DateProperty publishDate, DBStringListProperty as category left join category.list catList'))
+  #setVariable("$query" "${baseQuery} and obj.id=category.id.id and category.id.name='category'")
 #end
 ##
 ##
@@ -406,7 +497,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
         #set ($blogDay = $entryDateStr)
       #end
       ## Finally, display the entry.
-      #displayEntry($entryDoc $entryObj $onlyExtract $shouldDisplayTitles)
+      #displayEntry($entryDoc $entryObj $onlyExtract $shouldDisplayTitles true)
     #end
   #end
   )))## blogDay
@@ -477,8 +568,9 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param onlyExtract If &lt;tt&gt;true&lt;/tt&gt;, try to display only a summary of the entry, instead of the full content.
  * @param shouldDisplayTitle If &lt;tt&gt;true&lt;/tt&gt;, display the blog title (blog posts shouldn't display the title 
  *        when they're displayed alone on their page since it's the page title which is used in this case)
+ * @param shouldDisplayActions If &lt;tt&gt;true&lt;/tt&gt;, display the blog post actions buttons
  *###
-#macro(displayEntry $entryDoc $entryObj $onlyExtract $shouldDisplayTitle)
+#macro(displayEntry $entryDoc $entryObj $onlyExtract $shouldDisplayTitle $shouldDisplayActions)
   ## Only articles with an explicit hidden setting or an explicit unpublished setting are hidden
   #isPublished($entryObj $isPublished)
   #isHidden($entryObj $isHidden)
@@ -487,7 +579,9 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #else
     (% class="hentry#if(!$isPublished) unpublished-article#elseif($isHidden) hidden-article#end" %)(((
   #end
-  #displayEntryTools($entryDoc $entryObj)
+  #if ($shouldDisplayActions)
+    #displayEntryTools($entryDoc $entryObj)
+  #end
   #if($shouldDisplayTitle)
     #displayEntryTitle($entryDoc $entryObj)
   #end
@@ -691,26 +785,26 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  *###
 #macro(getEntryContent $entryDoc $entryObj $onlyExtract $entryContent)
   #if ($onlyExtract)
-    #set ($result = $entryObj.getProperty('extract').value)
+    #set ($macro.result = $entryObj.getProperty('extract').value)
   #end
-  #if("$!result" == '')
-    #set($result = $entryObj.getProperty('content').value)
+  #if("$!macro.result" == '')
+    #set($macro.result = $entryObj.getProperty('content').value)
 #* Disabled until the content can be cleanly cut.
 *    #if($onlyExtract &amp;&amp; $result.length()&gt;$maxchars)
-*      #set($i = $result.lastIndexOf(" ", $maxchars))
+*      #set($i = $macro.result.lastIndexOf(" ", $maxchars))
 *      #set($i = $i + 1)
-*      #set($result = "${result.substring(0,$i)} *[...&gt;${entryDoc.fullName}]*")
+*      #set($macro.result = "${macro.result.substring(0,$i)} *[...&gt;${entryDoc.fullName}]*")
 *    #end
 ## *###
   #else
     #if($entryDoc.syntax.toIdString() == 'xwiki/1.0')
-      #set($result = "${result} &lt;a href='${entryDoc.getURL()}' title='$services.localization.render('blog.code.readpost')'&gt;...&lt;/a&gt;")
+      #set($macro.result = "${macro.result} &lt;a href='${entryDoc.getURL()}' title='$services.localization.render('blog.code.readpost')'&gt;...&lt;/a&gt;")
     #else
-      #set($result = "${result} [[...&gt;&gt;${entryDoc}||title='$services.localization.render('blog.code.readpost')']]")
+      #set($macro.result = "${macro.result} [[...&gt;&gt;${entryDoc}||title='$services.localization.render('blog.code.readpost')']]")
     #end
   #end
   #set ($entryContent = $NULL)
-  #setVariable ("$entryContent" $result)
+  #setVariable ("$entryContent" $macro.result)
 #end
 ##
 ##
@@ -781,19 +875,19 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     (% class="pagingLinks" %)(((
     #getRequestedWeek($weekDate)
     $weekDate.addWeeks(-1)##
-    (% class="prevPage" %)**[[« {{translation key='blog.code.previousweek'/}}&gt;&gt;$doc.name||queryString="year=$weekDate.weekyear&amp;week=$weekDate.weekOfWeekyear"]]**(%%)
+    (% class="prevPage" %)**[[« {{translation key='blog.code.previousweek'/}}&gt;&gt;$doc.name||queryString="year=$weekDate.weekyear&amp;week=$weekDate.weekOfWeekyear"||class="button"]]**(%%)
     #sep()
     $weekDate.addWeeks(2)## 2 because we already subtracted 1 above
-    (% class="nextPage" %)**[[{{translation key='blog.code.nextweek'/}} »&gt;&gt;$doc.name||queryString="year=$weekDate.weekyear&amp;week=$weekDate.weekOfWeekyear"]]**(%%)
+    (% class="nextPage" %)**[[{{translation key='blog.code.nextweek'/}} »&gt;&gt;$doc.name||queryString="year=$weekDate.weekyear&amp;week=$weekDate.weekOfWeekyear"||class="button"]]**(%%)
     )))
   #elseif($displayType == 'monthly')
     (% class="pagingLinks" %)(((
     #getRequestedMonth($monthDate)
     $monthDate.addMonths(-1)##
-    (% class="prevPage" %)**[[« {{translation key='blog.code.previousmonth'/}}&gt;&gt;$doc.name||queryString="year=$monthDate.year&amp;month=$monthDate.monthOfYear"]]**(%%)
+    (% class="prevPage" %)**[[« {{translation key='blog.code.previousmonth'/}}&gt;&gt;$doc.name||queryString="year=$monthDate.year&amp;month=$monthDate.monthOfYear"||class="button"]]**(%%)
     #sep()
     $monthDate.addMonths(2)## 2 because we already subtracted 1 above
-    (% class="nextPage" %)**[[{{translation key='blog.code.nextmonth'/}} »&gt;&gt;$doc.name||queryString="year=$monthDate.year&amp;month=$monthDate.monthOfYear"]]**(%%)
+    (% class="nextPage" %)**[[{{translation key='blog.code.nextmonth'/}} »&gt;&gt;$doc.name||queryString="year=$monthDate.year&amp;month=$monthDate.monthOfYear"||class="button"]]**(%%)
     )))
   #elseif($displayType == 'all')
   #else
@@ -810,7 +904,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       (% class="pagingLinks" %)(((
       #if ($currentPageNumber &lt; $totalPages)
         #set($currentPageNumber = $currentPageNumber + 1)
-        (% class="prevPage" %)**[[« {{translation key='blog.code.olderposts'/}}&gt;&gt;$doc.name||queryString="page=${currentPageNumber}&amp;ipp=${itemsPerPage}$queryString"]]**(%%)
+        (% class="prevPage" %)**[[« {{translation key='blog.code.olderposts'/}}&gt;&gt;$doc.name||queryString="page=${currentPageNumber}&amp;ipp=${itemsPerPage}$queryString"||class="button"]]**(%%)
         #set($currentPageNumber = $currentPageNumber - 1)
       #end
       #if ($currentPageNumber &gt; 1)
@@ -818,7 +912,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
           #sep()
         #end
         #set($currentPageNumber = $currentPageNumber - 1)
-        (% class="nextPage" %)**[[{{translation key='blog.code.newerposts'/}} »&gt;&gt;$doc.name||queryString="page=${currentPageNumber}&amp;ipp=${itemsPerPage}$queryString"]]**(%%)
+        (% class="nextPage" %)**[[{{translation key='blog.code.newerposts'/}} »&gt;&gt;$doc.name||queryString="page=${currentPageNumber}&amp;ipp=${itemsPerPage}$queryString"||class="button"]]**(%%)
         #set($currentPageNumber = $currentPageNumber + 1)
       #end
       (% class="clear" %)(%%)
@@ -917,6 +1011,220 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #else
     {{error}}$services.localization.render($text, $!parameters){{/error}}
   #end
+#end
+##
+##
+##
+#**
+ * Check if a blog is the Default blog (The one in the 'Blog' space).
+ * 
+ * @param blogDoc The blog document. It should contain a &lt;tt&gt;Blog.BlogClass&lt;/tt&gt; object.
+ * @param isDefault The resulting boolean.
+ *###
+#macro(isDefaultBlog $blogDoc $isDefault)
+  #set ($result = false)
+  #if ($blogDoc.space == 'Blog')
+    #set ($result = true)
+  #end
+  #setVariable("$isDefault" $result)
+#end
+##
+##
+##
+#**
+ * Retrieve the blog posts location (space).
+ *
+ * @param blogSpace The blog space. It should contain a document with a &lt;tt&gt;Blog.BlogClass&lt;/tt&gt; object
+ * @param postsLocation The resulting location.
+ *###
+#macro(getBlogPostsLocation $blogSpace $postsLocation)
+  #getBlogDocument($blogSpace $blogDoc)
+  #getBlogProperty($blogDoc 'postsLocation' $blogDoc.space $result)
+  #set ($postsLocation = $NULL)
+  #setVariable ("$postsLocation" $result)
+#end
+##
+##
+##
+#**
+ * Retrieve the blog categories location (space).
+ *
+ * @param blogSpace The blog space. It should contain a document with a &lt;tt&gt;Blog.BlogClass&lt;/tt&gt; object
+ * @param categoriesLocation The resulting location.
+ *###
+#macro(getBlogCategoriesLocation $blogSpace $categoriesLocation)
+  #getBlogDocument($blogSpace $blogDoc)
+  #getBlogProperty($blogDoc 'categoriesLocation' 'Blog' $result)
+  #set ($postsLocation = $NULL)
+  #setVariable ("$categoriesLocation" $result)
+#end
+###**
+ * Return the Query for selecting the blog posts based on the context where the posts are displayed.
+ * for example there is 4 different panel contexts: 
+ * aBlog.aPost or aBlog.WebHome
+ * aCategorySpace.aCategory
+ * aCategorySpace.WebHome
+ * Blog.aPost or Blog.WebHome
+ *
+ * @param query The query for selecting blog entries.
+ * @param queryParams The parameters to bind with the generated query.
+ * @param targetDoc The document in which the articles will be displayed.
+ *###
+#macro(getAllBlogPostsQueryBasedOnDisplayContext $targetDoc $query $queryParams)
+  #set ($query = $NULL)
+  #set ($queryParams = $NULL)
+  #getCategoryAllBlogPostsQuery($resultQuery)
+  #set ($resultQueryParams = {})
+  #set($sanitizedSpace = $targetDoc.space.replaceAll('([%_!])', '!$1').concat('.%'))
+  #if ($targetDoc.space == $defaultBlogSpace &amp;&amp; !$targetDoc.getObject($blogCategoryClassname))
+    ## Get all posts that are in the default blog space('Blog') or in category 'Blog.%'
+    #set ($discard = $resultQueryParams.put('space', $targetDoc.space))
+    #set ($discard = $resultQueryParams.put('catList', $sanitizedSpace))
+    #set($resultQuery = "${resultQuery} and (doc.space = :space or catList like :catList escape '!')")
+  #elseif($targetDoc.getObject($blogCategoryClassname))
+    ## Get all posts that are in a category aCategorySpace.aCategory
+    #set ($discard = $resultQueryParams.put('catList', $targetDoc.fullName))
+    #set($resultQuery = "${resultQuery} and (catList=:catList)")
+  #elseif($targetDoc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
+    ## Get all posts that are in a category aCategorySpace.%
+    #set ($discard = $resultQueryParams.put('catList', $sanitizedSpace))
+    ## Exclude incategorized posts
+    #set ($excludedCategory = "${targetDoc.space}.WebHome")
+    #if ($targetDoc.space == $defaultBlogSpace)
+      #set ($excludedCategory = "Blog.Categories.WebHome")
+    #end
+    #set ($discard = $resultQueryParams.put('excludedCategory', $excludedCategory))
+    #set($resultQuery = "${resultQuery} and (catList&lt;&gt;:excludedCategory) and (catList like :catList escape '!')")
+  #else
+    ## Get all posts in blog space aBlog
+    #getBlogEntriesBaseQuery($resultQuery)
+    #getBlogPostsLocation($targetDoc.space $postsLocation)
+    #set ($discard = $resultQueryParams.put('space', $postsLocation))
+    #set($resultQuery = "${resultQuery} and doc.space = :space")
+  #end
+  #setVariable("$query" $resultQuery)
+  #setVariable("$queryParams" $resultQueryParams)
+#end
+##
+##
+##
+###**
+ * Display blog posts based on the context where the posts are displayed.
+ * for example there is 4 different panel contexts: 
+ * aBlog.aPost or aBlog.WebHome
+ * aCategorySpace.aCategory
+ * aCategorySpace.WebHome
+ * Blog.aPost or Blog.WebHome
+ *
+ * @param targetDoc The document in which the articles will be displayed.
+ * @param postsVisiblity The visibility of the posts to display: recent, unpublished, ...
+ * @param layout Layout of the the posts to display
+ * @param layoutParams additional layout parameters, it is a string like 'param1=val1|...|paramN=valueN'
+ * @param limit the number of posts to display
+ *###
+#macro(displayBlogPostsBasedOnContext $targetDoc $postsVisiblity $layout $layoutParams $limit)
+  #if ($postLayout == 'full')
+    #set ($macro.paginated = 'yes')
+  #end
+  #if ($targetDoc.space == $defaultBlogSpace &amp;&amp; !$targetDoc.getObject($blogCategoryClassname))
+    ## Display all posts that are in the default blog space('Blog') or in category 'Blog.%'
+    #getBlogPostsLayout($xwiki.getDocument("${defaultBlogSpace}.WebHome") $postsLayout)
+    #if ("$!layout" == '')
+      #set ($layout = $postsLayout)
+    #end
+    #if ($postsVisiblity == 'recent')
+    {{blogpostlist blog="${defaultBlogSpace}.WebHome" published='yes' hidden='no' layout="$!layout" layoutParams="$!layoutParams" limit="$limit" /}}
+    #elseif($postsVisiblity == 'unpublished')
+    {{blogpostlist blog="${defaultBlogSpace}.WebHome" published='no' layout="$!layout" layoutParams="$!layoutParams" paginated="$!macro.paginated" limit="$limit" /}}
+    #end
+  #elseif($targetDoc.getObject($blogCategoryClassname))
+    ## display all posts that are in a category aCategorySpace.aCategory
+    #getBlogDocumentForCategoriesSpace($targetDoc.space $blogDoc)
+    #getBlogPostsLayout($blogDoc $postsLayout)
+    #if ("$!layout" == '')
+      #set ($layout = $postsLayout)
+    #end
+    #if ($postsVisiblity == 'recent')
+    {{blogpostlist category="$targetDoc.fullName" published='yes' hidden='no' layout="$!layout" layoutParams="$!layoutParams" limit="$limit" /}}
+    #elseif($postsVisiblity == 'unpublished')
+    {{blogpostlist category="$targetDoc.fullName" published='no' layout="$!layout" layoutParams="$!layoutParams" paginated="$!macro.paginated" limit="$limit" /}}
+    #end
+  #elseif($targetDoc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
+    ## Dispaly all posts that are in a category aCategorySpace.%
+    #getBlogDocumentForCategoriesSpace($targetDoc.space $blogDoc)
+    #getBlogPostsLayout($blogDoc $postsLayout)
+    #if ("$!layout" == '')
+      #set ($layout = $postsLayout)
+    #end
+    #if ($postsVisiblity == 'recent')
+    {{blogpostlist category="$targetDoc.space" published='yes' hidden='no' layout="$!layout" layoutParams="$!layoutParams" limit="$limit" /}}
+    #elseif($postsVisiblity == 'unpublished')
+    {{blogpostlist category="$targetDoc.space" published='no' layout="$!layout" layoutParams="$!layoutParams" paginated="$!macro.paginated" limit="$limit" /}}
+    #end
+  #else
+    ## Display all posts in blog space aBlog
+    #getBlogDocument($targetDoc.space $blogDoc)
+    #getBlogPostsLayout($blogDoc $postsLayout)
+    #if ("$!layout" == '')
+      #set ($layout = $postsLayout)
+    #end
+    #if ($postsVisiblity == 'recent')
+    {{blogpostlist blog="$blogDoc.fullName" published='yes' hidden='no' layout="$!layout" limit="$limit" /}}
+    #elseif($postsVisiblity == 'unpublished')
+    {{blogpostlist blog="$blogDoc.fullName" published='no' layout="$!layout" layoutParams="$!layoutParams" paginated="$!macro.paginated" limit="$limit" /}}
+    #end
+  #end
+#end
+##
+##
+##
+#**
+ * Bind parameters to a query object.
+ *
+ * @param queryObj The query object (org.xwiki.query.internal.ScriptQuery object)
+ * @param queryParams the query parameters.
+ *###
+#macro(bindQueryParameters $queryObj $queryParams)
+  #set ($output = $queryObj)
+  #foreach( $key in $queryParams.keySet() )
+    #set($output = $queryObj.bindValue($key, $queryParams.get($key)))
+  #end
+  #setVariable("$queryObj" $output)
+#end
+##
+##
+##
+#**
+ * Determines the blogposts layout: Default layout (Calendar), Image thumbnail
+ * 
+ * @param blogDoc The blog document. It should contain a &lt;tt&gt;Blog.BlogClass&lt;/tt&gt; object with the &lt;tt&gt;postsLayout&lt;/tt&gt;
+ *        property set.
+ * @param postsLayout The resulting string. If the blog object does not define anything, it is considered full (default).
+ *###
+#macro(getBlogPostsLayout $blogDoc $postsLayout)
+  #getBlogProperty($blogDoc 'postsLayout' 'full' $res)
+  #set ($postsLayout = $NULL)
+  #setVariable ("$postsLayout" $res)
+#end
+##
+##
+##
+#**
+ * Retrieve the blog document of a categories space, which is the blog descriptor that have its categoriesLocation property set to the categories space
+ * 
+ * @param categoriesSpace A &lt;tt&gt;String&lt;/tt&gt;, the name of the space.
+ * @param blogDoc The resulting XDocument.
+ *###
+#macro(getBlogDocumentForCategoriesSpace $categoriesSpace $blogDoc)
+  #set($macro.blogDocs = $services.query.hql(", BaseObject obj, StringProperty as categoriesLocationProp where obj.name = doc.fullName and obj.className = '$blogClassname' and obj.id=categoriesLocationProp.id.id and categoriesLocationProp.id.name='categoriesLocation' and categoriesLocationProp.value=:categoriesLocation order by doc.creationDate").setLimit(1).setOffset(0).bindValue('categoriesLocation', $categoriesSpace).execute())
+  #if($macro.blogDocs.size() &gt; 0 &amp;&amp; $categoriesSpace != $defaultBlogSpace)
+    #set($macro.result = $xwiki.getDocument($macro.blogDocs.get(0)))
+  #else
+    ## Fallback to Blog.WebHome, the default blog
+    #set($macro.result = $xwiki.getDocument('Blog.WebHome'))
+  #end
+  #set ($blogDoc = $NULL)
+  #setVariable ("$blogDoc" $macro.result)
 #end
 {{/velocity}}</content>
 </xwikidoc>

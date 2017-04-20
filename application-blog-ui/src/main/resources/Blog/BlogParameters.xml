@@ -54,6 +54,7 @@
 #set($blogCategoryClassname = 'Blog.CategoryClass')
 #set($blogCategoryTemplate = 'Blog.CategoryTemplate')
 #set($blogCategorySheet = 'Blog.CategorySheet')
+#set($blogCategoriesSheet = 'Blog.CategoriesSheet')
 #set($oldBlogCategoryClassname = 'Blog.Categories')
 #set($defaultCategoryParent = 'Blog.Categories')
 ## Style
@@ -65,6 +66,9 @@
 ## Misc
 #set($thisURL = $doc.getURL($xcontext.action, $request.queryString))
 #set($isBlogPost = $doc.getObject($blogPostClassname))
+#set($defaultBlogSpace = 'Blog')
+#set($isCategoryPage = $doc.getObject($blogCategoryClassname))
+#set($isCategoriesHomePage = $doc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
 ##
 ##
 ##

@@ -125,15 +125,13 @@
       <content>{{include reference="Blog.BlogCode"/}}
 
 {{velocity}}
-#getBlogEntriesBaseQuery($query)
+#getAllBlogPostsQueryBasedOnDisplayContext($doc $query $queryParams)
 #set($query = "$!{query} and isPublished.value = 1 and hidden.value &lt;&gt; 1")
-#set($recentEntries = $services.query.hql("${query} order by publishDate.value desc").setLimit(10).setOffset(0).execute())
-#if($recentEntries.size() &gt; 0 || $showEmptyPanels)
+#set ($queryObj = $services.query.hql("${query} order by publishDate.value desc").addFilter("unique"))
+#bindQueryParameters($queryObj $queryParams)
+#if($queryObj.setLimit(10).setOffset(0).count() &gt; 0 || $showEmptyPanels)
   #panelheader($services.localization.render('blog.recentposts.paneltitle'))
-  #foreach($entryDoc in $xwiki.wrapDocs($recentEntries))
-    #getEntryObject($entryDoc $entryObj)
-    * [[$!{entryDoc.display('title', 'view', $entryObj).replaceAll('(\[|\]|\||&gt;)', '~~$1')}&gt;&gt;$!{services.model.serialize($entryDoc.documentReference).replaceAll('(\[|\]|\||&gt;)', '~$1')}]]
-  #end
+  #displayBlogPostsBasedOnContext($doc 'recent' 'link' '' 10)
   #panelfooter()
 #end
 {{/velocity}}</content>

@@ -39,16 +39,5 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{include reference="Blog.BlogCode"/}}
-
-{{velocity filter="none"}}
-{{html clean="false" wiki="true"}}
-
-= $services.localization.render('blog.unpublished.entries') =
-
-#getBlogEntriesBaseQuery($query)
-#getUnpublishedBlogEntries($xwiki.getDocument('Blog.WebHome') $query $entries)
-#displayBlog($entries 'unpublished' true true)
-{{/html}}
-{{/velocity}}</content>
+  <content>{{include reference="Blog.UnpublishedPostsSheet" /}}</content>
 </xwikidoc>

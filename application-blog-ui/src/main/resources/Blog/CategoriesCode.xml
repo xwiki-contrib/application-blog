@@ -65,17 +65,26 @@
     #getCategoriesHierarchy ('' $tree)
     #set ($subcategories = [])
     #getSubcategories ($tree $category $subcategories)
-    #set ($categories = [${category}])
+    #set ($categories = [])
+    #set ($parameters = '')
+    ## check if it a categories space
+    #set ($categoryDoc = $xwiki.getDocument($category))
+    #if ("$!categoryDoc.getObject($blogCategoryClassname)" != '')
+      #set ($discard = $categories.add($category))
+      #set ($parameters = '?')
+    #end
     #set ($discard = $categories.addAll(${subcategories}))
-    #set ($parameters = '?')
     #foreach ($subcategory in $subcategories)
-      #set ($parameters = $parameters.concat(', ?'))
+      #if ($parameters != '')
+        #set ($parameters = $parameters.concat(', '))
+      #end
+      #set ($parameters = $parameters.concat('?'))
     #end
     #getBlogEntriesBaseQuery ($query)
     #set ($query = ", DBStringListProperty as categories join categories.list as category${query} and obj.id = categories.id.id and categories.id.name='category' and category in (${parameters})")
-    #set ($totalResult = $services.query.hql($query).bindValues($categories).count())
+    #set ($totalResult = $services.query.hql($query).bindValues($categories).addFilter("unique").count())
     #preparePagedViewParams ($totalResult 10)
-    #set ($result = $services.query.hql("${query} order by publishDate.value desc").setLimit($itemsPerPage).setOffset($startAt).bindValues($categories).execute())
+    #set ($result = $services.query.hql("${query} order by publishDate.value desc").setLimit($itemsPerPage).setOffset($startAt).bindValues($categories).addFilter("unique").execute())
     #if ("$!{blogCategoryEntriesCache.containsKey($!{category})}" == '')
       #set ($blogCategoryEntriesCache = {})
     #end
@@ -85,11 +94,9 @@
   #end
 #end
 #macro(getSubcategories $tree $category $subcategories)
-  #if(!$subcategories.contains($category))
-    #foreach($subcategory in $tree.get($category))
-      #set($discard = $subcategories.add($subcategory))
-      #getSubcategories($tree $subcategory $subcategories)
-    #end
+  #foreach($subcategory in $tree.get($category))
+    #set($discard = $subcategories.add($subcategory))
+    #getSubcategories($tree $subcategory $subcategories)
   #end
 #end
 ##
@@ -97,7 +104,7 @@
 ##
 #**
  * Builds a tree of categories, respecting the parent&lt;-&gt;subcategory relation. Each node holds the
- * full name of the category's document. The root of the tree is 'Blog.Categories'.
+ * full name of the category's document. The root of the tree is 'Blog.Categories' or 'aCategorySpace.WebHome'.
  * 
  * @param space The space where to search for categories. If this parameter is an emptry string or
  *        null, all the categories in the wiki are returned.
@@ -113,10 +120,14 @@
     #set ($result = {})
     #set($query = ', BaseObject obj where ')
     #if("$!space" != '')
-      #set($query = "${query}doc.space = '${space}' and ")
+      #set($query = "${query}doc.space = :space and ")
     #end
     #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogCategoryClassname}' order by doc.name")
-    #foreach($category in $services.query.hql($query).execute())
+    #set($queryObj = $services.query.hql($query))
+    #if("$!space" != '')
+      #set($queryObj = $queryObj.bindValue('space', $space))
+    #end
+    #foreach($category in $queryObj.execute())
       #set($categoryDoc = $xwiki.getDocument($category))
       #set($categoryParent = "$!categoryDoc.parent")
       #if($categoryParent == '')
@@ -281,7 +292,7 @@
  * control for choosing the parent category among existing categories.
  *###
 ## DO NOT CHANGE INDENTATION
-#macro(addCategoryForm) #set($addCategURL = $doc.getURL()) #if("$!request.entry" != '') #set($addCategURL = "${addCategURL}?entry=$escapetool.url($request.entry)&amp;amp;entryObjNb=$escapetool.url($!request.entryObjNb)")#end&lt;form action="${addCategURL}" method="post" class="category-add-form"&gt;&lt;div class='create-category'&gt; &lt;input type="hidden" name="form_token" value="$!{services.csrf.getToken()}" /&gt; &lt;input type="hidden" name="xaction" value="create"/&gt; &lt;label&gt;$services.localization.render('blog.categories.new')&lt;br/&gt; &lt;input type="text" name="newCategoryName" class="category-name-input" /&gt;&lt;/label&gt;&lt;br/&gt;#if("$!{request.parentCategory}" == "")&lt;label&gt;#* $services.localization.render('blog.categories.parent')*# Subcategory of:&lt;br/&gt; &lt;select name="newCategoryParent" id="blog_category_selectBox" class="category-add-input"&gt; &lt;option value="${defaultCategoryParent}" selected="selected"&gt;None&lt;/option&gt; $!processedCategories.clear() #displayCategoriesHierarchy($tree 'option') &lt;/select&gt; &lt;br/&gt;&lt;/label&gt;#else&lt;input type="hidden" name="newCategoryParent" value="${escapetool.xml($request.parentCategory)}"/&gt;#end&lt;span class="buttonwrapper"&gt;&lt;input class="button" type="submit" value="Add" /&gt;&lt;/span&gt; &lt;a class="btn btn-default" href="$doc.getURL()"&gt;Cancel&lt;/a&gt; &lt;/div&gt;&lt;/form&gt; #end
+#macro(addCategoryForm) #set($addCategURL = $doc.getURL()) #if("$!request.entry" != '') #set($addCategURL = "${addCategURL}?entry=$escapetool.url($request.entry)&amp;amp;entryObjNb=$escapetool.url($!request.entryObjNb)")#end&lt;form action="${addCategURL}" method="post" class="category-add-form"&gt;&lt;div class='create-category'&gt; &lt;input type="hidden" name="form_token" value="$!{services.csrf.getToken()}" /&gt; &lt;input type="hidden" name="xaction" value="create"/&gt; &lt;label&gt;$services.localization.render('blog.categories.new')&lt;br/&gt; &lt;input type="text" name="newCategoryName" class="category-name-input" /&gt;&lt;/label&gt;&lt;br/&gt;#if("$!{request.parentCategory}" == "")&lt;label&gt;#* $services.localization.render('blog.categories.parent')*# $escapetool.xml($services.localization.render('blog.manageCategories.forms.sub_cat_of'))&lt;br/&gt; &lt;select name="newCategoryParent" id="blog_category_selectBox" class="category-add-input"&gt; &lt;option value="${escapetool.xml($defaultCategoryParent)}" selected="selected"&gt;$escapetool.xml($services.localization.render('blog.manageCategories.forms.select_none'))&lt;/option&gt; $!processedCategories.clear() #displayCategoriesHierarchy($tree 'option') &lt;/select&gt; &lt;br/&gt;&lt;/label&gt;#else&lt;input type="hidden" name="newCategoryParent" value="${escapetool.xml($request.parentCategory)}"/&gt;#end&lt;span class="buttonwrapper"&gt;&lt;input class="button" type="submit" value="$escapetool.xml($services.localization.render('blog.manageCategories.forms.add_button_label'))" /&gt;&lt;/span&gt; &lt;a class="btn btn-default" href="$doc.getURL()"&gt;$escapetool.xml($services.localization.render('blog.manageCategories.forms.cancel_button_label'))&lt;/a&gt; &lt;/div&gt;&lt;/form&gt; #end
 ##
 ##
 ##
@@ -295,8 +306,8 @@
 &lt;input type="hidden" name="xaction" value="rename"/&gt;##
 &lt;input type="hidden" name="category" value="${escapetool.xml($request.category)}"/&gt;##
 &lt;label&gt;$services.localization.render('blog.categories.newName')&lt;br/&gt; &lt;input type="text" name="newCategoryName" class="category-name-input" /&gt;&lt;/label&gt;&lt;br/&gt;##
-&lt;span class="buttonwrapper"&gt;&lt;input class="button" type="submit" value="Rename" /&gt;&lt;/span&gt; ##
-&lt;a class="btn btn-default" href="$doc.getURL()"&gt;Cancel&lt;/a&gt;##
+&lt;span class="buttonwrapper"&gt;&lt;input class="button" type="submit" value="$escapetool.xml($services.localization.render('blog.manageCategories.forms.rename_button_label'))" /&gt;&lt;/span&gt; ##
+&lt;a class="btn btn-default" href="$doc.getURL()"&gt;$escapetool.xml($services.localization.render('blog.manageCategories.forms.cancel_button_label'))&lt;/a&gt;##
 &lt;/div&gt;&lt;/form&gt;##
 #end
 ##
@@ -352,7 +363,7 @@
   #getEntriesForCategory($name $discard $totalEntries)
   #set($nameUrl = $escapetool.url($name))
   #getCallingDocument($callingDocument)
-  #foreach($i in [1..$level])*#end (% class="blog-category-level" %)((( [[#toolImage('rss')&gt;&gt;Blog.CategoryRss||queryString="xpage=plain&amp;category=$nameUrl" title="RSS"]] &lt;span class="wikilink"&gt;&lt;a href="$services.rendering.escape($xwiki.getURL($name), $callingDocument.syntax)"&gt;#getCategoryName($xwiki.getDocument($name)) &lt;span class="itemCount"&gt;($totalEntries)&lt;/span&gt;&lt;/a&gt;&lt;/span&gt;)))
+  #foreach($i in [1..$level])*#end (% class="blog-category-level" %)((( [[#toolImage('rss')&gt;&gt;$name||queryString="xpage=plain&amp;sheet=Blog.CategoryRss" title="RSS"]] &lt;span class="wikilink"&gt;&lt;a href="$services.rendering.escape($xwiki.getURL($name), $callingDocument.syntax)"&gt;#getCategoryName($xwiki.getDocument($name)) &lt;span class="itemCount"&gt;($totalEntries)&lt;/span&gt;&lt;/a&gt;&lt;/span&gt;)))
 #end
 ##
 ##
@@ -449,11 +460,15 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
 #macro(displayCategoryManagementTree $space $displayType)
 &lt;div class="blog-categories-list"&gt;
   #getCategoriesHierarchy("$!{space}" $tree)
+  #if ("$!space" != $defaultBlogSpace)
+    #set ($defaultCategoryParent = "${space}.WebHome")
+  #end
   #displayCategoriesHierarchy($tree $displayType)
   #if($xwiki.hasAccessLevel('edit', $xcontext.user, $doc.fullName))
     #set($addCategURL = $doc.getURL('view', $escapetool.url({
       'xaction' : 'showAddCategory',
-      'parentCategory' : ''
+      'parentCategory' : '',
+      'categoriesSpace': $space
     })))
     #if($isBlogPost || ("$!request.entry" != '' &amp;&amp; "$!request.entryObjNb" != ''))
       #set($entryParam = $!doc.fullName)
@@ -466,7 +481,8 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
         'xaction' : 'showAddCategory',
         'parentCategory' : '',
         'entry' : $entryParam,
-        'entryObjNb' : $entryObjNbParam
+        'entryObjNb' : $entryObjNbParam,
+        'categoriesSpace': $space
       })))
     #end
     * &lt;span class="blog-add-category-label"&gt;$services.icon.renderHTML('add')&amp;nbsp;&lt;a href="$escapetool.xml($addCategURL)"&gt;$services.localization.render('blog.categories.addcategory')&lt;/a&gt;&lt;/span&gt;
@@ -530,7 +546,11 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
  *###
 #macro(renameCategory $category $newCategoryName)
   #set($categoryDoc = $xwiki.getDocument($category))
-  #set($newCategoryDoc = $xwiki.getDocument($newCategoryName))
+  #set ($newCategoryFullName = $newCategoryName)
+  #if ($category.space != $defaultBlogSpace)
+    #set ($newCategoryFullName = "${categoryDoc.space}.${newCategoryName}")
+  #end
+  #set($newCategoryDoc = $xwiki.getDocument($newCategoryFullName))
   #set($parameterValues = ["$!{category}"])
   #set($query = ', BaseObject obj where ')
   #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogCategoryClassname}' and doc.fullName &lt;&gt; 'Blog.CategoryTemplate' and doc.parent = ? order by doc.name")
@@ -554,7 +574,57 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
   #if ($!{services.csrf.isTokenValid("$!{request.getParameter('form_token')}")})
     $categoryDoc.getObject('Blog.CategoryClass').set('name', $newCategoryName)
     $categoryDoc.save($services.localization.render('blog.manageCategories.comment.updatedCategory'), true)
-    $categoryDoc.rename($newCategoryName)
+    $categoryDoc.rename($newCategoryFullName)
+  #end
+#end
+##
+##
+##
+#**
+ * Dipslay posts of a given category or a categories space.
+ * This macro is used in Blog.CategorySheet and Blog.CategoriesSheet pages
+ * 
+ * @param catDoc The document containing the category or the WebHome page of a categories space.
+ * @param catObj The Blog.CategoryClass object attached to the category document, this parameter is null in case of categories space WebHome.
+ *###
+#macro(displayCategoryPosts $catDoc $catObj)
+  #getEntriesForCategory($catDoc.fullName $discard $totalEntries)
+
+  #if ($totalEntries == 0)
+
+    {{info}}{{translation key="blog.categories.noentries"/}}{{/info}}
+  #else
+    #set ($macro.isCategoriesSpace = $catDoc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
+    #if ($catObj || $macro.isCategoriesSpace)
+
+    (% class="cat-posts-count" %)
+    ==== [[#toolImage('feed')&gt;&gt;Blog.CategoryRss||queryString="xpage=plain&amp;category=$escapetool.url($catDoc.fullName)" title="RSS"]] $services.localization.render('blog.category.posts.count', [$totalEntries]) ====
+    #end
+    ## Keep testing the inline action for backward compatibility with older categories.
+    #if ($xcontext.action != 'edit' &amp;&amp; $xcontext.action != 'inline')
+      #getCategoriesHierarchy($catDoc.space $tree)
+      #if ("$!tree.get($catDoc.fullName)" != '')
+        (% class="blog-categories-list subcategories cat-count" %)
+        (((
+          (((
+            **&amp;nbsp;**
+          )))
+          (((
+            #displayCategoriesHierarchyRecursive($tree $catDoc.fullName 1 'simple')
+          )))
+        )))
+      #end
+      (% class="clearfloats" %)((()))
+
+      #set ($macro.layoutParams = 'displayTitle=true|useSummary=true')
+      #getBlogDocumentForCategoriesSpace($catDoc.space $blogDoc)
+      #getBlogPostsLayout($blogDoc $postsLayout)
+      #set ($category = $catDoc.fullName)
+      #if ($macro.isCategoriesSpace)
+        #set ($category = $catDoc.space)
+      #end
+      (% class="hfeed category" %)((({{blogpostlist category="$category" paginated="yes" layout="$postsLayout" layoutParams="$!macro.layoutParams" /}})))
+    #end
   #end
 #end
 {{/velocity}}</content>

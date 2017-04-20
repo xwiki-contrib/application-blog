@@ -126,17 +126,34 @@
 
 {{velocity}}
 #panelheader($services.localization.render('blog.categories.paneltitle'))
+#if ($isCategoriesHomePage || $isCategoryPage)
+  #set ($categoriesLocation = $doc.space)
+#else
+  #getBlogCategoriesLocation($doc.space $categoriesLocation)
+#end
+#if ($categoriesLocation != $defaultBlogSpace)
+  #set ($defaultCategoryParent = "${categoriesLocation}.WebHome")
+  #set ($rssQueryString = "&amp;sheet=Blog.CategoryRss")
+#else
+  #set ($rssQueryString = "&amp;sheet=Blog.BlogRss")
+#end
+#set ($allLink = $xwiki.getURL("${categoriesLocation}.WebHome"))
 {{html wiki="true"}}
 #getCallingDocument($callingDocument)
-* (% class="blog-category-level" %)((( [[#toolImage('rss')&gt;&gt;Blog.BlogRss||queryString="xpage=plain" title="RSS"]] &lt;span class="wikilink"&gt;&lt;a href="$xwiki.getURL('Blog.WebHome')"&gt;$services.localization.render('blog.categories.all')&lt;/a&gt;&lt;/span&gt;)))
+* (% class="blog-category-level" %)((( [[#toolImage('rss')&gt;&gt;${categoriesLocation}.WebHome||queryString="xpage=plain${rssQueryString}" title="RSS"]] &lt;span class="wikilink"&gt;&lt;a href="$allLink"&gt;$services.localization.render('blog.categories.all')&lt;/a&gt;&lt;/span&gt;)))
 {{/html}}
 
-#getCategoriesHierarchy('Blog' $tree)
+#getCategoriesHierarchy($categoriesLocation $tree)
 {{html wiki="true"}}
 #displayCategoriesHierarchy($tree 'simple')
 {{/html}}
 #if($xwiki.hasAdminRights())
-  (% class="edit-categories" %)(((~([[$services.localization.render('blog.categories.edit')&gt;&gt;Blog.ManageCategories]]~))))
+  #set ($manageCategoriesPage = 'Blog.ManageCategories')
+  #if ($categoriesLocation != $defaultBlogSpace)
+    #set ($manageCategoriesPage = "${categoriesLocation}.WebHome")
+    #set ($manageCategoriesLinkQueryString = 'action=manage')
+  #end
+  (% class="edit-categories" %)(((~([[$services.localization.render('blog.categories.edit')&gt;&gt;$manageCategoriesPage||queryString="$!manageCategoriesLinkQueryString"]]~))))
 #end
 #panelfooter()
 {{/velocity}}</content>

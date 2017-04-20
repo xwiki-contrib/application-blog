@@ -20,43 +20,47 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.1">
+<xwikidoc version="1.2" reference="Blog.BlogPostLayoutMacros" locale="">
   <web>Blog</web>
-  <name>BlogRss</name>
+  <name>BlogPostLayoutMacros</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <creationDate>1229479418000</creationDate>
+  <creationDate>1492606591000</creationDate>
   <parent>Blog.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1229906910000</date>
-  <contentUpdateDate>1229906910000</contentUpdateDate>
+  <date>1492607611000</date>
+  <contentUpdateDate>1492607611000</contentUpdateDate>
   <version>1.1</version>
-  <title>Blog RSS Feed generator</title>
+  <title/>
   <comment/>
   <minorEdit>false</minorEdit>
-  <syntaxId>xwiki/2.0</syntaxId>
-  <hidden>true</hidden>
-  <content>{{include reference="Blog.RssCode"/}}
-
-{{velocity filter="none"}}
-#if("$!{request.xpage}" == 'plain' || "$!{request.xpage}" == 'rdf')
-$response.setContentType('application/rss+xml')
-{{html clean="false" wiki="false"}}
-##
-##
-##
-#if ("$!doc.getObject($blogClassname)" != '')
-  #set ($blogDoc = $doc)
-#else
-  #getTargetBlog($blogDoc)
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <content>{{velocity output='false'}}
+#**
+ * Extract the layout parameters from a string.
+ * 
+ * @param layoutParamsString The string representation of the layout parameters.
+ * It should contain a String following this format "paramName1=Value1|paramName2=Value2|...|paramNameK=ValueK"
+ * @param layoutsParameters The resulting layout parameters Map.
+ *###
+#macro(extractLayoutParametersFromString $layoutParamsString $layoutsParameters)
+  #set ($layoutsParameters = $NULL)
+  #set ($macro.layoutParams = {})
+  #if ("$!layoutParamsString" != '')
+    #set ($macro.paramsArr = $layoutParamsString.split('\|'))
+    #foreach ($item in $macro.paramsArr)
+      #set ($itemSplit = $item.split('='))
+      #if ($itemSplit.size() == 2)
+        #set ($discard = $macro.layoutParams.put($itemSplit[0].trim(), $itemSplit[1].trim()))
+      #end
+    #end
+  #end
+  #setVariable("$layoutsParameters" $macro.layoutParams)
 #end
-#getBlogEntries($blogDoc $entries)
-#set($entries = $xwiki.wrapDocs($entries))
-#displayBlogRss($blogDoc $entries)
-{{/html}}
-#end
-{{/velocity}}</content>
+{{/velocity}}
+</content>
 </xwikidoc>

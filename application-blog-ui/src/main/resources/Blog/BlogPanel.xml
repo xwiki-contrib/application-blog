@@ -20,31 +20,31 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.1">
+<xwikidoc version="1.2" reference="Blog.BlogPanel" locale="">
   <web>Blog</web>
-  <name>ArchivePanel</name>
+  <name>BlogPanel</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <creationDate>1373016402000</creationDate>
-  <parent>Panels.WebHome</parent>
+  <creationDate>1490970493000</creationDate>
+  <parent>xwiki:Blog.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1373018411000</date>
-  <contentUpdateDate>1373016402000</contentUpdateDate>
+  <date>1490980469000</date>
+  <contentUpdateDate>1490970495000</contentUpdateDate>
   <version>1.1</version>
-  <title>Blog Archive Panel</title>
+  <title>Blog Panel</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content/>
   <object>
-    <name>Blog.ArchivePanel</name>
+    <name>Blog.BlogPanel</name>
     <number>0</number>
     <className>Panels.PanelClass</className>
-    <guid>7a7707a2-9957-41c1-b1b3-a3b777560c70</guid>
+    <guid>66e87c53-bba8-46c3-8167-95a2f9de650f</guid>
     <class>
       <name>Panels.PanelClass</name>
       <customClass/>
@@ -125,81 +125,46 @@
       <content>{{include reference="Blog.BlogCode"/}}
 
 {{velocity}}
-#getAllBlogPostsQueryBasedOnDisplayContext($doc $query $queryParams)
-#set ($discard = $queryParams.put('creator', $xcontext.user))
-#set ($query = "$!{query} and (doc.creator = :creator or (isPublished.value = 1 and hidden.value = 0))")
-#set ($queryObj = $services.query.hql($query).addFilter('unique'))
-#bindQueryParameters($queryObj $queryParams)
-#set ($displayArchivePanel = false)
-#if ($queryObj.count() &gt; 0 || $showEmptyPanels)
-  #set ($displayArchivePanel = true)
+#set ($queryParams = {})
+#if ($isCategoryPage || $isCategoriesHomePage)
+  #set ($categoriesLocation = $doc.space)
+#else
+  #getBlogCategoriesLocation($doc.space $categoriesLocation)
 #end
-#if ($displayArchivePanel)
-  #if ($isCategoryPage || $isCategoriesHomePage)
-    #set ($archivePage = $doc.fullName)
-  #else
-    #getBlogDocument($doc.space $blogDoc)
-    #set ($archivePage = $blogDoc.fullName)
-  #end
-  #panelheader($services.localization.render('blog.archive.paneltitle'))
-  ## Create a Jodatime date formatter that will be used to format dates
-  #set ($monthFormatter = $xwiki.jodatime.getDateTimeFormatterForPattern('MMMM'))
-  #set ($tempDate = $xwiki.jodatime.mutableDateTime)
-  #set ($currentYear = $xwiki.formatDate($datetool.date, 'yyyy'))
-  #set ($currentMonth = $xwiki.formatDate($datetool.date, 'M'))
-  #set ($firstYear = '')
-  #set ($lastYear = '')
-  #set ($firstYearQueryObj = $services.query.hql("${query} order by year(publishDate.value)").setLimit(1).addFilter('unique'))
-  #bindQueryParameters($firstYearQueryObj $queryParams)
-  #foreach ($firstEntry in $firstYearQueryObj.execute())
-    #set ($discard = $xwiki.getDocument($firstEntry))
-    #getEntryObject($discard $entryObj)
-    #getEntryDate($discard $entryObj $firstYear)
-    #set ($firstYear = $mathtool.toInteger($xwiki.formatDate($firstYear, 'yyyy')))
-  #end
-  #set ($lastYearQueryObj = $services.query.hql("${query} order by year(publishDate.value) desc").setLimit(1).addFilter('unique'))
-  #bindQueryParameters($lastYearQueryObj $queryParams)
-  #foreach ($lastEntry in $lastYearQueryObj.execute())
-    #set ($discard = $xwiki.getDocument($lastEntry))
-    #getEntryObject($discard $entryObj)
-    #getEntryDate($discard $entryObj $lastYear)
-    #set ($lastYear = $mathtool.toInteger($xwiki.formatDate($lastYear, 'yyyy')))
-  #end
-  #if ("$!{firstYear}" != '') ## At least one entry exists
-    #foreach ($year in [$firstYear..$lastYear])
-      #set ($yearArticleCountQueryObj = $services.query.hql("${query} and year(publishDate.value) = $year").addFilter('unique'))
-      #bindQueryParameters($yearArticleCountQueryObj $queryParams)
-      #set ($yearArticleCount = $yearArticleCountQueryObj.count())
-      #if ($yearArticleCount &gt; 0)
-        #set ($queryString = "sheet=Blog.ArchiveSheet&amp;year=${year}")
-        * [[$year (% class="itemCount" %)(${yearArticleCount})(%%)&gt;&gt;${archivePage}||queryString="${queryString}"]]
-        #if ($year == $currentYear)
-          #foreach ($month in [1..12])
-            #set ($statement = "${query} and year(publishDate.value) = $year and month(publishDate.value) = $month")
-            #set ($monthArticleCountQueryObj = $services.query.hql($statement).addFilter("unique"))
-            #bindQueryParameters($monthArticleCountQueryObj $queryParams)
-            #set ($monthArticleCount = $monthArticleCountQueryObj.count())
-            #if ($monthArticleCount &gt; 0)
-              $tempDate.setMonthOfYear($month)##
-              #set($queryString = "sheet=Blog.ArchiveSheet&amp;year=${year}&amp;month=${month}")
-              ** [[$monthFormatter.print($tempDate) (% class="itemCount" %)(${monthArticleCount})(%%)&gt;&gt;${archivePage}||queryString="${queryString}"]]
-            #end
-          #end
-        #end
-      #end
+#if ($categoriesLocation == $defaultBlogSpace)
+  #set ($hql = ", BaseObject as obj where doc.fullName &lt;&gt; '${blogTemplate}' and
+obj.name=doc.fullName and obj.className='${blogClassname}'")
+  #set ($excludedBlogsQuery = "select doc1.fullName from XWikiDocument doc1, BaseObject as obj1, StringProperty as categoriesLocation1 where doc1.fullName &lt;&gt; '${blogTemplate}' and doc1.space&lt;&gt;'${defaultBlogSpace}' and obj1.name=doc1.fullName and obj1.className='${blogClassname}' and obj1.id=categoriesLocation1.id.id and categoriesLocation1.id.name='categoriesLocation' and categoriesLocation1.value is not null and categoriesLocation1.value&lt;&gt;''")
+  #set ($whereQuery = " and doc.fullName not in ($excludedBlogsQuery)")
+#else
+  #set ($hql = ", BaseObject as obj, StringProperty as categoriesLocation where doc.fullName &lt;&gt; '${blogTemplate}' and
+obj.name=doc.fullName and obj.className='${blogClassname}' and obj.id=categoriesLocation.id.id and categoriesLocation.id.name='categoriesLocation'")
+  #set ($whereQuery = " and categoriesLocation.value = :categoriesLocation")
+  #set ($discard = $queryParams.put('categoriesLocation', $categoriesLocation))
+#end
+#set ($hql = "${hql} ${whereQuery} order by doc.title")
+#set ($queryObj = $services.query.hql($hql))
+#bindQueryParameters($queryObj $queryParams)
+#if ($queryObj.count() &gt; 1)
+  #set ($blogResults = $queryObj.execute())
+  #panelheader($services.localization.render('blog.blogspanel.title'))
+  #foreach($blog in $blogResults)
+    #if ($blog == 'Blog.WebHome')
+      * [[$services.localization.render('blog.code.title')&gt;&gt;Blog.WebHome]]
+    #else
+      #set ($blogDoc = $xwiki.getDocument($blog))
+      * [[$!blogDoc.display('title', 'view')&gt;&gt;$!services.model.serialize($blogDoc.documentReference)]]
     #end
-  #else
-    {{info}}{{translation key="blog.archive.noarticle"/}}{{/info}}
   #end
   #panelfooter()
 #end
 {{/velocity}}</content>
     </property>
     <property>
-      <description>Displays an archive of the current blog.</description>
+      <description>Shows available blogs on the wiki.</description>
     </property>
     <property>
-      <name>Blog Archive</name>
+      <name>Recent Blog Posts</name>
     </property>
     <property>
       <type>view</type>

@@ -172,7 +172,7 @@
 }
 /* Calendar sheet display of a blogging day */
 .blogdate {
-  font-size: 70%;
+  font-size: 90%;
   width: 48px;
   text-align: center;
   background: $hbgColor;
@@ -254,7 +254,7 @@
 .hentry .entry-footer {
   border-top: 1px solid $borderColor;
   margin: 0px 0px 2em;
-  font-size: 75%;
+  font-size: 90%;
   font-weight: normal;
 }
 .entry-author-label {
@@ -288,7 +288,55 @@ div.edit-categories {
 .blog-category-tools .tool {
     padding-left: 0.25em;
 }
-</code>
+/* Image thumbnail display */
+.blog-list {
+  margin: 10px -15px;
+}
+.blog-list .blog-image {
+  min-width: 100%;
+}
+.blog-list .blog-left {
+  margin-bottom: 10px;
+}
+.blog-list .blogdate {
+  font-size: 140%;
+  float: none;
+  margin: 0;
+  line-height: inherit;
+  width: 100%;
+}
+.blog-list .blogdate .year {
+  display: block !important;
+}
+.blog-list .entry-date {
+  font-size: 90%;
+  color: #AAAAAA;
+  clear: both;
+  font-variant: small-caps;
+}
+.blog-list .blog-entry-toolbox {
+  margin-top: -10px;
+}
+.newBlogPostForm{
+  margin-bottom: 20px;
+}
+.post-state-blk.plainmessage {
+  padding: 0;
+}
+.post-state-blk .publish-message {
+  padding: 10px 20px;
+}
+.post-state-blk .hide-message {
+  padding: 0 20px;
+}
+h2.blog-sub-title {
+  margin-bottom: 30px;
+  margin-top: 0;
+}
+h3.blog-sub-title {
+  margin-bottom: 5px;
+  margin-top: -10px;
+}</code>
     </property>
     <property>
       <contentType>CSS</contentType>

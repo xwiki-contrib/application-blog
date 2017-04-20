@@ -34,15 +34,16 @@
   <date>1227680561000</date>
   <contentUpdateDate>1227680561000</contentUpdateDate>
   <version>1.1</version>
-  <title>Manage blogs on this wiki</title>
+  <title>$services.localization.render("blog.manage.pagetitle")</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.0</syntaxId>
   <hidden>true</hidden>
   <content>{{include reference="Blog.BlogCode"/}}
 
-{{velocity filter="none"}}
-{{html clean="false" wiki="true"}}
+{{template name="locationPicker_macros.vm" /}}
+
+{{velocity}}
 #if($hasAdmin)
 ##
 ##
@@ -50,15 +51,14 @@
 ## TODO: Display the number of articles in each blog
 ## TODO: Provide some management links: delete, edit title, configure...
 ##
-= $services.localization.render('blog.manage.existing') =
-
+#set ($discard = $xwiki.jsx.use('Blog.Management'))
+== $services.localization.render('blog.manage.existing') ==
 #foreach($item in $xwiki.wrapDocs($services.query.hql(", BaseObject obj where obj.name = doc.fullName and obj.className = '$blogClassname' and doc.fullName &lt;&gt; '$blogTemplate' ").execute()))
   #getBlogTitle($item $title)
   #if($title != '')
     * [[$title&gt;&gt;$item.fullName]]
   #else
     * [[$item.displayTitle&gt;&gt;$item.fullName]]
-&lt;p/&gt;
   #end
 #end
 ##
@@ -66,39 +66,145 @@
 ## New blog
 ##
 
-= $services.localization.render('blog.manage.createnew') =
+== $services.localization.render('blog.manage.createnew') ==
 
-#set($title = "$!request.blogTitle")
-#if($title != '')
-  #set($space = "$!request.blogSpace")
-  #if($space == '')
-    #warning($services.localization.render('blog.manage.nospace'))
-  #else
-    #if("$!request.blogType" == 'main')
-      #set($blogDocName = "${space}.WebHome")
+#if ("$!request.createBlog" != '')
+  #set($title = "$!request.blogTitle")
+  #if($title != '')
+    #set($blogParentPage = "$!request.blogParent")
+    #set($blogPageName = "$!request.blogName")
+
+    #if($blogPageName == '')
+      {{warning}}$services.localization.render('blog.manage.nopage'){{/warning}}
+
     #else
-      #set($blogDocName = "${space}.Blog")
+      #set($blogDocName = "${blogPageName}")
+      #if ("$!blogParentPage" != '')
+        #set($blogDocName = "${blogParentPage}.${blogDocName}")
+      #end
+      #if ($xwiki.exists("${blogDocName}.WebHome"))
+        {{warning}}$services.localization.render('blog.manage.unallowed_page'){{/warning}}
+
+      #else
+        #if (!$services.csrf.isTokenValid("$!request.form_token"))
+          {{error}}$services.localization.render('platform.wiki.csrf.error'){{/error}}
+
+        #else
+          ## Create the Blog
+          #set ($blogDoc = $xwiki.getDocument("${blogDocName}.WebHome"))
+          #set ($blogObj = $blogDoc.getObject('Blog.BlogClass', true))
+          #set ($discard = $blogObj.set('title', $title))
+          #set ($discard = $blogObj.set('displayType', 'paginated'))
+          #set ($discard = $blogObj.set('itemsPerPage', 10))
+          #set ($categoriesLocation = "${blogDocName}.Categories")
+          #set ($postsLocation = "${blogDocName}")
+          #set ($discard = $blogObj.set('categoriesLocation', $categoriesLocation))
+          #set ($discard = $blogObj.set('postsLocation', $postsLocation))
+          #if ("$!request.postsLayout" != '')
+            #set ($discard = $blogObj.set('postsLayout', $request.postsLayout))
+          #end
+          #set ($discard = $blogDoc.save())
+
+          ## Create the categories page
+          #set ($categoriesDoc = $xwiki.getDocument("${categoriesLocation}.WebHome"))
+          #set ($sheetBindingObj = $categoriesDoc.getObject('XWiki.DocumentSheetBinding', true))
+          #set ($discard = $sheetBindingObj.set('sheet', 'Blog.CategoriesSheet'))
+          #set ($discard = $categoriesDoc.save())
+
+          ## Create the Default categories
+          #if ("$!request.createDefaultCategories" != '')
+            #foreach($categoryName in ['News', 'Other', 'Personal'])
+              #set ($discard = $xwiki.copyDocument("Blog.${categoryName}", "${categoriesLocation}.${categoryName}"))
+              #set ($categoryDoc = $xwiki.getDocument("${categoriesLocation}.${categoryName}"))
+              #set ($discard = $categoryDoc.setParent("${categoriesLocation}.WebHome"))
+              #set ($discard = $categoryDoc.save())
+            #end
+          #end
+
+          ## Create the WebPreferences page
+          #if ("$!request.enablePanels" != '')
+            #set ($webPreferencesName = "${blogDocName}.WebPreferences")
+            #set ($webPreferencesDoc = $xwiki.getDocument($webPreferencesName))
+            #set ($discard = $webPreferencesDoc.setHidden(true))
+            #set ($xwikiPreferencesObj = $webPreferencesDoc.getObject('XWiki.XWikiPreferences', true))
+            #set ($discard = $xwikiPreferencesObj.set('showRightPanels', 1))
+            #set ($discard = $xwikiPreferencesObj.set('rightPanels', 'Blog.RecentPostsPanel,Blog.UnpublishedPanel,Blog.CategoriesPanel,Blog.ArchivePanel,Blog.BlogPanel'))
+            #set ($discard = $webPreferencesDoc.save())
+          #end
+
+          $response.sendRedirect($blogDoc.getURL())
+        #end
+      #end
     #end
-    #set($parent = $services.model.resolveDocument('', 'default', $doc.documentReference.extractReference('WIKI')))
-    $response.sendRedirect($xwiki.getURL($blogDocName, 'save', "parent=${parent}&amp;title=${escapetool.url($title)}&amp;template=${blogTemplate}&amp;${blogClassname}_0_title=${escapetool.url($title)}&amp;form_token=$!{request.getParameter('form_token')}"))
+  #else
+    {{warning}}$services.localization.render('blog.manage.notitle'){{/warning}}
+
   #end
 #end
 ##
 ## Show the form
-&lt;form action="${xwiki.getURL('Blog.Management')}" id="newBlog" method="post"&gt;
+{{html clean="false" wiki="true"}}
+&lt;form action="${xwiki.getURL('Blog.Management')}" id="newBlog" method="post" class="xform"&gt;
+#locationPicker({
+    'id': 'blogLocation',
+    'title': {
+      'label': 'blog.manage.location.title',
+      'hint': 'blog.manage.location.title.hint',
+      'name': 'blogTitle',
+      'value': '',
+      'placeholder': 'blog.manage.location.title.placeholder'
+    },
+    'preview': {
+      'label': 'core.create.locationPreview.label',
+      'hint': 'blog.manage.locationPreview.hint'
+    },
+    'parent': {
+      'label': 'core.create.spaceReference.label',
+      'hint': 'core.create.spaceReference.hint',
+      'name': 'blogParent',
+      'reference': $doc.documentReference.parent.parent,
+      'placeholder': 'core.create.spaceReference.placeholder'
+    },
+    'name': {
+      'label': 'core.create.name.label',
+      'hint': 'core.create.name.hint',
+      'name': 'blogName',
+      'value': '',
+      'placeholder': 'core.create.name.placeholder'
+    }
+  })
 &lt;div&gt;
   &lt;input type="hidden" name="form_token" value="$!{services.csrf.getToken()}" /&gt;
-&lt;dl&gt;
-  &lt;dt&gt;&lt;label for="blogSpace"&gt;$services.localization.render('blog.manage.space')&lt;/label&gt;&lt;/dt&gt;
-  &lt;dd&gt;&lt;input type="text" name="blogSpace" id="blogSpace" value=""/&gt;&lt;/dd&gt;
-  &lt;dt&gt;&lt;label for="blogTitle"&gt;$services.localization.render('blog.manage.title')&lt;/label&gt;&lt;/dt&gt;
-  &lt;dd&gt;&lt;input type="text" name="blogTitle" id="blogTitle" value="$services.localization.render('blog.manage.blogtitle')"/&gt;&lt;/dd&gt;
-  &lt;dt&gt;&lt;label for="blogType"&gt;$services.localization.render('blog.manage.blogtype')&lt;/label&gt;&lt;/dt&gt;
-  &lt;dd&gt;&lt;select name="blogType" id="blogType"&gt;
-    &lt;option value="inner" selected="selected"&gt;$services.localization.render('blog.manage.inside')&lt;/option&gt;
-    &lt;option value="main"&gt;$services.localization.render('blog.manage.main')&lt;/option&gt;
-  &lt;/select&gt;&lt;/dd&gt;
-&lt;/dl&gt;
+  &lt;input type="hidden" name="createBlog" value="1"/&gt;
+  &lt;dl&gt;
+    &lt;dt&gt;
+      &lt;label for="blogSpace"&gt;$services.localization.render('blog.manage.categories_location')&lt;/label&gt;
+      &lt;span class="xHint"&gt;$services.localization.render('blog.manage.categoriesLocationPreview.hint')&lt;/span&gt;
+    &lt;/dt&gt;
+    &lt;dd&gt;&lt;div id="catLocation"&gt;
+      &lt;div class="breadcrumb-container"&gt;
+        &lt;ol id="blogCategoriesLocation" class="breadcrumb"&gt;&lt;/ol&gt;
+      &lt;/div&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;dl&gt;
+    &lt;dt&gt;&lt;label for="blogSpace"&gt;$services.localization.render('blog.manage.enable_panels')&lt;/label&gt;
+      &lt;input type="checkbox" name="enablePanels" value="1" checked="checked" /&gt;
+    &lt;/dt&gt;
+  &lt;/dl&gt;
+  &lt;dl&gt;
+    &lt;dt&gt;&lt;label for="blogSpace"&gt;$services.localization.render('blog.manage.create_default_categories')&lt;/label&gt;
+      &lt;input type="checkbox" name="createDefaultCategories" value="1" checked="checked" /&gt;
+    &lt;/dt&gt;
+  &lt;/dl&gt;
+  &lt;dl&gt;
+    &lt;dt&gt;&lt;label for="blogSpace"&gt;$services.localization.render('blog.manage.post.layout')&lt;/label&gt;
+      &lt;select name="postsLayout"&gt;
+        &lt;option value=''&gt;$services.localization.render('blog.manage.post.layout.default')&lt;/option&gt;
+        &lt;option value='image'&gt;$services.localization.render('blog.manage.post.layout.image')&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/dt&gt;
+  &lt;/dl&gt;
   &lt;input class="button" type="submit" value="${escapetool.xml($services.localization.render('blog.manage.create'))}"/&gt;
 &lt;/div&gt;
 &lt;/form&gt;
@@ -109,4 +215,333 @@
 
 {{/html}}
 {{/velocity}}</content>
+  <object>
+    <name>Blog.Management</name>
+    <number>0</number>
+    <className>XWiki.ConfigurableClass</className>
+    <guid>f363e412-dc00-407d-a45a-8e295d14bda5</guid>
+    <class>
+      <name>XWiki.ConfigurableClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <categoryIcon>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>categoryIcon</name>
+        <number>11</number>
+        <picker>0</picker>
+        <prettyName>categoryIcon</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </categoryIcon>
+      <codeToExecute>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <editor>Text</editor>
+        <name>codeToExecute</name>
+        <number>7</number>
+        <picker>0</picker>
+        <prettyName>codeToExecute</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </codeToExecute>
+      <configurationClass>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>configurationClass</name>
+        <number>3</number>
+        <picker>0</picker>
+        <prettyName>configurationClass</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </configurationClass>
+      <configureGlobally>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>checkbox</displayFormType>
+        <displayType/>
+        <name>configureGlobally</name>
+        <number>4</number>
+        <prettyName>configureGlobally</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </configureGlobally>
+      <displayBeforeCategory>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>displayBeforeCategory</name>
+        <number>10</number>
+        <picker>0</picker>
+        <prettyName>displayBeforeCategory</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </displayBeforeCategory>
+      <displayInCategory>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>displayInCategory</name>
+        <number>9</number>
+        <picker>0</picker>
+        <prettyName>displayInCategory</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </displayInCategory>
+      <displayInSection>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>displayInSection</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>displayInSection</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </displayInSection>
+      <heading>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>heading</name>
+        <number>2</number>
+        <picker>0</picker>
+        <prettyName>heading</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </heading>
+      <iconAttachment>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>iconAttachment</name>
+        <number>8</number>
+        <picker>0</picker>
+        <prettyName>iconAttachment</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </iconAttachment>
+      <linkPrefix>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>linkPrefix</name>
+        <number>5</number>
+        <picker>0</picker>
+        <prettyName>linkPrefix</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </linkPrefix>
+      <propertiesToShow>
+        <cache>0</cache>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <multiSelect>1</multiSelect>
+        <name>propertiesToShow</name>
+        <number>6</number>
+        <picker>0</picker>
+        <prettyName>propertiesToShow</prettyName>
+        <relationalStorage>1</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>20</size>
+        <sort>none</sort>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <values/>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </propertiesToShow>
+      <sectionOrder>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>sectionOrder</name>
+        <number>12</number>
+        <numberType>integer</numberType>
+        <prettyName>sectionOrder</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </sectionOrder>
+    </class>
+    <property>
+      <categoryIcon/>
+    </property>
+    <property>
+      <codeToExecute>{{include reference='Blog.Management' /}}</codeToExecute>
+    </property>
+    <property>
+      <configurationClass/>
+    </property>
+    <property>
+      <configureGlobally>1</configureGlobally>
+    </property>
+    <property>
+      <displayBeforeCategory/>
+    </property>
+    <property>
+      <displayInCategory/>
+    </property>
+    <property>
+      <displayInSection>Blog</displayInSection>
+    </property>
+    <property>
+      <heading/>
+    </property>
+    <property>
+      <iconAttachment/>
+    </property>
+    <property>
+      <linkPrefix/>
+    </property>
+    <property>
+      <propertiesToShow/>
+    </property>
+    <property>
+      <sectionOrder/>
+    </property>
+  </object>
+  <object>
+    <name>Blog.Management</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>8225097b-f4ed-4c1d-95f0-42256fdafb61</guid>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>require(['jquery'], function($){
+  function updateCategoriesLocation(){
+    var catLocation = $('#blogCategoriesLocation');
+    catLocation.html($('#newBlog ol.breadcrumb:first').html());
+    if($('#newBlog ol.breadcrumb:first li:last').html() == ''){
+      $('li:last', catLocation).remove();
+    }
+    else
+    {
+      $('li:last', catLocation).html('&lt;a href="javascript:;"&gt;' + $('li:last', catLocation).html() + '&lt;/a&gt;');
+    }
+    catLocation.append('&lt;li class="active"&gt;Categories&lt;/li&gt;');
+  }
+  $(document).on('DOMSubtreeModified', '#newBlog ol.breadcrumb:first', function() {
+    updateCategoriesLocation();
+  });
+});</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse/>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
 </xwikidoc>

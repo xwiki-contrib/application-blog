@@ -42,6 +42,10 @@
   <content>{{include reference="Blog.BlogCode"/}}
 
 {{velocity}}
+## In case this page is called from  the blogPostCreate macro
+#if ("$!targetBlogDoc" != '')
+  #set ($doc = $targetBlogDoc)
+#end
 {{html clean="false" wiki="true"}}
 #set($name = "$!request.entryTitle")
 #if($name == '')
@@ -57,7 +61,7 @@
   #if($space == '')
     #set($space = $doc.space)
   #end
-  &lt;form action='$doc.getURL()' id="newBlogPost" method="post" class="xformInline"&gt;
+  &lt;form action='$doc.getURL()' method="post" class="xformInline newBlogPostForm"&gt;
   &lt;div&gt;
     &lt;input type="hidden" name="form_token" value="$!{services.csrf.getToken()}" /&gt;
     &lt;input type="hidden" name="entrySpace" value="$!{escapetool.xml($space)}"/&gt;
@@ -73,11 +77,12 @@
 #else
   ## Second step, form submitted, create the document
   #set($space = "$!request.entrySpace")
-  #if($space == '')
-    #set($space = 'Main')
+  #getBlogPostsLocation($space $blogPostsLocation)
+  #if($blogPostsLocation == '')
+    #set($blogPostsLocation = 'Main')
   #end
   ## Remove . and : from the document name, as they have a special meaning in XWiki document names
-  #set($postDocName = "${space}.${name.replaceAll('[.:]', '')}")
+  #set($postDocName = "${blogPostsLocation}.${name.replaceAll('[.:]', '')}")
   ## Get the target blog document, to set it as the parent
   #getBlogDocument($space $blogDoc)
   #set($parent = "$!{escapetool.url($blogDoc.fullName)}")
