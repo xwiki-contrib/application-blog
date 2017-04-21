@@ -200,8 +200,10 @@ blog.sheet.choose_image=Choisir une image
 blog.blogpostlayout.notpost=[{0}] n''est pas un article de blog!
 blog.blogpostlayout.post_view_not_allowed=Vous n''êtes pas autorisé à voir l''article de blog [{0}]
 blog.manage.post.layout=Layout des articles
-blog.manage.post.layout.default=Default (Calendrier)
-blog.manage.post.layout.image=Image miniature
 blog.archive.pagetitle=Archives
-blog.blogpostcreate.wrong_blog=Descripteur de blog incorrecte</content>
+blog.blogpostcreate.wrong_blog=Descripteur de blog incorrecte
+
+# Class fields
+Blog.BlogClass_postsLayout.full=Default (Calendrier)
+Blog.BlogClass_postsLayout.image=Image miniature</content>
 </xwikidoc>

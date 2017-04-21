@@ -199,9 +199,19 @@
   &lt;/dl&gt;
   &lt;dl&gt;
     &lt;dt&gt;&lt;label for="blogSpace"&gt;$services.localization.render('blog.manage.post.layout')&lt;/label&gt;
+      #set ( $class = $xwiki.getClass("Blog.BlogClass"))
+      #set ($postLayouts = $class.get('postsLayout').getMapValues())
       &lt;select name="postsLayout"&gt;
-        &lt;option value=''&gt;$services.localization.render('blog.manage.post.layout.default')&lt;/option&gt;
-        &lt;option value='image'&gt;$services.localization.render('blog.manage.post.layout.image')&lt;/option&gt;
+        #foreach ($item in $postLayouts.entrySet())
+        #set ($translation = $services.localization.get("Blog.BlogClass_postsLayout.${item.key}"))
+        &lt;option value="$item.key" #if($item.key=='full')selected="selected"#end &gt;
+          #if ("$!translation" != '')
+            $!services.localization.render("Blog.BlogClass_postsLayout.${item.key}")
+          #else
+            $!item.value.value
+          #end
+        &lt;/option&gt;
+        #end
       &lt;/select&gt;
     &lt;/dt&gt;
   &lt;/dl&gt;
