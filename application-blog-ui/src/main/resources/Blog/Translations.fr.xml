@@ -204,6 +204,6 @@ blog.archive.pagetitle=Archives
 blog.blogpostcreate.wrong_blog=Descripteur de blog incorrecte
 
 # Class fields
-Blog.BlogClass_postsLayout.full=Default (Calendrier)
+Blog.BlogClass_postsLayout.full=Calendrier
 Blog.BlogClass_postsLayout.image=Image miniature</content>
 </xwikidoc>

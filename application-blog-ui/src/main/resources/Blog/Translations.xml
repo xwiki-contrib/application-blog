@@ -203,7 +203,7 @@ blog.blogpostlayout.post_view_not_allowed=You are not allowed to view the blog p
 blog.blogpostcreate.wrong_blog=Wrong blog descriptor
 
 # Class fields
-Blog.BlogClass_postsLayout.full=Default (Calendar)
+Blog.BlogClass_postsLayout.full=Calendar
 Blog.BlogClass_postsLayout.image=Image thumnail</content>
   <object>
     <name>Blog.Translations</name>

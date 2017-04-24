@@ -201,10 +201,15 @@
     &lt;dt&gt;&lt;label for="blogSpace"&gt;$services.localization.render('blog.manage.post.layout')&lt;/label&gt;
       #set ( $class = $xwiki.getClass("Blog.BlogClass"))
       #set ($postLayouts = $class.get('postsLayout').getMapValues())
+      #set ($postLayoutsList = $class.get('postsLayout').getListValues())
+      #set ($firstLayout = '')
+      #if ($postLayoutsList.size() &gt; 0)
+        #set ($firstLayout = $postLayoutsList[0])
+      #end
       &lt;select name="postsLayout"&gt;
         #foreach ($item in $postLayouts.entrySet())
         #set ($translation = $services.localization.get("Blog.BlogClass_postsLayout.${item.key}"))
-        &lt;option value="$item.key" #if($item.key=='full')selected="selected"#end &gt;
+        &lt;option value="${escapetool.xml($item.key)}" #if("$!item.key" == $firstLayout)selected="selected"#end &gt;
           #if ("$!translation" != '')
             $!services.localization.render("Blog.BlogClass_postsLayout.${item.key}")
           #else
