@@ -49,8 +49,8 @@
     <!-- We need to depend on 8.4.2 since we use new ExtensionUpgradedEvent(String) which is only available in
          8.4.2+ -->
     <commons.version>8.4.2</commons.version>
-    <xwiki.issueManagement.system>jira</xwiki.issueManagement.system>
-    <xwiki.issueManagement.url>https://jira.xwiki.org/browse/BLOG</xwiki.issueManagement.url>
+    <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
+    <xwiki.issueManagement.jira.id>BLOG</xwiki.issueManagement.jira.id>
   </properties>
   <modules>
     <module>application-blog-api</module>
