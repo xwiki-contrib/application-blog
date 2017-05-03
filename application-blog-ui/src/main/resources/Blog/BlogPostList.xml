@@ -178,6 +178,18 @@
 #set ($layoutParam = $xcontext.macro.params.layout)
 #set ($paginatedParam = $xcontext.macro.params.paginated)
 #set ($layoutAdditionalParams = $xcontext.macro.params.layoutParams)
+## Passing the blog posts list parameters to the layout macro
+#foreach($p in $xcontext.macro.params.getParameterNames())
+  #if ($p == 'blog' &amp;&amp; "$!blogDescriptorParam" != '')
+    #set ($v = $blogDescriptorParam)
+  #elseif($p != 'layoutParams' &amp;&amp; "$!xcontext.macro.params.get($p)" != '')
+    #set ($v = $xcontext.macro.params.get($p))
+  #end
+  #set ($layoutAdditionalParams = "$!{layoutAdditionalParams}|list-${p}=${v}")
+#end
+#if ("$!layoutAdditionalParams" != '' &amp;&amp; $layoutAdditionalParams.startsWith('|'))
+  #set ($layoutAdditionalParams = $layoutAdditionalParams.replaceFirst('\|', ''))
+#end
 #set ($blogPostLayoutPrefix = 'blogPostLayout')
 #set ($isValidBlog = false)
 #set ($isAggregatorBlog = false)
