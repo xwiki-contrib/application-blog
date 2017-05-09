@@ -182,10 +182,11 @@
 #foreach($p in $xcontext.macro.params.getParameterNames())
   #if ($p == 'blog' &amp;&amp; "$!blogDescriptorParam" != '')
     #set ($v = $blogDescriptorParam)
+    #set ($layoutAdditionalParams = "$!{layoutAdditionalParams}|list-${p}=${v}")
   #elseif($p != 'layoutParams' &amp;&amp; "$!xcontext.macro.params.get($p)" != '')
     #set ($v = $xcontext.macro.params.get($p))
+    #set ($layoutAdditionalParams = "$!{layoutAdditionalParams}|list-${p}=${v}")
   #end
-  #set ($layoutAdditionalParams = "$!{layoutAdditionalParams}|list-${p}=${v}")
 #end
 #if ("$!layoutAdditionalParams" != '' &amp;&amp; $layoutAdditionalParams.startsWith('|'))
   #set ($layoutAdditionalParams = $layoutAdditionalParams.replaceFirst('\|', ''))
@@ -336,6 +337,7 @@
 
   #set ($results = $query.addFilter("unique").execute())
 
+  #set ($layoutAdditionalParams = "$!{layoutAdditionalParams}|list-results-count=${results.size()}")
   #set ($XDOMList = [])
   #set ($previousPostReference = '')
   #foreach($result in $results)
