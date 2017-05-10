@@ -157,22 +157,32 @@
   #bindQueryParameters($monthArticleCountQueryObj $queryParams)
   #set($monthArticleCount = $monthArticleCountQueryObj.count())
   #if($monthArticleCount &gt; 0)
+    #set ($fromDate = "${year}-${month}-01")
+    #set ($toDate =$datetool.toDate('yyyy-M-d', "$fromDate"))
+    #set ($cal = $datetool.getCalendar())
+    #set ($discard = $cal.setTime($toDate))
+    ## Get the last day of the month
+    #set ($discard = $cal.add(2, 1))## +1 month
+    #set ($discard = $cal.add(5, -1))## -1 day
+    #set ($toDate = $cal.getTime())
+    #set ($toDate = $datetool.format('yyyy-M-d', $toDate))
+
     #set ($layoutParams = "useSummary=true|displayTitle=true")
     #if ($targetDocument.space == $defaultBlogSpace &amp;&amp; !$targetDocument.getObject($blogCategoryClassname))
       #getBlogPostsLayout($xwiki.getDocument("${defaultBlogSpace}.WebHome") $postsLayout)
-      {{blogpostlist blog="${defaultBlogSpace}.WebHome" year="$year" month="$month" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
+      {{blogpostlist blog="${defaultBlogSpace}.WebHome" fromDate="$fromDate" toDate="$toDate" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
     #elseif($targetDocument.getObject($blogCategoryClassname))
       #getBlogDocumentForCategoriesSpace($targetDocument.space $blogDoc)
       #getBlogPostsLayout($blogDoc $postsLayout)
-      {{blogpostlist category="$targetDocument.fullName" year="$year" month="$month" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
+      {{blogpostlist category="$targetDocument.fullName" fromDate="$fromDate" toDate="$toDate" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
     #elseif($targetDocument.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
       #getBlogDocumentForCategoriesSpace($targetDocument.space $blogDoc)
       #getBlogPostsLayout($blogDoc $postsLayout)
-      {{blogpostlist category="$targetDocument.space" year="$year" month="$month" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
+      {{blogpostlist category="$targetDocument.space" fromDate="$fromDate" toDate="$toDate" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
     #else
       #getBlogDocument($targetDocument.space $blogDoc)
       #getBlogPostsLayout($blogDoc $postsLayout)
-      {{blogpostlist blog="$blogDoc.fullName" year="$year" month="$month" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
+      {{blogpostlist blog="$blogDoc.fullName" fromDate="$fromDate" toDate="$toDate" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
     #end
   #else
     #info($services.localization.render('blog.archive.noarticlesmonth'))

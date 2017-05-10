@@ -170,8 +170,8 @@
 #end
 
 #set ($categoryParam = $xcontext.macro.params.category)
-#set ($yearParam = $xcontext.macro.params.year)
-#set ($monthParam = $xcontext.macro.params.month)
+#set ($fromDateParam = $xcontext.macro.params.fromDate)
+#set ($toDateParam = $xcontext.macro.params.toDate)
 #set ($publishedParam = $xcontext.macro.params.published)
 #set ($hiddenParam = $xcontext.macro.params.hidden)
 #set ($limitParam = $xcontext.macro.params.limit)
@@ -278,16 +278,19 @@
     #end
   #end
 
-  ## Year parameter
-  #if ("$!yearParam" != '')
-    #set ($whereQuery = "${whereQuery} and year(publishDate.value)=:year")
-    #set ($discard = $queryParams.put('year', $mathtool.toInteger("$yearParam")))
+  ## fromDate parameter
+  #if ("$!fromDateParam" != '' &amp;&amp; "$!datetool.toDate('yyyy-M-d', $fromDateParam)" != '')
+    #set ($whereQuery = "${whereQuery} and publishDate.value&gt;=:fromDate")
+    #set ($discard = $queryParams.put('fromDate', $datetool.toDate("yyyy-M-d", $fromDateParam)))
   #end
 
-  ## Month parameter
-  #if ("$!monthParam" != '')
-    #set ($whereQuery = "${whereQuery} and month(publishDate.value)=:month")
-    #set ($discard = $queryParams.put('month', $mathtool.toInteger("$monthParam")))
+  ## toDate parameter
+  #if ("$!toDateParam" != '' &amp;&amp; "$!datetool.toDate('yyyy-M-d', $toDateParam)" != '')
+    #set ($cal = $datetool.getCalendar())
+    #set ($discard = $cal.setTime($datetool.toDate("yyyy-M-d", $toDateParam)))
+    #set ($discard = $cal.add(5, 1)) ## toDate = toDate + 1 day
+    #set ($whereQuery = "${whereQuery} and publishDate.value&lt;:toDate")
+    #set ($discard = $queryParams.put('toDate', $datetool.toDate("yyyy-M-d", $cal.getTime())))
   #end
 
   #if ("$!publishedParam" != '')
@@ -311,7 +314,9 @@
   ## Ordering
   #set ($hql = "${hql} order by publishDate.value desc")
   #set($query = $services.query.hql($hql))
+  #set($countQuery = $services.query.hql($hql))
   #bindQueryParameters($query $queryParams)
+  #bindQueryParameters($countQuery $queryParams)
 
   #if ("$!paginatedParam" == 'yes')
     #if ("$!limitParam" == '')
@@ -321,7 +326,7 @@
         #set ($limitParam = 10)
       #end
     #end
-    #set ($totalPosts = $query.count())
+    #set ($totalPosts = $countQuery.addFilter("unique").count())
     ## This macro is defined in the default macros.vm library. It also sets $itemsPerPage and $startAt.
     #set ($itemsPerPage = $mathtool.toInteger("$limitParam"))
     #preparePagedViewParams($totalPosts $itemsPerPage)
@@ -572,13 +577,13 @@
       <defaultValue/>
     </property>
     <property>
-      <description>limit posts to a given year</description>
+      <description>limit posts to posts published starting from a given date. The format of the parameter is yyyy-mm-dd.</description>
     </property>
     <property>
       <mandatory>0</mandatory>
     </property>
     <property>
-      <name>year</name>
+      <name>fromDate</name>
     </property>
   </object>
   <object>
@@ -638,13 +643,13 @@
       <defaultValue/>
     </property>
     <property>
-      <description>limit posts to a given month</description>
+      <description>limit posts to posts published before a given date. The format of the parameter is yyyy-mm-dd.</description>
     </property>
     <property>
       <mandatory>0</mandatory>
     </property>
     <property>
-      <name>month</name>
+      <name>toDate</name>
     </property>
   </object>
   <object>
