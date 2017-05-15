@@ -40,7 +40,7 @@ public class CreateBlogPostPane extends BaseElement
     /**
      * The create button.
      */
-    @FindBy(xpath = "//form[@id = 'newBlogPost']//input[@type = 'submit' and @value = 'Create']")
+    @FindBy(xpath = "//form[@class = 'newBlogPostForm']//input[@type = 'submit' and @value = 'Create']")
     private WebElement createButton;
 
     /**
