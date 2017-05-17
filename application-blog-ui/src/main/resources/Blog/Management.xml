@@ -223,12 +223,13 @@
   &lt;input class="button" type="submit" value="${escapetool.xml($services.localization.render('blog.manage.create'))}"/&gt;
 &lt;/div&gt;
 &lt;/form&gt;
-#else ## !hasAdmin
+{{/html}}
+#else
+  {{html}}
   #xwikimessageboxstart($services.localization.render('error') $services.localization.render('notallowed'))
   #xwikimessageboxend()
+  {{/html}}
 #end
-
-{{/html}}
 {{/velocity}}</content>
   <object>
     <name>Blog.Management</name>
