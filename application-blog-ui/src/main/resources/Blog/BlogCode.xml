@@ -75,7 +75,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     #end
     #set ($macro.layoutParams = 'displayTitle=true|useSummary=true')
     #getBlogPostsLayout($blogDoc $postsLayout)
-    (% class="hfeed index" %)((({{blogpostlist blog="$blogDoc.fullName" paginated="$paginated" layout="$postsLayout" layoutParams="$!macro.layoutParams" /}})))
+    (% class="hfeed index" %)((({{blogpostlist blog="$blogDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$paginated" layout="$!postsLayout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!macro.layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" /}})))
   #end
 #end
 ##
@@ -1133,9 +1133,9 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       #set ($layout = $postsLayout)
     #end
     #if ($postsVisiblity == 'recent')
-    {{blogpostlist blog="${defaultBlogSpace}.WebHome" published='yes' hidden='no' layout="$!layout" layoutParams="$!layoutParams" limit="$limit" /}}
+    {{blogpostlist blog="${defaultBlogSpace.replaceAll('~', '~~').replaceAll('"', '~"')}.WebHome" published='yes' hidden='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" limit="$limit" /}}
     #elseif($postsVisiblity == 'unpublished')
-    {{blogpostlist blog="${defaultBlogSpace}.WebHome" published='no' layout="$!layout" layoutParams="$!layoutParams" paginated="$!macro.paginated" limit="$limit" /}}
+    {{blogpostlist blog="${defaultBlogSpace.replaceAll('~', '~~').replaceAll('"', '~"')}.WebHome" published='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$!macro.paginated" limit="$limit" /}}
     #end
   #elseif($targetDoc.getObject($blogCategoryClassname))
     ## display all posts that are in a category aCategorySpace.aCategory
@@ -1145,9 +1145,9 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       #set ($layout = $postsLayout)
     #end
     #if ($postsVisiblity == 'recent')
-    {{blogpostlist category="$targetDoc.fullName" published='yes' hidden='no' layout="$!layout" layoutParams="$!layoutParams" limit="$limit" /}}
+    {{blogpostlist category="$targetDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" published='yes' hidden='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" limit="$limit" /}}
     #elseif($postsVisiblity == 'unpublished')
-    {{blogpostlist category="$targetDoc.fullName" published='no' layout="$!layout" layoutParams="$!layoutParams" paginated="$!macro.paginated" limit="$limit" /}}
+    {{blogpostlist category="$targetDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" published='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$!macro.paginated" limit="$limit" /}}
     #end
   #elseif($targetDoc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
     ## Dispaly all posts that are in a category aCategorySpace.%
@@ -1157,9 +1157,9 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       #set ($layout = $postsLayout)
     #end
     #if ($postsVisiblity == 'recent')
-    {{blogpostlist category="$targetDoc.space" published='yes' hidden='no' layout="$!layout" layoutParams="$!layoutParams" limit="$limit" /}}
+    {{blogpostlist category="$targetDoc.space.replaceAll('~', '~~').replaceAll('"', '~"')" published='yes' hidden='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" limit="$limit" /}}
     #elseif($postsVisiblity == 'unpublished')
-    {{blogpostlist category="$targetDoc.space" published='no' layout="$!layout" layoutParams="$!layoutParams" paginated="$!macro.paginated" limit="$limit" /}}
+    {{blogpostlist category="$targetDoc.space.replaceAll('~', '~~').replaceAll('"', '~"')" published='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$!macro.paginated" limit="$limit" /}}
     #end
   #else
     ## Display all posts in blog space aBlog
@@ -1169,9 +1169,9 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       #set ($layout = $postsLayout)
     #end
     #if ($postsVisiblity == 'recent')
-    {{blogpostlist blog="$blogDoc.fullName" published='yes' hidden='no' layout="$!layout" limit="$limit" /}}
+    {{blogpostlist blog="$blogDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" published='yes' hidden='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" limit="$limit" /}}
     #elseif($postsVisiblity == 'unpublished')
-    {{blogpostlist blog="$blogDoc.fullName" published='no' layout="$!layout" layoutParams="$!layoutParams" paginated="$!macro.paginated" limit="$limit" /}}
+    {{blogpostlist blog="$blogDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" published='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$!macro.paginated" limit="$limit" /}}
     #end
   #end
 #end

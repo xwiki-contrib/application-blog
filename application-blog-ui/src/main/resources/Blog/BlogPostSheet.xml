@@ -58,7 +58,7 @@ $xwiki.ssx.use('Blog.ManageCategories')##
   #if ($postsLayout != 'full')
     #set ($layoutParams="$!{layoutParams}|displayCalendar=false")
   #end
-  {{blogPostLayoutFull reference="$doc.fullName"  params="$!layoutParams" /}}
+  {{blogPostLayoutFull reference="$doc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')"  params="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" /}}
 #else
   #if ("$!request.title" != '')
     ## Use the page title specified on the request, if available, as blog post title. This is needed for instance when

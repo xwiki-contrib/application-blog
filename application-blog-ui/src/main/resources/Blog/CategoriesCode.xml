@@ -628,7 +628,7 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
       #if ($macro.isCategoriesSpace)
         #set ($category = $catDoc.space)
       #end
-      (% class="hfeed category" %)((({{blogpostlist category="$category" paginated="yes" layout="$postsLayout" layoutParams="$!macro.layoutParams" /}})))
+      (% class="hfeed category" %)((({{blogpostlist category="$category.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="yes" layout="$postsLayout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!macro.layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" /}})))
     #end
   #end
 #end

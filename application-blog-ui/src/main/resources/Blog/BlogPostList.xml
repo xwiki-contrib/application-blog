@@ -338,20 +338,23 @@
 
   #if ("$!layoutParam" != '')
     #set ($blogPostLayoutMacro = "${blogPostLayoutPrefix}${layoutParam.substring(0, 1).toUpperCase()}${layoutParam.substring(1)}")
+    #set ($blogPostLayoutMacro = $blogPostLayoutMacro.replaceAll('~', '~~').replaceAll('"', '~"'))
   #end
 
   #set ($results = $query.addFilter("unique").execute())
 
   #set ($layoutAdditionalParams = "$!{layoutAdditionalParams}|list-results-count=${results.size()}")
+  #set ($layoutAdditionalParams = $layoutAdditionalParams.replaceAll('~', '~~').replaceAll('"', '~"'))
   #set ($XDOMList = [])
   #set ($previousPostReference = '')
   #foreach($result in $results)
     #if ($services.security.authorization.hasAccess('view', $result))
       #set ($layoutAdditionalParams = "${layoutAdditionalParams}|postIndex=${foreach.index}|previousPostReference=$!{previousPostReference}")
-      #set ($toParse = "{{${blogPostLayoutMacro} reference=${escapetool.getQuote()}${result}${escapetool.getQuote()} params=${escapetool.getQuote()}$!layoutAdditionalParams${escapetool.getQuote()}/}}")
+      #set ($escapedPostReference = $result.replaceAll('~', '~~').replaceAll('"', '~"'))
+      #set ($toParse = "{{${blogPostLayoutMacro} reference=${escapetool.getQuote()}${escapedPostReference}${escapetool.getQuote()} params=${escapetool.getQuote()}$!layoutAdditionalParams${escapetool.getQuote()}/}}")
       #set ($xdom = $services.rendering.parse($toParse, $xwiki.getCurrentContentSyntaxId()).getChildren())
       #set ($discard = $XDOMList.addAll($xdom))
-      #set ($previousPostReference = $result)
+      #set ($previousPostReference = $escapedPostReference)
     #end
   #end
   ## Pagination

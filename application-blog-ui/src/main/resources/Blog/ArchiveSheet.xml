@@ -170,19 +170,19 @@
     #set ($layoutParams = "useSummary=true|displayTitle=true")
     #if ($targetDocument.space == $defaultBlogSpace &amp;&amp; !$targetDocument.getObject($blogCategoryClassname))
       #getBlogPostsLayout($xwiki.getDocument("${defaultBlogSpace}.WebHome") $postsLayout)
-      {{blogpostlist blog="${defaultBlogSpace}.WebHome" fromDate="$fromDate" toDate="$toDate" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
+      {{blogpostlist blog="${defaultBlogSpace.replaceAll('~', '~~').replaceAll('"', '~"')}.WebHome" fromDate="$fromDate" toDate="$toDate" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
     #elseif($targetDocument.getObject($blogCategoryClassname))
       #getBlogDocumentForCategoriesSpace($targetDocument.space $blogDoc)
       #getBlogPostsLayout($blogDoc $postsLayout)
-      {{blogpostlist category="$targetDocument.fullName" fromDate="$fromDate" toDate="$toDate" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
+      {{blogpostlist category="$targetDocument.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" fromDate="$fromDate" toDate="$toDate" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
     #elseif($targetDocument.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
       #getBlogDocumentForCategoriesSpace($targetDocument.space $blogDoc)
       #getBlogPostsLayout($blogDoc $postsLayout)
-      {{blogpostlist category="$targetDocument.space" fromDate="$fromDate" toDate="$toDate" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
+      {{blogpostlist category="$targetDocument.space.replaceAll('~', '~~').replaceAll('"', '~"')" fromDate="$fromDate" toDate="$toDate" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
     #else
       #getBlogDocument($targetDocument.space $blogDoc)
       #getBlogPostsLayout($blogDoc $postsLayout)
-      {{blogpostlist blog="$blogDoc.fullName" fromDate="$fromDate" toDate="$toDate" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
+      {{blogpostlist blog="$blogDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" fromDate="$fromDate" toDate="$toDate" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
     #end
   #else
     #info($services.localization.render('blog.archive.noarticlesmonth'))
@@ -196,7 +196,7 @@
   #if($targetDocument.getObject($blogCategoryClassname) || $targetDocument.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
     #getBlogDocumentForCategoriesSpace($targetDocument.space $blogDoc)
     #set ($categoryTitle = $targetDocument.display('name'))
-    #if ("$!categoryTitle" == '' &amp;&amp; !$targetDocument.getObject($blogCategoryClassname)) ## Categories space WebHome
+    #if ("$!categoryTitle" == '' &amp;&amp; !$targetDocument.getObject($blogCategoryClassname))## Categories space WebHome
       #set ($categoryTitle = $services.localization.render('blog.categories.webhome.title'))
     #end
   #else
