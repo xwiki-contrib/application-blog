@@ -23,7 +23,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.eventstream.RecordableEventDescriptor;
+import org.xwiki.eventstream.AbstractRecordableEventDescriptor;
 import org.xwiki.platform.blog.events.BlogPostPublishedEvent;
 
 /**
@@ -35,24 +35,20 @@ import org.xwiki.platform.blog.events.BlogPostPublishedEvent;
 @Component
 @Singleton
 @Named("BlogPostPublishedEvent")
-public class BlogPostPublishedEventDescriptor implements RecordableEventDescriptor
+public class BlogPostPublishedEventDescriptor extends AbstractRecordableEventDescriptor
 {
+    /**
+     * Construct a BlogPostPublishedEventDescriptor.
+     */
+    public BlogPostPublishedEventDescriptor()
+    {
+        super("blog.events.blogpostpublished.description", "blog.applicationName");
+    }
+
     @Override
     public String getEventType()
     {
         return BlogPostPublishedEvent.class.getCanonicalName();
-    }
-
-    @Override
-    public String getApplicationName()
-    {
-        return "blog.applicationName";
-    }
-
-    @Override
-    public String getDescription()
-    {
-        return "blog.events.blogpostpublished.description";
     }
 
     @Override

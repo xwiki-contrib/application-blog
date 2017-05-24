@@ -33,7 +33,7 @@ import org.apache.commons.io.IOUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.phase.Initializable;
 import org.xwiki.component.phase.InitializationException;
-import org.xwiki.eventstream.Event;
+import org.xwiki.notifications.CompositeEvent;
 import org.xwiki.notifications.NotificationDisplayer;
 import org.xwiki.notifications.NotificationException;
 import org.xwiki.rendering.block.Block;
@@ -91,7 +91,7 @@ public class BlogNotificationDisplayer implements NotificationDisplayer, Initial
     }
 
     @Override
-    public Block renderNotification(Event eventNotification) throws NotificationException
+    public Block renderNotification(CompositeEvent eventNotification) throws NotificationException
     {
         try {
             velocityManager.getCurrentVelocityContext().put(EVENT_BINDING_NAME, eventNotification);
