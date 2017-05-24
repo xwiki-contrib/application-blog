@@ -19,13 +19,15 @@
  */
 package org.xwiki.platform.blog.internal;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.xwiki.localization.ContextualLocalizationManager;
 import org.xwiki.platform.blog.events.BlogPostPublishedEvent;
-import org.xwiki.platform.blog.internal.BlogPostPublishedEventDescriptor;
 import org.xwiki.test.mockito.MockitoComponentMockingRule;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 /**
  * @version $Id$
@@ -36,6 +38,17 @@ public class BlogPostPublishedEventDescriptorTest
     public MockitoComponentMockingRule<BlogPostPublishedEventDescriptor> mocker =
             new MockitoComponentMockingRule<>(BlogPostPublishedEventDescriptor.class);
 
+    private ContextualLocalizationManager contextualLocalizationManager;
+
+    @Before
+    public void setUp() throws Exception
+    {
+        contextualLocalizationManager = mocker.getInstance(ContextualLocalizationManager.class);
+        when(contextualLocalizationManager.getTranslationPlain("blog.applicationName")).thenReturn("Blog");
+        when(contextualLocalizationManager.getTranslationPlain("blog.events.blogpostpublished.description"))
+                .thenReturn("An article has been posted!");
+    }
+
     @Test
     public void getEventType() throws Exception
     {
@@ -45,13 +58,13 @@ public class BlogPostPublishedEventDescriptorTest
     @Test
     public void getApplicationName() throws Exception
     {
-        assertEquals("blog.applicationName", mocker.getComponentUnderTest().getApplicationName());
+        assertEquals("Blog", mocker.getComponentUnderTest().getApplicationName());
     }
 
     @Test
     public void getDescription() throws Exception
     {
-        assertEquals("blog.events.blogpostpublished.description", mocker.getComponentUnderTest().getDescription());
+        assertEquals("An article has been posted!", mocker.getComponentUnderTest().getDescription());
     }
 
     @Test

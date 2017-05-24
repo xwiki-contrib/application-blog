@@ -25,7 +25,7 @@ import org.apache.velocity.VelocityContext;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.xwiki.eventstream.Event;
+import org.xwiki.notifications.CompositeEvent;
 import org.xwiki.platform.blog.events.BlogPostPublishedEvent;
 import org.xwiki.rendering.block.RawBlock;
 import org.xwiki.rendering.block.XDOM;
@@ -43,8 +43,8 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * @version $Id$
@@ -85,12 +85,12 @@ public class BlogNotificationDisplayerTest
         when(xwiki.evaluateVelocity(anyString(), eq("blog-notification"))).thenReturn("<h1>Notification</h1>");
 
         // Test
-        Event event = mock(Event.class);
+        CompositeEvent compositeEvent = mock(CompositeEvent.class);
         assertEquals(new RawBlock("<h1>Notification</h1>", Syntax.HTML_5_0),
-                mocker.getComponentUnderTest().renderNotification(event));
+                mocker.getComponentUnderTest().renderNotification(compositeEvent));
 
         // Verify
-        verify(velocityContext).put("event", event);
+        verify(velocityContext).put("event", compositeEvent);
         verify(velocityContext).remove("event");
     }
 
@@ -105,11 +105,11 @@ public class BlogNotificationDisplayerTest
         when(templateManager.executeNoException(template)).thenReturn(xdom);
 
         // Test
-        Event event = mock(Event.class);
-        assertEquals(xdom, mocker.getComponentUnderTest().renderNotification(event));
+        CompositeEvent compositeEvent = mock(CompositeEvent.class);
+        assertEquals(xdom, mocker.getComponentUnderTest().renderNotification(compositeEvent));
 
         // Verify
-        verify(velocityContext).put("event", event);
+        verify(velocityContext).put("event", compositeEvent);
         verify(velocityContext).remove("event");
     }
 
