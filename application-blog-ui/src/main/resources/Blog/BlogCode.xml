@@ -854,7 +854,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
           #else
             , ##
           #end##
-          [[$!{escapetool.xml($!categoryDoc.getObject($blogCategoryClassname).getValue('name'))}&gt;&gt;${category}||rel='tag']]##
+          [[$!{categoryDoc.getObject($blogCategoryClassname).getValue('name')}&gt;&gt;${category}||rel='tag']]##
         #end##
       #end##
     #end
