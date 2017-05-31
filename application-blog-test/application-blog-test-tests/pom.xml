@@ -75,6 +75,13 @@
       <artifactId>application-blog-ui</artifactId>
       <version>${project.version}</version>
       <type>xar</type>
+      <exclusions>
+        <!-- Excluding the notification module in integration test, since thoses tests are running on 8.4.2 -->
+        <exclusion>
+          <groupId>org.xwiki.contrib.blog</groupId>
+          <artifactId>application-blog-notification</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <!-- Test dependencies -->
     <dependency>
