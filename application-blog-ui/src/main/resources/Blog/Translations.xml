@@ -204,7 +204,13 @@ blog.blogpostcreate.wrong_blog=Wrong blog descriptor
 
 # Class fields
 Blog.BlogClass_postsLayout.full=Calendar
-Blog.BlogClass_postsLayout.image=Image thumnail</content>
+Blog.BlogClass_postsLayout.image=Image thumnail
+
+# Notifications&#xd;
+blog.applicationName=Blog&#xd;
+blog.events.blogpostpublished.description=A blog post is published&#xd;
+blog.events.blogpostpublished.displayer=A new blog post has been posted: {0}&#xd;
+blog.events.blogpostpublished.by=by {0}.</content>
   <object>
     <name>Blog.Translations</name>
     <number>0</number>

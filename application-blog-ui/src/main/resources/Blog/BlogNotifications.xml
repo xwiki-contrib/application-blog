@@ -1,0 +1,258 @@
+<?xml version='1.1' encoding='UTF-8'?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.3">
+  <web>Blog</web>
+  <name>BlogNotifications</name>
+  <language/>
+  <defaultLanguage></defaultLanguage>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1498829066000</creationDate>
+  <parent>Blog.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1498833851000</date>
+  <contentUpdateDate>1498829066000</contentUpdateDate>
+  <version>1.1</version>
+  <title>BlogNotifications</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <content>This page contains the notifications parameters of the blog application.</content>
+  <object>
+    <name>Blog.BlogNotifications.WebHome</name>
+    <number>0</number>
+    <className>XWiki.EventStream.Code.EventClass</className>
+    <guid>96a61678-5bdc-464b-89d9-a46a70a3d08d</guid>
+    <class>
+      <name>XWiki.EventStream.Code.EventClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <applicationIcon>
+        <disabled>0</disabled>
+        <name>applicationIcon</name>
+        <number>3</number>
+        <prettyName>Event icon</prettyName>
+        <size>64</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </applicationIcon>
+      <applicationName>
+        <disabled>0</disabled>
+        <name>applicationName</name>
+        <number>1</number>
+        <prettyName>Application</prettyName>
+        <size>64</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </applicationName>
+      <eventDescription>
+        <disabled>0</disabled>
+        <name>eventDescription</name>
+        <number>4</number>
+        <prettyName>Event description</prettyName>
+        <size>64</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </eventDescription>
+      <eventType>
+        <disabled>0</disabled>
+        <name>eventType</name>
+        <number>2</number>
+        <prettyName>Event type</prettyName>
+        <size>64</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </eventType>
+      <listenTo>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <multiSelect>1</multiSelect>
+        <name>listenTo</name>
+        <number>5</number>
+        <prettyName>Listen to …</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>64</size>
+        <unmodifiable>0</unmodifiable>
+        <values/>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </listenTo>
+      <objectType>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <multiSelect>1</multiSelect>
+        <name>objectType</name>
+        <number>6</number>
+        <prettyName>Object type</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>256</size>
+        <unmodifiable>0</unmodifiable>
+        <values/>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </objectType>
+      <validationExpression>
+        <contenttype>VelocityCode</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>validationExpression</name>
+        <number>7</number>
+        <prettyName>Validation expression</prettyName>
+        <rows>3</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </validationExpression>
+    </class>
+    <property>
+      <applicationIcon>rss</applicationIcon>
+    </property>
+    <property>
+      <applicationName>blog.applicationName</applicationName>
+    </property>
+    <property>
+      <eventDescription>blog.events.blogpostpublished.description</eventDescription>
+    </property>
+    <property>
+      <eventType>BlogPostPublishedEvent</eventType>
+    </property>
+    <property>
+      <listenTo>
+        <value>org.xwiki.bridge.event.DocumentCreatedEvent</value>
+        <value>org.xwiki.bridge.event.DocumentUpdatedEvent</value>
+      </listenTo>
+    </property>
+    <property>
+      <objectType>
+        <value>Blog.BlogPostClass</value>
+      </objectType>
+    </property>
+    <property>
+      <validationExpression>#set($blogClassReference = $services.model.createDocumentReference('', 'Blog', 'BlogPostClass'))&#xd;
+        #set($createdEvent = $event.class.name.toString().equals('org.xwiki.bridge.event.DocumentCreatedEvent'))&#xd;
+        #set($object = $source.getXObject($blogClassReference))&#xd;
+        #if (!$createdEvent)&#xd;
+        #set($previousObject = $source.originalDocument.getXObject($blogClassReference))&#xd;
+        #end&#xd;
+        #if ($object.get('published').value == 1 &amp;&amp; ($createdEvent || $previousObject.get('published').value == 0))&#xd;
+        true&#xd;
+        #end</validationExpression>
+    </property>
+  </object>
+  <object>
+    <name>Blog.BlogNotifications.WebHome</name>
+    <number>0</number>
+    <className>XWiki.Notifications.Code.NotificationDisplayerClass</className>
+    <guid>5eea754d-b9f7-45bd-a0fa-86fcccef6537</guid>
+    <class>
+      <name>XWiki.Notifications.Code.NotificationDisplayerClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <eventType>
+        <disabled>0</disabled>
+        <name>eventType</name>
+        <number>1</number>
+        <prettyName>Event type</prettyName>
+        <size>64</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </eventType>
+      <notificationTemplate>
+        <contenttype>VelocityCode</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>notificationTemplate</name>
+        <number>2</number>
+        <prettyName>Notification template</prettyName>
+        <rows>3</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </notificationTemplate>
+    </class>
+    <property>
+      <eventType>BlogPostPublishedEvent</eventType>
+    </property>
+    <property>
+      <notificationTemplate>#template('notification/macros.vm')&#xd;
+        ###&#xd;
+        ### Content&#xd;
+        ###&#xd;
+        #define($content)&#xd;
+        #set ($document = $xwiki.getDocument($event.document))&#xd;
+        &lt;p>&lt;strong>$escapetool.xml($services.localization.render('blog.applicationName'))&lt;/strong>&lt;/p>&#xd;
+        &lt;p>$services.localization.render('blog.events.blogpostpublished.displayer', ["&lt;a href='$document.getURL()'>$!escapetool.xml($document.getRenderedTitle('html/5.0'))&lt;/a>"])&lt;/p>&#xd;
+        &lt;p>$services.localization.render('notifications.events.by', ["#displayNotificationEventUsers($event.users)"])&lt;/p>&#xd;
+        #set ($dates = $event.dates)&#xd;
+        #if ($dates.size() > 1)&#xd;
+        &lt;p>&lt;small>$services.localization.render('notifications.events.lastChange', [$xwiki.formatDate($event.dates.get(0))])&lt;/small>&lt;/p>&#xd;
+        #else&#xd;
+        &lt;p>&lt;small>$escapetool.xml($xwiki.formatDate($event.dates.get(0)))&lt;/small>&lt;/p>&#xd;
+        #end&#xd;
+        #end&#xd;
+        ###&#xd;
+        ### Details&#xd;
+        ###&#xd;
+        #define($details)&#xd;
+        #if ($event.events.size() > 1)&#xd;
+        #define($rows)&#xd;
+        #foreach($ev in $event.events)&#xd;
+        &lt;tr>&#xd;
+        #set ($type = "$!ev.type")&#xd;
+        #set ($icon = 'page')&#xd;
+        #if ($type == 'org.xwiki.platform.blog.events.BlogPostPublishedEvent')&#xd;
+        #set ($type = $services.localization.render('blog.publisher.published'))&#xd;
+        #set ($icon = 'rss')&#xd;
+        #end&#xd;
+        &lt;td>$!services.icon.renderHTML($icon) $!escapetool.xml($type)&lt;/td>&#xd;
+        &lt;td>#displayNotificationEventUser($ev.user)&lt;/td>&#xd;
+        &lt;td class="text-right">$escapetool.xml($xwiki.formatDate($ev.date))&lt;/td>&#xd;
+        &lt;/tr>&#xd;
+        #end&#xd;
+        #end&#xd;
+        #displayNotificationEventDetailsSkeletons($event.events.size(), $rows)&#xd;
+        #end&#xd;
+        #end&#xd;
+        ###&#xd;
+        ### Display the notification&#xd;
+        ###&#xd;
+        #displayNotificationEventSkeleton('rss', $content, $details)</notificationTemplate>
+    </property>
+  </object>
+</xwikidoc>
