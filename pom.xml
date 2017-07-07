@@ -54,7 +54,6 @@
   </properties>
   <modules>
     <module>application-blog-api</module>
-    <module>application-blog-notification</module>
     <module>application-blog-ui</module>
   </modules>
   <profiles>
