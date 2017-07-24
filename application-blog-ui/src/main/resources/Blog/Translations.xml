@@ -174,7 +174,8 @@ blog.publisher.published = Published article
 blog.recentposts.paneltitle = Recent Blog Posts
 blog.unpublished.entries = Unpublished articles
 blog.unpublished.viewall = View all
-blog.blogspanel.title = Blogs
+blog.relatedblogspanel.title = Related Blogs
+blog.allblogspanel.title = All Blogs
 
 blog.templateProvider.blogpost.name=Blog Post
 blog.templateProvider.blogpost.description=Communicate news
@@ -205,6 +206,12 @@ blog.blogpostcreate.wrong_blog=Wrong blog descriptor
 # Class fields
 Blog.BlogClass_postsLayout.full=Calendar
 Blog.BlogClass_postsLayout.image=Image thumnail
+
+# Blogs macro
+blog.livetable.title=Title
+blog.livetable._actions=Actions
+rendering.macro.blogs.name=All Blogs Livetable
+rendering.macro.blogs.description=The blogs macro is used to list on a livetable all the blog available on the wiki.
 
 # Notifications&#xd;
 blog.applicationName=Blog&#xd;

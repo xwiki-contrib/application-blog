@@ -53,14 +53,8 @@
 ##
 #set ($discard = $xwiki.jsx.use('Blog.Management'))
 == $services.localization.render('blog.manage.existing') ==
-#foreach($item in $xwiki.wrapDocs($services.query.hql(", BaseObject obj where obj.name = doc.fullName and obj.className = '$blogClassname' and doc.fullName &lt;&gt; '$blogTemplate' ").execute()))
-  #getBlogTitle($item $title)
-  #if($title != '')
-    * [[$title&gt;&gt;$item.fullName]]
-  #else
-    * [[$item.displayTitle&gt;&gt;$item.fullName]]
-  #end
-#end
+
+{{blogs/}}
 ##
 ##
 ## New blog
@@ -128,7 +122,7 @@
             #set ($discard = $webPreferencesDoc.setHidden(true))
             #set ($xwikiPreferencesObj = $webPreferencesDoc.getObject('XWiki.XWikiPreferences', true))
             #set ($discard = $xwikiPreferencesObj.set('showRightPanels', 1))
-            #set ($discard = $xwikiPreferencesObj.set('rightPanels', 'Blog.RecentPostsPanel,Blog.UnpublishedPanel,Blog.CategoriesPanel,Blog.ArchivePanel,Blog.BlogPanel'))
+            #set ($discard = $xwikiPreferencesObj.set('rightPanels', 'Blog.RecentPostsPanel,Blog.UnpublishedPanel,Blog.CategoriesPanel,Blog.ArchivePanel,Blog.RelatedBlogsPanel,Blog.AllBlogsPanel'))
             #set ($discard = $webPreferencesDoc.save())
           #end
 

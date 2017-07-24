@@ -179,6 +179,8 @@ blog.templateProvider.blogpost.description=Nouvelle postée sur un blog
 blog.templateProvider.blogpost.name=Article de Blog
 blog.unpublished.entries=Articles non publiés
 blog.unpublished.viewall=Voir tout
+blog.relatedblogspanel.title=Blogs liés
+blog.allblogspanel.title=Tous les blogs
 
 blog.manage.pagetitle=Gérer les blogs sur ce wiki
 blog.manage.notitle=Aucun titre de blog fourni. Veuillez entrer le titre du blog.
@@ -202,6 +204,12 @@ blog.blogpostlayout.post_view_not_allowed=Vous n''êtes pas autorisé à voir l'
 blog.manage.post.layout=Layout des articles
 blog.archive.pagetitle=Archives
 blog.blogpostcreate.wrong_blog=Descripteur de blog incorrecte
+
+# Blogs macro
+blog.livetable.title=Titre
+blog.livetable._actions=Actions
+rendering.macro.blogs.name=Tous les blogs
+rendering.macro.blogs.description=La macro blogs est utilisée pour afficher un livetable de tous les blogs disponibles dans le wiki.
 
 # Class fields
 Blog.BlogClass_postsLayout.full=Calendrier

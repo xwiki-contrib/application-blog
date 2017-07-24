@@ -150,7 +150,23 @@
       <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
     </postsLocation>
     <title>
-      <customDisplay/>
+      <customDisplay>{{include reference="Blog.BlogCode"/}}
+
+{{velocity}}
+{{html clean="false"}}
+#if ($type == 'view')
+  #getBlogTitle($doc $title)
+  #if($title != '')
+    $title
+  #else
+    $item.displayTitle
+  #end
+#elseif($type == 'edit')
+  #set ($propertyClass = $object.getxWikiClass().get($name))
+  $doc.displayEdit($propertyClass, $prefix, $object)
+#end
+{{/html}}
+{{/velocity}}</customDisplay>
       <disabled>0</disabled>
       <name>title</name>
       <number>1</number>

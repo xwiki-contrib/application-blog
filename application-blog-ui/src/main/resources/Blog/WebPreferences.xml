@@ -1323,7 +1323,7 @@
       <registration_registered/>
     </property>
     <property>
-      <rightPanels>Blog.RecentPostsPanel,Blog.UnpublishedPanel,Blog.CategoriesPanel,Blog.ArchivePanel</rightPanels>
+      <rightPanels>Blog.RecentPostsPanel,Blog.UnpublishedPanel,Blog.CategoriesPanel,Blog.ArchivePanel,Blog.RelatedBlogsPanel,Blog.AllBlogsPanel</rightPanels>
     </property>
     <property>
       <rightPanelsWidth>Medium</rightPanelsWidth>
