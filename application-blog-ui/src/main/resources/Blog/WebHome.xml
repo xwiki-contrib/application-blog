@@ -182,7 +182,7 @@
       <itemsPerPage>10</itemsPerPage>
     </property>
     <property>
-      <postsLayout>full</postsLayout>
+      <postsLayout>image</postsLayout>
     </property>
     <property>
       <postsLocation/>

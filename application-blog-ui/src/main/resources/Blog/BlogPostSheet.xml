@@ -85,7 +85,7 @@ $xwiki.ssx.use('Blog.ManageCategories')##
   &lt;div class="row"&gt;
     &lt;div class="col-xs-12 col-sm-4 col-lg-3"&gt;
       &lt;dl&gt;
-        &lt;dt&gt;&lt;label&gt;$services.localization.render('blog.sheet.image'):&lt;/label&gt;&lt;/dt&gt;
+        &lt;dt&gt;&lt;label&gt;$services.localization.render('blog.sheet.image') &lt;a href="javascript:;" title="${escapetool.xml($services.localization.render('blog.sheet.image.info'))}"&gt;&lt;span class="glyphicon glyphicon-info-sign" aria-hidden="true"&gt;&lt;/span&gt;&lt;/a&gt; :&lt;/label&gt;&lt;/dt&gt;
         &lt;dd&gt;
 {{/html}}
 

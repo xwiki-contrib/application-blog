@@ -198,6 +198,7 @@ blog.blogpostlist.descriptor_not_found=Unable to found a blog descriptor in docu
 blog.categories.webhome.title=Toutes les catégories
 blog.category.posts.count={0} {0,choice,0#articles|1#article|1&lt;articles}
 blog.sheet.image=Image
+blog.sheet.image.info=Le champ image sert à attacher une vignette à chaque article de blog. Les vignettes seront visibles seulement dans le cas ou le blog est configuré pour utiliser le layout 'image'.
 blog.sheet.choose_image=Choisir une image
 blog.blogpostlayout.notpost=[{0}] n''est pas un article de blog!
 blog.blogpostlayout.post_view_not_allowed=Vous n''êtes pas autorisé à voir l''article de blog [{0}]
