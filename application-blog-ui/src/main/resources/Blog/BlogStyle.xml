@@ -269,7 +269,7 @@
   margin-top: 0;
   margin-bottom: 0;
 }
-div.edit-categories {
+div.edit-categories, div.manage-blogs-link {
   font-size: 75%;
 }
 /* Trick for making the entry title appear larger in the form editor */

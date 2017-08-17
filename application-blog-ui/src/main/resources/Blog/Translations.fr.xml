@@ -181,6 +181,7 @@ blog.unpublished.entries=Articles non publiés
 blog.unpublished.viewall=Voir tout
 blog.relatedblogspanel.title=Blogs liés
 blog.allblogspanel.title=Tous les blogs
+blog.allblogspanel.manage = Gérer les blogs
 
 blog.manage.pagetitle=Gérer les blogs sur ce wiki
 blog.manage.notitle=Aucun titre de blog fourni. Veuillez entrer le titre du blog.

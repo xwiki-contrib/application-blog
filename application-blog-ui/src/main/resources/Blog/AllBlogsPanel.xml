@@ -137,6 +137,10 @@
     * [[$item.displayTitle&gt;&gt;$blogDocument.fullName]]
   #end
 #end
+#if ($hasAdmin)
+
+(% class="manage-blogs-link" %)(((~([[$services.localization.render('blog.allblogspanel.manage')&gt;&gt;Blog.Management]]~))))
+#end
 #panelfooter()
 #end
 {{/velocity}}</content>

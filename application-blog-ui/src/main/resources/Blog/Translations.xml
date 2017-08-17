@@ -177,6 +177,7 @@ blog.unpublished.entries = Unpublished articles
 blog.unpublished.viewall = View all
 blog.relatedblogspanel.title = Related Blogs
 blog.allblogspanel.title = All Blogs
+blog.allblogspanel.manage = Manage Blogs
 
 blog.templateProvider.blogpost.name=Blog Post
 blog.templateProvider.blogpost.description=Communicate news
