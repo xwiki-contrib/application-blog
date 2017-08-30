@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
@@ -43,11 +42,14 @@
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
   <content>## XWiki Translation for language fr generated from http://www.l10n.xwiki.org
+Blog.BlogClass_postsLayout.full=Calendrier
 blog.application.name=Blog
+blog.applicationName=Blog
 blog.archive.hidden=(caché)
 blog.archive.noarticle=Pas d'articles pour le moment...
 blog.archive.noarticlesmonth=Pas d'articles pour ce mois...
 blog.archive.noarticlesyear=Pas d'articles pour cette année...
+blog.archive.pagetitle=Archive
 blog.archive.paneltitle=Archives
 blog.archive.postsfor=Articles de blog pour
 blog.archive.postsyear=Articles de blog pour {0}
@@ -55,6 +57,7 @@ blog.archive.unpublished=(non publié)
 blog.categories.add=Ajouter
 blog.categories.addcategory=Ajouter une catégorie
 blog.categories.addsubcategory=Ajouter une nouvelle sous-catégorie
+blog.categories.all=Toutes
 blog.categories.articles=Articles de cette catégorie
 blog.categories.deleteselected=Effacer les catégories sélectionnées
 blog.categories.description=Description \:
@@ -72,8 +75,8 @@ blog.categories.parentcategory=Catégorie parente
 blog.categories.remove=Enlever la catégorie supprimée
 blog.categories.sheet=Sheet des Catégories
 blog.categories.sheetmessage=Cette sheet doit être utilisée afin d'afficher des catégories de blog
-blog.categories.webhome_sheetmessage=Implémente l'affichage des articles de blog dans la page d'accueil des catégories (Blog.CategoriesSheet).
 blog.categories.subcategories=Sous-catégories
+blog.categories.webhome.title=Toutes les catégories
 blog.category.created=La catégorie {0} a été créée.
 blog.category.exists=La catégorie {0} existe déjà.
 blog.changeVisibility.changing=Modifier la visibilité
@@ -112,29 +115,33 @@ blog.code.readpost=Lire l’article complet
 blog.code.sheetexplanation=Cette sheet doit être utilisée afin d'afficher un article de blog.
 blog.code.title=Blog
 blog.code.warning=Attention \: 
+blog.events.blogpostpublished.by=par {0}. 
 blog.manage.blogtitle=Titre du Billet
 blog.manage.blogtype=Type de blog \:
 blog.manage.create=Créer
 blog.manage.createnew=Créer un nouveau blog
 blog.manage.existing=Blogs existant
 blog.manage.inside=blog au sein d'un espace existant
+blog.manage.location.title=Titre du blog
 blog.manage.main=blog qui sera la seule application de l'espace
 blog.manage.nospace=Vous n'avez pas donné le nom d'un espace. Veuillez entrer le nom de l'espace dans lequel vous souhitez que le blog soit créé.
+blog.manage.notitle=Le titre du blog est vide. Merci de le renseigner.
+blog.manage.pagetitle=Gérer les blogs sur ce wiki
 blog.manage.space=Espace \:
 blog.manage.title=Titre \:
 blog.manageCategories.comment.removedDeletedCategory=La catégorie a été définitivement supprimée
 blog.manageCategories.comment.updatedCategory=Le nom de la catégorie a été mis à jour
-blog.manageCategories.forms.add_button_label=Ajouter
-blog.manageCategories.forms.cancel_button_label=Annuler
-blog.manageCategories.forms.select_none=Aucune
-blog.manageCategories.forms.sub_cat_of=Sous-catégorie de :
-blog.manageCategories.forms.rename_button_label=Renommer
 blog.manageCategories.comment.updatedParent=Le parent de la catégorie a été mis à jour
 blog.manageCategories.comment.updatedRenamedCategory=La catégorie renommée a été mise à jour
 blog.manageCategories.create.error.alreadyExists=Le document cible existe déjà. Veuillez choisir un autre nom.
 blog.manageCategories.create.error.emptyName=Veuillez entrer un nom de catégorie valide
 blog.manageCategories.create.error.notExists=La page demandée est introuvable
 blog.manageCategories.create.error.targetNotWritable=Vous ne détenez pas les droits nécessaires de créer cette page.
+blog.manageCategories.forms.add_button_label=Ajouter
+blog.manageCategories.forms.cancel_button_label=Annuler
+blog.manageCategories.forms.rename_button_label=Renommer
+blog.manageCategories.forms.select_none=Aucun
+blog.manageCategories.forms.sub_cat_of=Sous-catégorie de \:
 blog.manageCategories.js.add.error.401=Vous avez été déconnecté, veuillez rafraîchir la page et vous reconnecter.
 blog.manageCategories.js.add.error.403=Vous n'avez pas les droits vous permettant de créer le document cible
 blog.manageCategories.js.add.error.409=Le document cible existe déjà, veuillez choisir un autre nom
@@ -166,8 +173,10 @@ blog.post.titleEmptyError=Le titre est obligatoire \!
 blog.publisher.published=Article publié
 blog.recentposts.paneltitle=Articles récents
 blog.sheet.category=Catégorie \:
+blog.sheet.choose_image=Sélectionner une image
 blog.sheet.content=Contenu\:
 blog.sheet.hidearticle=Cacher l''article {0}
+blog.sheet.image=Image
 blog.sheet.notpost=Ceci n'est pas un artice de blog\!
 blog.sheet.notpublished=Cet article n'a pas encore été publié.
 blog.sheet.publicationdate=Cet article a été publié le {0}
@@ -179,41 +188,5 @@ blog.templateProvider.blogpost.description=Nouvelle postée sur un blog
 blog.templateProvider.blogpost.name=Article de Blog
 blog.unpublished.entries=Articles non publiés
 blog.unpublished.viewall=Voir tout
-blog.relatedblogspanel.title=Blogs liés
-blog.allblogspanel.title=Tous les blogs
-blog.allblogspanel.manage = Gérer les blogs
-
-blog.manage.pagetitle=Gérer les blogs sur ce wiki
-blog.manage.notitle=Aucun titre de blog fourni. Veuillez entrer le titre du blog.
-blog.manage.nopage=Vous n'avez pas donné le nom d'une page. Veuillez entrer le nom de la page dans laquelle vous souhaitez que le blog soit créé.
-blog.manage.unallowed_page=L'emplacement du blog est déjà utilisé, veuillez saisir un autre emplacement.
-blog.manage.location.title=Titre du blog
-blog.manage.location.title.hint=Titre du nouveau blog
-blog.manage.location.title.placeholder=Nouveau blog
-blog.manage.categories_location=Emplacement des catégories
-blog.manage.enable_panels=Activer les panels du blog
-blog.manage.create_default_categories=Créer les catégories par defaut
-blog.manage.locationPreview.hint=Emplacement dans la hiérarchie des pages où ce blog sera créé.
-blog.manage.categoriesLocationPreview.hint=Emplacement dans la hiérarchie des pages où les catégories de ce blog seront créées.
-blog.blogpostlist.descriptor_not_found=Unable to found a blog descriptor in document [{0}]
-blog.categories.webhome.title=Toutes les catégories
-blog.category.posts.count={0} {0,choice,0#articles|1#article|1&lt;articles}
-blog.sheet.image=Image
-blog.sheet.image.info=Le champ image sert à attacher une vignette à chaque article de blog. Les vignettes seront visibles seulement dans le cas ou le blog est configuré pour utiliser le layout 'image'.
-blog.sheet.choose_image=Choisir une image
-blog.blogpostlayout.notpost=[{0}] n''est pas un article de blog!
-blog.blogpostlayout.post_view_not_allowed=Vous n''êtes pas autorisé à voir l''article de blog [{0}]
-blog.manage.post.layout=Layout des articles
-blog.archive.pagetitle=Archives
-blog.blogpostcreate.wrong_blog=Descripteur de blog incorrecte
-
-# Blogs macro
-blog.livetable.title=Titre
-blog.livetable._actions=Actions
-rendering.macro.blogs.name=Tous les blogs
-rendering.macro.blogs.description=La macro blogs est utilisée pour afficher un livetable de tous les blogs disponibles dans le wiki.
-
-# Class fields
-Blog.BlogClass_postsLayout.full=Calendrier
-Blog.BlogClass_postsLayout.image=Image miniature</content>
+</content>
 </xwikidoc>
