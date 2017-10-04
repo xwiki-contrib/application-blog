@@ -785,7 +785,9 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  *###
 #macro(getEntryContent $entryDoc $entryObj $onlyExtract $entryContent)
   #if ($onlyExtract)
-    #set ($macro.result = $entryObj.getProperty('extract').value)
+    ## Note: We trim the summary so that if there's some white space it won't cause the summary to be used instead
+    ## of the content.
+    #set ($macro.result = $entryObj.getProperty('extract').value.trim())
   #end
   #if("$!macro.result" == '')
     #set($macro.result = $entryObj.getProperty('content').value)
