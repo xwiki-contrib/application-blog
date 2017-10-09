@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.xwiki.contrib.blog</groupId>
     <artifactId>application-blog-test</artifactId>
-    <version>9.6-SNAPSHOT</version>
+    <version>9.5.1</version>
   </parent>
   <artifactId>application-blog-test-tests</artifactId>
   <name>Blog - Tests - Functional Tests</name>
