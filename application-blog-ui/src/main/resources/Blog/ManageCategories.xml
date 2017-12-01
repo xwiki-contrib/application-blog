@@ -628,7 +628,7 @@ document.observe('xwiki:dom:loaded', function() {
   $$(".blog-categories-list.subcategories").each(function(item) {
     var downIcon = '&lt;span class="glyphicon glyphicon-chevron-down" aria-hidden="true"&gt;&lt;/span&gt;';
     var upIcon = '&lt;span class="glyphicon glyphicon-chevron-up" aria-hidden="true"&gt;&lt;/span&gt;'
-    var toggler = new Element("a", {class : "subcat-toggle-link"}).update(downIcon);
+    var toggler = new Element('a', {'class' : 'subcat-toggle-link'}).update(downIcon);
     var list = item.down("div", 1);
     toggler.observe("click", function() {
       list.toggle();
