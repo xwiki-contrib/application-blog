@@ -242,6 +242,19 @@ $xwiki.ssx.use('Blog.ManageCategories')##
       $("input[type='hidden']#defaultPostCategory").val('');
     }
   });
+  // Reset the "dirty state" of the CKEDITOR editors
+  $("body").on("click", "form#uploadAttachment input[name='action_upload']", function(event){
+    if( typeof(CKEDITOR) !== "undefined" ) {
+      var contentEditor = CKEDITOR.instances['Blog.BlogPostClass_0_content'];
+      var extractEditor = CKEDITOR.instances['Blog.BlogPostClass_0_extract'];
+      if (contentEditor) {
+        contentEditor.resetDirty();
+      }
+      if (extractEditor) {
+        extractEditor.resetDirty();
+      }
+    }
+  });
 });</code>
     </property>
     <property>
