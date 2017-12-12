@@ -39,8 +39,10 @@ function format_xar() {
 function do_all() {
     read_user_and_password
 
-    cd ${XWIKI_TRUNKS}/application-blog-notification/src/main/resources/ || exit -1
-    do_one 'http://l10n.xwiki.org/xwiki/bin/view/L10NCode/GetTranslationFile?name=Contrib.Blog%20API%20Resources&app=Contrib'
+    if [[-f ${XWIKI_TUNKS}/application-blog-notification ]]; then
+	cd ${XWIKI_TRUNKS}/application-blog-notification/src/main/resources/ || exit -1
+	do_one 'http://l10n.xwiki.org/xwiki/bin/view/L10NCode/GetTranslationFile?name=Contrib.Blog%20API%20Resources&app=Contrib'
+    fi
 
     cd ${XWIKI_TRUNKS}/application-blog-ui/src/main/resources/ || exit -1
     do_one 'http://l10n.xwiki.org/xwiki/bin/view/L10NCode/GetTranslationFile?name=Contrib.BlogTranslations&app=Contrib'
