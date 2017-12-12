@@ -1,4 +1,4 @@
-<?xml version='1.1' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -24,7 +24,7 @@
   <web>Blog</web>
   <name>BlogNotifications</name>
   <language/>
-  <defaultLanguage></defaultLanguage>
+  <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
   <creationDate>1498829066000</creationDate>
@@ -41,7 +41,7 @@
   <hidden>true</hidden>
   <content>This page contains the notifications parameters of the blog application.</content>
   <object>
-    <name>Blog.BlogNotifications.WebHome</name>
+    <name>Blog.BlogNotifications</name>
     <number>0</number>
     <className>XWiki.EventStream.Code.EventClass</className>
     <guid>96a61678-5bdc-464b-89d9-a46a70a3d08d</guid>
@@ -57,17 +57,26 @@
       <applicationIcon>
         <disabled>0</disabled>
         <name>applicationIcon</name>
-        <number>3</number>
+        <number>4</number>
         <prettyName>Event icon</prettyName>
         <size>64</size>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </applicationIcon>
+      <applicationId>
+        <disabled>0</disabled>
+        <name>applicationId</name>
+        <number>2</number>
+        <prettyName>Application Identifier</prettyName>
+        <size>64</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </applicationId>
       <applicationName>
         <disabled>0</disabled>
         <name>applicationName</name>
         <number>1</number>
-        <prettyName>Application</prettyName>
+        <prettyName>Application Name</prettyName>
         <size>64</size>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
@@ -75,7 +84,7 @@
       <eventDescription>
         <disabled>0</disabled>
         <name>eventDescription</name>
-        <number>4</number>
+        <number>6</number>
         <prettyName>Event description</prettyName>
         <size>64</size>
         <unmodifiable>0</unmodifiable>
@@ -84,19 +93,28 @@
       <eventType>
         <disabled>0</disabled>
         <name>eventType</name>
-        <number>2</number>
+        <number>3</number>
         <prettyName>Event type</prettyName>
         <size>64</size>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </eventType>
+      <eventTypeIcon>
+        <disabled>0</disabled>
+        <name>eventTypeIcon</name>
+        <number>5</number>
+        <prettyName>Event Type icon</prettyName>
+        <size>64</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </eventTypeIcon>
       <listenTo>
         <cache>0</cache>
         <disabled>0</disabled>
         <displayType>input</displayType>
         <multiSelect>1</multiSelect>
         <name>listenTo</name>
-        <number>5</number>
+        <number>7</number>
         <prettyName>Listen to …</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
@@ -112,7 +130,7 @@
         <displayType>input</displayType>
         <multiSelect>1</multiSelect>
         <name>objectType</name>
-        <number>6</number>
+        <number>8</number>
         <prettyName>Object type</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
@@ -127,7 +145,7 @@
         <disabled>0</disabled>
         <editor>PureText</editor>
         <name>validationExpression</name>
-        <number>7</number>
+        <number>9</number>
         <prettyName>Validation expression</prettyName>
         <rows>3</rows>
         <size>40</size>
@@ -139,6 +157,9 @@
       <applicationIcon>rss</applicationIcon>
     </property>
     <property>
+      <applicationId/>
+    </property>
+    <property>
       <applicationName>blog.applicationName</applicationName>
     </property>
     <property>
@@ -146,6 +167,9 @@
     </property>
     <property>
       <eventType>BlogPostPublishedEvent</eventType>
+    </property>
+    <property>
+      <eventTypeIcon>add</eventTypeIcon>
     </property>
     <property>
       <listenTo>
@@ -159,19 +183,19 @@
       </objectType>
     </property>
     <property>
-      <validationExpression>#set($blogClassReference = $services.model.createDocumentReference('', 'Blog', 'BlogPostClass'))&#xd;
-        #set($createdEvent = $event.class.name.toString().equals('org.xwiki.bridge.event.DocumentCreatedEvent'))&#xd;
-        #set($object = $source.getXObject($blogClassReference))&#xd;
-        #if (!$createdEvent)&#xd;
-        #set($previousObject = $source.originalDocument.getXObject($blogClassReference))&#xd;
-        #end&#xd;
-        #if ($object.get('published').value == 1 &amp;&amp; ($createdEvent || $previousObject.get('published').value == 0))&#xd;
-        true&#xd;
-        #end</validationExpression>
+      <validationExpression>#set($blogClassReference = $services.model.createDocumentReference('', 'Blog', 'BlogPostClass'))
+#set($createdEvent = $event.class.name.toString().equals('org.xwiki.bridge.event.DocumentCreatedEvent'))
+#set($object = $source.getXObject($blogClassReference))
+#if (!$createdEvent)
+#set($previousObject = $source.originalDocument.getXObject($blogClassReference))
+#end
+#if ($object.get('published').value == 1 &amp;&amp; ($createdEvent || $previousObject.get('published').value == 0))
+true
+#end</validationExpression>
     </property>
   </object>
   <object>
-    <name>Blog.BlogNotifications.WebHome</name>
+    <name>Blog.BlogNotifications</name>
     <number>0</number>
     <className>XWiki.Notifications.Code.NotificationDisplayerClass</className>
     <guid>5eea754d-b9f7-45bd-a0fa-86fcccef6537</guid>
@@ -210,49 +234,54 @@
       <eventType>BlogPostPublishedEvent</eventType>
     </property>
     <property>
-      <notificationTemplate>#template('notification/macros.vm')&#xd;
-        ###&#xd;
-        ### Content&#xd;
-        ###&#xd;
-        #define($content)&#xd;
-        #set ($document = $xwiki.getDocument($event.document))&#xd;
-        &lt;p>&lt;strong>$escapetool.xml($services.localization.render('blog.applicationName'))&lt;/strong>&lt;/p>&#xd;
-        &lt;p>$services.localization.render('blog.events.blogpostpublished.displayer', ["&lt;a href='$document.getURL()'>$!escapetool.xml($document.getRenderedTitle('html/5.0'))&lt;/a>"])&lt;/p>&#xd;
-        &lt;p>$services.localization.render('notifications.events.by', ["#displayNotificationEventUsers($event.users)"])&lt;/p>&#xd;
-        #set ($dates = $event.dates)&#xd;
-        #if ($dates.size() > 1)&#xd;
-        &lt;p>&lt;small>$services.localization.render('notifications.events.lastChange', [$xwiki.formatDate($event.dates.get(0))])&lt;/small>&lt;/p>&#xd;
-        #else&#xd;
-        &lt;p>&lt;small>$escapetool.xml($xwiki.formatDate($event.dates.get(0)))&lt;/small>&lt;/p>&#xd;
-        #end&#xd;
-        #end&#xd;
-        ###&#xd;
-        ### Details&#xd;
-        ###&#xd;
-        #define($details)&#xd;
-        #if ($event.events.size() > 1)&#xd;
-        #define($rows)&#xd;
-        #foreach($ev in $event.events)&#xd;
-        &lt;tr>&#xd;
-        #set ($type = "$!ev.type")&#xd;
-        #set ($icon = 'page')&#xd;
-        #if ($type == 'org.xwiki.platform.blog.events.BlogPostPublishedEvent')&#xd;
-        #set ($type = $services.localization.render('blog.publisher.published'))&#xd;
-        #set ($icon = 'rss')&#xd;
-        #end&#xd;
-        &lt;td>$!services.icon.renderHTML($icon) $!escapetool.xml($type)&lt;/td>&#xd;
-        &lt;td>#displayNotificationEventUser($ev.user)&lt;/td>&#xd;
-        &lt;td class="text-right">$escapetool.xml($xwiki.formatDate($ev.date))&lt;/td>&#xd;
-        &lt;/tr>&#xd;
-        #end&#xd;
-        #end&#xd;
-        #displayNotificationEventDetailsSkeletons($event.events.size(), $rows)&#xd;
-        #end&#xd;
-        #end&#xd;
-        ###&#xd;
-        ### Display the notification&#xd;
-        ###&#xd;
-        #displayNotificationEventSkeleton('rss', $content, $details)</notificationTemplate>
+      <notificationTemplate>#template('notification/macros.vm')
+#if ($services.extension.core.getCoreExtension('org.xwiki.platform:xwiki-platform-oldcore').id.version.compareTo('9.10') &gt;= 0)
+  #displayNotificationEvent($event)
+#else
+  ###
+  ### Content
+  ###
+  #define($content)
+    #set ($document = $xwiki.getDocument($event.document))
+    &lt;p&gt;&lt;strong&gt;$escapetool.xml($services.localization.render('blog.applicationName'))&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;$services.localization.render('blog.events.blogpostpublished.displayer', ["&lt;a href='$document.getURL()'&gt;$!escapetool.xml($document.getRenderedTitle('html/5.0'))&lt;/a&gt;"])&lt;/p&gt;
+    &lt;p&gt;$services.localization.render('notifications.events.by', ["#displayNotificationEventUsers($event.users)"])&lt;/p&gt;
+    #set ($dates = $event.dates)
+    #if ($dates.size() &gt; 1)
+      &lt;p&gt;&lt;small&gt;$services.localization.render('notifications.events.lastChange', [$xwiki.formatDate($event.dates.get(0))])&lt;/small&gt;&lt;/p&gt;
+    #else
+      &lt;p&gt;&lt;small&gt;$escapetool.xml($xwiki.formatDate($event.dates.get(0)))&lt;/small&gt;&lt;/p&gt;
+    #end
+  #end
+  ###
+  ### Details
+  ###
+  #define($details)
+    #if ($event.events.size() &gt; 1)
+      #define($rows)
+        #foreach($ev in $event.events)
+          &lt;tr&gt;
+            #set ($type = "$!ev.type")
+            #set ($icon = 'page')
+            #if ($type == 'org.xwiki.platform.blog.events.BlogPostPublishedEvent')
+              #set ($type = $services.localization.render('blog.publisher.published'))
+              #set ($icon = 'rss')
+            #end
+            &lt;td&gt;$!services.icon.renderHTML($icon) $!escapetool.xml($type)&lt;/td&gt;
+            &lt;td&gt;#displayNotificationEventUser($ev.user)&lt;/td&gt;
+            &lt;td class="text-right"&gt;$escapetool.xml($xwiki.formatDate($ev.date))&lt;/td&gt;
+          &lt;/tr&gt;
+        #end
+      #end
+      #displayNotificationEventDetailsSkeletons($event.events.size(), $rows)
+    #end
+  #end
+  ###
+  ### Display the notification
+  ###
+  #displayNotificationEventSkeleton('rss', $content, $details)
+#end
+</notificationTemplate>
     </property>
   </object>
 </xwikidoc>

@@ -215,11 +215,13 @@ blog.livetable._actions=Actions
 rendering.macro.blogs.name=All Blogs Livetable
 rendering.macro.blogs.description=The blogs macro is used to list on a livetable all the blog available on the wiki.
 
-# Notifications&#xd;
-blog.applicationName=Blog&#xd;
-blog.events.blogpostpublished.description=A blog post is published&#xd;
-blog.events.blogpostpublished.displayer=A new blog post has been posted: {0}&#xd;
-blog.events.blogpostpublished.by=by {0}.</content>
+# Notifications
+blog.applicationName=Blog
+blog.events.blogpostpublished.description=A blog post is published
+blog.events.blogpostpublished.displayer=A new blog post has been posted: {0}
+blog.events.blogpostpublished.by=by {0}.
+notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0}
+notifications.events.BlogPostPublishedEvent.description=published the blog post</content>
   <object>
     <name>Blog.Translations</name>
     <number>0</number>
