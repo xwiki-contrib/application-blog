@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
@@ -43,6 +44,9 @@
   <hidden>true</hidden>
   <content>## XWiki Translation for language fr generated from http://www.l10n.xwiki.org
 Blog.BlogClass_postsLayout.full=Calendrier
+Blog.BlogClass_postsLayout.image=Miniature
+blog.allblogspanel.manage=Gérer les billets
+blog.allblogspanel.title=Tous les billets
 blog.application.name=Blog
 blog.applicationName=Blog
 blog.archive.hidden=(caché)
@@ -54,6 +58,8 @@ blog.archive.paneltitle=Archives
 blog.archive.postsfor=Articles de blog pour
 blog.archive.postsyear=Articles de blog pour {0}
 blog.archive.unpublished=(non publié)
+blog.blogpostlayout.notpost=[{0}] n''est pas un article de blog \!
+blog.blogpostlayout.post_view_not_allowed=Vous n''êtes pas autorisé à voir cet article de blog [{0}]
 blog.categories.add=Ajouter
 blog.categories.addcategory=Ajouter une catégorie
 blog.categories.addsubcategory=Ajouter une nouvelle sous-catégorie
@@ -79,6 +85,7 @@ blog.categories.subcategories=Sous-catégories
 blog.categories.webhome.title=Toutes les catégories
 blog.category.created=La catégorie {0} a été créée.
 blog.category.exists=La catégorie {0} existe déjà.
+blog.category.posts.count={0} {0,choice,0\#article|1\#article|1&lt;articles}
 blog.changeVisibility.changing=Modifier la visibilité
 blog.changeVisibility.success=La visibilité du blog a été modifiée avec succès
 blog.code.blogcategories=Catégories du Blog
@@ -116,13 +123,21 @@ blog.code.sheetexplanation=Cette sheet doit être utilisée afin d'afficher un a
 blog.code.title=Blog
 blog.code.warning=Attention \: 
 blog.events.blogpostpublished.by=par {0}. 
+blog.events.blogpostpublished.description=Un billet a été publié
+blog.events.blogpostpublished.displayer=Un nouveau billet a été publié \: {0}
+blog.livetable._actions=Actions
+blog.livetable.title=Titre
 blog.manage.blogtitle=Titre du Billet
 blog.manage.blogtype=Type de blog \:
+blog.manage.categories_location=Emplacement des catégories
 blog.manage.create=Créer
+blog.manage.create_default_categories=Créer des catégories par défaut
 blog.manage.createnew=Créer un nouveau blog
 blog.manage.existing=Blogs existant
 blog.manage.inside=blog au sein d'un espace existant
 blog.manage.location.title=Titre du blog
+blog.manage.location.title.hint=Titre du nouveau billet
+blog.manage.location.title.placeholder=Nouveau billet
 blog.manage.main=blog qui sera la seule application de l'espace
 blog.manage.nospace=Vous n'avez pas donné le nom d'un espace. Veuillez entrer le nom de l'espace dans lequel vous souhitez que le blog soit créé.
 blog.manage.notitle=Le titre du blog est vide. Merci de le renseigner.
@@ -188,5 +203,7 @@ blog.templateProvider.blogpost.description=Nouvelle postée sur un blog
 blog.templateProvider.blogpost.name=Article de Blog
 blog.unpublished.entries=Articles non publiés
 blog.unpublished.viewall=Voir tout
+notifications.events.BlogPostPublishedEvent.description=a publié l'article de blog
+notifications.events.BlogPostPublishedEvent.description.by.1user=publié par {0}
 </content>
 </xwikidoc>
