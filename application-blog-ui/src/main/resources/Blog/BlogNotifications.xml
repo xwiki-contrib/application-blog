@@ -284,4 +284,104 @@ true
 </notificationTemplate>
     </property>
   </object>
+  <object>
+    <name>Blog.BlogNotifications</name>
+    <number>0</number>
+    <className>XWiki.Notifications.Code.NotificationEmailRendererClass</className>
+    <guid>2291174d-2993-42b4-832e-7e7ba867dfd5</guid>
+    <class>
+      <name>XWiki.Notifications.Code.NotificationEmailRendererClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <emailSubject>
+        <contenttype>VelocityCode</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>emailSubject</name>
+        <number>4</number>
+        <prettyName>Email subject template</prettyName>
+        <rows>3</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </emailSubject>
+      <eventType>
+        <disabled>0</disabled>
+        <name>eventType</name>
+        <number>1</number>
+        <prettyName>Event type</prettyName>
+        <size>64</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </eventType>
+      <htmlTemplate>
+        <contenttype>VelocityCode</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>htmlTemplate</name>
+        <number>2</number>
+        <prettyName>HTML template</prettyName>
+        <rows>3</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </htmlTemplate>
+      <plainTextTemplate>
+        <contenttype>VelocityCode</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>plainTextTemplate</name>
+        <number>3</number>
+        <prettyName>Plain text template</prettyName>
+        <rows>3</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </plainTextTemplate>
+    </class>
+    <property>
+      <emailSubject/>
+    </property>
+    <property>
+      <eventType>BlogPostPublishedEvent</eventType>
+    </property>
+    <property>
+      <htmlTemplate>#template('notification/email/macros.vm')
+#define ($rightCell)
+  ###
+  ### Link to the Page
+  ###
+  #displayNotificationPage($event)
+  ###
+  ### Description, users and date
+  ###
+  #displayNotificationDescription($event)
+  #displayNotificationDate($event)  
+  #if ($event.document)
+    #set ($blogPost = $xwiki.getDocument($event.document))
+    #set ($blogObj  = $blogPost.getObject('Blog.BlogPostClass'))
+    &lt;div style="color: #666; font-style: italic; border-left: 3px solid #eee; padding-left: 10px;"&gt;
+      #set ($content = $blogObj.getValue('extract'))
+      #if ($stringtool.isBlank($content))
+        #set ($content = $blogObj.getValue('content'))
+      #end
+      #if ($content.length() &gt; 280)
+        #set ($content = "${content.substring(0, 280)}...")
+      #end
+      #set ($contentDOM = $services.rendering.parse($content, $blogPost.syntax))
+      $services.rendering.render($contentDOM, 'xhtml/1.0')
+    &lt;/div&gt;
+  #end
+#end
+#displayNotificationSkeleton("#displayNotificationLeftCell($event)", $rightCell.toString())</htmlTemplate>
+    </property>
+    <property>
+      <plainTextTemplate/>
+    </property>
+  </object>
 </xwikidoc>
