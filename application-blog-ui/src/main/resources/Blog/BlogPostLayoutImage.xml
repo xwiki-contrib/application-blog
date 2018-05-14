@@ -201,6 +201,7 @@
 #set($imgQs="width=$scaleWidth")
 #isPublished($postObj $isPublished)
 #isHidden($postObj $isHidden)
+#getEntryDate($postDoc $postObj $postDate)
 {{html clean="false" wiki="true"}}
 &lt;div class="row blog-list #if(!$isPublished) unpublished-article#elseif($isHidden) hidden-article#end"&gt;
   &lt;div class="col-xs-12 col-sm-3 col-lg-2 blog-left"&gt;
@@ -209,7 +210,6 @@
       #if ($imageAtt)
         {{/html}}{{html clean="false"}}&lt;img class="blog-image" src="$postDoc.getAttachmentURL($postObj.getValue('image'),'download',$imgQs)"&gt;{{/html}}{{html clean="false" wiki="true"}}
       #else
-        #getEntryDate($postDoc $postObj $postDate)
         #displayBlogDate($postDate)
       #end
     &lt;/a&gt;
