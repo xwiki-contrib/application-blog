@@ -203,6 +203,7 @@ blog.categories.webhome.title=All categories
 blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
 blog.blogpostlayout.notpost=[{0}] is not a blog post!
 blog.blogpostlayout.post_view_not_allowed=You are not allowed to view the blog post [{0}]
+blog.blogpostlayout.linktoblog=Direct access to blog
 blog.blogpostcreate.wrong_blog=Wrong blog descriptor
 
 # Class fields

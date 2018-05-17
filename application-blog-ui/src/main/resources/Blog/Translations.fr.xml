@@ -58,6 +58,7 @@ blog.archive.unpublished=(non publié)
 blog.blogpostcreate.wrong_blog=Descripteur du blog erroné
 blog.blogpostlayout.notpost=[{0}] n''est pas un article de blog \!
 blog.blogpostlayout.post_view_not_allowed=Vous n''êtes pas autorisé à voir cet article de blog [{0}]
+blog.blogpostlayout.linktoblog=Accès direct au blog
 blog.blogpostlist.descriptor_not_found=Impossible de trouver un descripteur dans le document [{0}]
 blog.categories.add=Ajouter
 blog.categories.addcategory=Ajouter une catégorie
