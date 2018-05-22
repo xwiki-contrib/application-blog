@@ -210,5 +210,13 @@ blog.manage.enable_panels=Activer les panneaux blog
 blog.manage.locationPreview.hint=Emplacement dans la hiérarchie des pages où ce nouveau blog sera créé.
 blog.manage.categoriesLocationPreview.hint=Emplacement dans la hiérarchie des pages où cette nouvelle catégorie de blog sera créée.
 blog.manage.post.layout=Disposition des articles
+blog.sheet.image.info=Le champ «Image» est utilisé pour attacher une vignette à chaque post. Cette vignette sera affichée uniquement si le blog est configuré pour utiliser la disposition «Image».
+blog.categories.webhome_sheetmessage=Implémente l'affichage des posts de blog à l'intérieur de la page d'accueil des catégories (Blog.CategoriesSheet).
+blog.manage.nopage=Aucune page fournie. Merci d'entrer un nom de page valide à l'emplacement où le blog doit être créé.
+blog.manage.unallowed_page=L'emplacement du blog est déjà utilisé, merci d'entrer un autre emplacement.
+blog.blogpostlist.descriptor_not_found=Impossible de trouver le descripteur de blog dans le document [{0}]
+blog.blogpostcreate.wrong_blog=Descripteur de blog incorrect
+rendering.macro.blogs.name=Livetable de tous les blogs
+rendering.macro.blogs.description=La macro «Blogs» est utilisée pour lister dans une livetable tous les blogs disponibles sur le wiki.
 </content>
 </xwikidoc>
