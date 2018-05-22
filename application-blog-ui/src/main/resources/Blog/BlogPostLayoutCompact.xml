@@ -20,31 +20,205 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.2" reference="Blog.BlogPostLayoutImage" locale="">
+<xwikidoc version="1.2" reference="Blog.BlogPostLayoutCompact" locale="">
   <web>Blog</web>
-  <name>BlogPostLayoutImage</name>
-  <language/>
+  <name>BlogPostLayoutCompact</name>
+<language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <creationDate>1492604613000</creationDate>
+  <creationDate>1523873234000</creationDate>
   <parent>Blog.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1492608413000</date>
-  <contentUpdateDate>1492604613000</contentUpdateDate>
+  <date>1526531375000</date>
+  <contentUpdateDate>1523873234000</contentUpdateDate>
   <version>1.1</version>
-  <title>BlogPostLayoutImage</title>
+  <title>BlogPostLayoutFull</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content/>
   <object>
-    <name>Blog.BlogPostLayoutImage</name>
+    <name>Blog.BlogPostLayoutCompact</name>
+    <number>0</number>
+    <className>XWiki.StyleSheetExtension</className>
+    <guid>e92e0370-eef3-4d71-ae61-3b52f585baa4</guid>
+    <class>
+      <name>XWiki.StyleSheetExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <contentType>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>contentType</name>
+        <number>6</number>
+        <prettyName>Content Type</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>CSS|LESS</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </contentType>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>/*
+ * Blog list layout
+ * --------------------------------------------------
+ */
+.blog-list-row {
+  .blog-list {
+    background-color: @breadcrumb-bg !important;
+    background-color: @breadcrumb-color;
+    border: solid @xwiki-border-color;
+    border-width: 0 1px 1px 0;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px @xwiki-border-color;
+    color: @breadcrumb-active-color;
+    padding: 0;
+
+    .row {
+      margin: 0;
+    }
+    .entry-author-date {
+      font-size: 0.9em;
+    }
+    .col-xs-12 {
+      .entry-title {
+        font-size: 1.2em;
+        padding: 15px 10px;
+      }
+      .entry-author-date {
+        padding: 0 10px 10px 10px;
+      }
+    }
+  }
+  .hidden-article {
+    opacity: 0.7;
+  }
+}
+.link-to-blog {
+  padding: 10px 15px 0 15px;
+}
+/*
+ * Row with equal height columns
+ * --------------------------------------------------
+ */
+@media (min-width : 768px) {
+  .is-table-row {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 7px;
+  }
+  .is-table-row .col-md-6 {
+    float: none;
+    display: table-cell;
+    vertical-align: top;
+    width: 50%;
+  }
+  .blog-list-row .blog-list .col-xs-12 .entry-title {
+    padding: 0;
+    margin: 0 0 .5em;
+  }
+  .blog-list-row .blog-list .col-xs-12 .entry-author-date {
+    padding: 0;
+  }
+}</code>
+    </property>
+    <property>
+      <contentType>LESS</contentType>
+    </property>
+    <property>
+      <name>Styles for the compact blog posts layout</name>
+    </property>
+    <property>
+      <parse/>
+    </property>
+    <property>
+      <use>currentPage</use>
+    </property>
+  </object>
+  <object>
+    <name>Blog.BlogPostLayoutCompact</name>
     <number>0</number>
     <className>XWiki.WikiMacroClass</className>
-    <guid>9ba689c0-c738-42df-9bef-c28c772d9f87</guid>
+    <guid>4afc8d73-bf33-4c03-87fc-63e3f5baf1b8</guid>
     <class>
       <name>XWiki.WikiMacroClass</name>
       <customClass/>
@@ -169,33 +343,25 @@
 #set ($postDoc = $xwiki.getDocument($xcontext.macro.params.reference))
 #getEntryObject($postDoc $postObj)
 #if ("$!postObj" != '')
-#set ($useSummary = false)
-#set ($displayTitle = true)
-#set ($displayImage = false)## display post image
-#set ($displayActions = true)
-#set ($previousPostReference = '')
+#set ($displayImage = true)## display post image
+#set ($displayBlogLink = true)## display a link to the blog
 #extractLayoutParametersFromString($xcontext.macro.params.params $macroAdditionalParams)
 ##
-#if ("$!macroAdditionalParams.get('useSummary')" == 'true')
-    #set ($useSummary = true)
+#if ("$!macroAdditionalParams.get('displayImage')" == 'false')
+  #set ($displayImage = false)
 #end
 ##
-#if ("$!macroAdditionalParams.get('displayTitle')" == 'false')
-    #set ($displayTitle = false)
-#end
-##
-#if ("$!macroAdditionalParams.get('displayImage')" == 'true')
-  #set ($displayImage = true)
-#end
-##
-#if ("$!macroAdditionalParams.get('previousPostReference')" != '')
-  #set ($previousPostReference = $macroAdditionalParams.get('previousPostReference'))
-#end
-##S
-#if ("$!macroAdditionalParams.get('displayActions')" == 'false')
-    #set ($displayActions = false)
+#if ("$!macroAdditionalParams.get('displayBlogLink')" == 'false')
+  #set ($displayBlogLink = false)
+#else
+  #set($blogDescriptor = $!macroAdditionalParams.get('blogDescriptor'))## the descriptor of the curent blog; in this case, the name of the blog document holding the blog object
 #end
 #set($discard = $xwiki.ssx.use($blogStyleDocumentName))
+#set($discard = $xwiki.ssx.use('Blog.BlogPostLayoutCompact'))## styles specific to the curent layout
+#set($postIndex = $mathtool.toInteger($macroAdditionalParams.get('postIndex')))## the index of the curent blog post in the list of results
+#set($postIndexOddEven = $postIndex % 2)
+#set($isEven = $postIndexOddEven == 0)
+#set($lastIndex= $mathtool.toInteger($macroAdditionalParams.get('list-results-count')) - 1)## the index of the last blog post in the list of results
 #set($scaleWidth = 300)
 #set($scaleHeight = 225)
 #set($imgQs="width=$scaleWidth")
@@ -203,52 +369,64 @@
 #isHidden($postObj $isHidden)
 #getEntryDate($postDoc $postObj $postDate)
 {{html clean="false" wiki="true"}}
-&lt;div class="row blog-list #if(!$isPublished) unpublished-article#elseif($isHidden) hidden-article#end"&gt;
-  &lt;div class="col-xs-12 col-sm-3 col-lg-2 blog-left"&gt;
-    &lt;a href="$postDoc.uRL"&gt;
-      #set ($imageAtt = $postDoc.getAttachment($postObj.getValue('image')))
-      #if ($imageAtt)
-        {{/html}}{{html clean="false"}}&lt;img class="blog-image" src="$postDoc.getAttachmentURL($postObj.getValue('image'),'download',$imgQs)"&gt;{{/html}}{{html clean="false" wiki="true"}}
-      #else
-        #displayBlogDate($postDate)
-      #end
-    &lt;/a&gt;
-  &lt;/div&gt;
-  &lt;div class="col-xs-12 col-sm-9 col-lg-10 hentry"&gt;
-    &lt;div class="pull-right"&gt;
-      #if ($displayActions)
-        #displayEntryTools($postDoc $postObj)
-      #end
-      &lt;div class="entry-date"&gt;
-        #set($dateStr = $datetool.format('medium', $postDate, $xcontext.locale))
+#if($isEven)
+  &lt;div class="row is-table-row blog-list-row">## adding a row for each 2 blog posts displayed in the page
+#end
+&lt;div class="blog-list col-md-6#if(!$isPublished) unpublished-article#elseif($isHidden) hidden-article#end">
+  &lt;div class="row blog-list-entry">
+    #set ($imageAtt = $postDoc.getAttachment($postObj.getValue('image')))## the image that was selected for the curent blog post
+    ## Display the image column only if there is one on the curent blog post and the image display is enabled
+    #if ($displayImage &amp;&amp; $imageAtt)
+      &lt;div class="col-xs-12 col-sm-4 col-md-4">
+        &lt;a href="$postDoc.uRL">
+          {{/html}}
+
+          {{html clean="false"}}&lt;img class="blog-image" src="$postDoc.getAttachmentURL($postObj.getValue('image'),'download',$imgQs)" />{{/html}}
+
+          {{html clean="false" wiki="true"}}
+        &lt;/a>
+      &lt;/div>
+    #end
+    &lt;div class="col-xs-12 #if($displayImage &amp;&amp; $imageAtt)col-sm-8 col-md-8#end hentry">## in case the image display is not enabled, the title is displayed on 100% of the curent row width
+      &lt;div class="entry-title">&lt;span class="wikilink">&lt;a href="$postDoc.uRL">$!postDoc.display('title', 'view', $postObj)&lt;/a>&lt;/span>&lt;/div>
+      &lt;div class="entry-author-date pull-right">
+        #set($dateStr = $datetool.format('long', $postDate, $xcontext.locale))
         #if ("$!dateStr" != '')
           #set ($dateArr = $dateStr.split(' '))
-          #if ($dateArr.size() &gt; 3)
+          #if ($dateArr.size() > 3)
             #set ($dateStr = "")
             #foreach($s in $dateArr.subList(0, 3))
               #set ($dateStr = "${dateStr}${s} ")
             #end
           #end
         #end
-        $!dateStr
-      &lt;/div&gt;
-    &lt;/div&gt;
-    #if($displayTitle)&lt;h3 class="entry-title"&gt;&lt;span class="wikilink"&gt;&lt;a href="$postDoc.uRL"&gt;$!postDoc.display('title', 'view', $postObj)&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;#end
-    &lt;p&gt;
-    #set ($postContent = "")
-    ## Note: We trim the summary so that if there's some white space it won't cause the summary to be used instead
-    ## of the content.
-    #if ($useSummary)
-      #set ($postContent = $postObj.getProperty('extract').value.trim())
-    #end
-    #if ("$!postContent" == '')
-      #set ($postContent = $postObj.getProperty('content').value)
-    #end
-    {{html wiki="false"}}$!postDoc.getRenderedContent($postContent, $postDoc.syntax.toIdString()){{/html}}
-    &lt;/p&gt;
-    #displayEntryFooter($postDoc $postObj)
-  &lt;/div&gt;
-&lt;/div&gt;
+        #if($isPublished)
+          {{translation key='blog.code.postedby'/}} ##
+        #else
+          {{translation key='blog.code.createdby'/}} ##
+        #end
+        &lt;span class='author vcard'>#userfn($postDoc.creator)&lt;/span> - $!dateStr## displaying the creator of the blog post and the date of the blog post
+      &lt;/div>
+    &lt;/div>
+  &lt;/div>
+&lt;/div>
+#if(!$isEven)
+  &lt;/div>## in case of an even blog post index, closing the current row (containing the 2 blog posts)
+#end
+#if($postIndex == $lastIndex)
+  #if($isEven)
+    ## Adding an empty div so that the last cell is not centered in the table
+    &lt;div class="col-md-6">&lt;/div>
+    &lt;/div>## closing the current row
+  #end
+  ## Adding a link to the curent blog
+  #if($displayBlogLink &amp;&amp; "$!blogDescriptor" != '' &amp;&amp; $services.security.authorization.hasAccess('view', $blogDescriptor))
+    #set($blogURL = $xwiki.getDocument($blogDescriptor).getURL())
+    &lt;div class="link-to-blog pull-right">
+      &lt;span class="wikilink">&lt;a href="$blogURL">$services.localization.render('blog.blogpostlayout.linktoblog')&lt;/a>&lt;/span>
+    &lt;/div>
+  #end
+#end
 {{/html}}
 #else
 {{error}}$services.localization.render('blog.blogpostlayout.notpost', [$xcontext.macro.params.reference]){{/error}}
@@ -259,22 +437,22 @@
 {{/velocity}}</code>
     </property>
     <property>
-      <contentDescription/>
+      <contentDescription></contentDescription>
     </property>
     <property>
       <contentType>Optional</contentType>
     </property>
     <property>
-      <defaultCategory/>
+      <defaultCategory></defaultCategory>
     </property>
     <property>
-      <description>This macro is used to display a full blog post with a thumbnail image</description>
+      <description>This macro is used to display a full blog post in a compact mode</description>
     </property>
     <property>
-      <id>blogPostLayoutImage</id>
+      <id>blogPostLayoutCompact</id>
     </property>
     <property>
-      <name>Blog Post Layout Image</name>
+      <name>Blog Post Layout Compact</name>
     </property>
     <property>
       <supportsInlineMode/>
@@ -284,10 +462,10 @@
     </property>
   </object>
   <object>
-    <name>Blog.BlogPostLayoutImage</name>
+    <name>Blog.BlogPostLayoutCompact</name>
     <number>0</number>
     <className>XWiki.WikiMacroParameterClass</className>
-    <guid>5a44edf5-049f-4c3f-a5c5-434fb7db4992</guid>
+    <guid>110b0a86-b20e-40ee-bd47-7707ffaab800</guid>
     <class>
       <name>XWiki.WikiMacroParameterClass</name>
       <customClass/>
@@ -337,7 +515,7 @@
       </name>
     </class>
     <property>
-      <defaultValue/>
+      <defaultValue></defaultValue>
     </property>
     <property>
       <description>The document reference of the blog post</description>
@@ -350,10 +528,10 @@
     </property>
   </object>
   <object>
-    <name>Blog.BlogPostLayoutImage</name>
+    <name>Blog.BlogPostLayoutCompact</name>
     <number>1</number>
     <className>XWiki.WikiMacroParameterClass</className>
-    <guid>e25c1eed-0f18-4e58-8501-ce9a572f3521</guid>
+    <guid>505ddc82-b8c5-4833-935d-b859b76a4858</guid>
     <class>
       <name>XWiki.WikiMacroParameterClass</name>
       <customClass/>
@@ -403,7 +581,7 @@
       </name>
     </class>
     <property>
-      <defaultValue/>
+      <defaultValue></defaultValue>
     </property>
     <property>
       <description>Additional parameters of the blog post layout</description>
