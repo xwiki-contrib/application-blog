@@ -40,7 +40,7 @@
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
   <content>blog.application.name=Blog
-### Missing: blog.archive.paneltitle=Blog Archive
+blog.archive.paneltitle=Arhivă Blog
 blog.archive.pagetitle=Arhivă
 blog.archive.noarticle=Nu există articole...
 blog.archive.postsyear=Postări pentru {0}
