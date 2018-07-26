@@ -219,8 +219,8 @@ rendering.macro.blogs.description=Emuāru makross visu viki emuāru attēlošana
 blog.applicationName=Emuāri
 blog.events.blogpostpublished.description=Emuāru ieraksts ir publicēts
 blog.events.blogpostpublished.displayer=Ir izveidotj jauns emuāru ieraksts {0}
-### Missing: blog.events.blogpostpublished.by=by {0}.
-### Missing: notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0}
-### Missing: notifications.events.BlogPostPublishedEvent.description=published the blog post
+blog.events.blogpostpublished.by=no {0}.
+notifications.events.BlogPostPublishedEvent.description.by.1user=publicējis {0}
+notifications.events.BlogPostPublishedEvent.description=publicēja emuāru ierakstu
 </content>
 </xwikidoc>
