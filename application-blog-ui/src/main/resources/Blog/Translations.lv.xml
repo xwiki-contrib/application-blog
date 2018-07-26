@@ -196,29 +196,29 @@ blog.manage.categories_location=Kategoriju vieta
 blog.manage.enable_panels=Iespējot emuāru paneļus
 blog.manage.create_default_categories=Izveidot noklusētās kategorijas
 blog.manage.locationPreview.hint=Izveidojamo emuāru vieta lapu hierarhijā
-### Missing: blog.manage.categoriesLocationPreview.hint=Location in the page hierarchy where this new blog categories will be created.
-### Missing: blog.manage.post.layout=Posts layout
-### Missing: blog.blogpostlist.descriptor_not_found=Unable to found a blog descriptor in document [{0}]
-### Missing: blog.categories.webhome.title=All categories
-### Missing: blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
-### Missing: blog.blogpostlayout.notpost=[{0}] is not a blog post!
-### Missing: blog.blogpostlayout.post_view_not_allowed=You are not allowed to view the blog post [{0}]
-### Missing: blog.blogpostcreate.wrong_blog=Wrong blog descriptor
+blog.manage.categoriesLocationPreview.hint=Jaunizveidojamo emuāru atrašanās vieta kopējā lapu hierarhijā.
+blog.manage.post.layout=Ierakstu izklājums
+blog.blogpostlist.descriptor_not_found=Neizdevās atrast emuāru aprakstu dokumentam [{0}]
+blog.categories.webhome.title=Visas kategorijas
+blog.category.posts.count={0} {0,choice,0#ierakstu|1#ieraksts|1&lt;ieraksti}
+blog.blogpostlayout.notpost=[{0}] nav emuāru ieraksts!
+blog.blogpostlayout.post_view_not_allowed=Jums nav tiesību skatīt emuāru ierakstu [{0}]
+blog.blogpostcreate.wrong_blog=Nepareizs emuāru apraksts
 
 # Class fields
-### Missing: Blog.BlogClass_postsLayout.full=Calendar
-### Missing: Blog.BlogClass_postsLayout.image=Image thumnail
+Blog.BlogClass_postsLayout.full=Kalendārs
+Blog.BlogClass_postsLayout.image=Attēla sīktēls
 
 # Blogs macro
-### Missing: blog.livetable.title=Title
-### Missing: blog.livetable._actions=Actions
-### Missing: rendering.macro.blogs.name=All Blogs Livetable
-### Missing: rendering.macro.blogs.description=The blogs macro is used to list on a livetable all the blog available on the wiki.
+blog.livetable.title=Virsraksts
+blog.livetable._actions=Darbības
+rendering.macro.blogs.name=Visu emuāru tabula
+rendering.macro.blogs.description=Emuāru makross visu viki emuāru attēlošanai vienā tabulā.
 
 # Notifications
-### Missing: blog.applicationName=Blog
-### Missing: blog.events.blogpostpublished.description=A blog post is published
-### Missing: blog.events.blogpostpublished.displayer=A new blog post has been posted: {0}
+blog.applicationName=Emuāri
+blog.events.blogpostpublished.description=Emuāru ieraksts ir publicēts
+blog.events.blogpostpublished.displayer=Ir izveidotj jauns emuāru ieraksts {0}
 ### Missing: blog.events.blogpostpublished.by=by {0}.
 ### Missing: notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0}
 ### Missing: notifications.events.BlogPostPublishedEvent.description=published the blog post
