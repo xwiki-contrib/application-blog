@@ -834,8 +834,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   *#(% class="separator" %)·(%%) [[{{translation key='blog.code.permalink'/}}&gt;&gt;$entryDoc||rel="bookmark"]] ##
   #if ($showcomments)
     (% class="separator" %)·(%%) [[{{translation key='blog.code.comments'/}}&gt;&gt;$entryDoc||anchor="Comments"]] (% class="itemCount" %)($entryDoc.comments.size())(%%) ##
-    )))## entry-footer
   #end
+  )))## entry-footer
 #end
 ##
 ##
