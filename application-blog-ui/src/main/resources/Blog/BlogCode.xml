@@ -832,8 +832,10 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   ## Since the publish date and update date are not set at the exact same time, there could be a small difference that
   ## we assume cannot be more than 3 seconds.
   *#(% class="separator" %)·(%%) [[{{translation key='blog.code.permalink'/}}&gt;&gt;$entryDoc||rel="bookmark"]] ##
-  (% class="separator" %)·(%%) [[{{translation key='blog.code.comments'/}}&gt;&gt;$entryDoc||anchor="Comments"]] (% class="itemCount" %)($entryDoc.comments.size())(%%) ##
-  )))## entry-footer
+  #if ($showcomments)
+    (% class="separator" %)·(%%) [[{{translation key='blog.code.comments'/}}&gt;&gt;$entryDoc||anchor="Comments"]] (% class="itemCount" %)($entryDoc.comments.size())(%%) ##
+    )))## entry-footer
+  #end
 #end
 ##
 ##
