@@ -195,7 +195,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #if (!$entries)
     #setVariable ("$entries" [])
   #end
-  #getBlogEntriesBaseQuery($query)
+  #getAllBlogPostsQuery($query)
   #isDefaultBlog($blogDoc $isDefault)
   #set($queryParams = {})
   #if ($isDefault)
@@ -371,49 +371,39 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #if (!$entries)
     #setVariable ("$entries" [])
   #end
-  #getBlogEntriesBaseQuery($query)
+  #getAllBlogPostsQuery($query)
   #set($totalEntries = $services.query.hql($query).count())
   #set($defaultItemsPerPage = 20)
   ## This macro is defined in the default macros.vm library. It also sets $itemsPerPage and $startAt.
   #preparePagedViewParams($totalEntries $defaultItemsPerPage)
   #set($discard = $entries.addAll($services.query.hql("${query} order by publishDate.value desc").setLimit($itemsPerPage).setOffset($startAt).execute()))
 #end
-##
-##
-##
 #**
  * Return the base query for selecting blog entries. It filters only visible entries, but does not bind to a specific
  * blog, nor specify a range or an ordering criteria.
- * 
+ *
+ * This macro is a duplicate of #getAllBlogPostsQuery($query). Keep it in case it's used outside, in custom code.
+ *
  * @param query The basic query for selecting blog entries.
- *###
+ *#
 #macro(getBlogEntriesBaseQuery $query)
-  #set ($query = $NULL)
-  #setVariable ("$query" ", BaseObject obj, IntegerProperty isPublished, IntegerProperty hidden, DateProperty publishDate 
-    where doc.fullName &lt;&gt; '${blogPostTemplate}' and
-      obj.name = doc.fullName and obj.className = '${blogPostClassname}' and
-      publishDate.id.id = obj.id and publishDate.id.name = 'publishDate' and
-      isPublished.id.id = obj.id and isPublished.id.name = 'published' and
-      hidden.id.id = obj.id and hidden.id.name = 'hidden' and
-      (doc.creator = '$xcontext.user' or (isPublished.value = 1 and hidden.value = 0))")
+  #getAllBlogPostsQuery($query)
 #end
-##
-##
-###**
+#**
  * Return the Query for selecting the all wiki blog posts without filtering
- * 
+ *
  * @param query The basic query for selecting blog entries.
- *###
+ *#
 #macro(getAllBlogPostsQuery $query)
   #set ($query = $NULL)
-  #setVariable("$query" ", BaseObject as obj, IntegerProperty isPublished, 
-   IntegerProperty hidden, DateProperty publishDate 
-   where doc.fullName &lt;&gt; '$blogPostTemplate' and
-   obj.name=doc.fullName and obj.className='$blogPostClassname' and 
-   isPublished.id.id = obj.id and isPublished.id.name = 'published' and
-   hidden.id.id = obj.id and hidden.id.name='hidden' and
-   publishDate.id.id = obj.id and publishDate.id.name='publishDate' and 
-   (doc.creator = '$xcontext.user' or (isPublished.value = 1 and hidden.value = 0))")
+  #setVariable("$query" ", BaseObject as obj, IntegerProperty isPublished,
+    IntegerProperty hidden, DateProperty publishDate
+    where doc.fullName &lt;&gt; '$blogPostTemplate' and
+    obj.name=doc.fullName and obj.className='$blogPostClassname' and
+    isPublished.id.id = obj.id and isPublished.id.name = 'published' and
+    hidden.id.id = obj.id and hidden.id.name='hidden' and
+    publishDate.id.id = obj.id and publishDate.id.name='publishDate' and
+    (doc.creator = '$xcontext.user' or (isPublished.value = 1 and hidden.value = 0))")
 #end
 ##
 ##
@@ -1101,7 +1091,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     #set($resultQuery = "${resultQuery} and (catList&lt;&gt;:excludedCategory) and (catList like :catList escape '!')")
   #else
     ## Get all posts in blog space aBlog
-    #getBlogEntriesBaseQuery($resultQuery)
+    #getAllBlogPostsQuery($resultQuery)
     #getBlogPostsLocation($targetDoc.space $postsLocation)
     #set ($discard = $resultQueryParams.put('space', $postsLocation))
     #set($resultQuery = "${resultQuery} and doc.space = :space")

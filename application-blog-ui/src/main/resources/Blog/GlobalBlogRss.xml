@@ -52,7 +52,7 @@ $response.setContentType('application/rss+xml')
   "description": $services.localization.render('blog.code.description.wiki'),
   "url": $xwiki.getDocument($services.model.resolveDocument('', 'default', $doc.documentReference.extractReference('WIKI'))).externalURL
   })
-#getBlogEntriesBaseQuery($query)
+#getAllBlogPostsQuery($query)
 $xwiki.feed.getBlogFeedOutput("${query} order by publishDate.value desc", 10, 0, $feedMetadata, 'rss_2.0')
 {{/html}}
 #end
