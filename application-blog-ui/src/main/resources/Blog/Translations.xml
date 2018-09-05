@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.2" reference="Blog.Translations" locale="">
+<xwikidoc version="1.3" reference="Blog.Translations" locale="">
   <web>Blog</web>
   <name>Translations</name>
   <language/>
@@ -159,7 +159,6 @@ blog.manage.nospace=No space provided. Please enter a valid space where the blog
 blog.manage.space=Space:
 blog.manage.title=Title:
 blog.manage.blogtitle=Blog title
-blog.manage.blogtype=Blog type:
 blog.manage.inside=blog inside an existing space
 blog.manage.main=blog as the main content of a space
 blog.manage.create=Create
@@ -221,7 +220,10 @@ blog.events.blogpostpublished.description=A blog post is published
 blog.events.blogpostpublished.displayer=A new blog post has been posted: {0}
 blog.events.blogpostpublished.by=by {0}.
 notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0}
-notifications.events.BlogPostPublishedEvent.description=published the blog post</content>
+notifications.events.BlogPostPublishedEvent.description=published the blog post
+
+#@deprecated
+blog.manage.blogtype=Blog type:</content>
   <object>
     <name>Blog.Translations</name>
     <number>0</number>

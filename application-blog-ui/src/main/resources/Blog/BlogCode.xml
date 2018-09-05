@@ -423,24 +423,6 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
 ##
 ##
 #**
- * Checks if the provided blog is global or in-space.
- * 
- * @param blogDoc The blog document. It should contain a &lt;tt&gt;Blog.BlogClass&lt;/tt&gt; object with the &lt;tt&gt;blogType&lt;/tt&gt; property set.
- * @param isGlobal The resulting boolean. If the blog object does not define anything, it is considered in-space.
- *###
-#macro(isBlogGlobal $blogDoc $isGlobal)
-  #getBlogProperty($blogDoc 'blogType' '' $discard)
-  #set ($result = false)
-  #if($discard == 'global')
-    #set($result = true)
-  #end
-  #set ($isGlobal = $NULL)
-  #setVariable ("$isGlobal" $result)
-#end
-##
-##
-##
-#**
  * Determines how is the blog index split into pages: paginated (fixed number of entries), weekly (all entries in a
  * week), monthly (all entries in a month), or all.
  * 
