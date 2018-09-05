@@ -23,7 +23,7 @@
 <xwikidoc version="1.2" reference="Blog.BlogPostLayoutCompact" locale="">
   <web>Blog</web>
   <name>BlogPostLayoutCompact</name>
-<language/>
+  <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
@@ -370,30 +370,30 @@
 #getEntryDate($postDoc $postObj $postDate)
 {{html clean="false" wiki="true"}}
 #if($isEven)
-  &lt;div class="row is-table-row blog-list-row">## adding a row for each 2 blog posts displayed in the page
+  &lt;div class="row is-table-row blog-list-row"&gt;## adding a row for each 2 blog posts displayed in the page
 #end
-&lt;div class="blog-list col-md-6#if(!$isPublished) unpublished-article#elseif($isHidden) hidden-article#end">
-  &lt;div class="row blog-list-entry">
+&lt;div class="blog-list col-md-6#if(!$isPublished) unpublished-article#elseif($isHidden) hidden-article#end"&gt;
+  &lt;div class="row blog-list-entry"&gt;
     #set ($imageAtt = $postDoc.getAttachment($postObj.getValue('image')))## the image that was selected for the curent blog post
     ## Display the image column only if there is one on the curent blog post and the image display is enabled
     #if ($displayImage &amp;&amp; $imageAtt)
-      &lt;div class="col-xs-12 col-sm-4 col-md-4">
-        &lt;a href="$postDoc.uRL">
+      &lt;div class="col-xs-12 col-sm-4 col-md-4"&gt;
+        &lt;a href="$postDoc.uRL"&gt;
           {{/html}}
 
-          {{html clean="false"}}&lt;img class="blog-image" src="$postDoc.getAttachmentURL($postObj.getValue('image'),'download',$imgQs)" />{{/html}}
+          {{html clean="false"}}&lt;img class="blog-image" src="$postDoc.getAttachmentURL($postObj.getValue('image'),'download',$imgQs)" /&gt;{{/html}}
 
           {{html clean="false" wiki="true"}}
-        &lt;/a>
-      &lt;/div>
+        &lt;/a&gt;
+      &lt;/div&gt;
     #end
-    &lt;div class="col-xs-12 #if($displayImage &amp;&amp; $imageAtt)col-sm-8 col-md-8#end hentry">## in case the image display is not enabled, the title is displayed on 100% of the curent row width
-      &lt;div class="entry-title">&lt;span class="wikilink">&lt;a href="$postDoc.uRL">$!postDoc.display('title', 'view', $postObj)&lt;/a>&lt;/span>&lt;/div>
-      &lt;div class="entry-author-date pull-right">
+    &lt;div class="col-xs-12 #if($displayImage &amp;&amp; $imageAtt)col-sm-8 col-md-8#end hentry"&gt;## in case the image display is not enabled, the title is displayed on 100% of the curent row width
+      &lt;div class="entry-title"&gt;&lt;span class="wikilink"&gt;&lt;a href="$postDoc.uRL"&gt;$!postDoc.display('title', 'view', $postObj)&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;div class="entry-author-date pull-right"&gt;
         #set($dateStr = $datetool.format('long', $postDate, $xcontext.locale))
         #if ("$!dateStr" != '')
           #set ($dateArr = $dateStr.split(' '))
-          #if ($dateArr.size() > 3)
+          #if ($dateArr.size() &gt; 3)
             #set ($dateStr = "")
             #foreach($s in $dateArr.subList(0, 3))
               #set ($dateStr = "${dateStr}${s} ")
@@ -405,26 +405,26 @@
         #else
           {{translation key='blog.code.createdby'/}} ##
         #end
-        &lt;span class='author vcard'>#userfn($postDoc.creator)&lt;/span> - $!dateStr## displaying the creator of the blog post and the date of the blog post
-      &lt;/div>
-    &lt;/div>
-  &lt;/div>
-&lt;/div>
+        &lt;span class='author vcard'&gt;#userfn($postDoc.creator)&lt;/span&gt; - $!dateStr## displaying the creator of the blog post and the date of the blog post
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
 #if(!$isEven)
-  &lt;/div>## in case of an even blog post index, closing the current row (containing the 2 blog posts)
+  &lt;/div&gt;## in case of an even blog post index, closing the current row (containing the 2 blog posts)
 #end
 #if($postIndex == $lastIndex)
   #if($isEven)
     ## Adding an empty div so that the last cell is not centered in the table
-    &lt;div class="col-md-6">&lt;/div>
-    &lt;/div>## closing the current row
+    &lt;div class="col-md-6"&gt;&lt;/div&gt;
+    &lt;/div&gt;## closing the current row
   #end
   ## Adding a link to the curent blog
   #if($displayBlogLink &amp;&amp; "$!blogDescriptor" != '' &amp;&amp; $services.security.authorization.hasAccess('view', $blogDescriptor))
     #set($blogURL = $xwiki.getDocument($blogDescriptor).getURL())
-    &lt;div class="link-to-blog pull-right">
-      &lt;span class="wikilink">&lt;a href="$blogURL">$services.localization.render('blog.blogpostlayout.linktoblog')&lt;/a>&lt;/span>
-    &lt;/div>
+    &lt;div class="link-to-blog pull-right"&gt;
+      &lt;span class="wikilink"&gt;&lt;a href="$blogURL"&gt;$services.localization.render('blog.blogpostlayout.linktoblog')&lt;/a&gt;&lt;/span&gt;
+    &lt;/div&gt;
   #end
 #end
 {{/html}}
@@ -437,13 +437,13 @@
 {{/velocity}}</code>
     </property>
     <property>
-      <contentDescription></contentDescription>
+      <contentDescription/>
     </property>
     <property>
       <contentType>Optional</contentType>
     </property>
     <property>
-      <defaultCategory></defaultCategory>
+      <defaultCategory/>
     </property>
     <property>
       <description>This macro is used to display a full blog post in a compact mode</description>
@@ -515,7 +515,7 @@
       </name>
     </class>
     <property>
-      <defaultValue></defaultValue>
+      <defaultValue/>
     </property>
     <property>
       <description>The document reference of the blog post</description>
@@ -581,7 +581,7 @@
       </name>
     </class>
     <property>
-      <defaultValue></defaultValue>
+      <defaultValue/>
     </property>
     <property>
       <description>Additional parameters of the blog post layout</description>
