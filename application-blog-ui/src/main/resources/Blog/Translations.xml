@@ -223,6 +223,7 @@ notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0
 notifications.events.BlogPostPublishedEvent.description=published the blog post
 
 # Blog Menu UIX
+blog.uixMenu.name=Blog configuration
 blog.uixMenu.title=Wizard to configure Blog panels
 blog.uixMenu.title.hint=Choose a Blog and enable its panels in the current page and children.
 blog.uixMenu.blog.hint=Start typing to get the Blog suggestions. Only one should be selected.
