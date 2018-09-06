@@ -222,6 +222,14 @@ blog.events.blogpostpublished.by=by {0}.
 notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0}
 notifications.events.BlogPostPublishedEvent.description=published the blog post
 
+# Blog Menu UIX
+blog.uixMenu.title=Wizard to configure Blog panels
+blog.uixMenu.title.hint=Choose a Blog and enable its panels in the current page and children.
+blog.uixMenu.blog.hint=Start typing to get the Blog suggestions. Only one should be selected.
+blog.uixMenu.panels.hint=Select from the following list the Blog panels that needs to be displayed.
+blog.uixMenu.inheritPanels.hint=In order to keep the existing displayed panels, make sure this option in checked. Otherwise they will be removed.
+blog.uixMenu.panelsPosition.hint=In case keep the existing panels, select if the Blog panels should be displayed before or after.
+
 #@deprecated
 blog.manage.blogtype=Blog type:</content>
   <object>
