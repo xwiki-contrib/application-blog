@@ -127,9 +127,13 @@
 {{velocity}}
 #panelheader($services.localization.render('blog.categories.paneltitle'))
 #getBlogCategoriesLocation($doc.space $categoriesLocation)
-#set ($allLink = $xwiki.getURL("${categoriesLocation}.WebHome"))
+#set ($categoriesLocationSpaceRef = $services.model.resolveSpace($categoriesLocation))
+#set ($categoriesLocationDocRef = $services.model.createDocumentReference('WebHome', $categoriesLocationSpaceRef))
+#set ($categoriesLocationDoc = $xwiki.getDocument($categoriesLocationDocRef))
+#set ($allLink = $categoriesLocationDoc.URL)
+#set ($queryString = $escapetool.url({'xpage': 'plain', 'sheet': 'Blog.BlogRss'}))
 {{html wiki="true"}}
-* (% class="blog-category-level" %)((( [[#toolImage('rss')&gt;&gt;${categoriesLocation}.WebHome||queryString="xpage=plain&amp;sheet=Blog.BlogRss" title="RSS"]] &lt;span class="wikilink"&gt;&lt;a href="$allLink"&gt;$services.localization.render('blog.categories.all')&lt;/a&gt;&lt;/span&gt;)))
+* (% class="blog-category-level" %)((( [[#toolImage('rss')&gt;&gt;$categoriesLocationDoc||queryString="$queryString" title="RSS"]] &lt;span class="wikilink"&gt;&lt;a href="$allLink"&gt;$services.localization.render('blog.categories.all')&lt;/a&gt;&lt;/span&gt;)))
 {{/html}}
 
 #getCategoriesHierarchy($categoriesLocation $tree)
@@ -139,10 +143,10 @@
 #if($hasAdmin)
   #set ($manageCategoriesPage = 'Blog.ManageCategories')
   #if ($categoriesLocation != $defaultBlogSpace)
-    #set ($manageCategoriesPage = "${categoriesLocation}.WebHome")
-    #set ($manageCategoriesLinkQueryString = 'action=manage')
+    #set ($manageCategoriesPage = $categoriesLocationDoc.fullName)
+    #set ($queryString = $escapetool.url({'action': 'manage'}))
   #end
-  (% class="edit-categories" %)(((~([[$services.localization.render('blog.categories.edit')&gt;&gt;$manageCategoriesPage||queryString="$!manageCategoriesLinkQueryString"]]~))))
+  (% class="edit-categories" %)(((~([[$services.localization.render('blog.categories.edit')&gt;&gt;$manageCategoriesPage||queryString="$!queryString"]]~))))
 #end
 #panelfooter()
 {{/velocity}}</content>

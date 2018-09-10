@@ -179,7 +179,7 @@
  *###
 #macro(displayCategoriesHierarchy $tree $displayMethod)
   #set($processedCategories = [])
-  #displayCategoriesHierarchyRecursive($tree $defaultCategoryParent 1 $displayMethod)
+  #displayCategoriesHierarchyRecursive($tree $doc.fullName 1 $displayMethod)
 #end
 ##
 ##
@@ -642,6 +642,24 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
       (% class="hfeed category" %)((({{blogpostlist category="$category.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="yes" layout="$postsLayout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!macro.layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" /}})))
     #end
   #end
+#end
+## Content of the BlogName.Categories.WebHome.
+#macro(displayCategoriesHomepageContent)
+  {{html clean="false" wiki="true"}}
+  #set ($discard = $xwiki.ssx.use('Blog.ManageCategories'))
+  #set ($discard = $xwiki.jsx.use('Blog.ManageCategories'))
+  &lt;div class="blog-categories-list"&gt;
+  #getCategoriesHierarchy($doc.space $tree)
+  #displayCategoriesHierarchyRecursive($tree $doc.fullName 1 'editable')
+  #if($xwiki.hasAccessLevel('edit', $xcontext.user, $doc.fullName))
+    #set ($queryString = $escapetool.url({'xaction': 'showAddCategory', 'parentCategory': $doc.fullName}))
+    * (% class="blog-add-category-label"%)$services.icon.renderHTML('add')
+    [[$services.localization.render('blog.categories.addcategory')&gt;&gt;Blog.ManageCategories||queryString="$queryString"]]
+    #if("$!{request.xaction}" == 'showAddCategory' &amp;&amp; "$!{request.parentCategory}" == $doc.fullName) #addCategoryForm() #end
+  #end
+  &lt;/div&gt;
+  &lt;div class="clearfloats"&gt;&lt;/div&gt;
+  {{/html}}
 #end
 {{/velocity}}</content>
 </xwikidoc>

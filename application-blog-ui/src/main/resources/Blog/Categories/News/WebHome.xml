@@ -87,7 +87,7 @@
       </name>
     </class>
     <property>
-      <description/>
+      <description>Blog posts that can be considered as public interest news.</description>
     </property>
     <property>
       <name>News</name>

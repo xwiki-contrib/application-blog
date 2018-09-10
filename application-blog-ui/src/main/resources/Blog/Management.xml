@@ -92,9 +92,19 @@
           #set ($discard = $blogObj.set('title', $title))
           #set ($discard = $blogObj.set('displayType', 'paginated'))
           #set ($discard = $blogObj.set('itemsPerPage', 10))
+
+          ## Get the default blog's categories page.
+          #set ($defaultBlogDoc = $xwiki.getDocument('Blog.WebHome'))
+          #set ($defaultCategoriesSpaceRef = $services.model.resolveSpace($defaultBlogDoc.get('categoriesLocation')))
+          #set ($defaultCategoriesDocRef = $services.model.createDocumentReference('WebHome', $defaultCategoriesSpaceRef))
+          ## Create the categories page: BlogName.Categories.WebHome.
           #set ($categoriesSpaceRef = $services.model.createSpaceReference('Categories', $blogSpaceRef))
           #set ($categoriesDocRef = $services.model.createDocumentReference('WebHome', $categoriesSpaceRef))
+          ## Copy the content of the default blog's Categories to the new blog's Categories.
+          #set ($discard = $xwiki.copyDocument($defaultCategoriesDocRef, $categoriesDocRef, $xcontext.locale, true, false))
           #set ($categoriesDoc = $xwiki.getDocument($categoriesDocRef))
+          #set ($discard = $categoriesDoc.save())
+
           #set ($discard = $blogObj.set('categoriesLocation', $categoriesDoc.space))
           #set ($discard = $blogObj.set('postsLocation', $blogDocName))
           #if ("$!request.postsLayout" != '')
@@ -102,15 +112,7 @@
           #end
           #set ($discard = $blogDoc.save())
 
-          ## Save the categories page
-          #set ($sheetBindingObj = $categoriesDoc.getObject('XWiki.DocumentSheetBinding', true))
-          #set ($discard = $sheetBindingObj.set('sheet', 'Blog.CategoriesSheet'))
-          #set ($discard = $categoriesDoc.save())
-
           ## Create the Default categories
-          #set ($defaultBlogDoc = $xwiki.getDocument('Blog.WebHome'))
-          #set ($defaultCategoriesDoc = $xwiki.getDocument($defaultBlogDoc.get('categoriesLocation')))
-          #set ($defaultCategoriesSpaceRef = $services.model.resolveSpace($defaultBlogDoc.get('categoriesLocation')))
           #if ("$!request.createDefaultCategories" != '')
             #foreach($categoryName in ['News', 'Other', 'Personal'])
               #set ($sourceSpaceRef = $services.model.createSpaceReference($categoryName, $defaultCategoriesSpaceRef))
