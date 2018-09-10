@@ -113,7 +113,7 @@ public class BlogPostInlinePage extends InlinePage
         for (String categoryName : categories) {
             String categoryReference = categoryName;
             if (categoryReference.indexOf('.') < 0) {
-                categoryReference = "Blog." + categoryName;
+                categoryReference = "Blog.Categories." + categoryName + ".WebHome";
             }
             String categoryXPath =
                 "//input[@name = 'Blog.BlogPostClass_0_category' and @value = '" + categoryReference + "']";

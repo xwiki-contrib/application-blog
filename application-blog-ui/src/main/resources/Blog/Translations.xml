@@ -150,6 +150,7 @@ blog.post.createpost=Create a new post
 blog.post.title=Post title
 blog.post.titleEmptyError=The post title should not be empty!
 blog.post.create=Create
+blog.post.sheet=Blog post sheet
 blog.categories.existingcategories=Existing categories
 blog.categories.addcategory=Add a category
 blog.categories.deleteselected=Delete selected categories

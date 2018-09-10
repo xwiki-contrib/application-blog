@@ -84,7 +84,7 @@ public class BlogPostTest extends AbstractTest
 
         Assert.assertEquals("Test blog title", blogPostInlinePage.getTitle());
         Assert.assertEquals("Test blog content", blogPostInlinePage.getContent());
-        Assert.assertEquals(Collections.singletonList("Personal"), blogPostInlinePage.getCategories());
+        Assert.assertEquals(Collections.singletonList("Categories.Personal.WebHome"), blogPostInlinePage.getCategories());
         Assert.assertFalse(blogPostInlinePage.isPublished());
 
         // Modify the blog post.

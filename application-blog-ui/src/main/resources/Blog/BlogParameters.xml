@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.1">
+<xwikidoc version="1.3" reference="Blog.BlogParameters" locale="">
   <web>Blog</web>
   <name>BlogParameters</name>
   <language/>
@@ -55,8 +55,7 @@
 #set($blogCategoryTemplate = 'Blog.CategoryTemplate')
 #set($blogCategorySheet = 'Blog.CategorySheet')
 #set($blogCategoriesSheet = 'Blog.CategoriesSheet')
-#set($oldBlogCategoryClassname = 'Blog.Categories')
-#set($defaultCategoryParent = 'Blog.Categories')
+#set($defaultCategoryParent = 'Blog.Categories.WebHome')
 ## Style
 #set($blogStyleDocumentName = 'Blog.BlogStyle')
 #set($blogStyleDocument = $xwiki.getDocument($blogStyleDocumentName))
