@@ -179,6 +179,9 @@
  *###
 #macro(displayCategoriesHierarchy $tree $displayMethod)
   #set($processedCategories = [])
+  #getBlogDocument($doc.space $blogDoc)
+  #set ($categoriesLocation = $blogDoc.getValue('categoriesLocation'))
+  #displayCategoriesHierarchyRecursive($tree "${categoriesLocation}.WebHome" 1 $displayMethod)
   #displayCategoriesHierarchyRecursive($tree $doc.fullName 1 $displayMethod)
 #end
 ##
@@ -524,10 +527,6 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
  *###
 #macro(deleteCategory $category)
   #set($categoryDoc = $xwiki.getDocument($category))
-  #set($categoryParentDoc = $xwiki.getDocument($categoryDoc.parent))
-  #set($parameterValues = ["$!{category}"])
-  #set($query = ', BaseObject obj where ')
-  #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogCategoryClassname}' and doc.fullName &lt;&gt; 'Blog.CategoryTemplate' and doc.parent = ? order by doc.name")
   #set($statement = "from doc.object($blogCategoryClassname) as category where doc.parent = :categoryParent order by doc.name")
   #set($results = $services.query.xwql($statement).bindValue('categoryParent', $category).execute())
   #foreach($item in $results)

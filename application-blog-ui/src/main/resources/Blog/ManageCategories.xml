@@ -68,12 +68,12 @@
   #end
 #elseif("$!request.xaction" == 'create')
   #set($title = "$!{request.newCategoryName}")
-  #set($categoryParentDoc = $xwiki.getDocument($defaultCategoryParent))
+  #set($parentCategoryDoc = $xwiki.getDocument($defaultCategoryParent))
   #if ("$!request.newCategoryParent" != '')
-    #set($categoryParentDoc = $xwiki.getDocument($request.newCategoryParent))
+    #set($parentCategoryDoc = $xwiki.getDocument($request.newCategoryParent))
   #end
-  #set($categoryParentSpaceRef = $categoryParentDoc.documentReference.lastSpaceReference)
-  #set($categorySpaceRef = $services.model.createSpaceReference($title, $categoryParentSpaceRef))
+  #set($parentCategorySpaceRef = $parentCategoryDoc.documentReference.lastSpaceReference)
+  #set($categorySpaceRef = $services.model.createSpaceReference($title, $parentCategorySpaceRef))
   #set($categoryRef = $services.model.createDocumentReference('WebHome', $categorySpaceRef))
   #set($categoryDoc = $xwiki.getDocument($categoryRef))
   #if ($title.trim().equals(''))
@@ -85,7 +85,7 @@
       #set($redirectParams = {
         'xpage': 'plain',
         'display': 'list',
-        'root': "$categoryParentDoc.fullName",
+        'root': "$parentCategoryDoc.fullName",
         'entry': "$!{request.entry}",
         'entryObjNb': "$!{request.entryObjNb}"
       })
@@ -101,7 +101,7 @@
     #end
     $response.sendRedirect($categoryDoc.getURL('save', $escapetool.url({
       'template': "${blogCategoryTemplate}",
-      'parent': "$categoryParentDoc.fullName",
+      'parent': "$parentCategoryDoc.fullName",
       'title': '',
       "${blogCategoryClassname}_0_name": $title,
       "${blogCategoryClassname}_0_description": '',
@@ -141,11 +141,9 @@
 #elseif ("$!request.display" == 'renameForm')
   #renameCategoryForm()
 #elseif (!$request.ajax)
-##
-$xwiki.ssx.use('Blog.ManageCategories')##
-$xwiki.jsx.use('Blog.ManageCategories', {'minify':false})##
-##
-#displayCategoryManagementTree($defaultBlogSpace 'editable')
+  #set ($discard = $xwiki.ssx.use('Blog.ManageCategories'))
+  #set ($discard = $xwiki.jsx.use('Blog.ManageCategories', {'minify':false}))
+  #displayCategoryManagementTree($defaultBlogSpace 'editable')
 #end
 {{/html}}
 {{/velocity}}</content>
