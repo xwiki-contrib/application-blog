@@ -44,5 +44,5 @@ public interface BlogManager
      * @throws XWikiException in case of XWiki exceptions
      * @throws QueryException in case of Query exceptions
      */
-    Document getBlogDocument(DocumentReference docRef) throws XWikiException, QueryException;
+    Document getBlogDocument(DocumentReference documentReference) throws XWikiException, QueryException;
 }
