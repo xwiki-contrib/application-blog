@@ -45,7 +45,7 @@
 #if("$!{request.xpage}" == 'plain' || "$!{request.xpage}" == 'rdf')
 $response.setContentType('application/rss+xml')
 {{html clean="false" wiki="false"}}
-#getBlogDocument($doc.space $blogDoc)
+#set ($blogDoc = $services.blog.getBlogDocument($doc.documentReference))
 #getBlogTitle($blogDoc $title)
 #set($feedMetadata = {
   "title": $title,

@@ -138,7 +138,7 @@
   #if ($isCategoryPage || $isCategoriesHomePage)
     #set ($archivePage = $doc.fullName)
   #else
-    #getBlogDocument($doc.space $blogDoc)
+    #set ($blogDoc = $services.blog.getBlogDocument($doc.documentReference))
     #set ($archivePage = $blogDoc.fullName)
   #end
   #panelheader($services.localization.render('blog.archive.paneltitle'))
