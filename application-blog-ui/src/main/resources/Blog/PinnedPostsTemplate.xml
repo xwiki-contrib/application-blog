@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.3" reference="Blog.PinnedPostsTemplate" locale="">
+  <web>Blog</web>
+  <name>PinnedPostsTemplate</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1537278608000</creationDate>
+  <parent>xwiki:Blog.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1537279151000</date>
+  <contentUpdateDate>1537278608000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <content/>
+  <object>
+    <name>Blog.PinnedPostsTemplate</name>
+    <number>0</number>
+    <className>Blog.PinnedPostsClass</className>
+    <guid>031a8117-b74b-4d9a-8a4c-b85c9c1d0fa6</guid>
+    <class>
+      <name>Blog.PinnedPostsClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <orderedPosts>
+        <contenttype>---</contenttype>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <editor>Text</editor>
+        <hint/>
+        <name>orderedPosts</name>
+        <number>2</number>
+        <picker>0</picker>
+        <prettyName>orderedPosts</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </orderedPosts>
+      <posts>
+        <cache>0</cache>
+        <classname>Blog.BlogPostClass</classname>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <hint/>
+        <idField>doc.fullName</idField>
+        <multiSelect>1</multiSelect>
+        <name>posts</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>posts</prettyName>
+        <relationalStorage>1</relationalStorage>
+        <separator> </separator>
+        <separators/>
+        <size>1</size>
+        <sort>value</sort>
+        <sql/>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <valueField>title</valueField>
+        <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
+      </posts>
+    </class>
+    <property>
+      <posts/>
+    </property>
+  </object>
+</xwikidoc>
