@@ -239,7 +239,7 @@
   #end
   #set ($preferencesBlogClass = $preferencesBlogObj.xWikiClass)
   #showBlogModal()
-  #submenuitem('', $services.localization.render('blog.uixMenu.name'), 'tmBlogTrigger', 'tme', 'rss',
+  #submenuitem('', $services.localization.render('blog.application.name'), 'tmBlogTrigger', 'tme', 'rss',
       "data-toggle='modal' data-target='#blogModal'")
 #end
 #macro (showBlogModal)

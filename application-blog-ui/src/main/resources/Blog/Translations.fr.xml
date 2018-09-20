@@ -223,7 +223,6 @@ notifications.events.BlogPostPublishedEvent.description.by.1user=publié par {0}
 notifications.events.BlogPostPublishedEvent.description=a publié l'article de blog
 
 # Blog Menu UIX
-blog.uixMenu.name=Configuration du blog
 blog.uixMenu.title=Assistant pour configurer les panneaux de Blog
 blog.uixMenu.title.hint=Choisissez un Blog et activez ses panneaux dans la page courante et ses enfants.
 blog.uixMenu.blog.hint=Commencez à saisir le nom du blog pour obtenir une suggestion des blogs existants. Un seul blog peut être sélectionné.
