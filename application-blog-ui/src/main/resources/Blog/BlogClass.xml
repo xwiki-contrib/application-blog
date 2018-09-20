@@ -133,7 +133,7 @@
       <unmodifiable>0</unmodifiable>
       <validationMessage/>
       <validationRegExp/>
-      <values>image=Image thumbnail|full=Calendar|cards=Cards</values>
+      <values>image=Image thumbnail|full=Calendar</values>
       <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
     </postsLayout>
     <postsLocation>
