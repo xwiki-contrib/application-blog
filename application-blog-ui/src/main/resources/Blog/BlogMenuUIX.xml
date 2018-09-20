@@ -228,7 +228,8 @@
 ## This UIX implies the creation/update of WebPreferences pages, thus it should be available only to admins.
 #if ($hasAdmin &amp;&amp; $xcontext.action == 'view' &amp;&amp; !$doc.isNew())
   #template('menus_macros.vm')
-  #set ($preferencesDocRef = $services.model.createDocumentReference('', $doc.space, 'WebPreferences'))
+  #set ($preferencesDocRef = $services.model.createDocumentReference('WebPreferences',
+      $doc.documentReference.lastSpaceReference))
   #set ($preferencesDoc = $xwiki.getDocument($preferencesDocRef))
   #set ($preferencesBlogObj = $preferencesDoc.getObject('Blog.EnablePanelsConfigurationClass'))
   #if (!$preferencesBlogObj)
@@ -238,9 +239,7 @@
   #end
   #set ($preferencesBlogClass = $preferencesBlogObj.xWikiClass)
   #showBlogModal()
-  ## The Glyphicon theme doesn't have icon for 'rss' and thus we need a hack to display it from font awesome using
-  ## ' fa fa-rss' for $class parameter which will be converted to 'glyphicon glyphicon- fa fa-rss'.
-  #submenuitem('', $services.localization.render('blog.application.name'), 'tmBlogTrigger', 'tme', 'rss',
+  #submenuitem('', $services.localization.render('blog.uixMenu.name'), 'tmBlogTrigger', 'tme', 'rss',
       "data-toggle='modal' data-target='#blogModal'")
 #end
 #macro (showBlogModal)
@@ -249,15 +248,19 @@
       &lt;div class="modal-content"&gt;
         &lt;div class="modal-header"&gt;
           &lt;button type="button" class="close" data-dismiss="modal"&gt;&amp;times;&lt;/button&gt;
-          &lt;h4 class="modal-title"&gt;$services.localization.render('blog.moreActions.modal.title')&lt;/h4&gt;
+          &lt;h4 class="modal-title"&gt;$services.localization.render('blog.uixMenu.title')&lt;/h4&gt;
+          &lt;span class="xHint"&gt;$services.localization.render("blog.uixMenu.title.hint")&lt;/span&gt;
         &lt;/div&gt;
         &lt;div class="modal-body"&gt;
           &lt;form action="$xwiki.getURL('Blog.EnablePanelsConfigurationService', 'get', 'outputSyntax=plain')"
               class="xform" method="post" id="enableBlogPanels"&gt;
             &lt;dl&gt;
               #foreach ($prop in $preferencesBlogClass.properties)
-                ; $prop.prettyName
-                : $doc.display($prop.name, 'edit', $preferencesBlogObj)
+                &lt;dt&gt;
+	          $doc.displayPrettyName($prop.name, $preferencesBlogObj)
+	          &lt;span class="xHint"&gt;$services.localization.render("blog.uixMenu.${prop.name}.hint")&lt;/span&gt;
+                &lt;/dt&gt;
+                &lt;dd&gt;$doc.display($prop.name, 'edit', $preferencesBlogObj)&lt;/dd&gt;
               #end
             &lt;/dl&gt;
             &lt;input type="hidden" name="docSpace" value="$escapetool.xml($doc.space)"/&gt;

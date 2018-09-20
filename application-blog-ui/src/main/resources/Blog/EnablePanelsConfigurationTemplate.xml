@@ -134,7 +134,7 @@
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
-        <values>before|after</values>
+        <values>before=Before|after=After</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </panelsPosition>
     </class>
@@ -146,13 +146,12 @@
     </property>
     <property>
       <panels>
-        <value>Blog.RelatedBlogsPanel</value>
-        <value>Blog.CategoriesPanel</value>
         <value>Blog.AllBlogsPanel</value>
-        <value>Blog.BlogPanel</value>
-        <value>Blog.UnpublishedPanel</value>
         <value>Blog.ArchivePanel</value>
+        <value>Blog.CategoriesPanel</value>
         <value>Blog.RecentPostsPanel</value>
+        <value>Blog.RelatedBlogsPanel</value>
+        <value>Blog.UnpublishedPanel</value>
       </panels>
     </property>
     <property>

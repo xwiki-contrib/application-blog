@@ -46,18 +46,17 @@
   #set ($preferencesDoc = $xwiki.getDocument($preferencesDocRef))
   #set ($discard = $preferencesDoc.updateObjectFromRequest('Blog.EnablePanelsConfigurationClass'))
   ## Compute the panels list that will be set as right panels in the WebPreferences page.
-  #set ($panels = $NULL)
-  #set ($blogPanels = $stringtool.join($preferencesDoc.getValue('panels'), ','))
+  #set ($panels = $stringtool.join($preferencesDoc.getValue('panels'), ','))
   ## Keep the inherited panels.
   #if ($preferencesDoc.getValue('inheritPanels') == 1)
     #set ($inheritedPanels = $xwiki.getXWikiPreference('rightPanels'))
-  #end
-  #if ($preferencesDoc.getValue('panelsPosition').equals('before'))
-    ## Add blog panels on top of the inherited panels.
-    #set ($panels = "$blogPanels,$!inheritedPanels")
-  #else
-    ## Add blog panels at the bottom of the inherited panels.
-    #set ($panels = "$!inheritedPanels,$blogPanels")
+    #if ($preferencesDoc.getValue('panelsPosition').equals('before'))
+      ## Add blog panels on top of the inherited panels.
+      #set ($panels = "$panels,$inheritedPanels")
+    #else
+      ## Add blog panels at the bottom of the inherited panels.
+      #set ($panels = "$inheritedPanels,$panels")
+    #end
   #end
   #set ($discard = $preferencesDoc.getObject('XWiki.XWikiPreferences', true))
   #set ($discard = $preferencesDoc.set('rightPanels', $panels))
