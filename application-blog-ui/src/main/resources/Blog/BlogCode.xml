@@ -127,41 +127,37 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   ## First, try the Space.WebHome, for a whole-space blog
   #set($result = $xwiki.getDocument("${space}.WebHome"))
   #if(!$result.getObject($blogClassname))
-    ## Second, try searching for a blog document in the current space
-    ## Prevent the query fail when the space contains dots '.'
-    #set($blogDocs = $services.query.hql(", BaseObject obj where doc.space = ? and obj.name = doc.fullName and obj.className = '$blogClassname' order by doc.name").setLimit(1).setOffset(0).bindValues([${space}]).execute())
-    #if($blogDocs.size() &gt; 0)
-      #set($result = $xwiki.getDocument($blogDocs.get(0)))
-    #else
-      ## Third, try searching for a blog document that have the its 'postsLocation' set to the current space
-      #set($statement = "where doc.object($blogClassname).postsLocation = :postLocation")
-      #set($blogDocs = $services.query.xwql($statement).setLimit(1).setOffset(0).bindValue('postLocation', $space).execute())
+    ## Second, try the Space.Blog document
+    #set($result = $xwiki.getDocument("${space}.Blog"))
+    #if(!$result.getObject($blogClassname))
+      ## Third, try searching for a blog document in the current space
+      ## Prevent the query fail when the space contains dots '.'
+      #set($blogDocs = $services.query.hql(", BaseObject obj where doc.space = ? and obj.name = doc.fullName and obj.className = '$blogClassname' order by doc.name").setLimit(1).setOffset(0).bindValues([${space}]).execute())
       #if($blogDocs.size() &gt; 0)
         #set($result = $xwiki.getDocument($blogDocs.get(0)))
       #else
-        ## Forth, try searching for a blog document that have the its 'categoriesLocation' set to the current space
-        #set($statement = "where doc.object($blogClassname).categoriesLocation = :categoriesLocation")
-        #set($blogDocs = $services.query.xwql($statement).setLimit(1).setOffset(0).bindValue('categoriesLocation', $space).execute())
+        ## Fourth, try searching for a blog document that have the its 'postsLocation' set to the current space
+        #set($statement = "where doc.object($blogClassname).postsLocation = :postLocation")
+        #set($blogDocs = $services.query.xwql($statement).setLimit(1).setOffset(0).bindValue('postLocation', $space).execute())
         #if($blogDocs.size() &gt; 0)
           #set($result = $xwiki.getDocument($blogDocs.get(0)))
         #else
-          ## Fifth, check if the current page has a WebPreferences corresponding page that conains a Blog.EnablePanelsConfigurationClass object.
-          #set ($spaceReference = $services.model.resolveSpace($space))
-          #set ($preferencesDocRef = $services.model.createDocumentReference('WebPreferences', $spaceReference))
-          #set ($preferencesDoc = $xwiki.getDocument($preferencesDocRef))
-          #set ($preferencesObj = $preferencesDoc.getObject('Blog.EnablePanelsConfigurationClass'))
-          #if ($preferencesObj)
-            #set ($result = $xwiki.getDocument( $preferencesObj.get('blog')))
+          ## Try searching for a blog document that have the its 'categoriesLocation' set to the current space
+          #set($statement = "where doc.object($blogClassname).categoriesLocation = :categoriesLocation")
+          #set($blogDocs = $services.query.xwql($statement).setLimit(1).setOffset(0).bindValue('categoriesLocation', $space).execute())
+          #if($blogDocs.size() &gt; 0)
+            #set($result = $xwiki.getDocument($blogDocs.get(0)))
           #else
-            ## Last, find a blog up in the documents hierarchy
-            #set($statement = 'from doc.object(Blog.BlogClass) blog')
-            #set($blogNames = $services.query.xwql($statement).execute())
-            #foreach ($blogName in $blogNames)
-              #set ($blogDoc = $xwiki.getDocument($blogName))
-              #if ($doc.space.contains($blogDoc.space))
-                #set($result = $blogDoc)
-                #break
-              #end
+            ## Check if the current page has a WebPreferences corresponding page that conains a Blog.EnablePanelsConfigurationClass object.
+            #set ($spaceReference = $services.model.resolveSpace($space))
+            #set ($preferencesDocRef = $services.model.createDocumentReference('WebPreferences', $spaceReference))
+            #set ($preferencesDoc = $xwiki.getDocument($preferencesDocRef))
+            #set ($preferencesObj = $preferencesDoc.getObject('Blog.EnablePanelsConfigurationClass'))
+            #if ($preferencesObj)
+              #set ($result = $xwiki.getDocument( $preferencesObj.get('blog')))
+            #else
+              ## Last, fallback to Blog.WebHome, the default blog
+              #set($result = $xwiki.getDocument('Blog.WebHome'))
             #end
           #end
         #end
