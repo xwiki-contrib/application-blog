@@ -41,8 +41,25 @@
   <hidden>true</hidden>
   <content>{{include reference="Blog.CategoriesCode"/}}
 
-{{velocity}}
-#displayCategoriesHomepageContent()
+{{velocity filter="none"}}
+{{html clean="false" wiki="true"}}
+$xwiki.ssx.use('Blog.ManageCategories')##
+$xwiki.jsx.use('Blog.ManageCategories')##
+
+&lt;div class="blog-categories-list"&gt;
+#getCategoriesHierarchy($doc.space $tree)
+#displayCategoriesHierarchyRecursive($tree $doc.fullName 1 'editable')
+#if($xwiki.hasAccessLevel('edit', $xcontext.user, $doc.fullName))
+* (% class="blog-add-category-label"%)$services.icon.renderHTML('add')
+[[$services.localization.render('blog.categories.addcategory')&gt;&gt;Blog.ManageCategories||queryString="xaction=showAddCategory&amp;parentCategory=${escapetool.url(${doc.fullName})}"]](%%)(%%)
+##
+#if("$!{request.xaction}" == 'showAddCategory' &amp;&amp; "$!{request.parentCategory}" == ${doc.fullName}) #addCategoryForm() #end
+##
+#end
+
+&lt;/div&gt;
+&lt;div class="clearfloats"&gt;&lt;/div&gt;
+{{/html}}
 {{/velocity}}</content>
   <attachment>
     <filename>icon.png</filename>

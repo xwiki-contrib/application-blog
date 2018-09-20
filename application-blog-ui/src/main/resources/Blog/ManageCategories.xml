@@ -102,7 +102,6 @@
     $response.sendRedirect($categoryDoc.getURL('save', $escapetool.url({
       'template': "${blogCategoryTemplate}",
       'parent': "$categoryParentDoc.fullName",
-      'title': '',
       "${blogCategoryClassname}_0_name": $title,
       "${blogCategoryClassname}_0_description": '',
       'xredirect': $xredirect,
