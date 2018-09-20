@@ -44,7 +44,7 @@
     <name>Blog.EnablePanelsConfigurationTemplate</name>
     <number>0</number>
     <className>Blog.EnablePanelsConfigurationClass</className>
-    <guid>f01d2d2e-204f-42d0-8ad1-0b5e22ec923a</guid>
+    <guid>5cdc6353-6497-478c-b9e7-6ef2cfa1611e</guid>
     <class>
       <name>Blog.EnablePanelsConfigurationClass</name>
       <customClass/>
@@ -134,7 +134,7 @@
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
-        <values>After|Before|</values>
+        <values>before|after</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </panelsPosition>
     </class>
@@ -146,16 +146,17 @@
     </property>
     <property>
       <panels>
-        <value>Blog.AllBlogsPanel</value>
-        <value>Blog.ArchivePanel</value>
-        <value>Blog.CategoriesPanel</value>
-        <value>Blog.RecentPostsPanel</value>
         <value>Blog.RelatedBlogsPanel</value>
+        <value>Blog.CategoriesPanel</value>
+        <value>Blog.AllBlogsPanel</value>
+        <value>Blog.BlogPanel</value>
         <value>Blog.UnpublishedPanel</value>
+        <value>Blog.ArchivePanel</value>
+        <value>Blog.RecentPostsPanel</value>
       </panels>
     </property>
     <property>
-      <panelsPosition>Before</panelsPosition>
+      <panelsPosition>before</panelsPosition>
     </property>
   </object>
 </xwikidoc>

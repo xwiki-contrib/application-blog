@@ -159,6 +159,7 @@ blog.manage.nospace=Vous n'avez pas donné le nom d'un espace. Veuillez entrer l
 blog.manage.space=Espace :
 blog.manage.title=Titre :
 blog.manage.blogtitle=Titre du Billet
+blog.manage.blogtype=Type de blog :
 blog.manage.inside=blog au sein d'un espace existant
 blog.manage.main=blog qui sera la seule application de l'espace
 blog.manage.create=Créer
@@ -221,21 +222,5 @@ blog.events.blogpostpublished.displayer=Un nouveau billet a été publié : {0}
 blog.events.blogpostpublished.by=par {0}.
 notifications.events.BlogPostPublishedEvent.description.by.1user=publié par {0}
 notifications.events.BlogPostPublishedEvent.description=a publié l'article de blog
-
-# Blog Menu UIX
-blog.uixMenu.title=Assistant pour configurer les panneaux de Blog
-blog.uixMenu.title.hint=Choisissez un Blog et activez ses panneaux dans la page en cours et les enfants.
-blog.uixMenu.blog.hint=Commencez à taper pour obtenir les suggestions du Blog. Un seul doit être sélectionné.
-blog.uixMenu.panels.hint=Sélectionnez dans la liste suivante les panneaux de Blog à afficher.
-blog.uixMenu.inheritPanels.hint=Pour conserver les panneaux affichés, assurez-vous que cette option est cochée. Sinon, ils seront supprimés.
-blog.uixMenu.panelsPosition.hint=Si vous conservez les panneaux existants, sélectionnez si les panneaux du Blog doivent être affichés avant ou après.
-Blog.EnablePanelsConfigurationClass_panels=Panneaux
-Blog.EnablePanelsConfigurationClass_inheritPanels=Panneaux hérités
-Blog.EnablePanelsConfigurationClass_panelsPosition=Position des panneaux
-Blog.EnablePanelsConfigurationClass_panelsPosition_After=Après
-Blog.EnablePanelsConfigurationClass_panelsPosition_Before=Avant
-
-#@deprecated
-blog.manage.blogtype=Type de blog :
 </content>
 </xwikidoc>
