@@ -114,35 +114,32 @@
 ##
 #**
  * Builds a tree of categories, respecting the parent&lt;-&gt;subcategory relation. Each node holds the
- * full name of the category's document. The root of the tree is 'aBlog.Categories.WebHome'.
+ * full name of the category's document. The root of the tree is 'Blog.Categories' or 'aCategorySpace.WebHome'.
  * 
  * @param space The space where to search for categories. If this parameter is an emptry string or
  *        null, all the categories in the wiki are returned.
  * @param tree Return parameter, HashMap&lt;String, List&lt;String&gt;&gt; structure holding the categories
  *        hierarchy, where the key is the name of a category, and the value contains the names of
- *        all its subcategories. To obtain the full hierarchy, start with the key 'aBlog.Categories.WebHome'.
+ *        all its subcategories. To obtain the full hierarchy, start with the key 'Blog.Categories'.
  *###
 #macro(getCategoriesHierarchy $space $tree)
   #set ($tree = $NULL)
-  #if ("$!blogCategoriesHierarchyCache.containsKey($!space)")
+  #if ("$!{blogCategoriesHierarchyCache.containsKey($!{space})}" == 'true')
     #setVariable ("$tree" $blogCategoriesHierarchyCache.get($!{space}))
   #else
+    #set ($result = {})
     #set($query = ', BaseObject obj where ')
     #if("$!space" != '')
-      #set($query = "${query}doc.space like :space and ")
+      #set($query = "${query}doc.space = :space and ")
     #end
-    #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogCategoryClassname}' order by doc.fullName")
+    #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogCategoryClassname}' order by doc.name")
     #set($queryObj = $services.query.hql($query))
     #if("$!space" != '')
-      ## Get the blog in question to display all its categories.
-      #getBlogDocument($space $blogDoc)
-      #set($categoriesLocation = $blogDoc.getValue('categoriesLocation'))
-      #set($queryObj = $queryObj.bindValue('space', "$categoriesLocation%"))
+      #set($queryObj = $queryObj.bindValue('space', $space))
     #end
-    #set ($result = {})
     #foreach($category in $queryObj.execute())
       #set($categoryDoc = $xwiki.getDocument($category))
-      #set($categoryParent = $categoryDoc.parent)
+      #set($categoryParent = "$!categoryDoc.parent")
       #if($categoryParent == '')
         #set($categoryParent = $defaultCategoryParent)
       #end
@@ -518,79 +515,84 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
 ##
 #**
  * Deletes a category, moving all the subcategories to its parent and removing this category from
- * all existing blog post entries.
+ * all existing blog entries.
  * 
  * @param category The full name of the document containing the category to be deleted.
  *###
 #macro(deleteCategory $category)
   #set($categoryDoc = $xwiki.getDocument($category))
-  #set($categoryParentDoc = $xwiki.getDocument($categoryDoc.parent))
+  #set($categoryParent = "$!categoryDoc.parent")
+  #if($categoryParent == '')
+    #set($categoryParent = "{$defaultCategoryParent}")
+  #end
   #set($parameterValues = ["$!{category}"])
   #set($query = ', BaseObject obj where ')
+  #if($space != '')
+    #set($query = "${query}doc.space = '${space}' and ")
+  #end
   #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogCategoryClassname}' and doc.fullName &lt;&gt; 'Blog.CategoryTemplate' and doc.parent = ? order by doc.name")
-  #set($statement = "from doc.object($blogCategoryClassname) as category where doc.parent = :categoryParent order by doc.name")
-  #set($results = $services.query.xwql($statement).bindValue('categoryParent', $category).execute())
-  #foreach($item in $results)
+  
+  #foreach($item in $services.query.hql($query).bindValues($parameterValues).execute())
     #if($xwiki.hasAccessLevel('edit', $xcontext.user, $item) &amp;&amp; $!{services.csrf.isTokenValid("$!{request.getParameter('form_token')}")})
       #set($subcategoryDoc = $xwiki.getDocument($item))
-      #set($discard = $subcategoryDoc.setParent($categoryParentDoc))
-      #set($discard = $subcategoryDoc.save($services.localization.render('blog.manageCategories.comment.updatedParent'), true))
+      $subcategoryDoc.setParent($categoryParent)
+      $subcategoryDoc.save($services.localization.render('blog.manageCategories.comment.updatedParent'), true)
     #end
   #end
-  #set($statement = "where :category member of doc.object($blogPostClassname).category order by doc.name")
-  #set($results = $services.query.xwql($statement).bindValue('category', $category).execute())
-  #foreach($item in $results)
-    #if($xwiki.hasAccessLevel('edit', $xcontext.user, $item) &amp;&amp; !$!{services.csrf.isTokenValid("$!{request.getParameter('form_token')}")})
-      #set($blogPostDoc = $xwiki.getDocument($item))
-      #set($blogPostCategories = $blogPostDoc.getObject(${blogPostClassname}).getProperty('category').value)
-      #set($discard = $blogPostCategories.remove($category))
-      #set($discard = $blogPostDoc.save($services.localization.render('blog.manageCategories.comment.removedDeletedCategory'), true))
+  #set($query = ', BaseObject obj, DBStringListProperty categories join categories.list as category where ')
+  #if($space != '')
+    #set($query = "${query}doc.space = '${space}' and ")
+  #end
+  #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogPostClassname}' and doc.fullName &lt;&gt; 'Blog.BlogPostTemplate' and categories.id.id = obj.id and categories.id.name = 'category' and category = ? order by doc.name")
+  #foreach($item in $services.query.hql($query).bindValues($parameterValues).execute())
+    #if($xwiki.hasAccessLevel('edit', $xcontext.user, $item) &amp;&amp; $!{services.csrf.isTokenValid("$!{request.getParameter('form_token')}")})
+      #set($blogEntryDoc = $xwiki.getDocument($item))
+      #set($discard = $blogEntryDoc.getObject(${blogPostClassname}).getProperty('category').value.remove($category))
+      $blogEntryDoc.save($services.localization.render('blog.manageCategories.comment.removedDeletedCategory'), true)
     #end
   #end
-  #if ($!{services.csrf.isTokenValid("$!{request.getParameter('form_token')}")})
-    #set($discard = $categoryDoc.delete())
-  #end
+  $categoryDoc.delete()
 #end
 ##
 ##
 ##
 #**
- * Renames a category, updating all the subcategories and all existing blog post entries.
- *
+ * Renames a category, updating all the subcategories and all existing blog entries.
+ * 
  * @param category The full name of the document containing the category to be renamed.
  * @param newCategoryName The new name of the category.
  *###
 #macro(renameCategory $category $newCategoryName)
   #set($categoryDoc = $xwiki.getDocument($category))
-  #set($categoryParentDoc = $xwiki.getDocument($categoryDoc.parent))
-  #set($categoryParentSpaceRef = $categoryParentDoc.documentReference.lastSpaceReference)
-  #set($categorySpaceRef = $services.model.createSpaceReference($newCategoryName, $categoryParentSpaceRef))
-  #set($newCategoryRef = $services.model.createDocumentReference('WebHome', $categorySpaceRef))
-  #set($newCategoryDoc = $xwiki.getDocument($newCategoryRef))
-  #set($statement = "from doc.object($blogCategoryClassname) as category where doc.parent = :categoryParent order by doc.name")
-  #set($results = $services.query.xwql($statement).bindValue('categoryParent', $category).execute())
-  #foreach($item in $results)
-    #if($xwiki.hasAccessLevel('edit', $xcontext.user, $item) &amp;&amp; !$!services.csrf.isTokenValid("$!{request.getParameter('form_token')}"))
+  #set ($newCategoryFullName = $newCategoryName)
+  #if ($category.space != $defaultBlogSpace)
+    #set ($newCategoryFullName = "${categoryDoc.space}.${newCategoryName}")
+  #end
+  #set($newCategoryDoc = $xwiki.getDocument($newCategoryFullName))
+  #set($parameterValues = ["$!{category}"])
+  #set($query = ', BaseObject obj where ')
+  #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogCategoryClassname}' and doc.fullName &lt;&gt; 'Blog.CategoryTemplate' and doc.parent = ? order by doc.name")
+  #foreach($item in $services.query.hql($query).bindValues($parameterValues).execute())
+    #if($xwiki.hasAccessLevel('edit', $xcontext.user, $item) &amp;&amp; $!{services.csrf.isTokenValid("$!{request.getParameter('form_token')}")})
       #set($subcategoryDoc = $xwiki.getDocument($item))
-      #set($discard = $subcategoryDoc.setParent($newCategoryDoc.fullName))
-      #set($discard = $subcategoryDoc.save($services.localization.render('blog.manageCategories.comment.updatedParent'), true))
+      $subcategoryDoc.setParent($newCategoryDoc.fullName)
+      $subcategoryDoc.save($services.localization.render('blog.manageCategories.comment.updatedParent'), true)
     #end
   #end
-  #set($statement = "where :category member of doc.object($blogPostClassname).category order by doc.name")
-  #set($results = $services.query.xwql($statement).bindValue('category', $category).execute())
-  #foreach($item in $results)
+  #set($query = ', BaseObject obj, DBStringListProperty categories join categories.list as category where ')
+  #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogPostClassname}' and doc.fullName &lt;&gt; 'Blog.BlogPostTemplate' and categories.id.id = obj.id and categories.id.name = 'category' and category = ? order by doc.name")
+  #foreach($item in $services.query.hql($query).bindValues($parameterValues).execute())
     #if($xwiki.hasAccessLevel('edit', $xcontext.user, $item) &amp;&amp; $!{services.csrf.isTokenValid("$!{request.getParameter('form_token')}")})
-      #set($blogPostDoc = $xwiki.getDocument($item))
-      #set($blogPostCategories = $blogPostDoc.getObject(${blogPostClassname}).getProperty('category').value)
-      #set($discard = $blogPostCategories.remove($category))
-      #set($discard = $blogPostCategories.add($newCategoryDoc.fullName))
-      #set($discard = $blogPostDoc.save($services.localization.render('blog.manageCategories.comment.updatedRenamedCategory'), true))
+      #set($blogEntryDoc = $xwiki.getDocument($item))
+      #set($discard = $blogEntryDoc.getObject(${blogPostClassname}).getProperty('category').value.remove($category))
+      #set($discard = $blogEntryDoc.getObject(${blogPostClassname}).getProperty('category').value.add($newCategoryDoc.fullName))
+      $blogEntryDoc.save($services.localization.render('blog.manageCategories.comment.updatedRenamedCategory'), true)
     #end
   #end
   #if ($!{services.csrf.isTokenValid("$!{request.getParameter('form_token')}")})
-    #set($discard = $categoryDoc.getObject($blogCategoryClassname).set('name', $newCategoryName))
-    #set($discard = $categoryDoc.save($services.localization.render('blog.manageCategories.comment.updatedCategory'), true))
-    #set($discard = $categoryDoc.rename($newCategoryRef))
+    $categoryDoc.getObject('Blog.CategoryClass').set('name', $newCategoryName)
+    $categoryDoc.save($services.localization.render('blog.manageCategories.comment.updatedCategory'), true)
+    $categoryDoc.rename($newCategoryFullName)
   #end
 #end
 ##
