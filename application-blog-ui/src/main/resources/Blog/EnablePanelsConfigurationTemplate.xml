@@ -134,7 +134,7 @@
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
-        <values>before=Before|after=After</values>
+        <values>Before|After</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </panelsPosition>
     </class>
@@ -155,7 +155,7 @@
       </panels>
     </property>
     <property>
-      <panelsPosition>before</panelsPosition>
+      <panelsPosition>Before</panelsPosition>
     </property>
   </object>
 </xwikidoc>
