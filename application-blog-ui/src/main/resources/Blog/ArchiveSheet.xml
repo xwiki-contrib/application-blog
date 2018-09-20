@@ -180,7 +180,7 @@
       #getBlogPostsLayout($blogDoc $postsLayout)
       {{blogpostlist category="$targetDocument.space.replaceAll('~', '~~').replaceAll('"', '~"')" fromDate="$fromDate" toDate="$toDate" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
     #else
-      #set ($blogDoc = $services.blog.getBlogDocument($targetDocument.documentReference))
+      #getBlogDocument($targetDocument.space $blogDoc)
       #getBlogPostsLayout($blogDoc $postsLayout)
       {{blogpostlist blog="$blogDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" fromDate="$fromDate" toDate="$toDate" layout="$postsLayout" layoutParams="$!layoutParams" paginated='yes' /}}
     #end
@@ -200,7 +200,7 @@
       #set ($categoryTitle = $services.localization.render('blog.categories.webhome.title'))
     #end
   #else
-    #set ($blogDoc = $services.blog.getBlogDocument($targetDocument.documentReference))
+    #getBlogDocument($targetDocument.space $blogDoc)
   #end
   #set ($macro.title = $blogDoc.display('title'))
   #if ($blogDoc.fullName == 'Blog.WebHome')

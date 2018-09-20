@@ -141,7 +141,7 @@
   #elseif($isCategoriesHomePage)
     #set($viewAllTarget = "${doc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
   #else
-    #set ($blogDoc = $services.blog.getBlogDocument($doc.documentReference))
+    #getBlogDocument($doc.space $blogDoc)
     #set($viewAllTarget = "${blogDoc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
   #end
   [[$services.localization.render('blog.unpublished.viewall') (% class="itemCount" %)($count)(%%)&gt;&gt;$viewAllTarget]]

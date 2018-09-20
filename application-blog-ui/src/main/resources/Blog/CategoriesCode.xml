@@ -83,7 +83,7 @@
     #getAllBlogPostsQuery($query)
     ## Need to be sure that the counted posts correspond to both categories and current blog.
     #if(!$doc.getObject($blogCategoryClassname))
-      #set ($blogDoc = $services.blog.getBlogDocument($doc.documentReference))
+      #getBlogDocument($doc.space $blogDoc)
       #set ($blogWhere = "and doc.space like '$blogDoc.space%'")
     #end
     #set ($query = ", DBStringListProperty as categories join categories.list as category${query} $!blogWhere and obj.id = categories.id.id and categories.id.name='category' and category in (${parameters})")
@@ -134,10 +134,8 @@
     #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogCategoryClassname}' order by doc.fullName")
     #set($queryObj = $services.query.hql($query))
     #if("$!space" != '')
-      ## Get the target blog document based on the reference of the sibling WebHome document.
-      #set ($spaceReference = $services.model.resolveSpace($space))
-      #set ($siblingDocumentReference = $services.model.createDocumentReference('WebHome', $spaceReference))
-      #set ($blogDoc = $services.blog.getBlogDocument($siblingDocumentReference))
+      ## Get the blog in question to display all its categories.
+      #getBlogDocument($space $blogDoc)
       #set($categoriesLocation = $blogDoc.getValue('categoriesLocation'))
       #set($queryObj = $queryObj.bindValue('space', "$categoriesLocation%"))
     #end
@@ -181,9 +179,10 @@
  *###
 #macro(displayCategoriesHierarchy $tree $displayMethod)
   #set($processedCategories = [])
-  #set ($blogDoc = $services.blog.getBlogDocument($doc.documentReference))
+  #getBlogDocument($doc.space $blogDoc)
   #set ($categoriesLocation = $blogDoc.getValue('categoriesLocation'))
   #displayCategoriesHierarchyRecursive($tree "${categoriesLocation}.WebHome" 1 $displayMethod)
+  #displayCategoriesHierarchyRecursive($tree $doc.fullName 1 $displayMethod)
 #end
 ##
 ##

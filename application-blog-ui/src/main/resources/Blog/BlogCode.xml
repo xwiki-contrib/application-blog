@@ -115,6 +115,66 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
 ##
 ##
 #**
+ * Retrieve the blog document, which usually is either &lt;tt&gt;&amp;lt;Space&amp;gt;.WebHome&lt;/tt&gt; for whole-spaces blogs, or
+ * &lt;tt&gt;&amp;lt;Space&amp;gt;.Blog&lt;/tt&gt; for in-space blogs. If none of these documents contains a blog object, then the first
+ * (alphabetically) document in the target space that contains one is returned. Finally, if no document in the current
+ * space contains a blog object, then &lt;tt&gt;Blog.WebHome&lt;/tt&gt; is returned as the default blog.
+ * 
+ * @param space A &lt;tt&gt;String&lt;/tt&gt;, the name of the space where to search.
+ * @param blogDoc The resulting XDocument.
+ *###
+#macro(getBlogDocument $space $blogDoc)
+  ## First, try the Space.WebHome, for a whole-space blog
+  #set($result = $xwiki.getDocument("${space}.WebHome"))
+  #if(!$result.getObject($blogClassname))
+    ## Second, try searching for a blog document in the current space
+    ## Prevent the query fail when the space contains dots '.'
+    #set($blogDocs = $services.query.hql(", BaseObject obj where doc.space = ? and obj.name = doc.fullName and obj.className = '$blogClassname' order by doc.name").setLimit(1).setOffset(0).bindValues([${space}]).execute())
+    #if($blogDocs.size() &gt; 0)
+      #set($result = $xwiki.getDocument($blogDocs.get(0)))
+    #else
+      ## Third, try searching for a blog document that have the its 'postsLocation' set to the current space
+      #set($statement = "where doc.object($blogClassname).postsLocation = :postLocation")
+      #set($blogDocs = $services.query.xwql($statement).setLimit(1).setOffset(0).bindValue('postLocation', $space).execute())
+      #if($blogDocs.size() &gt; 0)
+        #set($result = $xwiki.getDocument($blogDocs.get(0)))
+      #else
+        ## Forth, try searching for a blog document that have the its 'categoriesLocation' set to the current space
+        #set($statement = "where doc.object($blogClassname).categoriesLocation = :categoriesLocation")
+        #set($blogDocs = $services.query.xwql($statement).setLimit(1).setOffset(0).bindValue('categoriesLocation', $space).execute())
+        #if($blogDocs.size() &gt; 0)
+          #set($result = $xwiki.getDocument($blogDocs.get(0)))
+        #else
+          ## Fifth, check if the current page has a WebPreferences corresponding page that conains a Blog.EnablePanelsConfigurationClass object.
+          #set ($spaceReference = $services.model.resolveSpace($space))
+          #set ($preferencesDocRef = $services.model.createDocumentReference('WebPreferences', $spaceReference))
+          #set ($preferencesDoc = $xwiki.getDocument($preferencesDocRef))
+          #set ($preferencesObj = $preferencesDoc.getObject('Blog.EnablePanelsConfigurationClass'))
+          #if ($preferencesObj)
+            #set ($result = $xwiki.getDocument( $preferencesObj.get('blog')))
+          #else
+            ## Last, find a blog up in the documents hierarchy
+            #set($statement = 'from doc.object(Blog.BlogClass) blog')
+            #set($blogNames = $services.query.xwql($statement).execute())
+            #foreach ($blogName in $blogNames)
+              #set ($blogDoc = $xwiki.getDocument($blogName))
+              #if ($doc.space.contains($blogDoc.space))
+                #set($result = $blogDoc)
+                #break
+              #end
+            #end
+          #end
+        #end
+      #end
+    #end
+  #end
+  #set ($blogDoc = $NULL)
+  #setVariable ("$blogDoc" $result)
+#end
+##
+##
+##
+#**
  * Retrieve the blog title.
  * 
  * @param blogDoc The blog document. It should contain a &lt;tt&gt;Blog.BlogClass&lt;tt&gt; object with the &lt;tt&gt;title&lt;/tt&gt; property set.
@@ -975,10 +1035,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param postsLocation The resulting location.
  *###
 #macro(getBlogPostsLocation $blogSpace $postsLocation)
-  ## Get the target blog document considering the reference of the sibling WebHome document.
-  #set ($spaceReference = $services.model.resolveSpace($blogSpace))
-  #set ($siblingDocumentReference = $services.model.createDocumentReference('WebHome', $spaceReference))
-  #set ($blogDoc = $services.blog.getBlogDocument($siblingDocumentReference))
+  #getBlogDocument($blogSpace $blogDoc)
   #getBlogProperty($blogDoc 'postsLocation' $blogDoc.space $result)
   #set ($postsLocation = $NULL)
   #setVariable ("$postsLocation" $result)
@@ -993,10 +1050,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param categoriesLocation The resulting location.
  *###
 #macro(getBlogCategoriesLocation $blogSpace $categoriesLocation)
-  ## Get the target blog document considering the reference of the sibling WebHome document.
-  #set ($spaceReference = $services.model.resolveSpace($blogSpace))
-  #set ($siblingDocumentReference = $services.model.createDocumentReference('WebHome', $spaceReference))
-  #set ($blogDoc = $services.blog.getBlogDocument($siblingDocumentReference))
+  #getBlogDocument($blogSpace $blogDoc)
   #getBlogProperty($blogDoc 'categoriesLocation' 'Blog' $result)
   #set ($postsLocation = $NULL)
   #setVariable ("$categoriesLocation" $result)
@@ -1106,7 +1160,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     #end
   #else
     ## Display all posts in blog space aBlog
-    #set ($blogDoc = $services.blog.getBlogDocument($targetDoc.documentReference))
+    #getBlogDocument($targetDoc.space $blogDoc)
     #getBlogPostsLayout($blogDoc $postsLayout)
     #if ("$!layout" == '')
       #set ($layout = $postsLayout)

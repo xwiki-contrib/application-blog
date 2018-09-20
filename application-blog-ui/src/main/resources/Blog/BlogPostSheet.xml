@@ -52,7 +52,7 @@ $xwiki.ssx.use('Blog.ManageCategories')##
 ## Keep testing the inline action for backward compatibility with older blog posts.
 #elseif($xcontext.action != 'edit' &amp;&amp; $xcontext.action != 'inline')
   ## View mode
-  #set ($blogDoc = $services.blog.getBlogDocument($doc.documentReference))
+  #getBlogDocument ($doc.space $blogDoc)
   #getBlogPostsLayout($blogDoc $postsLayout)
   #set ($layoutParams="useSummary=false|displayTitle=false")
   #if ($postsLayout != 'full')

@@ -318,6 +318,26 @@
 ##
 ##
 ##
+#**
+ * Normally, this should be a Template eXtension, which would be used to display a blog as a RSS feed. Since TX are not
+ * yet implemented, the target blog should be passed in the URL. This macro determines exactly which blog should be
+ * syndicated. If the "blog" request parameter is not present, then the default Blog is used.
+ * 
+ * @param blogDoc The resulting XDocument of the target blog.
+ *###
+#macro(getTargetBlog $blogDoc)
+  #if("$!{request.blog}" != '')
+    #set($result = $xwiki.getDocument($request.blog))
+  #else
+    #getBlogDocument('Blog' $result)
+  #end
+  #set ($blogDoc = $NULL)
+  #setVariable ("$blogDoc" $result)
+  ## TODO: Check if the document has a Blog.BlogClass object.
+#end
+##
+##
+##
 #macro(printFieldContent $entryDoc $entryObj $fieldName)
 $escapetool.xml($entryDoc.display($fieldName, 'view', $entryObj))#end
 ##

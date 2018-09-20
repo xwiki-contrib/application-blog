@@ -83,10 +83,8 @@
   #end
   ## Remove . and : from the document name, as they have a special meaning in XWiki document names
   #set($postDocName = "${blogPostsLocation}.${name.replaceAll('[.:]', '')}")
-  ## Get the target blog document, to set it as the parent. Use the reference of the sibling WebHome document.
-  #set ($spaceReference = $services.model.resolveSpace($space))
-  #set ($siblingDocumentReference = $services.model.createDocumentReference('WebHome', $spaceReference))
-  #set ($blogDoc = $services.blog.getBlogDocument($siblingDocumentReference))
+  ## Get the target blog document, to set it as the parent
+  #getBlogDocument($space $blogDoc)
   #set($parent = "$!{escapetool.url($blogDoc.fullName)}")
   #set($title = "$!{escapetool.url($name)}")
   #if("$!request.category" != '')
