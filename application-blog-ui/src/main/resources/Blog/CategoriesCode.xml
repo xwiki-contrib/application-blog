@@ -81,12 +81,7 @@
       #set ($parameters = $parameters.concat('?'))
     #end
     #getAllBlogPostsQuery($query)
-    ## Need to be sure that the counted posts correspond to both categories and current blog.
-    #if(!$doc.getObject($blogCategoryClassname))
-      #getBlogDocument($doc.space $blogDoc)
-      #set ($blogWhere = "and doc.space like '$blogDoc.space%'")
-    #end
-    #set ($query = ", DBStringListProperty as categories join categories.list as category${query} $!blogWhere and obj.id = categories.id.id and categories.id.name='category' and category in (${parameters})")
+    #set ($query = ", DBStringListProperty as categories join categories.list as category${query} and obj.id = categories.id.id and categories.id.name='category' and category in (${parameters})")
     #if ($categories.size() &gt; 0)
       #set ($totalResult = $services.query.hql($query).bindValues($categories).addFilter("unique").count())
       #set ($result = $services.query.hql("${query} order by publishDate.value desc").setLimit($itemsPerPage).setOffset($startAt).bindValues($categories).addFilter("unique").execute())

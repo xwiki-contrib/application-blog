@@ -141,17 +141,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
         #if($blogDocs.size() &gt; 0)
           #set($result = $xwiki.getDocument($blogDocs.get(0)))
         #else
-          ## Check if the current page has a WebPreferences corresponding page that conains a Blog.EnablePanelsConfigurationClass object.
-          #set ($spaceReference = $services.model.resolveSpace($space))
-          #set ($preferencesDocRef = $services.model.createDocumentReference('WebPreferences', $spaceReference))
-          #set ($preferencesDoc = $xwiki.getDocument($preferencesDocRef))
-          #set ($preferencesObj = $preferencesDoc.getObject('Blog.EnablePanelsConfigurationClass'))
-          #if ($preferencesObj)
-            #set ($result = $xwiki.getDocument( $preferencesObj.get('blog')))
-          #else
-            ## Last, fallback to Blog.WebHome, the default blog
-            #set($result = $xwiki.getDocument('Blog.WebHome'))
-          #end
+          ## Last, fallback to Blog.WebHome, the default blog
+          #set($result = $xwiki.getDocument('Blog.WebHome'))
         #end
       #end
     #end
