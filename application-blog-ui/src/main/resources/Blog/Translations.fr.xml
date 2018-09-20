@@ -224,11 +224,11 @@ notifications.events.BlogPostPublishedEvent.description=a publié l'article de b
 
 # Blog Menu UIX
 blog.uixMenu.title=Assistant pour configurer les panneaux de Blog
-blog.uixMenu.title.hint=Choisissez un Blog et activez ses panneaux dans la page courante et ses enfants.
-blog.uixMenu.blog.hint=Commencez à saisir le nom du blog pour obtenir une suggestion des blogs existants. Un seul blog peut être sélectionné.
-blog.uixMenu.panels.hint=Sélectionnez dans la liste suivante les panneaux du blog à afficher.
-blog.uixMenu.inheritPanels.hint=Si vous souhaitez conserver les panneaux déjà associés à l'espace, assurez-vous de laisser l'option cochée. Dans le cas contraire, ils ne seront plus visibles.
-blog.uixMenu.panelsPosition.hint=Si vous conservez les panneaux déjà associés à l'espace, choisissez si les panneaux du Blog doivent être affichés avant ou après.
+blog.uixMenu.title.hint=Choisissez un Blog et activez ses panneaux dans la page en cours et les enfants.
+blog.uixMenu.blog.hint=Commencez à taper pour obtenir les suggestions du Blog. Un seul doit être sélectionné.
+blog.uixMenu.panels.hint=Sélectionnez dans la liste suivante les panneaux de Blog à afficher.
+blog.uixMenu.inheritPanels.hint=Pour conserver les panneaux affichés, assurez-vous que cette option est cochée. Sinon, ils seront supprimés.
+blog.uixMenu.panelsPosition.hint=Si vous conservez les panneaux existants, sélectionnez si les panneaux du Blog doivent être affichés avant ou après.
 Blog.EnablePanelsConfigurationClass_panels=Panneaux
 Blog.EnablePanelsConfigurationClass_inheritPanels=Panneaux hérités
 Blog.EnablePanelsConfigurationClass_panelsPosition=Position des panneaux
