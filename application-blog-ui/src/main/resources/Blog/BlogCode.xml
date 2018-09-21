@@ -124,6 +124,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param blogDoc The resulting XDocument.
  *###
 #macro(getBlogDocument $space $blogDoc)
+  #set ($result = $NULL)
   ## Check if the current space has a WebPreferences page that conains a Blog.EnablePanelsConfigurationClass object.
   ## It is possible to display a blog's panels info in a page that is not inside a blog and in that case we need to
   ## identify the right blog based on a configuration object in a WebPreferences page.
