@@ -69,5 +69,11 @@
       <version>${rendering.version}</version>
       <scope>runtime</scope>
     </dependency>
+    <!-- Select2 WebJar used by the cards blog post layout -->
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>select2</artifactId>
+      <version>4.0.5</version>
+    </dependency>
   </dependencies>
 </project>

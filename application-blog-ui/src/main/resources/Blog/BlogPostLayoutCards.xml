@@ -1,0 +1,846 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.3" reference="Blog.BlogPostLayoutCards" locale="">
+  <web>Blog</web>
+  <name>BlogPostLayoutCards</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1537276607000</creationDate>
+  <parent>xwiki:Blog.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1537430155000</date>
+  <contentUpdateDate>1537276607000</contentUpdateDate>
+  <version>1.1</version>
+  <title>BlogPostLayoutCards</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <content/>
+  <object>
+    <name>Blog.BlogPostLayoutCards</name>
+    <number>0</number>
+    <className>XWiki.StyleSheetExtension</className>
+    <guid>8c32f843-b8c9-4a8e-ae44-29040f7e693f</guid>
+    <class>
+      <name>XWiki.StyleSheetExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <contentType>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>contentType</name>
+        <number>6</number>
+        <prettyName>Content Type</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>CSS|LESS</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </contentType>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>.blog_pin a:hover .thumbnail {
+  border-color: #c1011f;
+}
+.note li {
+  padding:2px;
+  font-size:12px;
+}
+.date_info {
+  font-size: 10px;
+  padding:0;
+  display: block;
+  color: #818181;
+}
+.com_num{
+  color:#e2011a;
+}
+.blog_pin h5 {
+  margin: 0 0 10px 0;
+  color: #45466b;
+}
+.thumbnail .caption {
+  padding: 10px;
+}
+.blog_pin .thumbnail {
+  background: #eeeeee;
+}
+.com_det {
+  padding:0;
+}
+.date_info .text-right {
+  margin-right:10px;
+}
+.blog_pin a:hover, a:focus {
+  text-decoration:none;
+}
+.next_blog a {
+  color: #333;
+}
+.next_blog .date_info .text-right {
+  margin-right:35px;
+}
+.art_name p{
+  margin-top:-3px;
+}
+.note {
+  margin-bottom: 10px;
+  margin-top: 5px;
+  color: #adaed3;
+}
+.com_det {
+  padding-right:10px;
+  color: #c1c1c1;
+  font-size: 10px;
+}
+.next_blog .col-xs-4 {
+  padding-right: 0;
+}
+.next_blog .com_det {
+  padding-right: 20px;
+}
+.next_blog p {
+  font-weight: 400;
+}
+.art_det p.text-left {
+  font-size: 18px;
+  color: #45466b;
+}
+.edit-pinned-posts {
+  margin-bottom: 5px;
+}
+.blog_pin .thumbnail img {
+  width: 100%;
+}
+.thumbnail {
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 0;
+}
+.col-xs-8 .detail {
+    color: #adaed3;
+}
+.row .flex-container {
+  margin-bottom: 15px;
+}
+.blog_pin .com_det {
+    padding-right: 35px;
+    color: #c1c1c1;
+    font-size: 10px;
+    margin-top: 5px;
+  }
+.blog_pin .com_det .fa, .next_blog .com_det .fa {
+    font-size: 20px;
+  }
+@media only screen and (min-width : 768px) {
+  .flex-container {
+    display: flex;
+    flex-direction: row;
+  }
+  .flex-container &gt; div.blog_pin {
+    flex: 1 1 auto;
+    -webkit-flex: 1 1 auto;; /* Safari 6.1+ */
+    -ms-flex: 1 1 auto; /* IE 10 */
+  }
+  .flex-container div.blog_pin {
+    overflow: hidden;
+    height: auto;
+    float: none;
+  }
+  div.blog_pin .thumbnail {
+    height: 100%;
+    margin-bottom: 0;
+  }
+  .blog_pin .post-details {
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    margin-top: -32px;
+  }
+  .blog_pin .post-summary {
+    padding-bottom: 10px;
+  }
+  .edit-pinned-posts-container {
+    position: absolute;
+    z-index: 10;
+    right: 0;
+    margin-right: 0;
+    padding: 5px 10px;
+  }
+  .no-pinnded-posts .edit-pinned-posts-container {
+    position: initial;
+    padding: 0;
+  }
+}
+@media only screen and (min-width : 768px) {
+  .flex-container {
+    display: flex;
+    flex-direction: row;
+  }
+  .flex-container &gt; div.next_blog {
+    flex: 1 1 auto;
+    -webkit-flex: 1 1 auto;; /* Safari 6.1+ */
+    -ms-flex: 1 1 auto; /* IE 10 */
+  }
+  .flex-container div.next_blog {
+    overflow: hidden;
+    height: auto;
+    float: none;
+  }
+  div.next_blog .thumbnail {
+    height: 100%;
+    margin-bottom: 0;
+  }
+}
+</code>
+    </property>
+    <property>
+      <contentType>CSS</contentType>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse/>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
+  <object>
+    <name>Blog.BlogPostLayoutCards</name>
+    <number>0</number>
+    <className>XWiki.WikiMacroClass</className>
+    <guid>caa2d1b7-faed-499c-9ee4-0f6a3cf32f3f</guid>
+    <class>
+      <name>XWiki.WikiMacroClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <code>
+        <disabled>0</disabled>
+        <editor>Text</editor>
+        <name>code</name>
+        <number>9</number>
+        <prettyName>Macro code</prettyName>
+        <rows>20</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <contentDescription>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>contentDescription</name>
+        <number>8</number>
+        <prettyName>Content description (Not applicable for "No content" type)</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </contentDescription>
+      <contentType>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>contentType</name>
+        <number>7</number>
+        <prettyName>Macro content type</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator>|</separator>
+        <separators>|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>Optional|Mandatory|No content</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </contentType>
+      <defaultCategory>
+        <disabled>0</disabled>
+        <name>defaultCategory</name>
+        <number>4</number>
+        <prettyName>Default category</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultCategory>
+      <description>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>description</name>
+        <number>3</number>
+        <prettyName>Macro description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <id>
+        <disabled>0</disabled>
+        <name>id</name>
+        <number>1</number>
+        <prettyName>Macro id</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </id>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>2</number>
+        <prettyName>Macro name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <supportsInlineMode>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>supportsInlineMode</name>
+        <number>5</number>
+        <prettyName>Supports inline mode</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </supportsInlineMode>
+      <visibility>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>visibility</name>
+        <number>6</number>
+        <prettyName>Macro visibility</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator>|</separator>
+        <separators>|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>Current User|Current Wiki|Global</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </visibility>
+    </class>
+    <property>
+      <code>{{include reference='Blog.BlogCode' /}}
+
+{{include reference='Blog.BlogPostLayoutMacros' /}}
+
+{{velocity output='false'}}
+#macro(displaySmallPost $pDoc $pObj)
+#initLayoutVars($pDoc $pObj)
+&lt;div class="col-xs-12 col-sm-6 next_blog"&gt;
+  &lt;a href="$pDoc.uRL" class="thumbnail"&gt;
+    &lt;div class="row"&gt;
+      &lt;div class="col-xs-4"&gt;
+      #if ($imageAtt)
+        &lt;img src="$escapetool.xml($pDoc.getAttachmentURL($pObj.getValue('image'),'download',$imgQs))" /&gt;
+      #end 
+      &lt;/div&gt;
+      &lt;div class="col-xs-8 art_det"&gt;
+        &lt;p class="text-left"&gt;
+          #if($displayTitle)$!pDoc.display('title', 'view', $pObj) #end 
+          &lt;br/&gt;&lt;span class="date_info"&gt; $!dateStr &lt;/span&gt; 
+        &lt;/p&gt;
+        #displayPostDetails($averageVote)
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+#end
+##
+##
+##
+#macro(displayPinnedPost $pDoc $pObj)
+#initLayoutVars($pDoc $pObj)
+&lt;div class="col-xs-12 col-sm-4 col-md-4 blog_pin"&gt;
+  &lt;a href="$pDoc.uRL" class="all-post-link"&gt;
+    &lt;div class="thumbnail"&gt;
+      #if ($imageAtt)
+        &lt;img src="$escapetool.xml($pDoc.getAttachmentURL($pObj.getValue('image'),'download',$imgQs))" /&gt;
+      #end
+      &lt;div class="caption"&gt;
+        &lt;h5 class="text-left"&gt;#if($displayTitle)$!pDoc.display('title', 'view', $pObj) #end &lt;br/&gt; &lt;span class="date_info"&gt; $!dateStr &lt;/span&gt; &lt;/h5&gt;
+        &lt;div class="text-left post-summary"&gt;
+         #set ($postContent = $pObj.getProperty('extract').value)
+         $!pDoc.getRenderedContent($postContent, $pDoc.syntax.toIdString())
+        &lt;/div&gt;
+        #displayPostDetails($averageVote)
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+#end
+##
+##
+##
+#macro(formatPostDate $pDoc $pObj)
+  #set ($formattedDate = $NULL)
+  #set($dateStr = $datetool.format('medium', $postDate, $xcontext.locale))
+  #if ("$!dateStr" != '')
+    #set ($dateArr = $dateStr.split(' '))
+    #if ($dateArr.size() &gt; 3)
+      #set ($dateStr = "")
+      #foreach($s in $dateArr.subList(0, 3))
+        #set ($dateStr = "${dateStr}${s} ")
+      #end
+    #end
+  #end
+  #setVariable("$formattedDate" $dateStr)
+#end
+##
+##
+##
+#macro(displayPostDetails)
+&lt;div class="row post-details"&gt;
+  &lt;div class="col-xs-8 detail"&gt;
+    &lt;ul class="pull-left note list-inline"&gt;
+      #foreach ($x in [1..5])
+        #set ($cls = "")
+        #if ($x &gt; $averageVote)
+          #set ($cls = "-o")
+        #end
+        &lt;li&gt;&lt;span class="fa fa-star${cls}"&gt;&lt;/span&gt;&lt;/li&gt;
+      #end
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  #if ($showPostComments)
+  &lt;div class="col-xs-4 com_det"&gt;
+    &lt;p class="text-right"&gt; &lt;i class="fa fa-comments"&gt;&lt;/i&gt; ($!nbComments)&lt;/p&gt;
+  &lt;/div&gt;
+  #end
+&lt;/div&gt;
+#end
+##
+##
+##
+#macro(initLayoutVars $pDoc $pObj)
+  #set ($imageAtt = $pDoc.getAttachment($pObj.getValue('image')))
+  #isPublished($pObj $isPublished)
+  #isHidden($pObj $isHidden)
+  #getEntryDate($pDoc $pObj $postDate)
+  #formatPostDate($postDate $dateStr)
+  #set ($averageVote = $mathtool.round($services.ratings.getAverageRating($pDoc.documentReference).getAverageVote()))
+  #set ($nbComments = $pDoc.getComments().size())
+  #set ($showPostComments = true)
+  #if ($xwiki.getSpacePreferenceFor('showcomments', $pDoc.documentReference.lastSpaceReference, '1') == '0')
+    #set ($showPostComments = false)
+  #end
+#end
+##
+##
+##
+#macro(displayEditPinnedPostsButton)
+  #if ("$!macroAdditionalParams.get('postIndex')" == '0' &amp;&amp; $services.security.authorization.hasAccess('edit', $pinnedPostsSourceDoc.fullName))
+    #set ($discard = $xwiki.ssx.use('Blog.PinnedPostsSheet'))
+    #set ($discard = $xwiki.jsx.use('Blog.PinnedPostsSheet'))
+    #set ($editPinnedPostsURL = $xwiki.getURL($pinnedPostsSourceDoc.fullName, 'get', 'sheet=Blog.PinnedPostsSheet'))
+    #set ($newPinnedPostsObjectURL = $xwiki.getURL($pinnedPostsSourceDoc.fullName, 'edit', 'xpage=editobject&amp;xaction=addObject&amp;className=Blog.PinnedPostsClass'))
+    &lt;div class="edit-pinned-posts-container"&gt;
+      &lt;div class="col-xs-12 col-sm-12 col-md-12 text-right edit-pinned-posts"&gt;
+        &lt;a href="javascript:;" class="editPinnedPosts"&gt;
+          &lt;span class="glyphicon glyphicon-edit" aria-hidden="true"&gt;&lt;/span&gt; $services.localization.render('blog.post.layout.cards.pinnedposts.edit')
+        &lt;/a&gt;
+        &lt;input type="hidden" id="editPinnedPostsURL" value="$escapetool.xml($editPinnedPostsURL)"/&gt;
+        &lt;input type="hidden" id="newPinnedPostsObjectURL" value="$escapetool.xml($newPinnedPostsObjectURL)"/&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    #if ("$!pinnedPostsObj" == '')
+      &lt;input type="hidden" name="createPinnedPostsObject" value="1"/&gt;
+    #end
+  #end
+#end
+{{/velocity}}
+
+{{velocity}}
+#if ($services.security.authorization.hasAccess('view', $xcontext.macro.params.reference))
+#set ($postDoc = $xwiki.getDocument($xcontext.macro.params.reference))
+#getEntryObject($postDoc $postObj)
+#if ("$!postObj" != '')
+#set ($displayTitle = true)
+#set ($displayImage = false)## display post image
+#set ($displayActions = true)
+#set ($previousPostReference = '')
+#extractLayoutParametersFromString($xcontext.macro.params.params $macroAdditionalParams)
+##
+#if ("$!macroAdditionalParams.get('displayTitle')" == 'false')
+    #set ($displayTitle = false)
+#end
+##
+#if ("$!macroAdditionalParams.get('displayImage')" == 'true')
+  #set ($displayImage = true)
+#end
+##
+#if ("$!macroAdditionalParams.get('previousPostReference')" != '')
+  #set ($previousPostReference = $macroAdditionalParams.get('previousPostReference'))
+#end
+##
+#if ("$!macroAdditionalParams.get('displayActions')" == 'false')
+    #set ($displayActions = false)
+#end
+##
+#set ($postIndex = $mathtool.toInteger("$macroAdditionalParams.get('postIndex')"))
+#set ($listResultsCount = $mathtool.toInteger($macroAdditionalParams.get('list-results-count')))
+#set($discard = $xwiki.ssx.use('Blog.BlogPostLayoutCards'))
+#set($scaleWidth = 600)
+#set($imgQs="width=$scaleWidth")
+## Display pinned posts
+## Get the list of pinned posts
+#set ($pinnedPosts = [])
+#set ($pinnedPostsSourceDoc = $NULL)
+#if ("$!macroAdditionalParams.get('forceDisplayPinnedPosts')" == 'true' &amp;&amp; "$!macroAdditionalParams.get('list-blog')" != '')
+  #set ($pinnedPostsSourceDoc = $xwiki.getDocument($macroAdditionalParams.get('list-blog')))
+  ## Note that the 'list-blog' parameter contains the value of the 'blog' parameter of the blogpostlist macro passed to the current layout macro
+#end
+#if ("$!pinnedPostsSourceDoc" != '')
+  #set ($pinnedPostsObj = $pinnedPostsSourceDoc.getObject('Blog.PinnedPostsClass'))
+  #if ("$!pinnedPostsObj" != '')
+    #set ($orderedPinnedPostsJSON = $pinnedPostsObj.getProperty('orderedPosts').value)
+    #if ("$!orderedPinnedPostsJSON" != '')
+      #set ($pinnedPosts = $jsontool.parse($orderedPinnedPostsJSON))
+    #else
+      #set ($pinnedPosts = $pinnedPostsObj.getProperty('posts').value)
+    #end
+  #end
+  #if ($postIndex == 0 &amp;&amp; $pinnedPosts.size() &gt; 0)
+    {{html clean="false"}}
+    #set ($x = 0)
+    #set ($showPinnedPostsButton = true)
+    #foreach ($pinnedPost in $pinnedPosts)
+      #if ($x == 0)
+      &lt;div class="row flex-container"&gt;
+      #if ($showPinnedPostsButton)
+      #displayEditPinnedPostsButton()
+      #set($showPinnedPostsButton = false)
+      #end
+      #end
+      #set ($pinnedPostDoc = $xwiki.getDocument($pinnedPost))
+      #getEntryObject($pinnedPostDoc $pinnedPostObj)
+      #if ("$!pinnedPostObj" != '')
+        #displayPinnedPost($pinnedPostDoc $pinnedPostObj)
+      #end
+      #set ($x = $mathtool.add($x, 1))
+      #if ($x == 3)
+        #set ($x = 0)
+        &lt;/div&gt;
+      #end
+    #end
+    #if ($mathtool.mod($x, 3) != 0)
+     &lt;/div&gt;
+    #end
+    {{/html}}
+
+  #elseif($postIndex == 0 &amp;&amp; $pinnedPosts.size() == 0)
+
+   {{html}}
+     &lt;div class="row no-pinnded-posts"&gt;
+     #displayEditPinnedPostsButton()
+     &lt;/div&gt;
+   {{/html}}
+
+  #end
+#end
+{{html clean="false"}}
+#if ("$!nbDisplayedPosts" == '' || $postIndex == 0)
+  #set ($nbDisplayedPosts = 0)
+#end
+#if($mathtool.mod($nbDisplayedPosts, 2) == 0)
+  #if ($nbDisplayedPosts != 0)
+    &lt;/div&gt;
+    #set ($lastHtmlTag = 'c')
+  #end
+  #if ($nbDisplayedPosts == $mathtool.sub($listResultsCount, 1))
+    &lt;div class="row"&gt;
+    #set ($lastHtmlTag = 'o')
+    #set ($lastRowClass = "")
+  #else
+    &lt;div class="row flex-container"&gt;
+    #set ($lastHtmlTag = 'o')
+    #set ($lastRowClass = "flex")
+  #end
+#end
+#displaySmallPost($postDoc $postObj)
+#if ($nbDisplayedPosts == $mathtool.sub($listResultsCount, 1))
+  &lt;/div&gt;
+  #set ($lastHtmlTag = 'c')
+#end
+#set ($nbDisplayedPosts = $mathtool.add($nbDisplayedPosts, 1))
+#if ($postIndex == $mathtool.sub($listResultsCount, 1))
+  #if ("$!lastHtmlTag" == 'o')
+    #if ($mathtool.mod($nbDisplayedPosts, 2) == 1 &amp;&amp; $lastRowClass == "flex")
+      &lt;div class="col-xs-12 col-sm-6"&gt;&lt;/div&gt;
+    #end
+    &lt;/div&gt;
+  #end
+#end
+{{/html}}
+#else
+{{error}}$services.localization.render('blog.blogpostlayout.notpost', [$xcontext.macro.params.reference]){{/error}}
+#end
+#else
+{{error}}$services.localization.render('blog.blogpostlayout.post_view_not_allowed', [$xcontext.macro.params.reference]){{/error}}
+#end
+{{/velocity}}</code>
+    </property>
+    <property>
+      <contentDescription/>
+    </property>
+    <property>
+      <contentType>Optional</contentType>
+    </property>
+    <property>
+      <defaultCategory/>
+    </property>
+    <property>
+      <description>This macro is used to display a blog post using the 'Cards' layout</description>
+    </property>
+    <property>
+      <id>blogPostLayoutCards</id>
+    </property>
+    <property>
+      <name>Cards Blog Post Layout</name>
+    </property>
+    <property>
+      <supportsInlineMode/>
+    </property>
+    <property>
+      <visibility>Global</visibility>
+    </property>
+  </object>
+  <object>
+    <name>Blog.BlogPostLayoutCards</name>
+    <number>0</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>1a7d5b00-6e9e-4b60-be9b-d1bc8599e7c0</guid>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <property>
+      <defaultValue/>
+    </property>
+    <property>
+      <description>The document reference of the blog post</description>
+    </property>
+    <property>
+      <mandatory>1</mandatory>
+    </property>
+    <property>
+      <name>reference</name>
+    </property>
+  </object>
+  <object>
+    <name>Blog.BlogPostLayoutCards</name>
+    <number>1</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>db50b5e6-ee51-4ad6-9232-8e5be3613b41</guid>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <property>
+      <defaultValue/>
+    </property>
+    <property>
+      <description>Additional parameters of the blog post layout</description>
+    </property>
+    <property>
+      <mandatory/>
+    </property>
+    <property>
+      <name>params</name>
+    </property>
+  </object>
+</xwikidoc>

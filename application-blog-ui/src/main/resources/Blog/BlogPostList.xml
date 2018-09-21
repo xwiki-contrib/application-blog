@@ -162,6 +162,8 @@
     <property>
       <code>{{include reference='Blog.CategoriesCode' /}}
 
+{{include reference='Blog.BlogPostLayoutMacros' /}}
+
 {{velocity output='no'}}
 #if ("$!xcontext.macro.params.blog" == '' &amp;&amp; "$!xcontext.macro.params.category" == '')
   #set ($blogDescriptorParam = 'Blog.WebHome') ## Default Blog descriptor
@@ -310,6 +312,27 @@
   #end
 
   #set ($hql = "${hql} ${whereQuery}")
+
+  ## Exclude pinned posts
+  ## Pinned posts are a list of blog posts that are saved in a Blog.PinnedPostsClass object attached to the descriptor of the blog
+  ## The pinned posts are displayed in a different way on the blog post layout compared to the other blog posts, FTM the pinned posts are supported on the 'cards' blog post layout
+  ## the pinned posts are displayed only if the blog post layout parameter 'forceDisplayPinnedPosts' is equal to 'true'
+  #set ($pinnedPosts = [])
+  #extractLayoutParametersFromString($layoutAdditionalParams $layoutParamsMap)
+  #if ("$!layoutParamsMap.get('forceDisplayPinnedPosts')" == 'true' &amp;&amp; "$!blogDescriptorParam" != '')
+    #set ($pinnedPostsSourceDoc = $xwiki.getDocument($blogDescriptorParam))
+  #end
+  #if ("$!pinnedPostsSourceDoc" != '')
+    #set ($pinnedPostsObj = $pinnedPostsSourceDoc.getObject('Blog.PinnedPostsClass'))
+    #if ("$!pinnedPostsObj" != '')
+      #set ($pinnedPosts = $pinnedPostsObj.getProperty('posts').value)
+    #end
+  #end
+  #if ($pinnedPosts.size() &gt; 0)
+    #set ($hql = "${hql} and doc.fullName not in :pinnedPosts")
+    #set ($discard = $queryParams.put('pinnedPosts', $pinnedPosts))
+  #end
+  ###
 
   ## Ordering
   #set ($hql = "${hql} order by publishDate.value desc")
