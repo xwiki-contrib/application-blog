@@ -498,15 +498,18 @@
 #macro(displayPostDetails)
 &lt;div class="row post-details"&gt;
   &lt;div class="col-xs-8 detail"&gt;
-    &lt;ul class="pull-left note list-inline"&gt;
-      #foreach ($x in [1..5])
-        #set ($cls = "")
-        #if ($x &gt; $averageVote)
-          #set ($cls = "-o")
+    #set ($ratingsConfigDoc = $services.ratings.getConfigurationDocument($doc.documentReference))
+    #if ($ratingsConfigDoc.getValue('displayRatings') == 1)
+      &lt;ul class="pull-left note list-inline"&gt;
+        #foreach ($x in [1..5])
+          #set ($cls = "")
+          #if ($x &gt; $averageVote)
+            #set ($cls = "-o")
+          #end
+          &lt;li&gt;&lt;span class="fa fa-star${cls}"&gt;&lt;/span&gt;&lt;/li&gt;
         #end
-        &lt;li&gt;&lt;span class="fa fa-star${cls}"&gt;&lt;/span&gt;&lt;/li&gt;
-      #end
-    &lt;/ul&gt;
+      &lt;/ul&gt;
+    #end
   &lt;/div&gt;
   #if ($showPostComments)
   &lt;div class="col-xs-4 com_det"&gt;
