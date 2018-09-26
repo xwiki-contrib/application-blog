@@ -150,6 +150,7 @@ blog.post.createpost=Tạo một bài mới
 blog.post.title=Post title
 ### Missing: blog.post.titleEmptyError=The post title should not be empty!
 blog.post.create=Tạo
+### Missing: blog.post.sheet=Blog post sheet
 blog.categories.existingcategories=Những danh mục đang tồn tại
 blog.categories.addcategory=Thêm một danh mục
 blog.categories.deleteselected=Xóa lựa chọn những danh mục
@@ -159,7 +160,6 @@ blog.manage.nospace=Không có space cung cấp. Xin nhập vào một space h�
 blog.manage.space=Space\:
 blog.manage.title=Tựa đề\:
 blog.manage.blogtitle=Tiêu đề blog
-blog.manage.blogtype=Loại blog \:
 blog.manage.inside=blog bên trong không gian đang tồn tại
 blog.manage.main=blog như là nội dung chính của một không gian
 blog.manage.create=Tạo
@@ -208,6 +208,7 @@ blog.unpublished.viewall=Hiển thị tất cả
 # Class fields
 ### Missing: Blog.BlogClass_postsLayout.full=Calendar
 ### Missing: Blog.BlogClass_postsLayout.image=Image thumbnail
+### Missing: Blog.BlogClass_postsLayout.cards=Cards
 
 # Blogs macro
 ### Missing: blog.livetable.title=Title
@@ -222,5 +223,21 @@ blog.unpublished.viewall=Hiển thị tất cả
 ### Missing: blog.events.blogpostpublished.by=by {0}.
 ### Missing: notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0}
 ### Missing: notifications.events.BlogPostPublishedEvent.description=published the blog post
+
+# Blog Menu UIX
+### Missing: blog.uixMenu.name=Blog configuration
+### Missing: blog.uixMenu.title=Wizard to configure Blog panels
+### Missing: blog.uixMenu.title.hint=Choose a Blog and enable its panels in the current page and children.
+### Missing: blog.uixMenu.blog.hint=Start typing to get the Blog suggestions. Only one should be selected.
+### Missing: blog.uixMenu.panels.hint=Select from the following list the Blog panels that needs to be displayed.
+### Missing: blog.uixMenu.inheritPanels.hint=In order to keep the existing displayed panels, make sure this option in checked. Otherwise they will be removed.
+### Missing: blog.uixMenu.panelsPosition.hint=In case keep the existing panels, select if the Blog panels should be displayed before or after.
+
+# Blog Post Cards Layout
+### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
+### Missing: blog.post.layout.cards.pinnedposts.save=Save
+
+#@deprecated
+blog.manage.blogtype=Loại blog \:
 </content>
 </xwikidoc>
