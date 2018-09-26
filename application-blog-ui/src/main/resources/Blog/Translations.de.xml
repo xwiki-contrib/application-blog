@@ -213,12 +213,12 @@ Blog.BlogClass_postsLayout.image=Vorschaubild
 # Blogs macro
 blog.livetable.title=Titel
 blog.livetable._actions=Aktionen
-rendering.macro.blogs.name=Live-Tabelle von allen Blogs
-### Missing: rendering.macro.blogs.description=The blogs macro is used to list on a livetable all the blog available on the wiki.
+rendering.macro.blogs.name=Livetable aller Blogs
+rendering.macro.blogs.description=Das Livetable aller Blogs Macro listet alle im Wiki verfügbaren Blogs in einer Live-Tabelle auf.
 
 # Notifications
-### Missing: blog.applicationName=Blog
-### Missing: blog.events.blogpostpublished.description=A blog post is published
+blog.applicationName=Blog
+blog.events.blogpostpublished.description=Ein Blog-Eintrag wurde veröffentlicht.
 ### Missing: blog.events.blogpostpublished.displayer=A new blog post has been posted: {0}
 ### Missing: blog.events.blogpostpublished.by=by {0}.
 ### Missing: notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0}
