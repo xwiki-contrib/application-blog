@@ -150,6 +150,7 @@ blog.post.createpost=Crear una nueva entrada
 blog.post.title=Título de la entrada
 ### Missing: blog.post.titleEmptyError=The post title should not be empty!
 blog.post.create=Crear
+### Missing: blog.post.sheet=Blog post sheet
 blog.categories.existingcategories=Categorías existentes
 blog.categories.addcategory=Añadir categoría
 blog.categories.deleteselected=Categorías seleccionadas eliminadas
@@ -159,7 +160,6 @@ blog.manage.nospace=No se ha proporcionado espacio. Por favor, introduzca un esp
 blog.manage.space=Espacio
 blog.manage.title=Título\:
 blog.manage.blogtitle=Título del blog
-blog.manage.blogtype=Tipo de blog\:
 blog.manage.inside=Blog dentro de un espacio existente
 blog.manage.main=blog como el contenido principal de un espacio
 blog.manage.create=Crear
@@ -208,6 +208,7 @@ blog.unpublished.viewall=Ver todas
 # Class fields
 ### Missing: Blog.BlogClass_postsLayout.full=Calendar
 ### Missing: Blog.BlogClass_postsLayout.image=Image thumbnail
+### Missing: Blog.BlogClass_postsLayout.cards=Cards
 
 # Blogs macro
 ### Missing: blog.livetable.title=Title
@@ -222,5 +223,21 @@ blog.unpublished.viewall=Ver todas
 ### Missing: blog.events.blogpostpublished.by=by {0}.
 ### Missing: notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0}
 ### Missing: notifications.events.BlogPostPublishedEvent.description=published the blog post
+
+# Blog Menu UIX
+### Missing: blog.uixMenu.name=Blog configuration
+### Missing: blog.uixMenu.title=Wizard to configure Blog panels
+### Missing: blog.uixMenu.title.hint=Choose a Blog and enable its panels in the current page and children.
+### Missing: blog.uixMenu.blog.hint=Start typing to get the Blog suggestions. Only one should be selected.
+### Missing: blog.uixMenu.panels.hint=Select from the following list the Blog panels that needs to be displayed.
+### Missing: blog.uixMenu.inheritPanels.hint=In order to keep the existing displayed panels, make sure this option in checked. Otherwise they will be removed.
+### Missing: blog.uixMenu.panelsPosition.hint=In case keep the existing panels, select if the Blog panels should be displayed before or after.
+
+# Blog Post Cards Layout
+### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
+### Missing: blog.post.layout.cards.pinnedposts.save=Save
+
+#@deprecated
+blog.manage.blogtype=Tipo de blog\:
 </content>
 </xwikidoc>

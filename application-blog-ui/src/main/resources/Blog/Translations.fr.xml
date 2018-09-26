@@ -150,6 +150,7 @@ blog.post.createpost=Créer un nouvel article
 blog.post.title=Titre de l'article
 blog.post.titleEmptyError=Le titre est obligatoire !
 blog.post.create=Créer
+### Missing: blog.post.sheet=Blog post sheet
 blog.categories.existingcategories=Catégories existantes
 blog.categories.addcategory=Ajouter une catégorie
 blog.categories.deleteselected=Effacer les catégories sélectionnées
@@ -207,6 +208,7 @@ blog.blogpostcreate.wrong_blog=Descripteur de blog incorrect
 # Class fields
 Blog.BlogClass_postsLayout.full=Calendrier
 Blog.BlogClass_postsLayout.image=Miniature
+### Missing: Blog.BlogClass_postsLayout.cards=Cards
 
 # Blogs macro
 blog.livetable.title=Titre
@@ -230,9 +232,10 @@ blog.uixMenu.blog.hint=Commencez à saisir le nom du blog pour obtenir une sugge
 blog.uixMenu.panels.hint=Sélectionnez dans la liste suivante les panneaux du blog à afficher.
 blog.uixMenu.inheritPanels.hint=Si vous souhaitez conserver les panneaux déjà associés à l'espace, assurez-vous de laisser l'option cochée. Dans le cas contraire, ils ne seront plus visibles.
 blog.uixMenu.panelsPosition.hint=Si vous conservez les panneaux déjà associés à l'espace, choisissez si les panneaux du Blog doivent être affichés avant ou après.
-Blog.EnablePanelsConfigurationClass_panelsPosition=Position des panneaux
-Blog.EnablePanelsConfigurationClass_panelsPosition_After=Après
-Blog.EnablePanelsConfigurationClass_panelsPosition_Before=Avant
+
+# Blog Post Cards Layout
+### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
+### Missing: blog.post.layout.cards.pinnedposts.save=Save
 
 #@deprecated
 blog.manage.blogtype=Type de blog :
