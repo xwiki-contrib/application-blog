@@ -150,6 +150,7 @@ blog.post.createpost=Neuen Beitrag erstellen
 blog.post.title=Beitragstitel
 blog.post.titleEmptyError=Der Titel des Beitrags sollte nicht leer sein!
 blog.post.create=Erstellen
+### Missing: blog.post.sheet=Blog post sheet
 blog.categories.existingcategories=Verfügbare Kategorien
 blog.categories.addcategory=Kategorie hinzufügen
 blog.categories.deleteselected=Gewählte Kategorien löschen
@@ -159,7 +160,6 @@ blog.manage.nospace=Kein Bereich angegeben. Bitte geben Sie einen gültigen Bere
 blog.manage.space=Bereich:
 blog.manage.title=Titel:
 blog.manage.blogtitle=Blog-Titel
-blog.manage.blogtype=Blog-Typ:
 blog.manage.inside=Blog in einem bestehenden Bereich
 blog.manage.main=Blog als Hauptinhalt eines Bereiches
 blog.manage.create=Erstellen
@@ -201,18 +201,19 @@ blog.manage.post.layout=Beitragslayout
 blog.blogpostlist.descriptor_not_found=Blog-Deskriptor in Dokument nicht gefunden [{0}]
 blog.categories.webhome.title=Alle Kategorien
 blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
-### Missing: blog.blogpostlayout.notpost=[{0}] is not a blog post!
-### Missing: blog.blogpostlayout.post_view_not_allowed=You are not allowed to view the blog post [{0}]
+blog.blogpostlayout.notpost=[{0}] ist kein Blogbeitrag!
+blog.blogpostlayout.post_view_not_allowed=Sie haben nicht die Berechtigung den Blog-Eintrag [{0}] anzuzeigen
 ### Missing: blog.blogpostcreate.wrong_blog=Wrong blog descriptor
 
 # Class fields
-### Missing: Blog.BlogClass_postsLayout.full=Calendar
-### Missing: Blog.BlogClass_postsLayout.image=Image thumbnail
+Blog.BlogClass_postsLayout.full=Kalender
+Blog.BlogClass_postsLayout.image=Vorschaubild
+### Missing: Blog.BlogClass_postsLayout.cards=Cards
 
 # Blogs macro
-### Missing: blog.livetable.title=Title
-### Missing: blog.livetable._actions=Actions
-### Missing: rendering.macro.blogs.name=All Blogs Livetable
+blog.livetable.title=Titel
+blog.livetable._actions=Aktionen
+rendering.macro.blogs.name=Live-Tabelle von allen Blogs
 ### Missing: rendering.macro.blogs.description=The blogs macro is used to list on a livetable all the blog available on the wiki.
 
 # Notifications
@@ -222,5 +223,21 @@ blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
 ### Missing: blog.events.blogpostpublished.by=by {0}.
 ### Missing: notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0}
 ### Missing: notifications.events.BlogPostPublishedEvent.description=published the blog post
+
+# Blog Menu UIX
+### Missing: blog.uixMenu.name=Blog configuration
+### Missing: blog.uixMenu.title=Wizard to configure Blog panels
+### Missing: blog.uixMenu.title.hint=Choose a Blog and enable its panels in the current page and children.
+### Missing: blog.uixMenu.blog.hint=Start typing to get the Blog suggestions. Only one should be selected.
+### Missing: blog.uixMenu.panels.hint=Select from the following list the Blog panels that needs to be displayed.
+### Missing: blog.uixMenu.inheritPanels.hint=In order to keep the existing displayed panels, make sure this option in checked. Otherwise they will be removed.
+### Missing: blog.uixMenu.panelsPosition.hint=In case keep the existing panels, select if the Blog panels should be displayed before or after.
+
+# Blog Post Cards Layout
+### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
+### Missing: blog.post.layout.cards.pinnedposts.save=Save
+
+#@deprecated
+blog.manage.blogtype=Blog-Typ:
 </content>
 </xwikidoc>
