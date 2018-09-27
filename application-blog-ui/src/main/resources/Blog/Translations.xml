@@ -237,8 +237,16 @@ blog.uixMenu.panelsPosition.hint=In case keep the existing panels, select if the
 blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
 blog.post.layout.cards.pinnedposts.save=Save
 
-#@deprecated
-blog.manage.blogtype=Blog type:</content>
+## Used to indicate where deprecated keys start
+#@deprecatedstart
+#######################################
+## until 9.9
+#######################################
+
+blog.manage.blogtype=Blog type:
+
+## Used to indicate where deprecated keys end
+#@deprecatedend</content>
   <object>
     <name>Blog.Translations</name>
     <number>0</number>
