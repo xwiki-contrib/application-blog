@@ -237,7 +237,15 @@ notifications.events.BlogPostPublishedEvent.description=publicēja emuāru ierak
 ### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
 ### Missing: blog.post.layout.cards.pinnedposts.save=Save
 
-#@deprecated
+## Used to indicate where deprecated keys start
+#@deprecatedstart
+#######################################
+## until 9.9
+#######################################
+
 blog.manage.blogtype=Emuāra veids:
+
+## Used to indicate where deprecated keys end
+#@deprecatedend
 </content>
 </xwikidoc>
