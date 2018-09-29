@@ -237,7 +237,15 @@ blog.unpublished.viewall=Vizualizare completă
 ### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
 ### Missing: blog.post.layout.cards.pinnedposts.save=Save
 
-#@deprecated
+## Used to indicate where deprecated keys start
+#@deprecatedstart
+#######################################
+## until 9.9
+#######################################
+
 blog.manage.blogtype=Tipul blogului:
+
+## Used to indicate where deprecated keys end
+#@deprecatedend
 </content>
 </xwikidoc>
