@@ -237,6 +237,14 @@ blog.uixMenu.panelsPosition.hint=Si vous conservez les panneaux déjà associés
 ### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
 ### Missing: blog.post.layout.cards.pinnedposts.save=Save
 
+# Panels page title
+blog.panel.blogArchive.pageTitle=Panneau Archive du blog
+blog.panel.allBlogs.pageTitle=Panneau Tous les blogs
+blog.panel.blogCategories.pageTitle=Panneau Catégories du blog
+blog.panel.recentBlogPosts.pageTitle=Panneau Billets récents
+blog.panel.relatedBlogs.pageTitle=Panneau Blogs similaires
+blog.panel.unpublishedBlogPosts.pageTitle=Panneau Billets non publiés
+
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
 #######################################

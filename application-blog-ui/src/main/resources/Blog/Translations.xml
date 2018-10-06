@@ -237,6 +237,14 @@ blog.uixMenu.panelsPosition.hint=In case keep the existing panels, select if the
 blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
 blog.post.layout.cards.pinnedposts.save=Save
 
+# Panels page title
+blog.panel.blogArchive.pageTitle=Blog Archive Panel
+blog.panel.allBlogs.pageTitle=All Blogs Panel
+blog.panel.blogCategories.pageTitle=Blog Categories Panel
+blog.panel.recentBlogPosts.pageTitle=Recent Blog Posts Panel
+blog.panel.relatedBlogs.pageTitle=Related Blogs Panel
+blog.panel.unpublishedBlogPosts.pageTitle=Unpublished Blog Posts Panel
+
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
 #######################################
