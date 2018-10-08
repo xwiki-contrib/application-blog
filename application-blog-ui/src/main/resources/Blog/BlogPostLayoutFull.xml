@@ -246,7 +246,7 @@
       <supportsInlineMode/>
     </property>
     <property>
-      <visibility>Global</visibility>
+      <visibility>Current Wiki</visibility>
     </property>
   </object>
   <object>
