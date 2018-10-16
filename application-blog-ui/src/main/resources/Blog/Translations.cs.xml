@@ -237,6 +237,14 @@ blog.unpublished.viewall=Zobrazit vše
 ### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
 ### Missing: blog.post.layout.cards.pinnedposts.save=Save
 
+# Panels page title
+### Missing: blog.panel.blogArchive.pageTitle=Blog Archive Panel
+### Missing: blog.panel.allBlogs.pageTitle=All Blogs Panel
+### Missing: blog.panel.blogCategories.pageTitle=Blog Categories Panel
+### Missing: blog.panel.recentBlogPosts.pageTitle=Recent Blog Posts Panel
+### Missing: blog.panel.relatedBlogs.pageTitle=Related Blogs Panel
+### Missing: blog.panel.unpublishedBlogPosts.pageTitle=Unpublished Blog Posts Panel
+
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
 #######################################
