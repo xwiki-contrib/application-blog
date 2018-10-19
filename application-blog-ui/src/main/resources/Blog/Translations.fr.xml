@@ -232,17 +232,12 @@ blog.uixMenu.blog.hint=Commencez à saisir le nom du blog pour obtenir une sugge
 blog.uixMenu.panels.hint=Sélectionnez dans la liste suivante les panneaux du blog à afficher.
 blog.uixMenu.inheritPanels.hint=Si vous souhaitez conserver les panneaux déjà associés à l'espace, assurez-vous de laisser l'option cochée. Dans le cas contraire, ils ne seront plus visibles.
 blog.uixMenu.panelsPosition.hint=Si vous conservez les panneaux déjà associés à l'espace, choisissez si les panneaux du Blog doivent être affichés avant ou après.
-Blog.EnablePanelsConfigurationClass_panels=Panneaux
 Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=Panneau Tous les blogs
 Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=Panneau Archive du blog
 Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=Panneau Catégories du blog
 Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=Panneau Billets récents
 Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Panneau Blogs similaires
 Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Panneau Billets non publiés
-Blog.EnablePanelsConfigurationClass_inheritPanels=Panneaux hérités
-Blog.EnablePanelsConfigurationClass_panelsPosition=Position des panneaux
-Blog.EnablePanelsConfigurationClass_panelsPosition_after=Après
-Blog.EnablePanelsConfigurationClass_panelsPosition_before=Avant
 
 # Blog Post Cards Layout
 ### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
