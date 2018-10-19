@@ -232,6 +232,12 @@ blog.uixMenu.blog.hint=Sāciet rakstīt, lai iegūtu uzvedinājumus. Var izvēli
 blog.uixMenu.panels.hint=No sekojošā saraksta izvēlieties emuāros parādāmos paneļus.
 blog.uixMenu.inheritPanels.hint=Lai turpinātu rādīt esošos paneļus, pārliecinieties ka šī iespēja ir atzīmēta. Pretējā gadījumā esošie paneļi tiks novākti.
 blog.uixMenu.panelsPosition.hint=Ja izvēlēts saglabāt esošos paneļus, norādiet vai tos rādīt pirms, vai pēc tam.
+### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=All Blogs Panel
+### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=Blog Archive Panel
+### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=Blog Categories Panel
+### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=Recent Blog Posts Panel
+### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Related Blogs Panel
+### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Unpublished Blog Posts Panel
 
 # Blog Post Cards Layout
 blog.post.layout.cards.pinnedposts.edit=Pārvaldīt piespraustos emuāru ierakstus
