@@ -208,7 +208,7 @@ blog.blogpostcreate.wrong_blog=Descripteur de blog incorrect
 # Class fields
 Blog.BlogClass_postsLayout.full=Calendrier
 Blog.BlogClass_postsLayout.image=Miniature
-### Missing: Blog.BlogClass_postsLayout.cards=Cards
+Blog.BlogClass_postsLayout.cards=Cartes
 
 # Blogs macro
 blog.livetable.title=Titre
@@ -240,8 +240,8 @@ Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Panneau Blogs 
 Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Panneau Billets non publiés
 
 # Blog Post Cards Layout
-### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
-### Missing: blog.post.layout.cards.pinnedposts.save=Save
+blog.post.layout.cards.pinnedposts.edit=Gérer les billets de blog épinglés
+blog.post.layout.cards.pinnedposts.save=Enregistrer
 
 # Panels page title
 blog.panel.blogArchive.pageTitle=Panneau Archive du blog
