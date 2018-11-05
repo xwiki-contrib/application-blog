@@ -232,24 +232,24 @@ blog.uixMenu.blog.hint=Tippen um Blog-Vorschläge zu bekommen. Nur einer sollte 
 ### Missing: blog.uixMenu.panels.hint=Select from the following list the Blog panels that needs to be displayed.
 ### Missing: blog.uixMenu.inheritPanels.hint=In order to keep the existing displayed panels, make sure this option in checked. Otherwise they will be removed.
 ### Missing: blog.uixMenu.panelsPosition.hint=In case keep the existing panels, select if the Blog panels should be displayed before or after.
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=All Blogs Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=Blog Archive Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=Blog Categories Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=Recent Blog Posts Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Related Blogs Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Unpublished Blog Posts Panel
+Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=Alle Blogs Panel
+Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=Blog Archiv Panel
+Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=Blog Kategorie Panel
+Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=Neueste Blog Einträge Panel
+Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Ähnliche Blogs Panel
+Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Unveröffentlichte Blog Einträge Panel
 
 # Blog Post Cards Layout
 blog.post.layout.cards.pinnedposts.edit=Angeheftete Blog-Einträge verwalten
 blog.post.layout.cards.pinnedposts.save=Speichern
 
 # Panels page title
-### Missing: blog.panel.blogArchive.pageTitle=Blog Archive Panel
-### Missing: blog.panel.allBlogs.pageTitle=All Blogs Panel
-### Missing: blog.panel.blogCategories.pageTitle=Blog Categories Panel
-### Missing: blog.panel.recentBlogPosts.pageTitle=Recent Blog Posts Panel
-### Missing: blog.panel.relatedBlogs.pageTitle=Related Blogs Panel
-### Missing: blog.panel.unpublishedBlogPosts.pageTitle=Unpublished Blog Posts Panel
+blog.panel.blogArchive.pageTitle=Blog Archiv Panel
+blog.panel.allBlogs.pageTitle=Alle Blogs Panel
+blog.panel.blogCategories.pageTitle=Blog Kategorien Panel
+blog.panel.recentBlogPosts.pageTitle=Neueste Blog Einträge Panel
+blog.panel.relatedBlogs.pageTitle=Ähnliche Blogs Panel
+blog.panel.unpublishedBlogPosts.pageTitle=Unveröffentlichte Blog Einträge Panel
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
