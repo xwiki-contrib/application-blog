@@ -203,7 +203,7 @@ blog.categories.webhome.title=Alle Kategorien
 blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
 blog.blogpostlayout.notpost=[{0}] ist kein Blogbeitrag!
 blog.blogpostlayout.post_view_not_allowed=Sie haben nicht die Berechtigung den Blog-Eintrag [{0}] anzuzeigen
-### Missing: blog.blogpostcreate.wrong_blog=Wrong blog descriptor
+blog.blogpostcreate.wrong_blog=Falscher Blog-Deskriptor
 
 # Class fields
 Blog.BlogClass_postsLayout.full=Kalender
