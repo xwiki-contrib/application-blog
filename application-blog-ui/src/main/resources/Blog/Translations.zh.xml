@@ -146,7 +146,7 @@ blog.manageCategories.comment.updatedCategory=更新类名
 ### Missing: blog.manageCategories.forms.select_none=None
 ### Missing: blog.manageCategories.forms.sub_cat_of=Subcategory of:
 ### Missing: blog.manageCategories.forms.rename_button_label=Rename
-blog.post.createpost=创建新的评论
+blog.post.createpost=创建新的文章
 blog.post.title=评论标题
 ### Missing: blog.post.titleEmptyError=The post title should not be empty!
 blog.post.create=创建
@@ -219,7 +219,7 @@ blog.unpublished.viewall=查看全部
 # Notifications
 ### Missing: blog.applicationName=Blog
 ### Missing: blog.events.blogpostpublished.description=A blog post is published
-### Missing: blog.events.blogpostpublished.displayer=A new blog post has been posted: {0}
+blog.events.blogpostpublished.displayer=一篇新文章已经被发布
 ### Missing: blog.events.blogpostpublished.by=by {0}.
 ### Missing: notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0}
 ### Missing: notifications.events.BlogPostPublishedEvent.description=published the blog post
