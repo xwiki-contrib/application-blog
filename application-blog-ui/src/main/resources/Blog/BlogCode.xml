@@ -753,7 +753,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #getEntryContent($entryDoc $entryObj $onlyExtract $entryContent)
   ## FIXME: This causes the blog's content to not be annotatable. See http://jira.xwiki.org/browse/XWIKI-6328
   ##        Should probably be replaced by a display macro call with a reference to the object property holding the post's content
-  {{html wiki="false"}}$entryDoc.getRenderedContent($entryContent, $entryDoc.syntax.toIdString()){{/html}}
+  {{html clean="false" wiki="false"}}$entryDoc.getRenderedContent($entryContent, $entryDoc.syntax.toIdString()){{/html}}
   ))) ## entry-content
   (% class="clearfloats" %)((()))
 #end
