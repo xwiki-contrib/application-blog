@@ -225,7 +225,7 @@ blog.code.comments=Коментарі
 ### Missing: notifications.events.BlogPostPublishedEvent.description=published the blog post
 
 # Blog Menu UIX
-### Missing: blog.uixMenu.name=Blog configuration
+blog.uixMenu.name=Конфыгурування блогу
 ### Missing: blog.uixMenu.title=Wizard to configure Blog panels
 ### Missing: blog.uixMenu.title.hint=Choose a Blog and enable its panels in the current page and children.
 ### Missing: blog.uixMenu.blog.hint=Start typing to get the Blog suggestions. Only one should be selected.
