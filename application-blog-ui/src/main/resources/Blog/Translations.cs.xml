@@ -260,6 +260,5 @@ blog.unpublished.viewall=Zobrazit vše
 blog.manage.blogtype=Typ blogu:
 
 ## Used to indicate where deprecated keys end
-#@deprecatedend
-</content>
+#@deprecatedend</content>
 </xwikidoc>

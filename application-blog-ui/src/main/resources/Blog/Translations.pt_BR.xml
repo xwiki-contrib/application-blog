@@ -260,6 +260,5 @@ blog.blogpostlayout.post_view_not_allowed=Você não tem permissão para para vi
 blog.manage.blogtype=Tipo de blog\:
 
 ## Used to indicate where deprecated keys end
-#@deprecatedend
-</content>
+#@deprecatedend</content>
 </xwikidoc>
