@@ -260,6 +260,5 @@ blog.post.layout.cards.pinnedposts.save=Saglabāt
 blog.manage.blogtype=Emuāra veids:
 
 ## Used to indicate where deprecated keys end
-#@deprecatedend
-</content>
+#@deprecatedend</content>
 </xwikidoc>
