@@ -59,7 +59,7 @@ blog.code.madevisible=Entitatea a devenit vizibilă
 blog.code.hid=Intrare ascunsă
 blog.code.makevisible=Acest post nu este vizibil pentru alți utilizatori. Activează vizibilitatea.
 blog.code.hide=Ascunde această postare pentru alți utilizatori.
-### Missing: blog.code.loading=Loading...
+blog.code.loading=Se încarcă...
 ### Missing: blog.code.failedToChangeBlogPostVisibility=Failed to change blog post visibility.
 blog.code.editpost=Editează această postare
 blog.code.deletepost=Șterge această postare
@@ -199,29 +199,29 @@ blog.unpublished.viewall=Vizualizare completă
 ### Missing: blog.manage.categoriesLocationPreview.hint=Location in the page hierarchy where this new blog categories will be created.
 ### Missing: blog.manage.post.layout=Posts layout
 ### Missing: blog.blogpostlist.descriptor_not_found=Unable to found a blog descriptor in document [{0}]
-### Missing: blog.categories.webhome.title=All categories
+blog.categories.webhome.title=Toate categoriile
 ### Missing: blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
 ### Missing: blog.blogpostlayout.notpost=[{0}] is not a blog post!
 ### Missing: blog.blogpostlayout.post_view_not_allowed=You are not allowed to view the blog post [{0}]
 ### Missing: blog.blogpostcreate.wrong_blog=Wrong blog descriptor
 
 # Class fields
-### Missing: Blog.BlogClass_postsLayout.full=Calendar
+Blog.BlogClass_postsLayout.full=Calendar
 ### Missing: Blog.BlogClass_postsLayout.image=Image thumbnail
 ### Missing: Blog.BlogClass_postsLayout.cards=Cards
 
 # Blogs macro
-### Missing: blog.livetable.title=Title
-### Missing: blog.livetable._actions=Actions
+blog.livetable.title=Titlu
+blog.livetable._actions=Acțiuni
 ### Missing: rendering.macro.blogs.name=All Blogs Livetable
 ### Missing: rendering.macro.blogs.description=The blogs macro is used to list on a livetable all the blog available on the wiki.
 
 # Notifications
-### Missing: blog.applicationName=Blog
+blog.applicationName=Blog
 ### Missing: blog.events.blogpostpublished.description=A blog post is published
 ### Missing: blog.events.blogpostpublished.displayer=A new blog post has been posted: {0}
-### Missing: blog.events.blogpostpublished.by=by {0}.
-### Missing: notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0}
+blog.events.blogpostpublished.by=de {0}.
+notifications.events.BlogPostPublishedEvent.description.by.1user=publicat de {0}
 ### Missing: notifications.events.BlogPostPublishedEvent.description=published the blog post
 
 # Blog Menu UIX
