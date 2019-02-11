@@ -176,7 +176,9 @@ require(['jquery',"$services.webjars.url('jquery-ui', 'jquery-ui.js')",'select2'
     if (orderedPinnedPosts &amp;&amp; orderedPinnedPosts.length &gt; 0) {
       var prevOption = null;
       for(var i=0;i&lt;orderedPinnedPosts.length;i++){
-        var option = $('option[value="'+orderedPinnedPosts[i]+'"]', selectObj);
+        var option = $("option", selectObj).filter(function(index){
+          return $(this).val() == orderedPinnedPosts[i];
+        });
         if (option.length &gt; 0) {
           if(!prevOption){
             option.prependTo(selectObj);
