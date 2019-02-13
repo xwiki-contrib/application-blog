@@ -180,7 +180,7 @@ blog.allblogspanel.title=Все блоги
 blog.allblogspanel.manage=Управление блогами
 
 blog.templateProvider.blogpost.name=Сообщение блога
-### Missing: blog.templateProvider.blogpost.description=Communicate news
+blog.templateProvider.blogpost.description=Сообщить новости
 blog.categories.all=Все
 blog.changeVisibility.changing=Изменение видимости
 blog.changeVisibility.success=Видимость записи блога успешно изменена
@@ -213,14 +213,14 @@ Blog.BlogClass_postsLayout.cards=Карты
 # Blogs macro
 blog.livetable.title=Название
 blog.livetable._actions=Действия
-### Missing: rendering.macro.blogs.name=All Blogs Livetable
+rendering.macro.blogs.name=Список всех блогов
 rendering.macro.blogs.description=Макрос блогов используется для того, чтобы перечислять в реальном времени все блоги, доступные в вики.
 
 # Notifications
 blog.applicationName=Блог
 blog.events.blogpostpublished.description=Сообщение в блоге опубликовано
 blog.events.blogpostpublished.displayer=Новое сообщение в блоге: {0}
-blog.events.blogpostpublished.by=автор {0}.
+blog.events.blogpostpublished.by=опубликовано {0}.
 notifications.events.BlogPostPublishedEvent.description.by.1user=опубликовано {0}
 notifications.events.BlogPostPublishedEvent.description=опубликовал сообщение в блоге
 
