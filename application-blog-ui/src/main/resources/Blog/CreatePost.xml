@@ -83,6 +83,13 @@
   #end
   ## Remove . and : from the document name, as they have a special meaning in XWiki document names
   #set($postDocName = "${blogPostsLocation}.${name.replaceAll('[.:]', '')}")
+  #set($postDocName = $postDocName.trim())
+  ## Make sure blog name is new
+  #if($xwiki.exists($postDocName))
+    #set($postDocRef = $services.model.resolveDocument($postDocName, "currentmixed"))
+    #set($postDocPageName = $xwiki.getUniquePageName($blogPostsLocation, $postDocRef.getName()))
+    #set($postDocName = "${blogPostsLocation}.${postDocPageName}")
+  #end
   ## Get the target blog document, to set it as the parent
   #getBlogDocument($space $blogDoc)
   #set($parent = "$!{escapetool.url($blogDoc.fullName)}")
