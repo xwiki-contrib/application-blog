@@ -55,6 +55,21 @@ import com.xpn.xwiki.objects.classes.PropertyClass;
 public class DefaultBlogVisibilityUpdater implements BlogVisibilityUpdater
 {
     /**
+     * The name of the space where the blog application should be installed.
+     */
+    private static final String BLOG_SPACE = "Blog";
+
+    /**
+     * The name of the blog post class page.
+     */
+    private static final String BLOG_POST_CLASS = "BlogPostClass";
+
+    /**
+     * The name of the blog post template page.
+     */
+    private static final String BLOG_POST_TEMPLATE = "BlogPostTemplate";
+
+    /**
      * The reference to the xwiki rights, relative to the current wiki.
      */
     private static final EntityReference RIGHTS_CLASS = new EntityReference("XWikiRights", EntityType.DOCUMENT,
@@ -97,7 +112,7 @@ public class DefaultBlogVisibilityUpdater implements BlogVisibilityUpdater
     @Override
     public void synchronizeHiddenMetadata(XWikiDocument document)
     {
-        final DocumentReference blogPostClass = new DocumentReference("BlogPostClass", new SpaceReference("Blog",
+        final DocumentReference blogPostClass = new DocumentReference(BLOG_POST_CLASS, new SpaceReference(BLOG_SPACE,
                 document.getDocumentReference().getWikiReference()));
 
         BaseObject blogPost = document.getXObject(blogPostClass);
@@ -106,14 +121,20 @@ public class DefaultBlogVisibilityUpdater implements BlogVisibilityUpdater
             // The change will be saved after because the event is sent before the actual saving.
             boolean hidden = blogPost.getIntValue("published") == 0 || blogPost.getIntValue("hidden") == 1;
             document.setHidden(hidden);
-            try {
-                if (hidden) {
-                    restrictVisibilityToCurrentUser(document);
-                } else {
-                    unrestrictVisibilityToCurrentUser(document);
+
+            final DocumentReference blogPostTemplate = new DocumentReference(BLOG_POST_TEMPLATE,
+                new SpaceReference(BLOG_SPACE, document.getDocumentReference().getWikiReference()));
+            if (!blogPostTemplate.equals(document.getDocumentReference())) {
+                try {
+                    if (hidden) {
+                        restrictVisibilityToCurrentUser(document);
+                    } else {
+                        unrestrictVisibilityToCurrentUser(document);
+                    }
+                } catch (XWikiException e) {
+                    logger.warn("could not set/clear user rights on blog post [{}]",
+                        document.getDocumentReference(), e);
                 }
-            } catch (XWikiException e) {
-                logger.warn("could not set/clear user rights on blog post [{}]", document.getDocumentReference(), e);
             }
         }
     }
