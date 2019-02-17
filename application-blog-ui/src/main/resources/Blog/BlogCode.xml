@@ -787,8 +787,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #else
     #if($entryDoc.syntax.toIdString() == 'xwiki/1.0')
       #set($macro.result = "${macro.result} &lt;a href='${entryDoc.getURL()}' title='$services.localization.render('blog.code.readpost')'&gt;...&lt;/a&gt;")
-    #else
-      #set($macro.result = "${macro.result} [[...&gt;&gt;${entryDoc}||title='$services.localization.render('blog.code.readpost')']]")
+    #elseif($entryDoc.syntax.toIdString() == 'xwiki/2.0' || $entryDoc.syntax.toIdString() == 'xwiki/2.1')
+      #set($macro.result = "${macro.result} [[...&gt;&gt;${services.rendering.escape($entryDoc.getFullName(), $entryDoc.getSyntax())}||title='$services.localization.render('blog.code.readpost')']]")
     #end
   #end
   #set ($entryContent = $NULL)
