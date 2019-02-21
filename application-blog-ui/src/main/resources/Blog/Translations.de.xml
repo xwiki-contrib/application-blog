@@ -64,6 +64,7 @@ blog.code.failedToChangeBlogPostVisibility=Die Sichtbarkeit des Blog-Eintrags ko
 blog.code.editpost=Diesen Blog-Beitrag bearbeiten
 blog.code.deletepost=Diesen Blog-Beitrag löschen
 blog.code.readpost=Kompletten Eintrag lesen
+blog.code.postedin=Eingestellt unter
 blog.code.postedby=Eingestellt von
 blog.code.createdby=Erstellt von
 blog.code.modifiedby=Geändert von
