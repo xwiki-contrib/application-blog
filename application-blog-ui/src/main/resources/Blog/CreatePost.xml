@@ -94,6 +94,7 @@
   #getBlogDocument($space $blogDoc)
   #set($parent = "$!{escapetool.url($blogDoc.fullName)}")
   #set($title = "$!{escapetool.url($name)}")
+  #set($category = "")
   #if("$!request.category" != '')
     #set($category = "&amp;${blogPostClassname}_${blogPostObjectNumber}_category=${escapetool.url(${request.category})}")
   #end
