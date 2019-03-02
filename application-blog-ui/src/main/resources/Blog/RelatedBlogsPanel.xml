@@ -125,6 +125,7 @@
       <content>{{include reference="Blog.BlogCode"/}}
 
 {{velocity}}
+#set($mySyntax = $xwiki.getDocument('Blog.RelatedBlogsPanel').getSyntax())
 #set ($queryParams = {})
 #if ($isCategoryPage || $isCategoriesHomePage)
   #set ($categoriesLocation = $doc.space)
@@ -153,7 +154,7 @@ obj.name=doc.fullName and obj.className='${blogClassname}' and obj.id=categories
       * [[$services.localization.render('blog.code.title')&gt;&gt;Blog.WebHome]]
     #else
       #set ($blogDoc = $xwiki.getDocument($blog))
-      * [[$!blogDoc.display('title', 'view')&gt;&gt;$!services.model.serialize($blogDoc.documentReference)]]
+      * [[$services.rendering.escape($!blogDoc.display('title', 'view'),$mySyntax)&gt;&gt;doc:$services.rendering.escape($!services.model.serialize($blogDoc.documentReference,'default'),$mySyntax)]]
     #end
   #end
   #panelfooter()

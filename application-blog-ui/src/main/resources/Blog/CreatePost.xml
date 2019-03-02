@@ -64,7 +64,7 @@
   &lt;form action='$doc.getURL()' method="post" class="xformInline newBlogPostForm"&gt;
   &lt;div&gt;
     &lt;input type="hidden" name="form_token" value="$!{services.csrf.getToken()}" /&gt;
-    &lt;input type="hidden" name="entrySpace" value="$!{escapetool.xml($space)}"/&gt;
+    &lt;input type="hidden" name="entrySpace" value="$!{escapetool.xml($services.rendering.escape($space,$doc.syntax))}"/&gt;
     #if($doc.getObject($blogCategoryClassname))
       &lt;input type="hidden" name="category" value="$services.rendering.escape(${escapetool.xml(${doc.fullName})}, $doc.syntax)"/&gt;
     #end

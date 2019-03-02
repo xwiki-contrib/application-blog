@@ -734,10 +734,10 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
 #macro(displayEntryTitle $entryDoc $entryObj)
   #if($doc.fullName == $entryDoc.fullName)
     (% class="entry-title" %)
-    = $entryDoc.display('title', 'view', $entryObj) =
+    = $services.rendering.escape($entryDoc.display('title', 'view', $entryObj), $xwiki.getCurrentContentSyntaxId()) =
   #else
     (% class="entry-title" %)
-    === [[$entryDoc.display('title', 'view', $entryObj)&gt;&gt;doc:$entryDoc]] ===
+    === [[$services.rendering.escape($entryDoc.display('title', 'view', $entryObj),$xwiki.getCurrentContentSyntaxId())&gt;&gt;doc:$services.rendering.escape($services.model.serialize($entryDoc.getDocumentReference(),'default'),$xwiki.getCurrentContentSyntaxId())]] ===
   #end
 #end
 ##
@@ -1157,7 +1157,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     {{blogpostlist blog="${defaultBlogSpace.replaceAll('~', '~~').replaceAll('"', '~"')}.WebHome" published='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$!macro.paginated" limit="$limit" /}}
     #end
   #elseif($targetDoc.getObject($blogCategoryClassname))
-    ## display all posts that are in a category aCategorySpace.aCategory
+    ## Display all posts that are in a category aCategorySpace.aCategory
     #getBlogDocumentForCategoriesSpace($targetDoc.space $blogDoc)
     #getBlogPostsLayout($blogDoc $postsLayout)
     #if ("$!layout" == '')
@@ -1169,7 +1169,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     {{blogpostlist category="$targetDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" published='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$!macro.paginated" limit="$limit" /}}
     #end
   #elseif($targetDoc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
-    ## Dispaly all posts that are in a category aCategorySpace.%
+    ## Display all posts that are in a category aCategorySpace.%
     #getBlogDocumentForCategoriesSpace($targetDoc.space $blogDoc)
     #getBlogPostsLayout($blogDoc $postsLayout)
     #if ("$!layout" == '')

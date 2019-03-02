@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.2" reference="Blog.BlogPostLayoutCompact" locale="">
+<xwikidoc version="1.3" reference="Blog.BlogPostLayoutCompact" locale="">
   <web>Blog</web>
   <name>BlogPostLayoutCompact</name>
   <language/>
@@ -34,7 +34,7 @@
   <date>1526531375000</date>
   <contentUpdateDate>1523873234000</contentUpdateDate>
   <version>1.1</version>
-  <title>BlogPostLayoutFull</title>
+  <title>BlogPostLayoutCompact</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
