@@ -135,7 +135,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #set ($preferencesDoc = $xwiki.getDocument($preferencesDocRef))
   #set ($preferencesObj = $preferencesDoc.getObject('Blog.EnablePanelsConfigurationClass'))
   #if ($preferencesObj)
-    #set ($result = $xwiki.getDocument( $preferencesObj.get('blog')))
+    #set ($result = $xwiki.getDocument( $preferencesObj.getValue('blog')))
   #end
   ## If no special case occurs (like the previous one), identify a blog by checking the current location from its hierarchy.
   #if ("$!result" == '')
