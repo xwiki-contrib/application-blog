@@ -83,4 +83,25 @@
       <version>4.0.5</version>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.xwiki.commons</groupId>
+        <artifactId>xwiki-commons-tool-xar-plugin</artifactId>
+        <version>10.4</version>
+        <configuration>
+          <skip>true</skip>
+          <entries>
+            <entry>
+              <document>Blog.BlogIntroduction</document>
+              <document>Blog.News</document>
+              <document>Blog.Other</document>
+              <document>Blog.Personal</document>
+              <type>demo</type>
+            </entry>
+          </entries>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
