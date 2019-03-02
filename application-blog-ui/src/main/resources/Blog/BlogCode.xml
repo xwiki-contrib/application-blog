@@ -894,19 +894,19 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     (% class="pagingLinks" %)(((
     #getRequestedWeek($weekDate)
     $weekDate.addWeeks(-1)##
-    (% class="prevPage" %)**[[« {{translation key='blog.code.previousweek'/}}&gt;&gt;$doc.name||queryString="year=$weekDate.weekyear&amp;week=$weekDate.weekOfWeekyear"||class="button"]]**(%%)
+    (% class="prevPage" %)**[[« {{translation key='blog.code.previousweek'/}}&gt;&gt;$doc.name||queryString="year=$weekDate.weekyear&amp;week=$weekDate.weekOfWeekyear" class="button"]]**(%%)
     #sep()
     $weekDate.addWeeks(2)## 2 because we already subtracted 1 above
-    (% class="nextPage" %)**[[{{translation key='blog.code.nextweek'/}} »&gt;&gt;$doc.name||queryString="year=$weekDate.weekyear&amp;week=$weekDate.weekOfWeekyear"||class="button"]]**(%%)
+    (% class="nextPage" %)**[[{{translation key='blog.code.nextweek'/}} »&gt;&gt;$doc.name||queryString="year=$weekDate.weekyear&amp;week=$weekDate.weekOfWeekyear" class="button"]]**(%%)
     )))
   #elseif($displayType == 'monthly')
     (% class="pagingLinks" %)(((
     #getRequestedMonth($monthDate)
     $monthDate.addMonths(-1)##
-    (% class="prevPage" %)**[[« {{translation key='blog.code.previousmonth'/}}&gt;&gt;$doc.name||queryString="year=$monthDate.year&amp;month=$monthDate.monthOfYear"||class="button"]]**(%%)
+    (% class="prevPage" %)**[[« {{translation key='blog.code.previousmonth'/}}&gt;&gt;$services.rendering.escape($doc.name,$doc.syntax)||queryString="year=$monthDate.year&amp;month=$monthDate.monthOfYear" class="button"]]**(%%)
     #sep()
     $monthDate.addMonths(2)## 2 because we already subtracted 1 above
-    (% class="nextPage" %)**[[{{translation key='blog.code.nextmonth'/}} »&gt;&gt;$doc.name||queryString="year=$monthDate.year&amp;month=$monthDate.monthOfYear"||class="button"]]**(%%)
+    (% class="nextPage" %)**[[{{translation key='blog.code.nextmonth'/}} »&gt;&gt;$services.rendering.escape($doc.name,$doc.syntax)||queryString="year=$monthDate.year&amp;month=$monthDate.monthOfYear" class="button"]]**(%%)
     )))
   #elseif($displayType == 'all')
   #else
@@ -916,14 +916,14 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       #foreach($p in $request.getParameterNames())
         #if($p != 'page' &amp;&amp; $p != 'ipp')
           #foreach($v in $request.getParameterValues($p))
-            #set($queryString = "${queryString}&amp;${p}=${v}")
+            #set($queryString = "${queryString}&amp;${escapetool.url($p)}=${escapetool.url($v)}")
           #end
         #end
       #end
       (% class="pagingLinks" %)(((
       #if ($currentPageNumber &lt; $totalPages)
         #set($currentPageNumber = $currentPageNumber + 1)
-        (% class="prevPage" %)**[[« {{translation key='blog.code.olderposts'/}}&gt;&gt;$doc.name||queryString="page=${currentPageNumber}&amp;ipp=${itemsPerPage}$queryString"||class="button"]]**(%%)
+        (% class="prevPage" %)**[[« {{translation key='blog.code.olderposts'/}}&gt;&gt;$services.rendering.escape($doc.name,$doc.syntax)||queryString="page=${currentPageNumber}&amp;ipp=${itemsPerPage}$queryString" class="button"]]**(%%)
         #set($currentPageNumber = $currentPageNumber - 1)
       #end
       #if ($currentPageNumber &gt; 1)
@@ -931,7 +931,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
           #sep()
         #end
         #set($currentPageNumber = $currentPageNumber - 1)
-        (% class="nextPage" %)**[[{{translation key='blog.code.newerposts'/}} »&gt;&gt;$doc.name||queryString="page=${currentPageNumber}&amp;ipp=${itemsPerPage}$queryString"||class="button"]]**(%%)
+        (% class="nextPage" %)**[[{{translation key='blog.code.newerposts'/}} »&gt;&gt;$services.rendering.escape($doc.name,$doc.syntax)||queryString="page=${currentPageNumber}&amp;ipp=${itemsPerPage}$queryString" class="button"]]**(%%)
         #set($currentPageNumber = $currentPageNumber + 1)
       #end
       (% class="clear" %)(%%)
