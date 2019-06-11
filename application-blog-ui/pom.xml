@@ -99,6 +99,10 @@
               <document>Blog.Personal</document>
               <type>demo</type>
             </entry>
+            <entry>
+              <document>Blog.WebHome</document>
+              <type>customizable</type>
+            </entry>
           </entries>
         </configuration>
       </plugin>
