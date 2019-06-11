@@ -75,6 +75,7 @@
       <type>xar</type>
       <version>${platform.version}</version>
       <scope>runtime</scope>
+      <optional>true</optional>
     </dependency>
     <!-- Select2 WebJar used by the cards blog post layout -->
     <dependency>
