@@ -64,11 +64,13 @@
   &lt;form action='$doc.getURL()' method="post" class="xformInline newBlogPostForm"&gt;
   &lt;div&gt;
     &lt;input type="hidden" name="form_token" value="$!{services.csrf.getToken()}" /&gt;
-    &lt;input type="hidden" name="entrySpace" value="$!{escapetool.xml($space)}"/&gt;
+    &lt;input type="hidden" name="entrySpace" value="$!{escapetool.xml($services.rendering.escape($space,$doc.syntax))}"/&gt;
     #if($doc.getObject($blogCategoryClassname))
       &lt;input type="hidden" name="category" value="$services.rendering.escape(${escapetool.xml(${doc.fullName})}, $doc.syntax)"/&gt;
     #end
-    $services.icon.renderHTML('add')&lt;label class="createPost" for="entryTitle"&gt;$services.localization.render('blog.post.createpost') &lt;/label&gt;&lt;input type="text" id="entryTitle" name="entryTitle" value="$services.localization.render('blog.post.title')" class="withTip" size="30" /&gt; &lt;span class="buttonwrapper"&gt;&lt;input type="submit" value="${escapetool.xml($services.localization.render('blog.post.create'))}" class="btn btn-success button"/&gt;&lt;/span&gt;
+    $services.icon.renderHTML('add')&lt;label class="createPost" for="entryTitle"&gt;$services.localization.render('blog.post.createpost') &lt;/label&gt;
+    &lt;input type="text" id="entryTitle" name="entryTitle" size="30" placeholder="$services.localization.render('blog.post.title')"/&gt; &lt;span class="buttonwrapper"&gt;
+    &lt;input type="submit" value="${escapetool.xml($services.localization.render('blog.post.create'))}" class="btn btn-success button"/&gt;&lt;/span&gt;
   &lt;/div&gt;
   &lt;/form&gt;
   #elseif("$!request.entryTitle" != '')## !hasEdit &amp;&amp; form submitted
@@ -83,10 +85,18 @@
   #end
   ## Remove . and : from the document name, as they have a special meaning in XWiki document names
   #set($postDocName = "${blogPostsLocation}.${name.replaceAll('[.:]', '')}")
+  #set($postDocName = $postDocName.trim())
+  ## Make sure blog name is new
+  #if($xwiki.exists($postDocName))
+    #set($postDocRef = $services.model.resolveDocument($postDocName, "currentmixed"))
+    #set($postDocPageName = $xwiki.getUniquePageName($blogPostsLocation, $postDocRef.getName()))
+    #set($postDocName = "${blogPostsLocation}.${postDocPageName}")
+  #end
   ## Get the target blog document, to set it as the parent
   #getBlogDocument($space $blogDoc)
   #set($parent = "$!{escapetool.url($blogDoc.fullName)}")
   #set($title = "$!{escapetool.url($name)}")
+  #set($category = "")
   #if("$!request.category" != '')
     #set($category = "&amp;${blogPostClassname}_${blogPostObjectNumber}_category=${escapetool.url(${request.category})}")
   #end

@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.2" reference="Blog.BlogPostLayoutLink" locale="">
+<xwikidoc version="1.3" reference="Blog.BlogPostLayoutLink" locale="">
   <web>Blog</web>
   <name>BlogPostLayoutLink</name>
   <language/>
@@ -293,7 +293,7 @@
   #if ("$!postObj" != '')
     #set ($discard = $xwiki.ssx.use('Blog.BlogPostLayoutLink'))
     (% class='blog-post-layout-link' %)
-    * $services.icon.render('right') [[$!{postDoc.display('title', 'view', $postObj)}&gt;&gt;$!{services.model.serialize($postDoc.documentReference)}]]
+    * $services.icon.render('right') [[$!{postDoc.display('title', 'view', $postObj)}&gt;&gt;$!{services.rendering.escape($services.model.serialize($postDoc.documentReference,'default'),$xwiki.getCurrentContentSyntaxId())}]]
   #else
     {{error}}$services.localization.render('blog.blogpostlayout.notpost', [$xcontext.macro.params.reference]){{/error}}
   #end

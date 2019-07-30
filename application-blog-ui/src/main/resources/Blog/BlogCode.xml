@@ -49,6 +49,8 @@
 $!xwiki.ssx.use($blogStyleDocumentName)##
 $!xwiki.jsx.use($blogScriptsDocumentName)##
 ##
+## import the hierarchy for the path the blog post footer (in displayEntryBlogLocation)
+#template('hierarchy_macros.vm')##
 ##
 ##
 #**
@@ -125,7 +127,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  *###
 #macro(getBlogDocument $space $blogDoc)
   #set ($result = $NULL)
-  ## Check if the current space has a WebPreferences page that conains a Blog.EnablePanelsConfigurationClass object.
+  ## Check if the current space has a WebPreferences page that contains a Blog.EnablePanelsConfigurationClass object.
   ## It is possible to display a blog's panels info in a page that is not inside a blog and in that case we need to
   ## identify the right blog based on a configuration object in a WebPreferences page.
   #set ($spaceReference = $services.model.resolveSpace($space))
@@ -133,7 +135,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #set ($preferencesDoc = $xwiki.getDocument($preferencesDocRef))
   #set ($preferencesObj = $preferencesDoc.getObject('Blog.EnablePanelsConfigurationClass'))
   #if ($preferencesObj)
-    #set ($result = $xwiki.getDocument( $preferencesObj.get('blog')))
+    #set ($result = $xwiki.getDocument( $preferencesObj.getValue('blog')))
   #end
   ## If no special case occurs (like the previous one), identify a blog by checking the current location from its hierarchy.
   #if ("$!result" == '')
@@ -732,10 +734,10 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
 #macro(displayEntryTitle $entryDoc $entryObj)
   #if($doc.fullName == $entryDoc.fullName)
     (% class="entry-title" %)
-    = $entryDoc.display('title', 'view', $entryObj) =
+    = $services.rendering.escape($entryDoc.display('title', 'view', $entryObj), $xwiki.getCurrentContentSyntaxId()) =
   #else
     (% class="entry-title" %)
-    === [[$entryDoc.display('title', 'view', $entryObj)&gt;&gt;doc:$entryDoc]] ===
+    === [[$services.rendering.escape($entryDoc.display('title', 'view', $entryObj),$xwiki.getCurrentContentSyntaxId())&gt;&gt;doc:$services.rendering.escape($services.model.serialize($entryDoc.getDocumentReference(),'default'),$xwiki.getCurrentContentSyntaxId())]] ===
   #end
 #end
 ##
@@ -787,8 +789,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #else
     #if($entryDoc.syntax.toIdString() == 'xwiki/1.0')
       #set($macro.result = "${macro.result} &lt;a href='${entryDoc.getURL()}' title='$services.localization.render('blog.code.readpost')'&gt;...&lt;/a&gt;")
-    #else
-      #set($macro.result = "${macro.result} [[...&gt;&gt;${entryDoc}||title='$services.localization.render('blog.code.readpost')']]")
+    #elseif($entryDoc.syntax.toIdString() == 'xwiki/2.0' || $entryDoc.syntax.toIdString() == 'xwiki/2.1')
+      #set($macro.result = "${macro.result} [[...&gt;&gt;${services.rendering.escape($entryDoc.getFullName(), $entryDoc.getSyntax())}||title='$services.localization.render('blog.code.readpost')']]")
     #end
   #end
   #set ($entryContent = $NULL)
@@ -817,12 +819,39 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #listCategories($entryObj) #*
   ## Since the publish date and update date are not set at the exact same time, there could be a small difference that
   ## we assume cannot be more than 3 seconds.
-  *#(% class="separator" %)·(%%) [[{{translation key='blog.code.permalink'/}}&gt;&gt;$entryDoc||rel="bookmark"]] ##
+  *#(% class="separator" %)·(%%) [[{{translation key='blog.code.permalink'/}}&gt;&gt;$services.rendering.escape($entryDoc,'xwiki/2.0')||rel="bookmark"]] ##
   #if ($showcomments)
-    (% class="separator" %)·(%%) [[{{translation key='blog.code.comments'/}}&gt;&gt;$entryDoc||anchor="Comments"]] (% class="itemCount" %)($entryDoc.comments.size())(%%) ##
+    (% class="separator" %)·(%%) [[{{translation key='blog.code.comments'/}}&gt;&gt;$services.rendering.escape($entryDoc,'xwiki/2.0')||anchor="Comments"]] (% class="itemCount" %)($entryDoc.comments.size())(%%) ##
+  #end ##
+  #if($entryDoc != $doc) ##
+    #displayEntryBlogLocation($entryDoc $entryObj) ##
   #end
   )))## entry-footer
 #end
+##
+##
+#**
+ * Display the blog for the entry (if it is not the currently displayed blog)
+ *
+ * @param entryDoc The xdocument of the blog post. Each post resides in its own document.
+ * @param entryObj The xobject of the blog post, an instance of the &lt;tt&gt;Blog.BlogPostClass&lt;/tt&gt; xclass.
+ *###
+#macro(displayEntryBlogLocation $entryDoc $entryObj)
+  #getBlogPostsLocation($entryDoc.getSpace() $blogPostsLocation) ##
+  #if("$!blogPostsLocation" != "") ##
+    #set($blogSpaceRef = $services.model.resolveSpace($blogPostsLocation)) ##
+    #set($blogDocRef = $services.model.createDocumentReference($services.model.getEntityReference('DOCUMENT', 'default').getName(), $blogSpaceRef)) ##
+    #if($doc.documentReference != $blogDocRef) ##
+      #set($blogDoc = $xwiki.getDocument($blogDocRef)) ##
+      #set($blogObj = $blogDoc.getObject('Blog.BlogClass')) ##
+      #if($blogObj) (% class="blogrefpath" %)((( ##
+        $services.localization.render('blog.code.postedin') {{html clean="false" wiki="false"}} #hierarchy($blogDocRef, {'selfIsActive' : true, 'local': true}) {{/html}} ##
+        )))(%%)##
+      #end
+    #end
+  #end
+#end
+##
 ##
 ##
 ##
@@ -865,19 +894,19 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     (% class="pagingLinks" %)(((
     #getRequestedWeek($weekDate)
     $weekDate.addWeeks(-1)##
-    (% class="prevPage" %)**[[« {{translation key='blog.code.previousweek'/}}&gt;&gt;$doc.name||queryString="year=$weekDate.weekyear&amp;week=$weekDate.weekOfWeekyear"||class="button"]]**(%%)
+    (% class="prevPage" %)**[[« {{translation key='blog.code.previousweek'/}}&gt;&gt;$doc.name||queryString="year=$weekDate.weekyear&amp;week=$weekDate.weekOfWeekyear" class="button"]]**(%%)
     #sep()
     $weekDate.addWeeks(2)## 2 because we already subtracted 1 above
-    (% class="nextPage" %)**[[{{translation key='blog.code.nextweek'/}} »&gt;&gt;$doc.name||queryString="year=$weekDate.weekyear&amp;week=$weekDate.weekOfWeekyear"||class="button"]]**(%%)
+    (% class="nextPage" %)**[[{{translation key='blog.code.nextweek'/}} »&gt;&gt;$doc.name||queryString="year=$weekDate.weekyear&amp;week=$weekDate.weekOfWeekyear" class="button"]]**(%%)
     )))
   #elseif($displayType == 'monthly')
     (% class="pagingLinks" %)(((
     #getRequestedMonth($monthDate)
     $monthDate.addMonths(-1)##
-    (% class="prevPage" %)**[[« {{translation key='blog.code.previousmonth'/}}&gt;&gt;$doc.name||queryString="year=$monthDate.year&amp;month=$monthDate.monthOfYear"||class="button"]]**(%%)
+    (% class="prevPage" %)**[[« {{translation key='blog.code.previousmonth'/}}&gt;&gt;$services.rendering.escape($doc.name,$doc.syntax)||queryString="year=$monthDate.year&amp;month=$monthDate.monthOfYear" class="button"]]**(%%)
     #sep()
     $monthDate.addMonths(2)## 2 because we already subtracted 1 above
-    (% class="nextPage" %)**[[{{translation key='blog.code.nextmonth'/}} »&gt;&gt;$doc.name||queryString="year=$monthDate.year&amp;month=$monthDate.monthOfYear"||class="button"]]**(%%)
+    (% class="nextPage" %)**[[{{translation key='blog.code.nextmonth'/}} »&gt;&gt;$services.rendering.escape($doc.name,$doc.syntax)||queryString="year=$monthDate.year&amp;month=$monthDate.monthOfYear" class="button"]]**(%%)
     )))
   #elseif($displayType == 'all')
   #else
@@ -887,14 +916,14 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       #foreach($p in $request.getParameterNames())
         #if($p != 'page' &amp;&amp; $p != 'ipp')
           #foreach($v in $request.getParameterValues($p))
-            #set($queryString = "${queryString}&amp;${p}=${v}")
+            #set($queryString = "${queryString}&amp;${escapetool.url($p)}=${escapetool.url($v)}")
           #end
         #end
       #end
       (% class="pagingLinks" %)(((
       #if ($currentPageNumber &lt; $totalPages)
         #set($currentPageNumber = $currentPageNumber + 1)
-        (% class="prevPage" %)**[[« {{translation key='blog.code.olderposts'/}}&gt;&gt;$doc.name||queryString="page=${currentPageNumber}&amp;ipp=${itemsPerPage}$queryString"||class="button"]]**(%%)
+        (% class="prevPage" %)**[[« {{translation key='blog.code.olderposts'/}}&gt;&gt;$services.rendering.escape($doc.name,$doc.syntax)||queryString="page=${currentPageNumber}&amp;ipp=${itemsPerPage}$queryString" class="button"]]**(%%)
         #set($currentPageNumber = $currentPageNumber - 1)
       #end
       #if ($currentPageNumber &gt; 1)
@@ -902,7 +931,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
           #sep()
         #end
         #set($currentPageNumber = $currentPageNumber - 1)
-        (% class="nextPage" %)**[[{{translation key='blog.code.newerposts'/}} »&gt;&gt;$doc.name||queryString="page=${currentPageNumber}&amp;ipp=${itemsPerPage}$queryString"||class="button"]]**(%%)
+        (% class="nextPage" %)**[[{{translation key='blog.code.newerposts'/}} »&gt;&gt;$services.rendering.escape($doc.name,$doc.syntax)||queryString="page=${currentPageNumber}&amp;ipp=${itemsPerPage}$queryString" class="button"]]**(%%)
         #set($currentPageNumber = $currentPageNumber + 1)
       #end
       (% class="clear" %)(%%)
@@ -1128,7 +1157,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     {{blogpostlist blog="${defaultBlogSpace.replaceAll('~', '~~').replaceAll('"', '~"')}.WebHome" published='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$!macro.paginated" limit="$limit" /}}
     #end
   #elseif($targetDoc.getObject($blogCategoryClassname))
-    ## display all posts that are in a category aCategorySpace.aCategory
+    ## Display all posts that are in a category aCategorySpace.aCategory
     #getBlogDocumentForCategoriesSpace($targetDoc.space $blogDoc)
     #getBlogPostsLayout($blogDoc $postsLayout)
     #if ("$!layout" == '')
@@ -1140,7 +1169,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     {{blogpostlist category="$targetDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" published='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$!macro.paginated" limit="$limit" /}}
     #end
   #elseif($targetDoc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
-    ## Dispaly all posts that are in a category aCategorySpace.%
+    ## Display all posts that are in a category aCategorySpace.%
     #getBlogDocumentForCategoriesSpace($targetDoc.space $blogDoc)
     #getBlogPostsLayout($blogDoc $postsLayout)
     #if ("$!layout" == '')

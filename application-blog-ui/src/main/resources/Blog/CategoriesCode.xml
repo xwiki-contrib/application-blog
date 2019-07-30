@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.2" reference="Blog.CategoriesCode" locale="">
+<xwikidoc version="1.3" reference="Blog.CategoriesCode" locale="">
   <web>Blog</web>
   <name>CategoriesCode</name>
   <language/>
@@ -50,8 +50,8 @@
  * are not returned.
  * 
  * @param category The name of the category (XDocument full name, for example 'MyBlog.Fishing').
- * @param articles Return parameter, where the list of entries is placed.
- * @param total Return parameter, where the total number of entries belonging to this category is
+ * @param entries Return parameter, where the list of entries is placed.
+ * @param totalEntries Return parameter, where the total number of entries belonging to this category is
  *        placed. Useful for a paginated view.
  *###
 #macro(getEntriesForCategory $category $entries $totalEntries)
@@ -84,12 +84,12 @@
     #set ($query = ", DBStringListProperty as categories join categories.list as category${query} and obj.id = categories.id.id and categories.id.name='category' and category in (${parameters})")
     #if ($categories.size() &gt; 0)
       #set ($totalResult = $services.query.hql($query).bindValues($categories).addFilter("unique").count())
+      #preparePagedViewParams ($totalResult 10)
       #set ($result = $services.query.hql("${query} order by publishDate.value desc").setLimit($itemsPerPage).setOffset($startAt).bindValues($categories).addFilter("unique").execute())
     #else
       #set ($totalResult = 0)
       #set ($result = [])
     #end
-    #preparePagedViewParams ($totalResult 10)
     #if ("$!{blogCategoryEntriesCache.containsKey($!{category})}" == '')
       #set ($blogCategoryEntriesCache = {})
     #end
@@ -287,7 +287,7 @@
   #set ($entryObjNumber = $entryObj.number)
 #end
 &lt;span class="blog-category-level"&gt;&lt;span class="blog-category"&gt;##
-&lt;label id='blog_category_${services.rendering.escape(${escapetool.xml($name)}, $doc.syntax)}' title="#getCategoryDescription($categoryDoc)"&gt;&lt;input name="${blogPostClassname}_$!{entryObjNumber}_category" value="$services.rendering.escape(${escapetool.xml($name)}, $doc.syntax)" type="checkbox"#if($entryObj.getProperty('category').getValue().contains($name)) checked="checked" #end/&gt; #getCategoryName($categoryDoc)&lt;/label&gt;##
+&lt;label id='blog_category_${services.rendering.escape(${escapetool.xml($name)}, $xwiki.currentContentSyntaxId)}' title="#getCategoryDescription($categoryDoc)"&gt;&lt;input name="${blogPostClassname}_$!{entryObjNumber}_category" value="$services.rendering.escape(${escapetool.xml($name)}, $xwiki.currentContentSyntaxId)" type="checkbox"#if($entryObj.getProperty('category').getValue().contains($name)) checked="checked" #end/&gt; #getCategoryName($categoryDoc)&lt;/label&gt;##
 &lt;/span&gt;##
 #if($xwiki.hasAccessLevel('edit', $xcontext.user, $doc.fullName) &amp;&amp; ("$!{request.xaction}" != "showAddCategory" || "$!{request.parentCategory}" != $name))
 &lt;span class="blog-category-tools"&gt;##
@@ -375,8 +375,7 @@
 #macro(displaySimpleCategory $name $level)
   #getEntriesForCategory($name $discard $totalEntries)
   #set($nameUrl = $escapetool.url($name))
-  #getCallingDocument($callingDocument)
-  #foreach($i in [1..$level])*#end (% class="blog-category-level" %)((( [[#toolImage('rss')&gt;&gt;$name||queryString="xpage=plain&amp;sheet=Blog.CategoryRss" title="RSS"]] &lt;span class="wikilink"&gt;&lt;a href="$services.rendering.escape($xwiki.getURL($name), $callingDocument.syntax)"&gt;#getCategoryName($xwiki.getDocument($name)) &lt;span class="itemCount"&gt;($totalEntries)&lt;/span&gt;&lt;/a&gt;&lt;/span&gt;)))
+  #foreach($i in [1..$level])*#end (% class="blog-category-level" %)((( [[#toolImage('rss')&gt;&gt;$name||queryString="xpage=plain&amp;sheet=Blog.CategoryRss" title="RSS"]] &lt;span class="wikilink"&gt;&lt;a href="$services.rendering.escape($xwiki.getURL($name), $xwiki.getCurrentContentSyntaxId())"&gt;#getCategoryName($xwiki.getDocument($name)) &lt;span class="itemCount"&gt;($totalEntries)&lt;/span&gt;&lt;/a&gt;&lt;/span&gt;)))
 #end
 ##
 ##
@@ -394,23 +393,9 @@
 #set($result = $categoryDoc.name)
 #end
 ## Escape wiki syntax, if any.
-#getCallingDocument($callingDocument)
-#set ($result = "$services.rendering.escape($result, $callingDocument.syntax)")
+#set ($result = "$services.rendering.escape($result, $xwiki.currentContentSyntaxId)")
 ## Escape HTML, if any.
 $escapetool.xml($result)##
-#end
-##
-##
-##
-#**
- * Return the calling document to make the various API work when called from the context of a Panel and from a wiki page
- *###
-#macro(getCallingDocument $callingDocument)
-  #if ("$!paneldoc" != '')
-    #setVariable ("$callingDocument" $paneldoc)
-  #else
-    #setVariable ("$callingDocument" $doc)
-  #end
 #end
 ##
 ##

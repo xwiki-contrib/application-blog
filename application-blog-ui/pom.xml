@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.xwiki.contrib.blog</groupId>
     <artifactId>application-blog</artifactId>
-    <version>9.10-SNAPSHOT</version>
+    <version>9.11-SNAPSHOT</version>
   </parent>
   <!-- If someone has to change the ID, he must update org.xwiki.platform.blog.internal.BlogUpgradeEventListener to
        consider the new ID as well -->
@@ -75,6 +75,7 @@
       <type>xar</type>
       <version>${platform.version}</version>
       <scope>runtime</scope>
+      <optional>true</optional>
     </dependency>
     <!-- Select2 WebJar used by the cards blog post layout -->
     <dependency>
@@ -83,4 +84,29 @@
       <version>4.0.5</version>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.xwiki.commons</groupId>
+        <artifactId>xwiki-commons-tool-xar-plugin</artifactId>
+        <version>10.4</version>
+        <configuration>
+          <skip>true</skip>
+          <entries>
+            <entry>
+              <document>Blog.BlogIntroduction</document>
+              <document>Blog.News</document>
+              <document>Blog.Other</document>
+              <document>Blog.Personal</document>
+              <type>demo</type>
+            </entry>
+            <entry>
+              <document>Blog.WebHome</document>
+              <type>customizable</type>
+            </entry>
+          </entries>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

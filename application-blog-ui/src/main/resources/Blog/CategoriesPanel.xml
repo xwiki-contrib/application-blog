@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.2" reference="Blog.CategoriesPanel" locale="">
+<xwikidoc version="1.3" reference="Blog.CategoriesPanel" locale="">
   <web>Blog</web>
   <name>CategoriesPanel</name>
   <language/>
@@ -139,7 +139,6 @@
 #end
 #set ($allLink = $xwiki.getURL("${categoriesLocation}.WebHome"))
 {{html wiki="true"}}
-#getCallingDocument($callingDocument)
 * (% class="blog-category-level" %)((( [[#toolImage('rss')&gt;&gt;${categoriesLocation}.WebHome||queryString="xpage=plain${rssQueryString}" title="RSS"]] &lt;span class="wikilink"&gt;&lt;a href="$allLink"&gt;$services.localization.render('blog.categories.all')&lt;/a&gt;&lt;/span&gt;)))
 {{/html}}
 

@@ -125,6 +125,7 @@
       <content>{{include reference="Blog.BlogCode"/}}
 
 {{velocity}}
+#set($mySyntax = $xwiki.getDocument('Blog.AllBlogsPanel').getSyntax())
 #set ($xwql = "from doc.object(Blog.BlogClass) as blog where doc.fullName&lt;&gt;'Blog.BlogTemplate' order by blog.title")
 #set ($results = $services.query.xwql($xwql).addFilter('currentlanguage').execute())
 #if ($results.size() &gt; 0)
@@ -133,9 +134,9 @@
   #set ($blogDocument = $xwiki.getDocument($item))
   #getBlogTitle($blogDocument $title)
   #if($title != '')
-    * [[$title&gt;&gt;$blogDocument.fullName]]
+    * [[$services.rendering.escape($title,$mySyntax)&gt;&gt;$services.rendering.escape($blogDocument.fullName,$mySyntax)]]
   #else
-    * [[$item.displayTitle&gt;&gt;$blogDocument.fullName]]
+    * [[$services.rendering.escape($item.displayTitle,$mySyntax)&gt;&gt;$services.rendering.escape($blogDocument.fullName,$mySyntax)]]
   #end
 #end
 #if ($hasAdmin)

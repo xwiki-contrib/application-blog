@@ -24,9 +24,15 @@ import org.junit.Test;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.test.mockito.MockitoComponentMockingRule;
 
+import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.doc.XWikiDocument;
+import com.xpn.xwiki.internal.XWikiContextProvider;
 import com.xpn.xwiki.objects.BaseObject;
+import com.xpn.xwiki.objects.BaseProperty;
+import com.xpn.xwiki.objects.classes.BaseClass;
+import com.xpn.xwiki.objects.classes.PropertyClass;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -43,6 +49,10 @@ public class DefaultBlogVisibilityUpdaterTest
     public MockitoComponentMockingRule<DefaultBlogVisibilityUpdater> mocker =
             new MockitoComponentMockingRule<>(DefaultBlogVisibilityUpdater.class);
 
+    @Rule
+    public MockitoComponentMockingRule<XWikiContextProvider> mockContextProvider =
+            new MockitoComponentMockingRule<>(XWikiContextProvider.class);
+
     private void test(boolean isPublished, boolean isHidden, boolean hiddenExpected) throws Exception
     {
         // Mock
@@ -52,6 +62,19 @@ public class DefaultBlogVisibilityUpdaterTest
         when(document.getXObject(eq(new DocumentReference("chocolate", "Blog", "BlogPostClass")))).thenReturn(object);
         when(object.getIntValue("published")).thenReturn(isPublished ? 1 : 0);
         when(object.getIntValue("hidden")).thenReturn(isHidden ? 1 : 0);
+
+        // even more mocks for the rights fiddeling (not tested yet)
+        XWikiContext mockContext = mock(XWikiContext.class);
+        when(mocker.getComponentUnderTest().getContextProvider().get()).thenReturn(mockContext);
+
+        BaseObject rightsMock = mock(BaseObject.class);
+        when(document.newXObject(any(), any())).thenReturn(rightsMock);
+        BaseClass userClass = mock(BaseClass.class);
+        PropertyClass userProps = mock(PropertyClass.class);
+        BaseProperty<?> userPropValue = mock(BaseProperty.class);
+        when(rightsMock.getXClass(mockContext)).thenReturn(userClass);
+        when(userClass.get(any())).thenReturn(userProps);
+        when(userProps.fromStringArray(any())).thenReturn(userPropValue);
 
         // Test
         mocker.getComponentUnderTest().synchronizeHiddenMetadata(document);

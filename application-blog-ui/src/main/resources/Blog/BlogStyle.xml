@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.1">
+<xwikidoc version="1.3" reference="Blog.BlogStyle" locale="">
   <web>Blog</web>
   <name>BlogStyle</name>
   <language/>
@@ -71,7 +71,9 @@
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </cache>
       <code>
+        <contenttype>PureText</contenttype>
         <disabled>0</disabled>
+        <editor>PureText</editor>
         <name>code</name>
         <number>2</number>
         <prettyName>Code</prettyName>
@@ -279,7 +281,7 @@ div.edit-categories, div.manage-blogs-link {
   font-weight: bold;
 }
 .createPost {
-  font-size: 80%; 
+  font-size: 80%;
   font-weight: bold;
   padding-left: 9px;
 }
@@ -319,7 +321,20 @@ div.edit-categories, div.manage-blogs-link {
 .blog-list .blog-entry-toolbox {
   margin-top: -10px;
 }
-.newBlogPostForm{
+/* Restyle the navigation path */
+.blogrefpath&gt;.breadcrumb, .blogrefpath p {
+  display: inline-block;
+}
+.blogrefpath&gt;.breadcrumb {
+  padding: 0 0 0 1ex;
+  margin: 0;
+  background-color: $bgColor;
+}
+.blogrefpath&gt;.breadcrumb .active a {
+  color: $theme.linkColor;
+}
+
+.newBlogPostForm {
   margin-bottom: 20px;
 }
 .post-state-blk.plainmessage {
