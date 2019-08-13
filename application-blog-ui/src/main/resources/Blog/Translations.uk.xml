@@ -64,6 +64,7 @@ blog.code.failedToChangeBlogPostVisibility=Помилка при спробі з
 blog.code.editpost=Змінити цей допис
 blog.code.deletepost=Вилучити цей допис
 blog.code.readpost=Прочитати увесь запис
+### Missing: blog.code.postedin=Posted in
 blog.code.postedby=Опубліковано
 blog.code.createdby=Створено
 blog.code.modifiedby=Змінено

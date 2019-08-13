@@ -64,6 +64,7 @@ blog.code.failedToChangeBlogPostVisibility=Kunne ikke ændre artikel synlighed.
 blog.code.editpost=Redigér artiklen
 blog.code.deletepost=Slet artiklen
 blog.code.readpost=Læs hele artiklen
+### Missing: blog.code.postedin=Posted in
 blog.code.postedby=Placeret af
 blog.code.createdby=Oprettet af
 blog.code.modifiedby=Ændret af

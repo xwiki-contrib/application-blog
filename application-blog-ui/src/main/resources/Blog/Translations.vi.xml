@@ -64,6 +64,7 @@ blog.code.hide=Ẩn bài viết blog này từ những người dùng khác
 blog.code.editpost=Chỉnh sửa bài viết blog này
 blog.code.deletepost=Xóa bài viết blog này
 blog.code.readpost=Đọc các mục nhập đầy đủ
+### Missing: blog.code.postedin=Posted in
 blog.code.postedby=Đăng bởi
 blog.code.createdby=Tạo bởi
 blog.code.modifiedby=Đã thay đổi bởi

@@ -64,6 +64,7 @@ blog.code.hide=Göm det här blogginlägget för andra användare.
 blog.code.editpost=Redigera det här blogginlägget
 blog.code.deletepost=Radera det här blogginlägget
 blog.code.readpost=Läs hela inlägget
+### Missing: blog.code.postedin=Posted in
 blog.code.postedby=Publicerat av
 blog.code.createdby=Skapat av
 blog.code.modifiedby=Ändrat av

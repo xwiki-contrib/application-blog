@@ -64,6 +64,7 @@ blog.code.hide=Ocultar als altres usuaris aquesta entrada al blog.
 blog.code.editpost=Editar aquesta entrada al blog
 blog.code.deletepost=Eliminar aquesta entrada al blog
 blog.code.readpost=Llegir tota l'entrada
+### Missing: blog.code.postedin=Posted in
 blog.code.postedby=Enviat per
 blog.code.createdby=Creat per
 blog.code.modifiedby=Modificat per

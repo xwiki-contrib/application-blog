@@ -64,6 +64,7 @@ blog.code.failedToChangeBlogPostVisibility=Falha ao alterar a visibilidade do po
 blog.code.editpost=Editar este post do Blog
 blog.code.deletepost=Remover esse post de blog
 blog.code.readpost=Ler o post completo
+### Missing: blog.code.postedin=Posted in
 blog.code.postedby=Enviado por
 blog.code.createdby=Criado por
 blog.code.modifiedby=Atualizado por

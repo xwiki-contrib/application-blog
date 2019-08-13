@@ -64,6 +64,7 @@
 blog.code.editpost=Edytuj ten wpis
 blog.code.deletepost=Usuń ten wpis
 blog.code.readpost=Czytaj całość
+### Missing: blog.code.postedin=Posted in
 blog.code.postedby=Wysłane przez
 blog.code.createdby=Utworzone przez
 blog.code.modifiedby=Zmodyfikowany przez

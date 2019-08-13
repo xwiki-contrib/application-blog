@@ -64,6 +64,7 @@ blog.code.failedToChangeBlogPostVisibility=Wijzigen van de zichtbaarheid van het
 blog.code.editpost=Blogartikel wijzigen
 blog.code.deletepost=Blogartikel verwijderen
 blog.code.readpost=Lees het volledige artikel
+### Missing: blog.code.postedin=Posted in
 blog.code.postedby=Geplaatst door
 blog.code.createdby=Gemaakt door
 blog.code.modifiedby=Gewijzigd door

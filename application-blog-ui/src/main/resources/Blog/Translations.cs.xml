@@ -64,6 +64,7 @@ blog.code.failedToChangeBlogPostVisibility=Změna viditelnosti příspěvku blog
 blog.code.editpost=Upravit tento příspěvek
 blog.code.deletepost=Odstranit tento příspěvek
 blog.code.readpost=Číst celý příspěvek
+### Missing: blog.code.postedin=Posted in
 blog.code.postedby=Publikoval(a)
 blog.code.createdby=Vytvořeno
 blog.code.modifiedby=Změnil(a)
