@@ -64,6 +64,7 @@ blog.code.hide=对其他用户隐藏该博客评论
 blog.code.editpost=编辑该博客评论
 blog.code.deletepost=删除该博客评论
 blog.code.readpost=阅读全文
+### Missing: blog.code.postedin=Posted in
 blog.code.postedby=由谁评论
 blog.code.createdby=由谁创建
 blog.code.modifiedby=由谁修改

@@ -64,6 +64,7 @@ blog.code.hide=讓其他使用者看不到這篇部落格文章
 blog.code.editpost=編輯此部落格文章
 blog.code.deletepost=刪除此部落格文章
 blog.code.readpost=讀取所有項目
+### Missing: blog.code.postedin=Posted in
 blog.code.postedby=發佈者
 blog.code.createdby=建立者
 blog.code.modifiedby=修改者

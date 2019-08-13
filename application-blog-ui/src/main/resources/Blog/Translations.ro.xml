@@ -64,6 +64,7 @@ blog.code.loading=Se încarcă...
 blog.code.editpost=Editează această postare
 blog.code.deletepost=Șterge această postare
 blog.code.readpost=Citește întreaga intrare
+### Missing: blog.code.postedin=Posted in
 blog.code.postedby=Postat de
 blog.code.createdby=Creat de
 blog.code.modifiedby=Modificat de

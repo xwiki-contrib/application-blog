@@ -64,6 +64,7 @@ blog.code.hide=diğer kullanıcılardan bu blog yazısı gizle .
 blog.code.editpost=Bu blog yazısı düzenle
 blog.code.deletepost=Bu blog yazısı sil
 ### Missing: blog.code.readpost=Read the full entry
+### Missing: blog.code.postedin=Posted in
 blog.code.postedby=tarafından gönderildi
 blog.code.createdby=tarafından düzenlendi
 blog.code.modifiedby=tarafından Modifiye

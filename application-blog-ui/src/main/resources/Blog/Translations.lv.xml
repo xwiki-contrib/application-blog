@@ -64,6 +64,7 @@ blog.code.failedToChangeBlogPostVisibility=Neizdevās izmainīt ieraksta redzam�
 blog.code.editpost=Mainīt šo emuāru ierakstu
 blog.code.deletepost=Dzēst šo emuāru ierakstu
 blog.code.readpost=Lasīt visu ierakstu
+### Missing: blog.code.postedin=Posted in
 blog.code.postedby=Ievietojis
 blog.code.createdby=Izveidojis
 blog.code.modifiedby=Mainīja

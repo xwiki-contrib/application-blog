@@ -64,6 +64,7 @@ blog.code.hide=Ocultar esta entrada do blog para outros usuarios
 blog.code.editpost=Editar esta entrada do blg
 blog.code.deletepost=Eliminar esta entrada do blog
 blog.code.readpost=Ler a entrada completa
+### Missing: blog.code.postedin=Posted in
 blog.code.postedby=Publicada por
 blog.code.createdby=Creado por
 blog.code.modifiedby=Modificado por
