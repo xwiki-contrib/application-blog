@@ -147,7 +147,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       #if(!$result.getObject($blogClassname))
         ## Third, try searching for a blog document in the current space
         ## Prevent the query fail when the space contains dots '.'
-        #set($blogDocs = $services.query.hql(", BaseObject obj where doc.space = ? and obj.name = doc.fullName and obj.className = '$blogClassname' order by doc.name").setLimit(1).setOffset(0).bindValues([${space}]).execute())
+        #set($blogDocs = $services.query.hql(", BaseObject obj where doc.space = :space and obj.name = doc.fullName and obj.className = '$blogClassname' order by doc.name").setLimit(1).setOffset(0).bindValue('space', $space).execute())
         #if($blogDocs.size() &gt; 0)
           #set($result = $xwiki.getDocument($blogDocs.get(0)))
         #else

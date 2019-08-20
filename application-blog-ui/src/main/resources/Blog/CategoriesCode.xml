@@ -66,26 +66,18 @@
     #set ($subcategories = [])
     #getSubcategories ($tree $category $subcategories)
     #set ($categories = [])
-    #set ($parameters = '')
     ## check if it a categories space
     #set ($categoryDoc = $xwiki.getDocument($category))
     #if ("$!categoryDoc.getObject($blogCategoryClassname)" != '')
       #set ($discard = $categories.add($category))
-      #set ($parameters = '?')
     #end
     #set ($discard = $categories.addAll(${subcategories}))
-    #foreach ($subcategory in $subcategories)
-      #if ($parameters != '')
-        #set ($parameters = $parameters.concat(', '))
-      #end
-      #set ($parameters = $parameters.concat('?'))
-    #end
     #getAllBlogPostsQuery($query)
-    #set ($query = ", DBStringListProperty as categories join categories.list as category${query} and obj.id = categories.id.id and categories.id.name='category' and category in (${parameters})")
+    #set ($query = ", DBStringListProperty as categories join categories.list as category${query} and obj.id = categories.id.id and categories.id.name='category' and category in (:categories)")
     #if ($categories.size() &gt; 0)
-      #set ($totalResult = $services.query.hql($query).bindValues($categories).addFilter("unique").count())
+      #set ($totalResult = $services.query.hql($query).bindValue('categories', $categories).addFilter("unique").count())
       #preparePagedViewParams ($totalResult 10)
-      #set ($result = $services.query.hql("${query} order by publishDate.value desc").setLimit($itemsPerPage).setOffset($startAt).bindValues($categories).addFilter("unique").execute())
+      #set ($result = $services.query.hql("${query} order by publishDate.value desc").setLimit($itemsPerPage).setOffset($startAt).bindValue('categories', $categories).addFilter("unique").execute())
     #else
       #set ($totalResult = 0)
       #set ($result = [])
@@ -505,14 +497,14 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
   #if($categoryParent == '')
     #set($categoryParent = "{$defaultCategoryParent}")
   #end
-  #set($parameterValues = ["$!{category}"])
   #set($query = ', BaseObject obj where ')
   #if($space != '')
     #set($query = "${query}doc.space = '${space}' and ")
   #end
-  #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogCategoryClassname}' and doc.fullName &lt;&gt; 'Blog.CategoryTemplate' and doc.parent = ? order by doc.name")
-  
-  #foreach($item in $services.query.hql($query).bindValues($parameterValues).execute())
+  ## Get the subcategories of the deleted category.
+  #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogCategoryClassname}' and doc.fullName &lt;&gt; 'Blog.CategoryTemplate' and doc.parent = :category order by doc.name")
+
+  #foreach($item in $services.query.hql($query).bindValue('category', $category).execute())
     #if($xwiki.hasAccessLevel('edit', $xcontext.user, $item) &amp;&amp; $!{services.csrf.isTokenValid("$!{request.getParameter('form_token')}")})
       #set($subcategoryDoc = $xwiki.getDocument($item))
       $subcategoryDoc.setParent($categoryParent)
@@ -523,8 +515,10 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
   #if($space != '')
     #set($query = "${query}doc.space = '${space}' and ")
   #end
-  #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogPostClassname}' and doc.fullName &lt;&gt; 'Blog.BlogPostTemplate' and categories.id.id = obj.id and categories.id.name = 'category' and category = ? order by doc.name")
-  #foreach($item in $services.query.hql($query).bindValues($parameterValues).execute())
+  ## Get the blog posts of the deleted category.
+  #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogPostClassname}' and doc.fullName &lt;&gt; 'Blog.BlogPostTemplate' and categories.id.id = obj.id and categories.id.name = 'category' and category = :category order by doc.name")
+
+  #foreach($item in $services.query.hql($query).bindValue('category', $category).execute())
     #if($xwiki.hasAccessLevel('edit', $xcontext.user, $item) &amp;&amp; $!{services.csrf.isTokenValid("$!{request.getParameter('form_token')}")})
       #set($blogEntryDoc = $xwiki.getDocument($item))
       #set($discard = $blogEntryDoc.getObject(${blogPostClassname}).getProperty('category').value.remove($category))
@@ -549,10 +543,10 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
     #set ($newCategoryFullName = "${categoryDoc.space}.${newCategoryName}")
   #end
   #set($newCategoryDoc = $xwiki.getDocument($newCategoryFullName))
-  #set($parameterValues = ["$!{category}"])
   #set($query = ', BaseObject obj where ')
-  #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogCategoryClassname}' and doc.fullName &lt;&gt; 'Blog.CategoryTemplate' and doc.parent = ? order by doc.name")
-  #foreach($item in $services.query.hql($query).bindValues($parameterValues).execute())
+  ## Get the subcategories of the renamed category.
+  #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogCategoryClassname}' and doc.fullName &lt;&gt; 'Blog.CategoryTemplate' and doc.parent = :category order by doc.name")
+  #foreach($item in $services.query.hql($query).bindValue('category', $category).execute())
     #if($xwiki.hasAccessLevel('edit', $xcontext.user, $item) &amp;&amp; $!{services.csrf.isTokenValid("$!{request.getParameter('form_token')}")})
       #set($subcategoryDoc = $xwiki.getDocument($item))
       $subcategoryDoc.setParent($newCategoryDoc.fullName)
@@ -560,8 +554,9 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
     #end
   #end
   #set($query = ', BaseObject obj, DBStringListProperty categories join categories.list as category where ')
-  #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogPostClassname}' and doc.fullName &lt;&gt; 'Blog.BlogPostTemplate' and categories.id.id = obj.id and categories.id.name = 'category' and category = ? order by doc.name")
-  #foreach($item in $services.query.hql($query).bindValues($parameterValues).execute())
+  ## Get the blog posts of the renamed category.
+  #set($query = "${query}obj.name = doc.fullName and obj.className = '${blogPostClassname}' and doc.fullName &lt;&gt; 'Blog.BlogPostTemplate' and categories.id.id = obj.id and categories.id.name = 'category' and category = :category order by doc.name")
+  #foreach($item in $services.query.hql($query).bindValue('category', $category).execute())
     #if($xwiki.hasAccessLevel('edit', $xcontext.user, $item) &amp;&amp; $!{services.csrf.isTokenValid("$!{request.getParameter('form_token')}")})
       #set($blogEntryDoc = $xwiki.getDocument($item))
       #set($discard = $blogEntryDoc.getObject(${blogPostClassname}).getProperty('category').value.remove($category))
