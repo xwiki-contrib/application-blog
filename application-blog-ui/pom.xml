@@ -95,8 +95,17 @@
           <entries>
             <entry>
               <document>Blog.BlogIntroduction</document>
+              <type>demo</type>
+            </entry>
+            <entry>
               <document>Blog.News</document>
+              <type>demo</type>
+            </entry>
+            <entry>
               <document>Blog.Other</document>
+              <type>demo</type>
+            </entry>
+            <entry>
               <document>Blog.Personal</document>
               <type>demo</type>
             </entry>
