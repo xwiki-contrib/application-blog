@@ -26,7 +26,7 @@
 
 node {
   // We need FF 32.0.1 since we the tests are still on Selenium 2.x
-  def firefoxVersionSystemProperty =
+  def firefoxVersionSystemProperty = getFirefoxVersionSystemProperty()
   xwikiBuild {
     properties = firefoxVersionSystemProperty
   }
