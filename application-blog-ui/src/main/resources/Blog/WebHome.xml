@@ -200,6 +200,9 @@
       <postsLayout>image</postsLayout>
     </property>
     <property>
+      <postsLayoutParameters/>
+    </property>
+    <property>
       <postsLocation/>
     </property>
     <property>
