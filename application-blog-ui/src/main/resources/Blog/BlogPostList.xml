@@ -190,6 +190,15 @@
     #set ($layoutAdditionalParams = "$!{layoutAdditionalParams}|list-${p}=${v}")
   #end
 #end
+## If the 'layoutParams' parameter is empty check if there are layout parameters set at Blog level.
+#if("$!blogDescriptorParam" != '' &amp;&amp; "$!xcontext.macro.params.layoutParams" == '')
+  #set ($blogDoc = $xwiki.getDocument($blogDescriptorParam))
+  #set ($blogObj = $blogDoc.getObject($blogClassname))
+  #set ($blogLayoutParams = $blogObj.getProperty('postsLayoutParameters').value)
+  #if ("$!blogLayoutParams" != '')
+    #set ($layoutAdditionalParams = "$!{layoutAdditionalParams}|${blogLayoutParams}")
+  #end
+#end
 #if ("$!layoutAdditionalParams" != '' &amp;&amp; $layoutAdditionalParams.startsWith('|'))
   #set ($layoutAdditionalParams = $layoutAdditionalParams.replaceFirst('\|', ''))
 #end

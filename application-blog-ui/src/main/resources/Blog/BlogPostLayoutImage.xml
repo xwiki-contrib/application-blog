@@ -169,29 +169,19 @@
 #set ($postDoc = $xwiki.getDocument($xcontext.macro.params.reference))
 #getEntryObject($postDoc $postObj)
 #if ("$!postObj" != '')
-#set ($useSummary = false)
+#set ($useSummary = true)
 #set ($displayTitle = true)
-#set ($displayImage = false)## display post image
 #set ($displayActions = true)
-#set ($previousPostReference = '')
 #extractLayoutParametersFromString($xcontext.macro.params.params $macroAdditionalParams)
 ##
-#if ("$!macroAdditionalParams.get('useSummary')" == 'true')
-    #set ($useSummary = true)
+#if ("$!macroAdditionalParams.get('useSummary')" == 'false')
+    #set ($useSummary = false)
 #end
 ##
 #if ("$!macroAdditionalParams.get('displayTitle')" == 'false')
     #set ($displayTitle = false)
 #end
 ##
-#if ("$!macroAdditionalParams.get('displayImage')" == 'true')
-  #set ($displayImage = true)
-#end
-##
-#if ("$!macroAdditionalParams.get('previousPostReference')" != '')
-  #set ($previousPostReference = $macroAdditionalParams.get('previousPostReference'))
-#end
-##S
 #if ("$!macroAdditionalParams.get('displayActions')" == 'false')
     #set ($displayActions = false)
 #end

@@ -75,9 +75,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     #if ($displayType == 'paginated')
       #set ($paginated = 'yes')
     #end
-    #set ($macro.layoutParams = 'displayTitle=true|useSummary=true')
     #getBlogPostsLayout($blogDoc $postsLayout)
-    (% class="hfeed index" %)((({{blogpostlist blog="$blogDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$paginated" layout="$!postsLayout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!macro.layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" /}})))
+    (% class="hfeed index" %)((({{blogpostlist blog="$blogDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$paginated" layout="$!postsLayout.replaceAll('~', '~~').replaceAll('"', '~"')" /}})))
   #end
 #end
 ##
@@ -103,6 +102,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       #displayProperty($blogDoc 'displayType')
       #displayProperty($blogDoc 'itemsPerPage')
       #displayProperty($blogDoc 'postsLayout')
+      #displayProperty($blogDoc 'postsLayoutParameters')
     #else
       $blogDoc.display('description')
     #end

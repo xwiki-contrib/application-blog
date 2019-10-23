@@ -172,7 +172,7 @@
 #end
 #getEntryObject($postDoc $postObj)
 #if ("$!postObj" != '')
-#set ($useSummary = false)
+#set ($useSummary = true)
 #set ($displayTitle = true)
 #set ($displayCalendar = true)
 #set ($displayCalendarImage = true)
@@ -180,7 +180,7 @@
 #set ($previousPostReference = '')
 #extractLayoutParametersFromString($xcontext.macro.params.params $macroAdditionalParams)
 ##
-#if ("$!macroAdditionalParams.get('useSummary')" == 'true')
+#if ("$!macroAdditionalParams.get('useSummary')" == 'false')
     #set ($useSummary = true)
 #end
 ##
@@ -188,13 +188,8 @@
     #set ($displayTitle = false)
 #end
 ##
-#if ("$!macroAdditionalParams.get('displayImage')" == 'true')
-  #set ($displayImage = true)
-#end
-##
 #if ("$!macroAdditionalParams.get('displayCalendar')" == 'false')
   #set ($displayCalendar = false)
-  #set ($displayImage = false)## DisplayCalendar has the priority
 #end
 ##
 #if ("$!macroAdditionalParams.get('previousPostReference')" != '')

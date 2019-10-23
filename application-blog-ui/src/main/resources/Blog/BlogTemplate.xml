@@ -141,9 +141,24 @@
         <values>image=Image thumbnail|full=Calendar|cards=Cards</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </postsLayout>
+      <postsLayoutParameters>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <hint/>
+        <name>postsLayoutParameters</name>
+        <number>8</number>
+        <picker>0</picker>
+        <prettyName>Posts Layout Parameters</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </postsLayoutParameters>
       <postsLocation>
         <customDisplay/>
         <disabled>0</disabled>
+        <hint/>
         <name>postsLocation</name>
         <number>6</number>
         <picker>0</picker>
@@ -199,6 +214,9 @@
     </property>
     <property>
       <postsLayout>image</postsLayout>
+    </property>
+    <property>
+      <postsLayoutParameters/>
     </property>
     <property>
       <postsLocation/>
