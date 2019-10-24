@@ -354,11 +354,15 @@
 #if ("$!macroAdditionalParams.get('displayBlogLink')" == 'false')
   #set ($displayBlogLink = false)
 #else
-  #set($blogDescriptor = $!macroAdditionalParams.get('blogDescriptor'))## the descriptor of the curent blog; in this case, the name of the blog document holding the blog object
+  ## The descriptor of the current blog; in this case, the name of the blog document holding the blog object
+  ## Note that, all the parameters of the blogpostlist macro are passed to the current layout macro as additional parameters.
+  ## The names of the parameters are prefixed with 'list-'.
+  ## Based on that, the descriptor of the current blog can be retrieved in the current layout 'params' parameter under the name 'list-blog'
+  #set($blogDescriptor = $!macroAdditionalParams.get('list-blog'))
 #end
 #set($discard = $xwiki.ssx.use($blogStyleDocumentName))
-#set($discard = $xwiki.ssx.use('Blog.BlogPostLayoutCompact'))## styles specific to the curent layout
-#set($postIndex = $mathtool.toInteger($macroAdditionalParams.get('postIndex')))## the index of the curent blog post in the list of results
+#set($discard = $xwiki.ssx.use('Blog.BlogPostLayoutCompact'))## styles specific to the current layout
+#set($postIndex = $mathtool.toInteger($macroAdditionalParams.get('postIndex')))## the index of the current blog post in the list of results
 #set($postIndexOddEven = $postIndex % 2)
 #set($isEven = $postIndexOddEven == 0)
 #set($lastIndex= $mathtool.toInteger($macroAdditionalParams.get('list-results-count')) - 1)## the index of the last blog post in the list of results
@@ -374,8 +378,8 @@
 #end
 &lt;div class="blog-list col-md-6#if(!$isPublished) unpublished-article#elseif($isHidden) hidden-article#end"&gt;
   &lt;div class="row blog-list-entry"&gt;
-    #set ($imageAtt = $postDoc.getAttachment($postObj.getValue('image')))## the image that was selected for the curent blog post
-    ## Display the image column only if there is one on the curent blog post and the image display is enabled
+    #set ($imageAtt = $postDoc.getAttachment($postObj.getValue('image')))## the image that was selected for the current blog post
+    ## Display the image column only if there is one on the current blog post and the image display is enabled
     #if ($displayImage &amp;&amp; $imageAtt)
       &lt;div class="col-xs-12 col-sm-4 col-md-4"&gt;
         &lt;a href="$postDoc.uRL"&gt;
@@ -419,11 +423,11 @@
     &lt;div class="col-md-6"&gt;&lt;/div&gt;
     &lt;/div&gt;## closing the current row
   #end
-  ## Adding a link to the curent blog
+  ## Adding a link to the current blog
   #if($displayBlogLink &amp;&amp; "$!blogDescriptor" != '' &amp;&amp; $services.security.authorization.hasAccess('view', $blogDescriptor))
     #set($blogURL = $xwiki.getDocument($blogDescriptor).getURL())
     &lt;div class="link-to-blog pull-right"&gt;
-      &lt;span class="wikilink"&gt;&lt;a href="$blogURL"&gt;$services.localization.render('blog.blogpostlayout.linktoblog')&lt;/a&gt;&lt;/span&gt;
+      &lt;span class="wikilink"&gt;&lt;a href="$blogURL"&gt;$services.localization.render('blog.post.layout.compact.linktoblog')&lt;/a&gt;&lt;/span&gt;
     &lt;/div&gt;
   #end
 #end
