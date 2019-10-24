@@ -446,7 +446,7 @@
           #if($displayTitle)$!pDoc.display('title', 'view', $pObj) #end 
           &lt;br/&gt;&lt;span class="date_info"&gt; $!dateStr &lt;/span&gt; 
         &lt;/p&gt;
-        #displayPostDetails($averageVote)
+        #displayPostDetails($pDoc)
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/a&gt;
@@ -469,7 +469,7 @@
          #set ($postContent = $pObj.getProperty('extract').value)
          $!pDoc.getRenderedContent($postContent, $pDoc.syntax.toIdString())
         &lt;/div&gt;
-        #displayPostDetails($averageVote)
+        #displayPostDetails($pDoc)
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/a&gt;
@@ -495,23 +495,23 @@
 ##
 ##
 ##
-#macro(displayPostDetails)
+#macro(displayPostDetails $pDoc)
 &lt;div class="row post-details"&gt;
   &lt;div class="col-xs-8 detail"&gt;
-    #if ($services.ratings)
-      #set ($ratingsConfigDoc = $services.ratings.getConfigurationDocument($doc.documentReference))
-      #if ($ratingsConfigDoc.getValue('displayRatings') == 1)
-        &lt;ul class="pull-left note list-inline"&gt;
-          #foreach ($x in [1..5])
-            #set ($cls = "")
-            #if ($x &gt; $averageVote)
-              #set ($cls = "-o")
-            #end
-            &lt;li&gt;&lt;span class="fa fa-star${cls}"&gt;&lt;/span&gt;&lt;/li&gt;
+  #if ($services.ratings)
+    #set ($ratingsConfigDoc = $services.ratings.getConfigurationDocument($pDoc.documentReference))
+    #if ($ratingsConfigDoc.getValue('displayRatings') == 1)
+      &lt;ul class="pull-left note list-inline"&gt;
+        #foreach ($x in [1..5])
+          #set ($cls = "")
+          #if ($x &gt; $averageVote)
+            #set ($cls = "-o")
           #end
-        &lt;/ul&gt;
-      #end
+          &lt;li&gt;&lt;span class="fa fa-star${cls}"&gt;&lt;/span&gt;&lt;/li&gt;
+        #end
+      &lt;/ul&gt;
     #end
+  #end
   &lt;/div&gt;
   #if ($showPostComments)
   &lt;div class="col-xs-4 com_det"&gt;
