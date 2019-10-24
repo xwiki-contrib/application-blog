@@ -150,6 +150,8 @@
   padding:0;
   display: block;
   color: #818181;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 .com_num{
   color:#e2011a;
@@ -159,6 +161,7 @@
   color: #45466b;
 }
 .thumbnail .caption {
+  min-height: 30px;
   padding: 10px;
 }
 .blog_pin .thumbnail {
@@ -254,7 +257,8 @@
     position: absolute;
     width: 100%;
     top: 100%;
-    margin-top: -32px;
+    margin-top: -35px;
+    padding-top: 5px;
   }
   .blog_pin .post-summary {
     padding-bottom: 10px;
@@ -291,7 +295,12 @@
     margin-bottom: 0;
   }
 }
-</code>
+.blog_pin .title-top {
+  padding: 10px;
+}
+.blog_pin .title-top .date_info {
+  float: right;
+}</code>
     </property>
     <property>
       <contentType>CSS</contentType>
@@ -443,7 +452,7 @@
       &lt;/div&gt;
       &lt;div class="col-xs-8 art_det"&gt;
         &lt;p class="text-left"&gt;
-          #if($displayTitle)$!pDoc.display('title', 'view', $pObj) #end 
+          #if($displayTitle)$!postTitle #end
           &lt;br/&gt;&lt;span class="date_info"&gt; $!dateStr &lt;/span&gt; 
         &lt;/p&gt;
         #displayPostDetails($pDoc)
@@ -460,15 +469,22 @@
 &lt;div class="col-xs-12 col-sm-4 col-md-4 blog_pin"&gt;
   &lt;a href="$pDoc.uRL" class="all-post-link"&gt;
     &lt;div class="thumbnail"&gt;
+      #if ($displayTitle &amp;&amp; $displayTitleFirstOnPinnedPosts)
+        &lt;h5 class="title-top"&gt;$!postTitle &lt;br/&gt; &lt;span class="date_info"&gt; $!dateStr &lt;/span&gt; &lt;/h5&gt;
+      #end
       #if ($imageAtt)
         &lt;img src="$escapetool.xml($pDoc.getAttachmentURL($pObj.getValue('image'),'download',$imgQs))" /&gt;
       #end
       &lt;div class="caption"&gt;
-        &lt;h5 class="text-left"&gt;#if($displayTitle)$!pDoc.display('title', 'view', $pObj) #end &lt;br/&gt; &lt;span class="date_info"&gt; $!dateStr &lt;/span&gt; &lt;/h5&gt;
-        &lt;div class="text-left post-summary"&gt;
-         #set ($postContent = $pObj.getProperty('extract').value)
-         $!pDoc.getRenderedContent($postContent, $pDoc.syntax.toIdString())
-        &lt;/div&gt;
+        #if ($displayTitle &amp;&amp; !$displayTitleFirstOnPinnedPosts)
+          &lt;h5 class="text-left"&gt;$!postTitle &lt;br/&gt; &lt;span class="date_info"&gt; $!dateStr &lt;/span&gt; &lt;/h5&gt;
+        #end
+        #if ($displaySummaryOnPinnedPosts)
+          &lt;div class="text-left post-summary"&gt;
+           #set ($postContent = $pObj.getProperty('extract').value)
+           $!pDoc.getRenderedContent($postContent, $pDoc.syntax.toIdString())
+          &lt;/div&gt;
+        #end
         #displayPostDetails($pDoc)
       &lt;/div&gt;
     &lt;/div&gt;
@@ -524,6 +540,7 @@
 ##
 ##
 #macro(initLayoutVars $pDoc $pObj)
+  #set ($postTitle = $pDoc.display('title', 'view', $pObj))
   #set ($imageAtt = $pDoc.getAttachment($pObj.getValue('image')))
   #isPublished($pObj $isPublished)
   #isHidden($pObj $isHidden)
@@ -566,13 +583,24 @@
 #set ($postDoc = $xwiki.getDocument($xcontext.macro.params.reference))
 #getEntryObject($postDoc $postObj)
 #if ("$!postObj" != '')
-#set ($displayTitle = true)
 #extractLayoutParametersFromString($xcontext.macro.params.params $macroAdditionalParams)
 ##
+#set ($displayTitle = true)
 #if ("$!macroAdditionalParams.get('displayTitle')" == 'false')
   #set ($displayTitle = false)
 #end
 ##
+#set ($displayTitleFirstOnPinnedPosts = false)
+#if ("$!macroAdditionalParams.get('displayTitleFirstOnPinnedPosts')" == 'true')
+  #set ($displayTitleFirstOnPinnedPosts = true)
+#end
+##
+#set ($displaySummaryOnPinnedPosts = true)
+#if ("$!macroAdditionalParams.get('displaySummaryOnPinnedPosts')" == 'false')
+  #set ($displaySummaryOnPinnedPosts = false)
+#end
+##
+
 #set ($postIndex = $mathtool.toInteger("$macroAdditionalParams.get('postIndex')"))
 #set ($listResultsCount = $mathtool.toInteger($macroAdditionalParams.get('list-results-count')))
 #set($discard = $xwiki.ssx.use('Blog.BlogPostLayoutCards'))
