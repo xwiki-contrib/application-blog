@@ -181,7 +181,7 @@
 #extractLayoutParametersFromString($xcontext.macro.params.params $macroAdditionalParams)
 ##
 #if ("$!macroAdditionalParams.get('useSummary')" == 'false')
-    #set ($useSummary = true)
+    #set ($useSummary = false)
 #end
 ##
 #if ("$!macroAdditionalParams.get('displayTitle')" == 'false')
