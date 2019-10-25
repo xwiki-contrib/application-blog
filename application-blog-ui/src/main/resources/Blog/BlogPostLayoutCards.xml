@@ -440,277 +440,277 @@
 {{include reference='Blog.BlogPostLayoutMacros' /}}
 
 {{velocity output='false'}}
-#macro(displaySmallPost $pDoc $pObj)
-#initLayoutVars($pDoc $pObj)
-&lt;div class="col-xs-12 col-sm-6 next_blog"&gt;
-  &lt;a href="$pDoc.uRL" class="thumbnail"&gt;
-    &lt;div class="row"&gt;
-      &lt;div class="col-xs-4"&gt;
-      #if ($imageAtt)
-        &lt;img src="$escapetool.xml($pDoc.getAttachmentURL($pObj.getValue('image'),'download',$imgQs))" /&gt;
-      #end 
-      &lt;/div&gt;
-      &lt;div class="col-xs-8 art_det"&gt;
-        &lt;p class="text-left"&gt;
-          #if($displayTitle)$!postTitle #end
-          &lt;br/&gt;&lt;span class="date_info"&gt; $!dateStr &lt;/span&gt; 
-        &lt;/p&gt;
-        #displayPostDetails($pDoc)
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/a&gt;
-&lt;/div&gt;
-#end
-##
-##
-##
-#macro(displayPinnedPost $pDoc $pObj)
-#initLayoutVars($pDoc $pObj)
-&lt;div class="col-xs-12 col-sm-4 col-md-4 blog_pin"&gt;
-  &lt;a href="$pDoc.uRL" class="all-post-link"&gt;
-    &lt;div class="thumbnail"&gt;
-      #if ($displayTitle &amp;&amp; $displayTitleFirstOnPinnedPosts)
-        &lt;h5 class="title-top"&gt;$!postTitle &lt;br/&gt; &lt;span class="date_info"&gt; $!dateStr &lt;/span&gt; &lt;/h5&gt;
-      #end
-      #if ($imageAtt)
-        &lt;img src="$escapetool.xml($pDoc.getAttachmentURL($pObj.getValue('image'),'download',$imgQs))" /&gt;
-      #end
-      &lt;div class="caption"&gt;
-        #if ($displayTitle &amp;&amp; !$displayTitleFirstOnPinnedPosts)
-          &lt;h5 class="text-left"&gt;$!postTitle &lt;br/&gt; &lt;span class="date_info"&gt; $!dateStr &lt;/span&gt; &lt;/h5&gt;
-        #end
-        #if ($displaySummaryOnPinnedPosts)
-          &lt;div class="text-left post-summary"&gt;
-           #set ($postContent = $pObj.getProperty('extract').value)
-           $!pDoc.getRenderedContent($postContent, $pDoc.syntax.toIdString())
-          &lt;/div&gt;
-        #end
-        #displayPostDetails($pDoc)
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/a&gt;
-&lt;/div&gt;
-#end
-##
-##
-##
-#macro(formatPostDate $pDoc $pObj)
-  #set ($formattedDate = $NULL)
-  #set($dateStr = $datetool.format('medium', $postDate, $xcontext.locale))
-  #if ("$!dateStr" != '')
-    #set ($dateArr = $dateStr.split(' '))
-    #if ($dateArr.size() &gt; 3)
-      #set ($dateStr = "")
-      #foreach($s in $dateArr.subList(0, 3))
-        #set ($dateStr = "${dateStr}${s} ")
-      #end
-    #end
-  #end
-  #setVariable("$formattedDate" $dateStr)
-#end
-##
-##
-##
-#macro(displayPostDetails $pDoc)
-&lt;div class="row post-details"&gt;
-  &lt;div class="col-xs-8 detail"&gt;
-  #if ($services.ratings)
-    #set ($ratingsConfigDoc = $services.ratings.getConfigurationDocument($pDoc.documentReference))
-    #if ($ratingsConfigDoc.getValue('displayRatings') == 1)
-      &lt;ul class="pull-left note list-inline"&gt;
-        #foreach ($x in [1..5])
-          #set ($cls = "")
-          #if ($x &gt; $averageVote)
-            #set ($cls = "-o")
+  #macro(displaySmallPost $pDoc $pObj)
+  #initLayoutVars($pDoc $pObj)
+  &lt;div class="col-xs-12 col-sm-6 next_blog"&gt;
+    &lt;a href="$pDoc.uRL" class="thumbnail"&gt;
+      &lt;div class="row"&gt;
+        &lt;div class="col-xs-4"&gt;
+          #if ($imageAtt)
+            &lt;img src="$escapetool.xml($pDoc.getAttachmentURL($pObj.getValue('image'),'download',$imgQs))" /&gt;
           #end
-          &lt;li&gt;&lt;span class="fa fa-star${cls}"&gt;&lt;/span&gt;&lt;/li&gt;
-        #end
-      &lt;/ul&gt;
-    #end
-  #end
-  &lt;/div&gt;
-  #if ($showPostComments)
-  &lt;div class="col-xs-4 com_det"&gt;
-    &lt;p class="text-right"&gt; &lt;i class="fa fa-comments"&gt;&lt;/i&gt; ($!nbComments)&lt;/p&gt;
-  &lt;/div&gt;
-  #end
-&lt;/div&gt;
-#end
-##
-##
-##
-#macro(initLayoutVars $pDoc $pObj)
-  #set ($postTitle = $pDoc.display('title', 'view', $pObj))
-  #set ($imageAtt = $pDoc.getAttachment($pObj.getValue('image')))
-  #isPublished($pObj $isPublished)
-  #isHidden($pObj $isHidden)
-  #getEntryDate($pDoc $pObj $postDate)
-  #formatPostDate($postDate $dateStr)
-  #set ($averageVote = $mathtool.round($services.ratings.getAverageRating($pDoc.documentReference).getAverageVote()))
-  #set ($nbComments = $pDoc.getComments().size())
-  #set ($showPostComments = true)
-  #if ($xwiki.getSpacePreferenceFor('showcomments', $pDoc.documentReference.lastSpaceReference, '1') == '0')
-    #set ($showPostComments = false)
-  #end
-#end
-##
-##
-##
-#macro(displayEditPinnedPostsButton)
-  #if ("$!macroAdditionalParams.get('postIndex')" == '0' &amp;&amp; $services.security.authorization.hasAccess('edit', $pinnedPostsSourceDoc.fullName))
-    #set ($discard = $xwiki.ssx.use('Blog.PinnedPostsSheet'))
-    #set ($discard = $xwiki.jsx.use('Blog.PinnedPostsSheet'))
-    #set ($editPinnedPostsURL = $xwiki.getURL($pinnedPostsSourceDoc.fullName, 'get', 'sheet=Blog.PinnedPostsSheet'))
-    #set ($newPinnedPostsObjectURL = $xwiki.getURL($pinnedPostsSourceDoc.fullName, 'edit', 'xpage=editobject&amp;xaction=addObject&amp;className=Blog.PinnedPostsClass'))
-    &lt;div class="edit-pinned-posts-container"&gt;
-      &lt;div class="col-xs-12 col-sm-12 col-md-12 text-right edit-pinned-posts"&gt;
-        &lt;a href="javascript:;" class="editPinnedPosts"&gt;
-          &lt;span class="glyphicon glyphicon-edit" aria-hidden="true"&gt;&lt;/span&gt; $services.localization.render('blog.post.layout.cards.pinnedposts.edit')
-        &lt;/a&gt;
-        &lt;input type="hidden" id="editPinnedPostsURL" value="$escapetool.xml($editPinnedPostsURL)"/&gt;
-        &lt;input type="hidden" id="newPinnedPostsObjectURL" value="$escapetool.xml($newPinnedPostsObjectURL)"/&gt;
+        &lt;/div&gt;
+        &lt;div class="col-xs-8 art_det"&gt;
+          &lt;p class="text-left"&gt;
+            #if($displayTitle)$!postTitle #end
+            &lt;br/&gt;&lt;span class="date_info"&gt; $!dateStr &lt;/span&gt;
+          &lt;/p&gt;
+          #displayPostDetails($pDoc)
+        &lt;/div&gt;
       &lt;/div&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+  #end
+  ##
+  ##
+  ##
+  #macro(displayPinnedPost $pDoc $pObj)
+    #initLayoutVars($pDoc $pObj)
+    &lt;div class="col-xs-12 col-sm-4 col-md-4 blog_pin"&gt;
+      &lt;a href="$pDoc.uRL" class="all-post-link"&gt;
+        &lt;div class="thumbnail"&gt;
+        #if ($displayTitle &amp;&amp; $displayTitleFirstOnPinnedPosts)
+          &lt;h5 class="title-top"&gt;$!postTitle &lt;br/&gt; &lt;span class="date_info"&gt; $!dateStr &lt;/span&gt; &lt;/h5&gt;
+        #end
+        #if ($imageAtt)
+          &lt;img src="$escapetool.xml($pDoc.getAttachmentURL($pObj.getValue('image'),'download',$imgQs))" /&gt;
+        #end
+        &lt;div class="caption"&gt;
+          #if ($displayTitle &amp;&amp; !$displayTitleFirstOnPinnedPosts)
+            &lt;h5 class="text-left"&gt;$!postTitle &lt;br/&gt; &lt;span class="date_info"&gt; $!dateStr &lt;/span&gt; &lt;/h5&gt;
+          #end
+          #if ($displaySummaryOnPinnedPosts)
+            &lt;div class="text-left post-summary"&gt;
+             #set ($postContent = $pObj.getProperty('extract').value)
+             $!pDoc.getRenderedContent($postContent, $pDoc.syntax.toIdString())
+            &lt;/div&gt;
+          #end
+          #displayPostDetails($pDoc)
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+  #end
+  ##
+  ##
+  ##
+  #macro(formatPostDate $pDoc $pObj)
+    #set ($formattedDate = $NULL)
+    #set($dateStr = $datetool.format('medium', $postDate, $xcontext.locale))
+    #if ("$!dateStr" != '')
+      #set ($dateArr = $dateStr.split(' '))
+      #if ($dateArr.size() &gt; 3)
+        #set ($dateStr = "")
+        #foreach($s in $dateArr.subList(0, 3))
+          #set ($dateStr = "${dateStr}${s} ")
+        #end
+      #end
+    #end
+    #setVariable("$formattedDate" $dateStr)
+  #end
+  ##
+  ##
+  ##
+  #macro(displayPostDetails $pDoc)
+    &lt;div class="row post-details"&gt;
+      &lt;div class="col-xs-8 detail"&gt;
+        #if ($services.ratings)
+          #set ($ratingsConfigDoc = $services.ratings.getConfigurationDocument($pDoc.documentReference))
+          #if ($ratingsConfigDoc.getValue('displayRatings') == 1)
+            &lt;ul class="pull-left note list-inline"&gt;
+              #foreach ($x in [1..5])
+                #set ($cls = "")
+                #if ($x &gt; $averageVote)
+                  #set ($cls = "-o")
+                #end
+                &lt;li&gt;&lt;span class="fa fa-star${cls}"&gt;&lt;/span&gt;&lt;/li&gt;
+              #end
+            &lt;/ul&gt;
+          #end
+        #end
+      &lt;/div&gt;
+      #if ($showPostComments)
+        &lt;div class="col-xs-4 com_det"&gt;
+          &lt;p class="text-right"&gt; &lt;i class="fa fa-comments"&gt;&lt;/i&gt; ($!nbComments)&lt;/p&gt;
+        &lt;/div&gt;
+      #end
     &lt;/div&gt;
-    #if ("$!pinnedPostsObj" == '')
-      &lt;input type="hidden" name="createPinnedPostsObject" value="1"/&gt;
+  #end
+  ##
+  ##
+  ##
+  #macro(initLayoutVars $pDoc $pObj)
+    #set ($postTitle = $pDoc.display('title', 'view', $pObj))
+    #set ($imageAtt = $pDoc.getAttachment($pObj.getValue('image')))
+    #isPublished($pObj $isPublished)
+    #isHidden($pObj $isHidden)
+    #getEntryDate($pDoc $pObj $postDate)
+    #formatPostDate($postDate $dateStr)
+    #set ($averageVote = $mathtool.round($services.ratings.getAverageRating($pDoc.documentReference).getAverageVote()))
+    #set ($nbComments = $pDoc.getComments().size())
+    #set ($showPostComments = true)
+    #if ($xwiki.getSpacePreferenceFor('showcomments', $pDoc.documentReference.lastSpaceReference, '1') == '0')
+      #set ($showPostComments = false)
     #end
   #end
-#end
+  ##
+  ##
+  ##
+  #macro(displayEditPinnedPostsButton)
+    #if ("$!macroAdditionalParams.get('postIndex')" == '0' &amp;&amp; $services.security.authorization.hasAccess('edit', $pinnedPostsSourceDoc.fullName))
+      #set ($discard = $xwiki.ssx.use('Blog.PinnedPostsSheet'))
+      #set ($discard = $xwiki.jsx.use('Blog.PinnedPostsSheet'))
+      #set ($editPinnedPostsURL = $xwiki.getURL($pinnedPostsSourceDoc.fullName, 'get', 'sheet=Blog.PinnedPostsSheet'))
+      #set ($newPinnedPostsObjectURL = $xwiki.getURL($pinnedPostsSourceDoc.fullName, 'edit', 'xpage=editobject&amp;xaction=addObject&amp;className=Blog.PinnedPostsClass'))
+      &lt;div class="edit-pinned-posts-container"&gt;
+        &lt;div class="col-xs-12 col-sm-12 col-md-12 text-right edit-pinned-posts"&gt;
+          &lt;a href="javascript:;" class="editPinnedPosts"&gt;
+            &lt;span class="glyphicon glyphicon-edit" aria-hidden="true"&gt;&lt;/span&gt; $services.localization.render('blog.post.layout.cards.pinnedposts.edit')
+          &lt;/a&gt;
+          &lt;input type="hidden" id="editPinnedPostsURL" value="$escapetool.xml($editPinnedPostsURL)"/&gt;
+          &lt;input type="hidden" id="newPinnedPostsObjectURL" value="$escapetool.xml($newPinnedPostsObjectURL)"/&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      #if ("$!pinnedPostsObj" == '')
+        &lt;input type="hidden" name="createPinnedPostsObject" value="1"/&gt;
+      #end
+    #end
+  #end
 {{/velocity}}
 
 {{velocity}}
-#if ($services.security.authorization.hasAccess('view', $xcontext.macro.params.reference))
-#set ($postDoc = $xwiki.getDocument($xcontext.macro.params.reference))
-#getEntryObject($postDoc $postObj)
-#if ("$!postObj" != '')
-#extractLayoutParametersFromString($xcontext.macro.params.params $macroAdditionalParams)
-##
-#set ($displayTitle = true)
-#if ("$!macroAdditionalParams.get('displayTitle')" == 'false')
-  #set ($displayTitle = false)
-#end
-##
-#set ($displayTitleFirstOnPinnedPosts = false)
-#if ("$!macroAdditionalParams.get('displayTitleFirstOnPinnedPosts')" == 'true')
-  #set ($displayTitleFirstOnPinnedPosts = true)
-#end
-##
-#set ($displaySummaryOnPinnedPosts = true)
-#if ("$!macroAdditionalParams.get('displaySummaryOnPinnedPosts')" == 'false')
-  #set ($displaySummaryOnPinnedPosts = false)
-#end
-##
-#set ($postIndex = $mathtool.toInteger("$macroAdditionalParams.get('postIndex')"))
-#if ($postIndex == 0)
-  #set ($stopBlogPostsDisplay = false)
-#end
-#set ($listResultsCount = $mathtool.toInteger($macroAdditionalParams.get('list-results-count')))
-#set($discard = $xwiki.ssx.use('Blog.BlogPostLayoutCards'))
-#set($scaleWidth = 600)
-#set($imgQs="width=$scaleWidth")
-## Display pinned posts
-## Get the list of pinned posts
-#set ($pinnedPosts = [])
-#set ($pinnedPostsSourceDoc = $NULL)
-#if ("$!macroAdditionalParams.get('forceDisplayPinnedPosts')" == 'true' &amp;&amp; "$!macroAdditionalParams.get('list-blog')" != '')
-  #set ($pinnedPostsSourceDoc = $xwiki.getDocument($macroAdditionalParams.get('list-blog')))
-  ## Note that the 'list-blog' parameter contains the value of the 'blog' parameter of the blogpostlist macro passed to the current layout macro
-#end
-#if ("$!pinnedPostsSourceDoc" != '')
-  #set ($pinnedPostsObj = $pinnedPostsSourceDoc.getObject('Blog.PinnedPostsClass'))
-  #if ("$!pinnedPostsObj" != '')
-    #set ($orderedPinnedPostsJSON = $pinnedPostsObj.getProperty('orderedPosts').value)
-    #if ("$!orderedPinnedPostsJSON" != '')
-      #set ($pinnedPosts = $jsontool.parse($orderedPinnedPostsJSON))
+  #if ($services.security.authorization.hasAccess('view', $xcontext.macro.params.reference))
+    #set ($postDoc = $xwiki.getDocument($xcontext.macro.params.reference))
+    #getEntryObject($postDoc $postObj)
+    #if ("$!postObj" != '')
+      #extractLayoutParametersFromString($xcontext.macro.params.params $macroAdditionalParams)
+      ##
+      #set ($displayTitle = true)
+      #if ("$!macroAdditionalParams.get('displayTitle')" == 'false')
+        #set ($displayTitle = false)
+      #end
+      ##
+      #set ($displayTitleFirstOnPinnedPosts = false)
+      #if ("$!macroAdditionalParams.get('displayTitleFirstOnPinnedPosts')" == 'true')
+        #set ($displayTitleFirstOnPinnedPosts = true)
+      #end
+      ##
+      #set ($displaySummaryOnPinnedPosts = true)
+      #if ("$!macroAdditionalParams.get('displaySummaryOnPinnedPosts')" == 'false')
+        #set ($displaySummaryOnPinnedPosts = false)
+      #end
+      ##
+      #set ($postIndex = $mathtool.toInteger("$macroAdditionalParams.get('postIndex')"))
+      #if ($postIndex == 0)
+        #set ($stopBlogPostsDisplay = false)
+      #end
+      #set ($listResultsCount = $mathtool.toInteger($macroAdditionalParams.get('list-results-count')))
+      #set($discard = $xwiki.ssx.use('Blog.BlogPostLayoutCards'))
+      #set($scaleWidth = 600)
+      #set($imgQs="width=$scaleWidth")
+      ## Display pinned posts
+      ## Get the list of pinned posts
+      #set ($pinnedPosts = [])
+      #set ($pinnedPostsSourceDoc = $NULL)
+      #if ("$!macroAdditionalParams.get('forceDisplayPinnedPosts')" == 'true' &amp;&amp; "$!macroAdditionalParams.get('list-blog')" != '')
+        #set ($pinnedPostsSourceDoc = $xwiki.getDocument($macroAdditionalParams.get('list-blog')))
+        ## Note that the 'list-blog' parameter contains the value of the 'blog' parameter of the blogpostlist macro passed to the current layout macro
+      #end
+      #if ("$!pinnedPostsSourceDoc" != '')
+        #set ($pinnedPostsObj = $pinnedPostsSourceDoc.getObject('Blog.PinnedPostsClass'))
+        #if ("$!pinnedPostsObj" != '')
+          #set ($orderedPinnedPostsJSON = $pinnedPostsObj.getProperty('orderedPosts').value)
+          #if ("$!orderedPinnedPostsJSON" != '')
+            #set ($pinnedPosts = $jsontool.parse($orderedPinnedPostsJSON))
+          #else
+            #set ($pinnedPosts = $pinnedPostsObj.getProperty('posts').value)
+          #end
+        #end
+        #if ($postIndex == 0 &amp;&amp; $pinnedPosts.size() &gt; 0)
+          {{html clean="false"}}
+            #set ($x = 0)
+            #set ($showPinnedPostsButton = true)
+            #foreach ($pinnedPost in $pinnedPosts)
+              #if ($x == 0)
+                &lt;div class="row flex-container"&gt;
+                #if ($showPinnedPostsButton)
+                  #displayEditPinnedPostsButton()
+                  #set($showPinnedPostsButton = false)
+                #end
+              #end
+              #set ($pinnedPostDoc = $xwiki.getDocument($pinnedPost))
+              #getEntryObject($pinnedPostDoc $pinnedPostObj)
+              #if ("$!pinnedPostObj" != '')
+                #displayPinnedPost($pinnedPostDoc $pinnedPostObj)
+              #end
+              #set ($x = $mathtool.add($x, 1))
+              #if ($x == 3)
+                #set ($x = 0)
+                &lt;/div&gt;
+              #end
+            #end
+            #if ($mathtool.mod($x, 3) != 0)
+              &lt;/div&gt;
+            #end
+          {{/html}}
+
+          ## If the first post is a pinned post : this means that all the posts are pinned
+          ## In this case, avoid displaying the posts again after the pinned posts section.
+          #if ($pinnedPosts.contains($xcontext.macro.params.reference))
+            #set ($stopBlogPostsDisplay = true)
+          #end
+        #elseif($postIndex == 0 &amp;&amp; $pinnedPosts.size() == 0)
+
+          {{html}}
+            &lt;div class="row no-pinnded-posts"&gt;
+              #displayEditPinnedPostsButton()
+            &lt;/div&gt;
+          {{/html}}
+
+        #end
+      #end
+      #if (!$stopBlogPostsDisplay)
+        {{html clean="false"}}
+          #if ("$!nbDisplayedPosts" == '' || $postIndex == 0)
+            #set ($nbDisplayedPosts = 0)
+          #end
+          #if($mathtool.mod($nbDisplayedPosts, 2) == 0)
+            #if ($nbDisplayedPosts != 0)
+              &lt;/div&gt;
+              #set ($lastHtmlTag = 'c')
+            #end
+            #if ($nbDisplayedPosts == $mathtool.sub($listResultsCount, 1))
+              &lt;div class="row"&gt;
+              #set ($lastHtmlTag = 'o')
+              #set ($lastRowClass = "")
+            #else
+              &lt;div class="row flex-container"&gt;
+              #set ($lastHtmlTag = 'o')
+              #set ($lastRowClass = "flex")
+            #end
+          #end
+          #displaySmallPost($postDoc $postObj)
+          #if ($nbDisplayedPosts == $mathtool.sub($listResultsCount, 1))
+            &lt;/div&gt;
+            #set ($lastHtmlTag = 'c')
+          #end
+          #set ($nbDisplayedPosts = $mathtool.add($nbDisplayedPosts, 1))
+          #if ($postIndex == $mathtool.sub($listResultsCount, 1))
+            #if ("$!lastHtmlTag" == 'o')
+              #if ($mathtool.mod($nbDisplayedPosts, 2) == 1 &amp;&amp; $lastRowClass == "flex")
+                &lt;div class="col-xs-12 col-sm-6"&gt;&lt;/div&gt;
+              #end
+              &lt;/div&gt;
+            #end
+          #end
+        {{/html}}
+      #end
     #else
-      #set ($pinnedPosts = $pinnedPostsObj.getProperty('posts').value)
+      {{error}}$services.localization.render('blog.blogpostlayout.notpost', [$xcontext.macro.params.reference]){{/error}}
     #end
-  #end
-  #if ($postIndex == 0 &amp;&amp; $pinnedPosts.size() &gt; 0)
-    {{html clean="false"}}
-    #set ($x = 0)
-    #set ($showPinnedPostsButton = true)
-    #foreach ($pinnedPost in $pinnedPosts)
-      #if ($x == 0)
-      &lt;div class="row flex-container"&gt;
-      #if ($showPinnedPostsButton)
-      #displayEditPinnedPostsButton()
-      #set($showPinnedPostsButton = false)
-      #end
-      #end
-      #set ($pinnedPostDoc = $xwiki.getDocument($pinnedPost))
-      #getEntryObject($pinnedPostDoc $pinnedPostObj)
-      #if ("$!pinnedPostObj" != '')
-        #displayPinnedPost($pinnedPostDoc $pinnedPostObj)
-      #end
-      #set ($x = $mathtool.add($x, 1))
-      #if ($x == 3)
-        #set ($x = 0)
-        &lt;/div&gt;
-      #end
-    #end
-    #if ($mathtool.mod($x, 3) != 0)
-     &lt;/div&gt;
-    #end
-    {{/html}}
-
-    ## If the first post is a pinned post : this means that all the posts are pinned
-    ## In this case, avoid displaying the posts again after the pinned posts section.
-    #if ($pinnedPosts.contains($xcontext.macro.params.reference))
-      #set ($stopBlogPostsDisplay = true)
-    #end
-  #elseif($postIndex == 0 &amp;&amp; $pinnedPosts.size() == 0)
-
-   {{html}}
-     &lt;div class="row no-pinnded-posts"&gt;
-     #displayEditPinnedPostsButton()
-     &lt;/div&gt;
-   {{/html}}
-
-  #end
-#end
-#if (!$stopBlogPostsDisplay)
-{{html clean="false"}}
-#if ("$!nbDisplayedPosts" == '' || $postIndex == 0)
-  #set ($nbDisplayedPosts = 0)
-#end
-#if($mathtool.mod($nbDisplayedPosts, 2) == 0)
-  #if ($nbDisplayedPosts != 0)
-    &lt;/div&gt;
-    #set ($lastHtmlTag = 'c')
-  #end
-  #if ($nbDisplayedPosts == $mathtool.sub($listResultsCount, 1))
-    &lt;div class="row"&gt;
-    #set ($lastHtmlTag = 'o')
-    #set ($lastRowClass = "")
   #else
-    &lt;div class="row flex-container"&gt;
-    #set ($lastHtmlTag = 'o')
-    #set ($lastRowClass = "flex")
+    {{error}}$services.localization.render('blog.blogpostlayout.post_view_not_allowed', [$xcontext.macro.params.reference]){{/error}}
   #end
-#end
-#displaySmallPost($postDoc $postObj)
-#if ($nbDisplayedPosts == $mathtool.sub($listResultsCount, 1))
-  &lt;/div&gt;
-  #set ($lastHtmlTag = 'c')
-#end
-#set ($nbDisplayedPosts = $mathtool.add($nbDisplayedPosts, 1))
-#if ($postIndex == $mathtool.sub($listResultsCount, 1))
-  #if ("$!lastHtmlTag" == 'o')
-    #if ($mathtool.mod($nbDisplayedPosts, 2) == 1 &amp;&amp; $lastRowClass == "flex")
-      &lt;div class="col-xs-12 col-sm-6"&gt;&lt;/div&gt;
-    #end
-    &lt;/div&gt;
-  #end
-#end
-{{/html}}
-#end
-#else
-{{error}}$services.localization.render('blog.blogpostlayout.notpost', [$xcontext.macro.params.reference]){{/error}}
-#end
-#else
-{{error}}$services.localization.render('blog.blogpostlayout.post_view_not_allowed', [$xcontext.macro.params.reference]){{/error}}
-#end
 {{/velocity}}</code>
     </property>
     <property>
