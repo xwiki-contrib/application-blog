@@ -375,6 +375,16 @@
 
   #set ($results = $query.addFilter("unique").execute())
 
+  ## If all the posts are pinned nothing will be returned by the query because pinned posts are excluded
+  ## Note, that the pinned posts are stored in an object attached to the blog descriptor.
+  ## The display of pinned posts is managed inside the blog post layout macros.
+  ## so, before the display of the first post, the pinned posts are extracted from the blog descriptor and displayed in a custom way (big blocks, ...).
+  ## In order to display the pinned posts even if the query don't return results we return the pinned posts as results.
+
+  #if ($pinnedPosts.size() &gt; 0 &amp;&amp; $results.size() == 0)
+    #set ($results = $pinnedPosts)
+  #end
+
   #set ($layoutAdditionalParams = "$!{layoutAdditionalParams}|list-results-count=${results.size()}")
   #set ($layoutAdditionalParams = $layoutAdditionalParams.replaceAll('~', '~~').replaceAll('"', '~"'))
   #set ($XDOMList = [])

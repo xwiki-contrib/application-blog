@@ -600,8 +600,10 @@
   #set ($displaySummaryOnPinnedPosts = false)
 #end
 ##
-
 #set ($postIndex = $mathtool.toInteger("$macroAdditionalParams.get('postIndex')"))
+#if ($postIndex == 0)
+  #set ($stopBlogPostsDisplay = false)
+#end
 #set ($listResultsCount = $mathtool.toInteger($macroAdditionalParams.get('list-results-count')))
 #set($discard = $xwiki.ssx.use('Blog.BlogPostLayoutCards'))
 #set($scaleWidth = 600)
@@ -652,6 +654,11 @@
     #end
     {{/html}}
 
+    ## If the first post is a pinned post : this means that all the posts are pinned
+    ## In this case, avoid displaying the posts again after the pinned posts section.
+    #if ($pinnedPosts.contains($xcontext.macro.params.reference))
+      #set ($stopBlogPostsDisplay = true)
+    #end
   #elseif($postIndex == 0 &amp;&amp; $pinnedPosts.size() == 0)
 
    {{html}}
@@ -662,6 +669,7 @@
 
   #end
 #end
+#if (!$stopBlogPostsDisplay)
 {{html clean="false"}}
 #if ("$!nbDisplayedPosts" == '' || $postIndex == 0)
   #set ($nbDisplayedPosts = 0)
@@ -696,6 +704,7 @@
   #end
 #end
 {{/html}}
+#end
 #else
 {{error}}$services.localization.render('blog.blogpostlayout.notpost', [$xcontext.macro.params.reference]){{/error}}
 #end
