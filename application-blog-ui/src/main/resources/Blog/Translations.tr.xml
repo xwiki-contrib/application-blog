@@ -244,6 +244,9 @@ blog.unpublished.viewall=Tüm
 ### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
 ### Missing: blog.post.layout.cards.pinnedposts.save=Save
 
+# Blog Post Compact Layout
+### Missing: blog.post.layout.compact.linktoblog=Direct access to blog
+
 # Panels page title
 ### Missing: blog.panel.blogArchive.pageTitle=Blog Archive Panel
 ### Missing: blog.panel.allBlogs.pageTitle=All Blogs Panel

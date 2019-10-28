@@ -244,6 +244,9 @@ Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Unveröffentlic
 blog.post.layout.cards.pinnedposts.edit=Angeheftete Blog-Beiträge verwalten
 blog.post.layout.cards.pinnedposts.save=Speichern
 
+# Blog Post Compact Layout
+### Missing: blog.post.layout.compact.linktoblog=Direct access to blog
+
 # Panels page title
 blog.panel.blogArchive.pageTitle=Blog Archiv Panel
 blog.panel.allBlogs.pageTitle=Alle Blogs Panel

@@ -244,6 +244,9 @@ Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Панель н
 blog.post.layout.cards.pinnedposts.edit=Керуйте закріпленими дописами в блоґах
 blog.post.layout.cards.pinnedposts.save=Зберегти
 
+# Blog Post Compact Layout
+### Missing: blog.post.layout.compact.linktoblog=Direct access to blog
+
 # Panels page title
 blog.panel.blogArchive.pageTitle=Панель архіву блоґу
 blog.panel.allBlogs.pageTitle=Панель усіх блоґів
