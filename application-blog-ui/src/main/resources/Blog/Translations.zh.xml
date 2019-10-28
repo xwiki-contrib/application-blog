@@ -143,8 +143,8 @@ blog.manageCategories.comment.removedDeletedCategory=彻底删除类别
 blog.manageCategories.comment.updatedRenamedCategory=更新重命名的类别
 blog.manageCategories.comment.updatedCategory=更新类名
 ### Missing: blog.manageCategories.forms.add_button_label=Add
-### Missing: blog.manageCategories.forms.cancel_button_label=Cancel
-### Missing: blog.manageCategories.forms.select_none=None
+blog.manageCategories.forms.cancel_button_label=取消
+blog.manageCategories.forms.select_none=无
 ### Missing: blog.manageCategories.forms.sub_cat_of=Subcategory of:
 ### Missing: blog.manageCategories.forms.rename_button_label=Rename
 blog.post.createpost=创建新的文章
@@ -242,7 +242,10 @@ blog.events.blogpostpublished.displayer=一篇新文章已经被发布
 
 # Blog Post Cards Layout
 ### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
-### Missing: blog.post.layout.cards.pinnedposts.save=Save
+blog.post.layout.cards.pinnedposts.save=保存
+
+# Blog Post Compact Layout
+### Missing: blog.post.layout.compact.linktoblog=Direct access to blog
 
 # Panels page title
 ### Missing: blog.panel.blogArchive.pageTitle=Blog Archive Panel
