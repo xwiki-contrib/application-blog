@@ -373,7 +373,11 @@
     #set ($blogPostLayoutMacro = $blogPostLayoutMacro.replaceAll('~', '~~').replaceAll('"', '~"'))
   #end
 
-  #set ($results = $query.addFilter("unique").execute())
+  #set ($results = [])
+
+  #if("$!limitParam" == '' || $mathtool.toInteger("$limitParam") &gt; 0)
+    #set ($results = $query.addFilter("unique").execute())
+  #end
 
   ## If all the posts are pinned nothing will be returned by the query because pinned posts are excluded
   ## Note, that the pinned posts are stored in an object attached to the blog descriptor.
