@@ -245,7 +245,7 @@ blog.post.layout.cards.pinnedposts.edit=Angeheftete Blog-Beiträge verwalten
 blog.post.layout.cards.pinnedposts.save=Speichern
 
 # Blog Post Compact Layout
-blog.post.layout.compact.linktoblog=irekter Zugriff auf den Blog
+blog.post.layout.compact.linktoblog=Direkter Zugriff auf den Blog
 
 # Panels page title
 blog.panel.blogArchive.pageTitle=Blog Archiv Panel
