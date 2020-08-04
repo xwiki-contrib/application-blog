@@ -64,7 +64,7 @@ blog.code.failedToChangeBlogPostVisibility=Kunne ikke ændre artikel synlighed.
 blog.code.editpost=Redigér artiklen
 blog.code.deletepost=Slet artiklen
 blog.code.readpost=Læs hele artiklen
-### Missing: blog.code.postedin=Posted in
+blog.code.postedin=Placeret i
 blog.code.postedby=Placeret af
 blog.code.createdby=Oprettet af
 blog.code.modifiedby=Ændret af
@@ -196,64 +196,64 @@ blog.manage.location.title.placeholder=Ny blog
 blog.manage.categories_location=Kategoriernes placering
 blog.manage.enable_panels=Vis blogpaneler
 blog.manage.create_default_categories=Opret standard kategorier
-### Missing: blog.manage.locationPreview.hint=Location in the page hierarchy where this new blog will be created.
-### Missing: blog.manage.categoriesLocationPreview.hint=Location in the page hierarchy where this new blog categories will be created.
-### Missing: blog.manage.post.layout=Posts layout
-### Missing: blog.blogpostlist.descriptor_not_found=Unable to found a blog descriptor in document [{0}]
-### Missing: blog.categories.webhome.title=All categories
-### Missing: blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
-### Missing: blog.blogpostlayout.notpost=[{0}] is not a blog post!
-### Missing: blog.blogpostlayout.post_view_not_allowed=You are not allowed to view the blog post [{0}]
-### Missing: blog.blogpostcreate.wrong_blog=Wrong blog descriptor
+blog.manage.locationPreview.hint=Hvor i side-hierakiet skal denne nye blog oprettes.
+blog.manage.categoriesLocationPreview.hint=Hvor i side-hierakiet skal denne ny blog-kategori oprettes.
+blog.manage.post.layout=Artikellayout
+blog.blogpostlist.descriptor_not_found=Kunne ikke finde en blog-beskrivelse i dokumentet [{0}]
+blog.categories.webhome.title=Alle kategorier
+blog.category.posts.count={0} {0,choice,0#artikler|1#artikel|1&lt;artikler}
+blog.blogpostlayout.notpost=[{0}] er ikke en blogartikel!
+blog.blogpostlayout.post_view_not_allowed=Du har ikke rettigheder til at se artiklen [{0}]
+blog.blogpostcreate.wrong_blog=Forkert blog-beskrivelse
 
 # Class fields
-### Missing: Blog.BlogClass_postsLayout.full=Calendar
-### Missing: Blog.BlogClass_postsLayout.image=Image thumbnail
-### Missing: Blog.BlogClass_postsLayout.cards=Cards
+Blog.BlogClass_postsLayout.full=Kalender
+Blog.BlogClass_postsLayout.image=Billedminiature
+Blog.BlogClass_postsLayout.cards=Kort
 
 # Blogs macro
-### Missing: blog.livetable.title=Title
-### Missing: blog.livetable._actions=Actions
-### Missing: rendering.macro.blogs.name=All Blogs Livetable
-### Missing: rendering.macro.blogs.description=The blogs macro is used to list on a livetable all the blog available on the wiki.
+blog.livetable.title=Titel
+blog.livetable._actions=Handlinger
+rendering.macro.blogs.name=Live-tabel for alle blogs
+rendering.macro.blogs.description=Blogmakro bruges til at vise alle blogs i en wiki i en Live-tabel.
 
 # Notifications
-### Missing: blog.applicationName=Blog
-### Missing: blog.events.blogpostpublished.description=A blog post is published
-### Missing: blog.events.blogpostpublished.displayer=A new blog post has been posted: {0}
-### Missing: blog.events.blogpostpublished.by=by {0}.
-### Missing: notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0}
-### Missing: notifications.events.BlogPostPublishedEvent.description=published the blog post
+blog.applicationName=Blog
+blog.events.blogpostpublished.description=En blogartikel er offentliggjort
+blog.events.blogpostpublished.displayer=En ny artikel er indsendt: {0}
+blog.events.blogpostpublished.by=af {0}.
+notifications.events.BlogPostPublishedEvent.description.by.1user=Offentliggjort af {0}
+notifications.events.BlogPostPublishedEvent.description=offentligjorde blogartiklen
 
 # Blog Menu UIX
-### Missing: blog.uixMenu.name=Blog configuration
-### Missing: blog.uixMenu.title=Wizard to configure Blog panels
-### Missing: blog.uixMenu.title.hint=Choose a Blog and enable its panels in the current page and children.
-### Missing: blog.uixMenu.blog.hint=Start typing to get the Blog suggestions. Only one should be selected.
-### Missing: blog.uixMenu.panels.hint=Select from the following list the Blog panels that needs to be displayed.
-### Missing: blog.uixMenu.inheritPanels.hint=In order to keep the existing displayed panels, make sure this option in checked. Otherwise they will be removed.
-### Missing: blog.uixMenu.panelsPosition.hint=In case keep the existing panels, select if the Blog panels should be displayed before or after.
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=All Blogs Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=Blog Archive Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=Blog Categories Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=Recent Blog Posts Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Related Blogs Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Unpublished Blog Posts Panel
+blog.uixMenu.name=Blogkonfiguration
+blog.uixMenu.title=Guide til at konfigurere blogpaneler
+blog.uixMenu.title.hint=Vælg en blog og aktiver dens paneler på denne side og undersider.
+blog.uixMenu.blog.hint=Start indtastning for at få forslag. Vælg kun en af dem.
+blog.uixMenu.panels.hint=Vælg hvilke blogpaneler der vises på følgende liste.
+blog.uixMenu.inheritPanels.hint=For at beholde de viste paneler skal dette valg være markeret. Ellers vil de blive fjernet.
+blog.uixMenu.panelsPosition.hint=Hvis eksisterende paneler skal beholde, vælg om blogpaneler vises før eller efter.
+Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=Alle blogpaneler
+Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=Blogarkiv panel
+Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=Blogkategorier panel
+Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=Seneste artikler panel
+Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Relateret blog panel
+Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Upublicerede artikel panel
 
 # Blog Post Cards Layout
-### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
-### Missing: blog.post.layout.cards.pinnedposts.save=Save
+blog.post.layout.cards.pinnedposts.edit=Håndter fastgjorte artikler
+blog.post.layout.cards.pinnedposts.save=Gem
 
 # Blog Post Compact Layout
-### Missing: blog.post.layout.compact.linktoblog=Direct access to blog
+blog.post.layout.compact.linktoblog=Direkte adgang til blog
 
 # Panels page title
-### Missing: blog.panel.blogArchive.pageTitle=Blog Archive Panel
-### Missing: blog.panel.allBlogs.pageTitle=All Blogs Panel
-### Missing: blog.panel.blogCategories.pageTitle=Blog Categories Panel
-### Missing: blog.panel.recentBlogPosts.pageTitle=Recent Blog Posts Panel
-### Missing: blog.panel.relatedBlogs.pageTitle=Related Blogs Panel
-### Missing: blog.panel.unpublishedBlogPosts.pageTitle=Unpublished Blog Posts Panel
+blog.panel.blogArchive.pageTitle=Blogarkiv panel
+blog.panel.allBlogs.pageTitle=Alle blogs panel
+blog.panel.blogCategories.pageTitle=Blogkategori panel
+blog.panel.recentBlogPosts.pageTitle=Seneste artikler panel
+blog.panel.relatedBlogs.pageTitle=Relaterede blog panel
+blog.panel.unpublishedBlogPosts.pageTitle=Upublicerede artikler panel
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
