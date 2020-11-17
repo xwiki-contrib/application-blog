@@ -43,11 +43,11 @@
 blog.archive.paneltitle=博客存档
 blog.archive.pagetitle=存档
 blog.archive.noarticle=当前没有文章......
-### Missing: blog.archive.postsyear=posts for {0}
+blog.archive.postsyear={0} 文章的Post请求
 blog.archive.unpublished=（未发布）
 blog.archive.hidden=（隐藏）
 blog.archive.noarticlesyear=本年没有文章......
-### Missing: blog.archive.postsfor=posts for
+blog.archive.postsfor=发布为
 blog.archive.noarticlesmonth=本月没有文章......
 blog.code.blogsheet=博客样式
 blog.code.sheetexplanation=该样式将用于显示博客文档。
