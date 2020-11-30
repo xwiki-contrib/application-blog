@@ -165,12 +165,7 @@
 {{include reference='Blog.BlogPostLayoutMacros' /}}
 
 {{velocity output='no'}}
-#if ("$!xcontext.macro.params.blog" == '' &amp;&amp; "$!xcontext.macro.params.category" == '')
-  #set ($blogDescriptorParam = 'Blog.WebHome') ## Default Blog descriptor
-#else
-  #set ($blogDescriptorParam = $xcontext.macro.params.blog)
-#end
-
+#set ($blogDescriptorParam = $xcontext.macro.params.blog)
 #set ($categoryParam = $xcontext.macro.params.category)
 #set ($fromDateParam = $xcontext.macro.params.fromDate)
 #set ($toDateParam = $xcontext.macro.params.toDate)
