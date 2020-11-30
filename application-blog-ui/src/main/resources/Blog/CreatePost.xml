@@ -83,8 +83,14 @@
   #if($blogPostsLocation == '')
     #set($blogPostsLocation = 'Main')
   #end
-  ## Remove . and : from the document name, as they have a special meaning in XWiki document names
-  #set($postDocName = "${blogPostsLocation}.${name.replaceAll('[.:]', '')}")
+  ## Since XWiki 12.0RC1 it is possible to use a naming strategy at wiki level and the blog application should respect it.
+  #if("$!services.modelvalidation" != '' &amp;&amp; $services.modelvalidation.configuration.useTransformation())
+    #set($name = $services.modelvalidation.transformName($name))
+  #else
+    ## Remove . and : from the document name, as they have a special meaning in XWiki document names
+    #set($name = $name.replaceAll('[.:]', ''))
+  #end
+  #set($postDocName = "${blogPostsLocation}.${name}")
   #set($postDocName = $postDocName.trim())
   ## Make sure blog name is new
   #if($xwiki.exists($postDocName))
