@@ -177,8 +177,8 @@ blog.recentposts.paneltitle=Articles récents
 blog.unpublished.entries=Articles non publiés
 blog.unpublished.viewall=Voir tout
 blog.relatedblogspanel.title=Blogs similaires
-blog.allblogspanel.title=Tous les billets
-blog.allblogspanel.manage=Gérer les billets
+blog.allblogspanel.title=Tous les blogs
+blog.allblogspanel.manage=Gérer les blogs
 
 blog.templateProvider.blogpost.name=Article de Blog
 blog.templateProvider.blogpost.description=Nouvelle postée sur un blog
