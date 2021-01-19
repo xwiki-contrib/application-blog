@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -60,7 +60,7 @@ blog.code.hid=隐藏此文
 blog.code.makevisible=该博客文章对其他用户不可见。使其可见。
 blog.code.hide=对其他用户隐藏该博客文章。
 blog.code.loading=加载中...
-blog.code.failedToChangeBlogPostVisibility=更改博客文章的可见性失败。
+blog.code.failedToChangeBlogPostVisibility=错误：无法更改博文的可见性。
 blog.code.editpost=编辑此博客文章
 blog.code.deletepost=删除此博客文章
 blog.code.readpost=阅读全文
@@ -69,7 +69,7 @@ blog.code.postedby=由谁评论
 blog.code.createdby=由谁创建
 blog.code.modifiedby=由谁修改
 blog.code.comments=评论
-blog.code.permalink=固定链接
+blog.code.permalink=永久链接
 blog.code.categories=类别：
 blog.code.in=在
 blog.code.previousweek=上个星期
@@ -179,13 +179,11 @@ blog.unpublished.viewall=查看全部
 blog.relatedblogspanel.title=相关博客
 blog.allblogspanel.title=所有博客
 blog.allblogspanel.manage=管理博客
-
 blog.templateProvider.blogpost.name=博客文章
 blog.templateProvider.blogpost.description=交流新闻
 blog.categories.all=全部
 blog.changeVisibility.changing=改变可见性
 blog.changeVisibility.success=博客条目的可见性已成功更改
-
 blog.manage.pagetitle=管理此wiki上的博客
 blog.manage.notitle=没有提供博客标题。请输入博客标题。
 blog.manage.nopage=没有提供页面。请输入一个用于创建博客的有效页面。
@@ -264,5 +262,6 @@ blog.panel.unpublishedBlogPosts.pageTitle=未发布的博客帖子面板
 blog.manage.blogtype=博客类型：
 
 ## Used to indicate where deprecated keys end
-#@deprecatedend</content>
+#@deprecatedend
+</content>
 </xwikidoc>
