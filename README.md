@@ -18,6 +18,6 @@ Create and manage blog posts.
 * Release
 
 ```
-mvn release:prepare -Pintegration-tests,legacy
-mvn release:perform -Pintegration-tests,legacy
+mvn release:prepare -Pintegration-tests
+mvn release:perform -Pintegration-tests
 ```
