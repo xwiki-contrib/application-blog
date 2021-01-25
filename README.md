@@ -12,3 +12,12 @@ Create and manage blog posts.
 * Translations: [![Translation status](https://l10n.xwiki.org/widgets/xwiki-contrib/-/blog-translations/svg-badge.svg)](https://l10n.xwiki.org/projects/xwiki-contrib/blog-translations/)
 * Sonar Dashboard: N/A
 * Continuous Integration Status: [![Build Status](http://ci.xwiki.org/job/XWiki%20Contrib/job/application-blog/job/master/badge/icon)](http://ci.xwiki.org/job/XWiki%20Contrib/job/application-blog/job/master/)
+
+# Release
+
+* Release
+
+```
+mvn release:prepare -Pintegration-tests,legacy
+mvn release:perform -Pintegration-tests,legacy
+```
