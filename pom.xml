@@ -41,6 +41,10 @@
   </scm>
   <developers>
     <developer>
+      <id>mouhb</id>
+      <name>Mohamed Boussaa</name>
+    </developer>
+    <developer>
       <id>xwikidev</id>
       <name>XWiki Development Team</name>
     </developer>
