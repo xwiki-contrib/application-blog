@@ -147,7 +147,7 @@
       <parse/>
     </property>
     <property>
-      <use>always</use>
+      <use>onDemand</use>
     </property>
   </object>
   <object>
@@ -227,6 +227,7 @@
 {{html clean="false" wiki="true"}}
 ## This UIX implies the creation/update of WebPreferences pages, thus it should be available only to admins.
 #if ($hasAdmin &amp;&amp; $xcontext.action == 'view' &amp;&amp; !$doc.isNew())
+  #set ($discard = $xwiki.jsx.use('Blog.BlogMenuUIX'))
   #template('menus_macros.vm')
   #set ($preferencesDocRef = $services.model.createDocumentReference('WebPreferences',
       $doc.documentReference.lastSpaceReference))
