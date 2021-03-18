@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -41,7 +41,7 @@
   <hidden>true</hidden>
   <content>blog.application.name=Blog
 blog.archive.paneltitle=Blogarchief
-### Missing: blog.archive.pagetitle=Archive
+blog.archive.pagetitle=Archief
 blog.archive.noarticle=Nog geen artikelen...
 blog.archive.postsyear=Blogs van {0}
 blog.archive.unpublished=(niet gepubliceerd)
@@ -51,7 +51,7 @@ blog.archive.postsfor=Blogs van
 blog.archive.noarticlesmonth=Geen artikelen uit deze maand...
 blog.code.blogsheet=Blog sheet
 blog.code.sheetexplanation=Deze stylesheet wordt gebruikt voor de weergave van blogartikelen.
-blog.code.notblog=Dit is geen blog-document\!
+blog.code.notblog=Dit is geen blog-document!
 blog.code.published=Dit blogartikel is nog niet gepubliceerd.
 blog.code.hidden=Dit blogartikel is verborgen.
 blog.code.notpublished=Dit blogartikel is nog niet gepubliceerd. Publiceer het.
@@ -70,7 +70,7 @@ blog.code.createdby=Gemaakt door
 blog.code.modifiedby=Gewijzigd door
 blog.code.comments=Opmerkingen
 blog.code.permalink=Permalink
-blog.code.categories=Categorieën\:
+blog.code.categories=Categorieën:
 blog.code.in=in
 blog.code.previousweek=Vorige week
 blog.code.nextweek=Volgende week
@@ -83,30 +83,30 @@ blog.code.description.category=Meest recente blogartikelen in de {0} categorie
 blog.code.description.space=Meest recente blogartikelen in de {0} paginaruimte
 blog.code.description.wiki=Meest recente blogartikelen in de wiki
 blog.code.title=De Wiki Blog
-blog.code.warning=Waarschuwing\:
-blog.sheet.notpost=Dit is geen blogartikel\!
-blog.sheet.category=Categorie\:
-blog.sheet.summary=Samenvatting (optioneel)\:
-blog.sheet.content=Inhoud\:
-blog.sheet.title=Titel\:
+blog.code.warning=Waarschuwing:
+blog.sheet.notpost=Dit is geen blogartikel!
+blog.sheet.category=Categorie:
+blog.sheet.summary=Samenvatting (optioneel):
+blog.sheet.content=Inhoud:
+blog.sheet.title=Titel:
 blog.sheet.publicationdate=Dit artikel is gepubliceerd op {0}
 blog.sheet.hidearticle=Verberg artikel {0}
 blog.sheet.notpublished=Dit artikel is nog niet gepubliceerd.
 blog.sheet.publish=Publiceren
-blog.sheet.setdate=Stel de publicatiedatum in op\:
-### Missing: blog.sheet.image=Image
+blog.sheet.setdate=Stel de publicatiedatum in op:
+blog.sheet.image=Afbeelding
 ### Missing: blog.sheet.image.info=The image field is used to attach a thumbnail to each blog post. The post thumbnails will be visible only in cases where the blog is configured to use the 'image' layout.
-### Missing: blog.sheet.choose_image=Choose an image
+blog.sheet.choose_image=Kies een afbeelding
 blog.category.created=De {0} categorie is gemaakt.
 blog.category.exists=De {0} categorie bestaat al.
 blog.categories.paneltitle=Blogcategorieën
-blog.categories.name=Naam\:
-blog.categories.parentcategory=Bovenliggende categorie\:
-blog.categories.description=Omschrijving\:
+blog.categories.name=Naam:
+blog.categories.parentcategory=Bovenliggende categorie:
+blog.categories.description=Omschrijving:
 blog.categories.add=Toevoegen
-blog.categories.new=Nieuwe categorie\:
-blog.categories.newName=Nieuwe categorienaam\:
-blog.categories.parent=Ouder\:
+blog.categories.new=Nieuwe categorie:
+blog.categories.newName=Nieuwe categorienaam:
+blog.categories.parent=Ouder:
 blog.categories.none=Geen
 blog.categories.remove=Verwijderde categorie weghalen
 blog.categories.edit=Categorieën wijzigen
@@ -116,7 +116,7 @@ blog.categories.articles=Artikelen van deze categorie
 blog.categories.sheet=Categorie sheet
 blog.categories.sheetmessage=Deze stylesheet wordt gebruikt voor de weergave van blogcategorieën.
 ### Missing: blog.categories.webhome_sheetmessage=Implement the display of blog posts inside the categories home page (Blog.CategoriesSheet).
-blog.categories.notcategory=Dit is geen blogcategorie\!
+blog.categories.notcategory=Dit is geen blogcategorie!
 blog.categories.noentries=Geen artikelen in deze categorie
 blog.manageCategories.title=Blogcategorieën beheren
 blog.manageCategories.create.error.emptyName=Voer een geldige categorienaam in
@@ -142,14 +142,14 @@ blog.manageCategories.comment.updatedParent=Categorie Ouder gewijzigd
 blog.manageCategories.comment.removedDeletedCategory=Verwijderde categorie weggehaald
 blog.manageCategories.comment.updatedRenamedCategory=Hernoemde categorie bijgewerkt
 blog.manageCategories.comment.updatedCategory=Categorienaam bijgewerkt
-### Missing: blog.manageCategories.forms.add_button_label=Add
-### Missing: blog.manageCategories.forms.cancel_button_label=Cancel
+blog.manageCategories.forms.add_button_label=Toevoegen
+blog.manageCategories.forms.cancel_button_label=Annuleer
 ### Missing: blog.manageCategories.forms.select_none=None
 ### Missing: blog.manageCategories.forms.sub_cat_of=Subcategory of:
-### Missing: blog.manageCategories.forms.rename_button_label=Rename
+blog.manageCategories.forms.rename_button_label=Hernoemen
 blog.post.createpost=Maak een nieuw artikel
 blog.post.title=Titel
-blog.post.titleEmptyError=De titel van het artikel mag niet leeg zijn\!
+blog.post.titleEmptyError=De titel van het artikel mag niet leeg zijn!
 blog.post.create=Maken
 ### Missing: blog.post.sheet=Blog post sheet
 blog.categories.existingcategories=Bestaande categorieën
@@ -158,8 +158,8 @@ blog.categories.deleteselected=Geselecteerde categorieën verwijderen
 blog.manage.existing=Bestaande blogs
 blog.manage.createnew=Nieuwe blog maken
 blog.manage.nospace=Geen paginaruimte opgegeven. Geef alstublieft een geldige naam op voor de paginaruimte waarin de blog moet worden gemaakt.
-blog.manage.space=Paginaruime\:
-blog.manage.title=Titel\:
+blog.manage.space=Paginaruime:
+blog.manage.title=Titel:
 blog.manage.blogtitle=Blog titel
 blog.manage.inside=blog binnen een bestaande paginaruimte
 blog.manage.main=blog als de enige inhoud van een paginaruimte
@@ -170,7 +170,7 @@ blog.migration.inspace=in paginaruimte
 blog.migration.skipping=Beschermd document overgeslagen
 blog.migration.done=Klaar.
 blog.migration.backtoblog=Terug naar het blog
-blog.migration.pleaseconfirm=Bevestig alstublieft dat u oude artikelen wilt migreren naar de nieuwe blogapplicatie\:
+blog.migration.pleaseconfirm=Bevestig alstublieft dat u oude artikelen wilt migreren naar de nieuwe blogapplicatie:
 blog.migration.confirm=Bevestigen
 blog.publisher.published=Artikel gepubliceerd
 blog.recentposts.paneltitle=Recente Blogartikelen
@@ -179,20 +179,18 @@ blog.unpublished.viewall=Bekijk alles
 ### Missing: blog.relatedblogspanel.title=Related Blogs
 ### Missing: blog.allblogspanel.title=All Blogs
 ### Missing: blog.allblogspanel.manage=Manage Blogs
-
 ### Missing: blog.templateProvider.blogpost.name=Blog Post
 ### Missing: blog.templateProvider.blogpost.description=Communicate news
 ### Missing: blog.categories.all=All
 ### Missing: blog.changeVisibility.changing=Changing the visibility
 ### Missing: blog.changeVisibility.success=The visibility of the blog entry has been successfully changed
-
 ### Missing: blog.manage.pagetitle=Manage blogs on this wiki
 ### Missing: blog.manage.notitle=No blog title provided. Please enter the blog title.
 ### Missing: blog.manage.nopage=No page provided. Please enter a valid page where the blog should be created.
 ### Missing: blog.manage.unallowed_page=The blog location is already used, please enter another location.
 ### Missing: blog.manage.location.title=Blog title
 ### Missing: blog.manage.location.title.hint=Title of the new blog
-### Missing: blog.manage.location.title.placeholder=New blog
+blog.manage.location.title.placeholder=Nieuwe blog
 ### Missing: blog.manage.categories_location=Categories location
 ### Missing: blog.manage.enable_panels=Enable blog panels
 ### Missing: blog.manage.create_default_categories=Create default categories
@@ -261,8 +259,9 @@ blog.unpublished.viewall=Bekijk alles
 ## until 9.9
 #######################################
 
-blog.manage.blogtype=Blog type\:
+blog.manage.blogtype=Blog type:
 
 ## Used to indicate where deprecated keys end
-#@deprecatedend</content>
+#@deprecatedend
+</content>
 </xwikidoc>
