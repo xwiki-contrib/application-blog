@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -40,7 +40,7 @@
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
   <content>blog.application.name=Blog
-blog.archive.paneltitle=Archivo del Blog
+blog.archive.paneltitle=Archivo del blog
 blog.archive.pagetitle=Archivo
 blog.archive.noarticle=Todavía no hay artículos...
 blog.archive.postsyear=Entradas de blog para {0}
@@ -68,7 +68,7 @@ blog.code.postedin=Publicado en
 blog.code.postedby=Creado por
 blog.code.createdby=Creado por
 blog.code.modifiedby=Modificada por
-blog.code.comments=Comentario(s)
+blog.code.comments=Comentarios
 blog.code.permalink=Enlace permanente
 blog.code.categories=Categorías:
 blog.code.in=en
@@ -97,21 +97,21 @@ blog.sheet.setdate=Poner la fecha de publicación a:
 blog.sheet.image=Imagen
 blog.sheet.image.info=El campo de imagen es utilizado para adjuntar una miniatura a cada entrada de blog. La miniatura de la entrada va a ser visible solo en casos en los que el blog esté configurado para utilizar el diseño de 'imagen'.
 blog.sheet.choose_image=Seleccione una imagen
-blog.category.created=La categoría {0} ha sido creada.
+blog.category.created=Se ha creado la categoría {0}.
 blog.category.exists=La categoría {0} ya existe.
-blog.categories.paneltitle=Categorías del Blog
+blog.categories.paneltitle=Categorías del blog
 blog.categories.name=Nombre:
-blog.categories.parentcategory=Categoría padre:
+blog.categories.parentcategory=Categoría contenedora:
 blog.categories.description=Descripción:
 blog.categories.add=Añadir
-blog.categories.new=Nueva categoría:
-blog.categories.newName=Nombre de la nueva categoría:
-blog.categories.parent=Padre:
+blog.categories.new=Categoría nueva:
+blog.categories.newName=Nombre de la categoría nueva:
+blog.categories.parent=Contenedora:
 blog.categories.none=Ninguna
-blog.categories.remove=Eliminar categoría borrada
+blog.categories.remove=Quitar categoría eliminada
 blog.categories.edit=Editar categorías
 blog.categories.subcategories=Subcategorías
-blog.categories.addsubcategory=Añadir nueva subcategoría
+blog.categories.addsubcategory=Añadir subcategoría nueva
 blog.categories.articles=Artículos de esta categoría
 blog.categories.sheet=Hoja de categoría
 blog.categories.sheetmessage=Esta hoja debería usarse para mostrar categorías de blog.
@@ -123,7 +123,7 @@ blog.manageCategories.create.error.emptyName=Por favor, introduzca un nombre de 
 blog.manageCategories.create.error.alreadyExists=Ya existe el documento de destino, por favor, escoja un nombre diferente
 blog.manageCategories.create.error.notExists=La página solicitada no pudo ser encontrada.
 blog.manageCategories.create.error.targetNotWritable=Usted no tiene permisos para crear la página solicitada.
-blog.manageCategories.rename.error.emptyName=Por favor, introduzca un nombre de categoría válido
+blog.manageCategories.rename.error.emptyName=Introduzca un nombre de categoría válido
 blog.manageCategories.js.fetchingForm=Obteniendo formulario...
 blog.manageCategories.js.error.noServer=El servidor no está respondiendo
 blog.manageCategories.js.rename.inProgress=Renombrando categoría...
@@ -179,13 +179,11 @@ blog.unpublished.viewall=Ver todas
 blog.relatedblogspanel.title=Blogs relacionados
 blog.allblogspanel.title=Todos los Blogs
 blog.allblogspanel.manage=Administrar Blogs
-
 blog.templateProvider.blogpost.name=Publicación de Blog
 blog.templateProvider.blogpost.description=Comunicar noticias
 blog.categories.all=Todas
 blog.changeVisibility.changing=Cambiando la visibilidad
 blog.changeVisibility.success=La visibilidad de la entrada del blog ha sido cambiada satisfactoriamente
-
 blog.manage.pagetitle=Administrar los blogs en esta wiki
 blog.manage.notitle=No se ha provisto un nombre de blog. Por favor, ingrese el título del blog.
 blog.manage.nopage=No se ha provisto una página. Por favor, ingrese una página válida en donde el blog debería ser creado.
@@ -241,7 +239,7 @@ Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Panel con los 
 Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Panel con las entradas de Blog aún no publicadas
 
 # Blog Post Cards Layout
-blog.post.layout.cards.pinnedposts.edit=Administrar las entradas de blog fijadas
+blog.post.layout.cards.pinnedposts.edit=Gestionar entradas de blog ancladas
 blog.post.layout.cards.pinnedposts.save=Guardar
 
 # Blog Post Compact Layout
@@ -261,8 +259,9 @@ blog.panel.unpublishedBlogPosts.pageTitle=Panel de entradas de Blog no publicada
 ## until 9.9
 #######################################
 
-blog.manage.blogtype=Tipo de blog\:
+blog.manage.blogtype=Tipo de blog:
 
 ## Used to indicate where deprecated keys end
-#@deprecatedend</content>
+#@deprecatedend
+</content>
 </xwikidoc>
