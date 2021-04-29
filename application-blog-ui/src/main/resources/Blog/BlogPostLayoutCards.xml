@@ -561,7 +561,7 @@
       #set ($discard = $xwiki.ssx.use('Blog.PinnedPostsSheet'))
       #set ($discard = $xwiki.jsx.use('Blog.PinnedPostsSheet'))
       #set ($editPinnedPostsURL = $xwiki.getURL($pinnedPostsSourceDoc.fullName, 'get', 'sheet=Blog.PinnedPostsSheet'))
-      #set ($newPinnedPostsObjectURL = $xwiki.getURL($pinnedPostsSourceDoc.fullName, 'edit', 'xpage=editobject&amp;xaction=addObject&amp;className=Blog.PinnedPostsClass'))
+      #set ($newPinnedPostsObjectURL = $xwiki.getURL($pinnedPostsSourceDoc.fullName, 'objectadd', "classname=Blog.PinnedPostsClass&amp;form_token=$!{services.csrf.getToken()}"))
       &lt;div class="edit-pinned-posts-container"&gt;
         &lt;div class="col-xs-12 col-sm-12 col-md-12 text-right edit-pinned-posts"&gt;
           &lt;a href="javascript:;" class="editPinnedPosts"&gt;
