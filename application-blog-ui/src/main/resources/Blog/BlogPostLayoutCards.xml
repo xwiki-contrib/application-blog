@@ -515,8 +515,8 @@
     &lt;div class="row post-details"&gt;
       &lt;div class="col-xs-8 detail"&gt;
         #if ($services.like.displayButton($pDoc))
-	   #set ($optLikeRecord = $services.like.getLikes($pDoc))
-	   #set ($likeNumber = $optLikeRecord.get().likeNumber)
+          #set ($optLikeRecord = $services.like.getLikes($pDoc))
+          #set ($likeNumber = $optLikeRecord.get().likeNumber)
           &lt;div class="like-button btn btn-default disabled badge"
             title="$escapetool.xml($services.localization.render('like.button.title', [$likeNumber]))"&gt;
             $services.icon.renderHTML('heart') &lt;span class="like-number"&gt;$likeNumber&lt;/span&gt;
