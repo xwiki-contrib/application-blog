@@ -362,10 +362,10 @@
 #end
 #set($discard = $xwiki.ssx.use($blogStyleDocumentName))
 #set($discard = $xwiki.ssx.use('Blog.BlogPostLayoutCompact'))## styles specific to the current layout
-#set($postIndex = $mathtool.toInteger($macroAdditionalParams.get('postIndex')))## the index of the current blog post in the list of results
+#set($postIndex = $numbertool.toNumber($macroAdditionalParams.get('postIndex')).intValue())## the index of the current blog post in the list of results
 #set($postIndexOddEven = $postIndex % 2)
 #set($isEven = $postIndexOddEven == 0)
-#set($lastIndex= $mathtool.toInteger($macroAdditionalParams.get('list-results-count')) - 1)## the index of the last blog post in the list of results
+#set($lastIndex= $numbertool.toNumber($macroAdditionalParams.get('list-results-count')).intValue() - 1)## the index of the last blog post in the list of results
 #set($scaleWidth = 300)
 #set($scaleHeight = 225)
 #set($imgQs="width=$scaleWidth")

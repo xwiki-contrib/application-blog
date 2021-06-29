@@ -263,7 +263,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #bindQueryParameters($queryObj $queryParams)
   #set($totalEntries = $countQueryObj.count())
   #getBlogProperty($blogDoc 'itemsPerPage' '10' $defaultItemsPerPage)
-  #set($defaultItemsPerPage = $mathtool.toInteger($defaultItemsPerPage))
+  #set($defaultItemsPerPage = $numbertool.toNumber($defaultItemsPerPage).intValue())
   ## This macro is defined in the default macros.vm library. It also sets $itemsPerPage and $startAt.
   #preparePagedViewParams($totalEntries $defaultItemsPerPage)
   #set($discard = $entries.addAll($queryObj.setLimit($itemsPerPage).setOffset($startAt).addFilter("unique").execute()))
@@ -971,10 +971,10 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #set ($weekDate = $NULL)
   #setVariable ("$weekDate" $xwiki.jodatime.mutableDateTime)
   #if("$!{request.year}" != '')
-    $weekDate.setYear($mathtool.toInteger($request.year))
+    #set ($discard = $weekDate.setYear($numbertool.toNumber($request.year).intValue()))
   #end
   #if("$!{request.week}" != '')
-    $weekDate.setWeekOfWeekyear($mathtool.toInteger($request.week))
+    #set ($discard = $weekDate.setWeekOfWeekyear($numbertool.toNumber($request.week).intValue()))
   #end
 #end
 ##
@@ -990,10 +990,10 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #set ($monthDate = $NULL)
   #setVariable ("$monthDate" $xwiki.jodatime.mutableDateTime)
   #if("$!{request.year}" != '')
-    $monthDate.setYear($mathtool.toInteger($request.year))
+    #set ($discard = $monthDate.setYear($numbertool.toNumber($request.year).intValue()))
   #end
   #if("$!{request.month}" != '')
-    $monthDate.setMonthOfYear($mathtool.toInteger($request.month))
+    #set ($discard = $monthDate.setMonthOfYear($numbertool.toNumber($request.month).intValue()))
   #end
 #end
 ##

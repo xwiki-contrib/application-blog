@@ -607,11 +607,11 @@
         #set ($displaySummaryOnPinnedPosts = false)
       #end
       ##
-      #set ($postIndex = $mathtool.toInteger("$macroAdditionalParams.get('postIndex')"))
+      #set ($postIndex = $numbertool.toNumber($macroAdditionalParams.get('postIndex')).intValue())
       #if ($postIndex == 0)
         #set ($stopBlogPostsDisplay = false)
       #end
-      #set ($listResultsCount = $mathtool.toInteger($macroAdditionalParams.get('list-results-count')))
+      #set ($listResultsCount = $numbertool.toNumber($macroAdditionalParams.get('list-results-count')).intValue())
       #set($discard = $xwiki.ssx.use('Blog.BlogPostLayoutCards'))
       #set($scaleWidth = 600)
       #set($imgQs="width=$scaleWidth")

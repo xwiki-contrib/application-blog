@@ -261,7 +261,7 @@
     #set($addEntryParams = true)
   #elseif("$!request.entry" != '' &amp;&amp; "$!request.entryObjNb" != '')
     #set($entry = $xwiki.getDocument($request.entry))
-    #set($entryObj = $entry.getObject($blogPostClassname, $mathtool.toInteger($request.entryObjNb)))
+    #set($entryObj = $entry.getObject($blogPostClassname, $numbertool.toNumber($request.entryObjNb).intValue()))
     #set($addEntryParams = true)
   #end
   #if($isBlogPost || $addEntryParams)

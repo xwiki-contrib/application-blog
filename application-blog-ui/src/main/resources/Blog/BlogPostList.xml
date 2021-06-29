@@ -355,12 +355,12 @@
     #end
     #set ($totalPosts = $countQuery.addFilter("unique").count())
     ## This macro is defined in the default macros.vm library. It also sets $itemsPerPage and $startAt.
-    #set ($itemsPerPage = $mathtool.toInteger("$limitParam"))
+    #set ($itemsPerPage = $numbertool.toNumber($limitParam).intValue())
     #preparePagedViewParams($totalPosts $itemsPerPage)
     #set ($query = $query.setOffset($startAt))
   #end
   #if ("$!limitParam" != '')
-    #set ($query = $query.setLimit($mathtool.toInteger("$limitParam")))
+    #set ($query = $query.setLimit($numbertool.toNumber($limitParam).intValue()))
   #end
 
   #if ("$!layoutParam" != '')
@@ -370,7 +370,7 @@
 
   #set ($results = [])
 
-  #if("$!limitParam" == '' || $mathtool.toInteger("$limitParam") &gt; 0)
+  #if("$!limitParam" == '' || $numbertool.toNumber($limitParam).intValue() &gt; 0)
     #set ($results = $query.addFilter("unique").execute())
   #end
 

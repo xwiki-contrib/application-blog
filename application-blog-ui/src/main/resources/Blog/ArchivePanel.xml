@@ -155,7 +155,7 @@
     #set ($discard = $xwiki.getDocument($firstEntry))
     #getEntryObject($discard $entryObj)
     #getEntryDate($discard $entryObj $firstYear)
-    #set ($firstYear = $mathtool.toInteger($xwiki.formatDate($firstYear, 'yyyy')))
+    #set ($firstYear = $numbertool.toNumber($xwiki.formatDate($firstYear, 'yyyy')).intValue())
   #end
   #set ($lastYearQueryObj = $services.query.hql("${query} order by year(publishDate.value) desc").setLimit(1).addFilter('unique'))
   #bindQueryParameters($lastYearQueryObj $queryParams)
@@ -163,7 +163,7 @@
     #set ($discard = $xwiki.getDocument($lastEntry))
     #getEntryObject($discard $entryObj)
     #getEntryDate($discard $entryObj $lastYear)
-    #set ($lastYear = $mathtool.toInteger($xwiki.formatDate($lastYear, 'yyyy')))
+    #set ($lastYear = $numbertool.toNumber($xwiki.formatDate($lastYear, 'yyyy')).intValue())
   #end
   #if ("$!{firstYear}" != '') ## At least one entry exists
     #foreach ($year in [$firstYear..$lastYear])

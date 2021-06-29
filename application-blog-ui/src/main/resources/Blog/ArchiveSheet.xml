@@ -62,7 +62,7 @@
     #set($discard = $xwiki.getDocument($firstEntry))
     #getEntryObject($discard $entryObj)
     #getEntryDate($discard $entryObj $firstYear)
-    #set($firstYear = $mathtool.toInteger($xwiki.formatDate($firstYear, 'yyyy')))
+    #set($firstYear = $numbertool.toNumber($xwiki.formatDate($firstYear, 'yyyy')).intValue())
   #end
   #set ($lastYearQueryObj = $services.query.hql("${query} order by year(publishDate.value) desc").setLimit(1).addFilter('unique'))
   #bindQueryParameters($lastYearQueryObj $queryParams)
@@ -70,7 +70,7 @@
     #set($discard = $xwiki.getDocument($lastEntry))
     #getEntryObject($discard $entryObj)
     #getEntryDate($discard $entryObj $lastYear)
-    #set($lastYear = $mathtool.toInteger($xwiki.formatDate($lastYear, 'yyyy')))
+    #set($lastYear = $numbertool.toNumber($xwiki.formatDate($lastYear, 'yyyy')).intValue())
   #end
   #if("$!{firstYear}" != '') ## At least one entry exists
     #foreach($year in [$firstYear..$lastYear])
@@ -106,7 +106,7 @@
   #set ($discard = $queryParams.put('creator', $xcontext.user))
   #set ($query = "$!{query} and (doc.creator = :creator or (isPublished.value = 1 and hidden.value = 0))")
   #set($query = "${query} and year(publishDate.value) = :year")
-  #set ($discard = $queryParams.put('year', $mathtool.toInteger($year)))
+  #set ($discard = $queryParams.put('year', $numbertool.toNumber($year).intValue()))
   ## Create a Jodatime date formatter that will be used to format dates
   #set($monthFormatter = $xwiki.jodatime.getDateTimeFormatterForPattern('MMMM'))
   #set($tempDate = $xwiki.jodatime.mutableDateTime)
@@ -144,15 +144,15 @@
 #macro(displayBlogMonthArchive $targetDocument $year $month)
   #set($dateFormatter = $xwiki.jodatime.getDateTimeFormatterForPattern('MMMM yyyy'))
   #set($tempDate = $xwiki.jodatime.mutableDateTime)
-  $tempDate.setYear($mathtool.toInteger($year))##
-  $tempDate.setMonthOfYear($mathtool.toInteger($month))##
+  #set($discard = $tempDate.setYear($numbertool.toNumber($year).intValue()))
+  #set($discard = $tempDate.setMonthOfYear($numbertool.toNumber($month).intValue()))
   #displayBlogMonthArchiveSubTitle($targetDocument $tempDate)
   #getAllBlogPostsQueryBasedOnDisplayContext($targetDocument $query $queryParams)
   #set ($discard = $queryParams.put('creator', $xcontext.user))
   #set ($query = "$!{query} and (doc.creator = :creator or (isPublished.value = 1 and hidden.value = 0))")
   #set($query = "${query} and year(publishDate.value) = :year and month(publishDate.value) = :month")
-  #set ($discard = $queryParams.put('year', $mathtool.toInteger($year)))
-  #set ($discard = $queryParams.put('month', $mathtool.toInteger($month)))
+  #set ($discard = $queryParams.put('year', $numbertool.toNumber($year).intValue()))
+  #set ($discard = $queryParams.put('month', $numbertool.toNumber($month).intValue()))
   #set ($monthArticleCountQueryObj = $services.query.hql($query).addFilter('unique'))
   #bindQueryParameters($monthArticleCountQueryObj $queryParams)
   #set($monthArticleCount = $monthArticleCountQueryObj.count())
@@ -235,8 +235,8 @@
 ##
 ##
 ##
-#set ($month = "$!{mathtool.toInteger($request.month)}")
-#set ($year = "$!{mathtool.toInteger($request.year)}")
+#set ($month = "$!numbertool.toNumber($request.month).intValue()")
+#set ($year = "$!numbertool.toNumber($request.year).intValue()")
 #if ($year == '')
   ## Show a brief history of the blog, a tree with first level = years, second level = months, and the number of entries from that year/month in every node.
   #displayBlogFullArchive($doc)
