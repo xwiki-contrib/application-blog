@@ -69,14 +69,6 @@
       <version>${rendering.version}</version>
       <scope>runtime</scope>
     </dependency>
-     <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-ratings-ui</artifactId>
-      <type>xar</type>
-      <version>${platform.version}</version>
-      <scope>runtime</scope>
-      <optional>true</optional>
-    </dependency>
     <!-- Select2 WebJar used by the cards blog post layout -->
     <dependency>
       <groupId>org.webjars</groupId>

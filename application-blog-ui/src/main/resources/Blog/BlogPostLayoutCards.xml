@@ -514,7 +514,14 @@
   #macro(displayPostDetails $pDoc)
     &lt;div class="row post-details"&gt;
       &lt;div class="col-xs-8 detail"&gt;
-        #if ($services.ratings)
+        #if ($services.like.displayButton($pDoc))
+	   #set ($optLikeRecord = $services.like.getLikes($pDoc))
+	   #set ($likeNumber = $optLikeRecord.get().likeNumber)
+          &lt;div class="like-button btn btn-default disabled badge"
+            title="$escapetool.xml($services.localization.render('like.button.title', [$likeNumber]))"&gt;
+            $services.icon.renderHTML('heart') &lt;span class="like-number"&gt;$likeNumber&lt;/span&gt;
+          &lt;/div&gt;
+        #elseif ($services.ratings)
           #set ($ratingsConfigDoc = $services.ratings.getConfigurationDocument($pDoc.documentReference))
           #if ($ratingsConfigDoc.getValue('displayRatings') == 1)
             &lt;ul class="pull-left note list-inline"&gt;
