@@ -211,7 +211,7 @@
 .edit-pinned-posts {
   margin-bottom: 5px;
 }
-.blog_pin .thumbnail img {
+.blog_pin .thumbnail &gt; img {
   width: 100%;
 }
 .thumbnail {
@@ -545,7 +545,7 @@
       &lt;/div&gt;
       #if ($showPostComments)
         &lt;div class="col-xs-4 com_det"&gt;
-          &lt;p class="text-right"&gt; &lt;i class="fa fa-comments"&gt;&lt;/i&gt; ($!nbComments)&lt;/p&gt;
+          &lt;p class="text-right"&gt;$services.icon.renderHTML('comments') ($!nbComments)&lt;/p&gt;
         &lt;/div&gt;
       #end
     &lt;/div&gt;
