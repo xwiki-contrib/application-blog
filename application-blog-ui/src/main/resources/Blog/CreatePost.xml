@@ -47,7 +47,7 @@
   #set ($doc = $targetBlogDoc)
 #end
 {{html clean="false" wiki="true"}}
-#set($name = "$!request.entryTitle")
+#set($name = "$!request.entryTitle.trim()")
 #set($title = $name)
 #if($name == '')
   ## If there's also a form_token passed it means the user has entered an empty blog post title, let the user know about it!
@@ -91,13 +91,12 @@
     ## Remove . and : from the document name, as they have a special meaning in XWiki document names
     #set($name = $name.replaceAll('[.:]', ''))
   #end
-  #set($postDocName = "${blogPostsLocation}.${name}")
-  #set($postDocName = $postDocName.trim())
+  #set($blogPostsLocationReference = $services.model.resolveSpace($blogPostsLocation))
+  #set($postDocRef = $services.model.createDocumentReference($name, $blogPostsLocationReference))
   ## Make sure blog name is new
-  #if($xwiki.exists($postDocName))
-    #set($postDocRef = $services.model.resolveDocument($postDocName, "currentmixed"))
-    #set($postDocPageName = $xwiki.getUniquePageName($blogPostsLocation, $postDocRef.getName()))
-    #set($postDocName = "${blogPostsLocation}.${postDocPageName}")
+  #if($xwiki.exists($postDocRef))
+    #set($name = $xwiki.getUniquePageName($blogPostsLocation, $name))
+    #set($postDocRef = $services.model.createDocumentReference($name, $blogPostsLocationReference))
   #end
   ## Get the target blog document, to set it as the parent
   #getBlogDocument($space $blogDoc)
@@ -107,7 +106,7 @@
   #if("$!request.category" != '')
     #set($category = "&amp;${blogPostClassname}_${blogPostObjectNumber}_category=${escapetool.url(${request.category})}")
   #end
-  $response.sendRedirect($xwiki.getURL($postDocName, 'edit', "template=${blogPostTemplate}&amp;parent=${parent}&amp;title=${title}&amp;${blogPostClassname}_0_title=${title}$!{category}&amp;form_token=$!{request.getParameter('form_token')}"))
+  $response.sendRedirect($xwiki.getURL($postDocRef, 'edit', "template=${blogPostTemplate}&amp;parent=${parent}&amp;title=${title}&amp;${blogPostClassname}_0_title=${title}$!{category}&amp;form_token=$!{request.getParameter('form_token')}"))
 #end## name == ''
 {{/html}}
 {{/velocity}}</content>
