@@ -2,7 +2,7 @@
 
 Create and manage blog posts.
 
-* Project Lead: [Vincent Massol](http://www.xwiki.org/xwiki/bin/view/XWiki/VincentMassol)
+* Project Lead: [Alex Cotiugă](http://www.xwiki.org/xwiki/bin/view/XWiki/acotiuga)
 * [Documentation & Download](http://extensions.xwiki.org/xwiki/bin/view/Extension/Blog+Application)
 * [Issue Tracker](https://jira.xwiki.org/browse/BLOG)
 * Communication: [Mailing List](http://dev.xwiki.org/xwiki/bin/view/Community/MailingLists), [IRC](http://dev.xwiki.org/xwiki/bin/view/Community/IRC)
