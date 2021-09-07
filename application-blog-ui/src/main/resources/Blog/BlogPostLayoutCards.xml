@@ -300,10 +300,14 @@
 }
 .blog_pin .title-top .date_info {
   float: right;
+}
+.post-likes.btn-default.badge {
+  color: @btn-default-color;
+  background-color: @btn-default-bg;
 }</code>
     </property>
     <property>
-      <contentType>CSS</contentType>
+      <contentType>LESS</contentType>
     </property>
     <property>
       <name/>
@@ -523,7 +527,7 @@
             #set ($likeNumber = $optLikeRecord.get().likeNumber)
           #end
           #if ($stringtool.isNumeric($likeNumber.toString()))
-            &lt;div class="btn btn-default disabled badge"
+            &lt;div class="post-likes btn btn-default disabled badge"
               title="$escapetool.xml($services.localization.render('like.button.title', [$likeNumber]))"&gt;
               $services.icon.renderHTML('heart') &lt;span class="like-number"&gt;$likeNumber&lt;/span&gt;
             &lt;/div&gt;
