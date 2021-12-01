@@ -146,7 +146,7 @@ obj.name=doc.fullName and obj.className='${blogClassname}' and obj.id=categories
 #set ($hql = "${hql} ${whereQuery} order by doc.title")
 #set ($queryObj = $services.query.hql($hql))
 #bindQueryParameters($queryObj $queryParams)
-#if ($queryObj.count() &gt; 1)
+#if ($queryObj.count() &gt; 1 || $showEmptyPanels)
   #set ($blogResults = $queryObj.addFilter('currentlanguage').execute())
   #panelheader($services.localization.render('blog.relatedblogspanel.title'))
   #foreach($blog in $blogResults)
