@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -43,9 +43,9 @@
 blog.archive.paneltitle=Blog Arşivi
 blog.archive.pagetitle=Arşiv
 blog.archive.noarticle=Henüz haberler ...
-### Missing: blog.archive.postsyear=posts for {0}
+blog.archive.postsyear={0} için gönderiler
 blog.archive.unpublished=( yayımlanmamış )
-### Missing: blog.archive.hidden=(hidden)
+blog.archive.hidden=(gizlenmiş)
 blog.archive.noarticlesyear=Bu yıl makaleler yok...
 blog.archive.postsfor=şunlar için gönderiler
 blog.archive.noarticlesmonth=bu ayda makaleler yok ...
@@ -63,7 +63,7 @@ blog.code.loading=Yükleniyor...
 blog.code.failedToChangeBlogPostVisibility=Blog yazısının görünürlüğünün değişimi başarısız oldu.
 blog.code.editpost=Bu blog yazısı düzenle
 blog.code.deletepost=Bu blog yazısı sil
-### Missing: blog.code.readpost=Read the full entry
+blog.code.readpost=Girişin tamamını okuyun
 ### Missing: blog.code.postedin=Posted in
 blog.code.postedby=tarafından gönderildi
 blog.code.createdby=tarafından düzenlendi
@@ -78,12 +78,12 @@ blog.code.previousmonth=Önceki ay
 blog.code.nextmonth=Sonraki ay
 blog.code.olderposts=Eski mesajlar
 blog.code.newerposts=Yeni mesajlar
-### Missing: blog.code.blogcategories=Blog categories
-### Missing: blog.code.description.category=Most recent blog posts in the {0} category
-### Missing: blog.code.description.space=Most recent blog posts in the {0} space
-### Missing: blog.code.description.wiki=Most recent blog posts in the wiki
+blog.code.blogcategories=Blog kategorileri
+blog.code.description.category={0} kategorisindeki en son blog gönderileri
+blog.code.description.space={0} alanındaki en son blog gönderileri
+blog.code.description.wiki=Wiki'deki en son blog gönderileri
 ### Missing: blog.code.title=Blog
-### Missing: blog.code.warning=Warning:
+blog.code.warning=Uyarı:
 blog.sheet.notpost=Bu bir blog yazısı değil!
 blog.sheet.category=Kategori :
 blog.sheet.summary=Özeti ( isteğe bağlı ) :
@@ -93,12 +93,12 @@ blog.sheet.publicationdate=Bu makale yayınlandı {0}
 blog.sheet.hidearticle=gizle makale {0}
 blog.sheet.notpublished=Bu makale henüz yayınlanmadı .
 blog.sheet.publish=Yayınla
-### Missing: blog.sheet.setdate=Set the publication date to:
-### Missing: blog.sheet.image=Image
-### Missing: blog.sheet.image.info=The image field is used to attach a thumbnail to each blog post. The post thumbnails will be visible only in cases where the blog is configured to use the 'image' layout.
-### Missing: blog.sheet.choose_image=Choose an image
-### Missing: blog.category.created=The {0} category has been created.
-### Missing: blog.category.exists=The {0} category already exists.
+blog.sheet.setdate=Yayın tarihini şu şekilde ayarlayın:
+blog.sheet.image=Resim
+blog.sheet.image.info=Resim alanı, her blog gönderisine küçük resim eklemek için kullanılır. Gönderi küçük resimleri, yalnızca blogun 'görüntü' düzenini kullanacak şekilde yapılandırıldığı durumlarda görünür olacaktır.
+blog.sheet.choose_image=Bir resim seçin
+blog.category.created={0} kategorisi oluşturuldu.
+blog.category.exists={0} kategorisi zaten var.
 blog.categories.paneltitle=Blog Kategorileri
 blog.categories.name=Adı:
 blog.categories.parentcategory=ana kategori :
@@ -111,17 +111,17 @@ blog.categories.none=Yok
 blog.categories.remove=Kaldır silindi kategori
 blog.categories.edit=düzenle Kategoriler
 blog.categories.subcategories=Alt
-blog.categories.addsubcategory=new subcategory ekle
-### Missing: blog.categories.articles=Articles from this category
-blog.categories.sheet=Kategori levha
-blog.categories.sheetmessage=Bu levha blog kategorileri görüntülemek için kullanılmalıdır .
-### Missing: blog.categories.webhome_sheetmessage=Implement the display of blog posts inside the categories home page (Blog.CategoriesSheet).
+blog.categories.addsubcategory=Yeni alt kategori ekle
+blog.categories.articles=Bu kategorideki makaleler
+blog.categories.sheet=Kategori sayfası
+blog.categories.sheetmessage=Bu sayfa, blog kategorilerini görüntülemek için kullanılmalıdır.
+blog.categories.webhome_sheetmessage=Kategoriler ana sayfasındaki (Blog.CategoriesSheet) blog gönderilerinin görüntüsünü uygulayın.
 blog.categories.notcategory=Bu bir blog kategori değildir !
-### Missing: blog.categories.noentries=No entries in this category
+blog.categories.noentries=Bu kategoride giriş yok
 blog.manageCategories.title=yönet blog kategorileri
 blog.manageCategories.create.error.emptyName=geçerli bir kategori adı girin
 blog.manageCategories.create.error.alreadyExists=Hedef belge zaten var , başka bir isim seçiniz
-### Missing: blog.manageCategories.create.error.notExists=The requested page could not be found.
+blog.manageCategories.create.error.notExists=İstenilen sayfa bulunamadı.
 ### Missing: blog.manageCategories.create.error.targetNotWritable=You don't have the right to create the target page.
 blog.manageCategories.rename.error.emptyName=geçerli bir kategori adı girin
 blog.manageCategories.js.fetchingForm=getiriliyor formu ...
@@ -179,13 +179,11 @@ blog.unpublished.viewall=Tüm
 ### Missing: blog.relatedblogspanel.title=Related Blogs
 ### Missing: blog.allblogspanel.title=All Blogs
 ### Missing: blog.allblogspanel.manage=Manage Blogs
-
 ### Missing: blog.templateProvider.blogpost.name=Blog Post
 ### Missing: blog.templateProvider.blogpost.description=Communicate news
 ### Missing: blog.categories.all=All
 ### Missing: blog.changeVisibility.changing=Changing the visibility
 ### Missing: blog.changeVisibility.success=The visibility of the blog entry has been successfully changed
-
 ### Missing: blog.manage.pagetitle=Manage blogs on this wiki
 ### Missing: blog.manage.notitle=No blog title provided. Please enter the blog title.
 ### Missing: blog.manage.nopage=No page provided. Please enter a valid page where the blog should be created.
@@ -264,5 +262,6 @@ blog.unpublished.viewall=Tüm
 blog.manage.blogtype=Blog türü \:
 
 ## Used to indicate where deprecated keys end
-#@deprecatedend</content>
+#@deprecatedend
+</content>
 </xwikidoc>
