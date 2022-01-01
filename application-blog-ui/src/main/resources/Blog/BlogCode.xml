@@ -419,7 +419,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     isPublished.id.id = obj.id and isPublished.id.name = 'published' and
     hidden.id.id = obj.id and hidden.id.name='hidden' and
     publishDate.id.id = obj.id and publishDate.id.name='publishDate' and
-    (doc.creator = '$xcontext.user' or (isPublished.value = 1 and hidden.value = 0))")
+    (doc.creator = '$escapetool.sql($xcontext.user)' or (isPublished.value = 1 and hidden.value = 0))")
 #end
 ##
 ##
