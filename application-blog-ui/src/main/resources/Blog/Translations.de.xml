@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -179,13 +179,11 @@ blog.unpublished.viewall=Zeige alle
 blog.relatedblogspanel.title=Verwandte Blogs
 blog.allblogspanel.title=Alle Blogs
 blog.allblogspanel.manage=Blogs verwalten
-
 blog.templateProvider.blogpost.name=Blog Beitrag
 blog.templateProvider.blogpost.description=Nachrichten übermitteln
 blog.categories.all=Alle
 blog.changeVisibility.changing=Ändere Sichtbarkeit
 blog.changeVisibility.success=Die Sichtbarkeit des Blogbeitrags wurde erfolgreich geändert
-
 blog.manage.pagetitle=Verwalten von Blogs in diesem Wiki
 blog.manage.notitle=Kein Blog-Titel angegeben. Bitte geben Sie eine Blog Titel an.
 blog.manage.nopage=Kein Bereich angegeben. Bitte geben Sie einen gültigen Bereich an, in dem der Blog erstellt werden soll.
@@ -201,7 +199,7 @@ blog.manage.categoriesLocationPreview.hint=Ort in der Seitenhierarchie, an dem d
 blog.manage.post.layout=Beitragslayout
 blog.blogpostlist.descriptor_not_found=Blog-Deskriptor im Dokument nicht gefunden [{0}]
 blog.categories.webhome.title=Alle Kategorien
-blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
+blog.category.posts.count={0} {0,Auswahl,0#Beiträge|1#Beitrag|1&lt;Beiträge}
 blog.blogpostlayout.notpost=[{0}] ist kein Blogbeitrag!
 blog.blogpostlayout.post_view_not_allowed=Sie haben nicht die Berechtigung den Blog-Beitrag [{0}] anzuzeigen
 blog.blogpostcreate.wrong_blog=Falscher Blog-Deskriptor
@@ -264,5 +262,6 @@ blog.panel.unpublishedBlogPosts.pageTitle=Unveröffentlichte Blog Beiträge Pane
 blog.manage.blogtype=Blog-Typ:
 
 ## Used to indicate where deprecated keys end
-#@deprecatedend</content>
+#@deprecatedend
+</content>
 </xwikidoc>
