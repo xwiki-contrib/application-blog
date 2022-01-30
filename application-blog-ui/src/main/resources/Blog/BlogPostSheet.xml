@@ -89,7 +89,7 @@ $xwiki.ssx.use('Blog.ManageCategories')##
         &lt;dd&gt;
 {{/html}}
 
-{{attachmentSelector classname="Blog.BlogPostClass" property="image" filter="png,jpg,gif" displayImage="true" buttontext="$services.localization.render('blog.sheet.choose_image')" width="300" cssClass="blogImageSelector"/}}
+{{attachmentSelector classname="Blog.BlogPostClass" property="image" filter="png,jpeg,jpg,gif" displayImage="true" buttontext="$services.localization.render('blog.sheet.choose_image')" width="300" cssClass="blogImageSelector"/}}
 
 {{html clean="false" wiki="true"}}
         &lt;/dd&gt;
