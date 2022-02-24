@@ -163,7 +163,7 @@
       ## This is just a list of blog entries, which are detailed below.
       #foreach ($entryDoc in $entries)
         #if($xwiki.hasAccessLevel('view', ${entryDoc.fullName}))
-        &lt;rdf:li rdf:resource="$entryDoc.getExternalURL('view', "language=${entryDoc.realLocale.language}")" /&gt;
+        &lt;rdf:li rdf:resource="$entryDoc.getExternalURL('view', "language=${entryDoc.realLocale}")" /&gt;
         #end
       #end
       &lt;/rdf:Seq&gt;
@@ -194,7 +194,7 @@
       ## This is just a list of blog entries, which are detailed below.
       #foreach ($entryDoc in $entries)
         #if($xwiki.hasAccessLevel('view', ${entryDoc.fullName}))
-        &lt;rdf:li rdf:resource="$entryDoc.getExternalURL('view', "language=${entryDoc.realLocal.language}")" /&gt;
+        &lt;rdf:li rdf:resource="$entryDoc.getExternalURL('view', "language=${entryDoc.realLocale}")" /&gt;
         #end
       #end
       &lt;/rdf:Seq&gt;
@@ -229,7 +229,7 @@
       ## This is just a list of blog entries, which are detailed below.
       #foreach ($entryDoc in $entries)
         #if($xwiki.hasAccessLevel('view', ${entryDoc.fullName}))
-        &lt;rdf:li rdf:resource="$entryDoc.getExternalURL('view', "language=${entryDoc.realLocale.language}")" /&gt;
+        &lt;rdf:li rdf:resource="$entryDoc.getExternalURL('view', "language=${entryDoc.realLocale}")" /&gt;
         #end
       #end
       &lt;/rdf:Seq&gt;
@@ -279,7 +279,7 @@
  * @param entryDoc The XDocument corresponding to the displayed blog entry.
  *###
 #macro(printBlogRssItem $entryDoc)
-  #set($entryUrl = $entryDoc.getExternalURL('view', "language=${entryDoc.realLocale.language}"))
+  #set($entryUrl = $entryDoc.getExternalURL('view', "language=${entryDoc.realLocale}"))
   #getEntryObject($entryDoc $entryObj)
   #getEntryContent($entryDoc $entryObj true $entryContent)
   #if($!entryDoc.syntax.toIdString() == 'xwiki/1.0')
