@@ -7,7 +7,7 @@ Create and manage blog posts.
 * [Issue Tracker](https://jira.xwiki.org/browse/BLOG)
 * Communication: [Mailing List](http://dev.xwiki.org/xwiki/bin/view/Community/MailingLists), [IRC](http://dev.xwiki.org/xwiki/bin/view/Community/IRC)
 * [Development Practices](http://dev.xwiki.org)
-* Minimal XWiki version supported: XWiki 9.2-rc-1
+* Minimal XWiki version supported: XWiki 8.4
 * License: LGPL 2.1
 * Translations: [![Translation status](https://l10n.xwiki.org/widgets/xwiki-contrib/-/blog-translations/svg-badge.svg)](https://l10n.xwiki.org/projects/xwiki-contrib/blog-translations/)
 * Sonar Dashboard: N/A
