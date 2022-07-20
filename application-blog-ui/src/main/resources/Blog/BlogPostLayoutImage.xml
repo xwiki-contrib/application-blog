@@ -195,18 +195,18 @@
 {{html clean="false" wiki="true"}}
 &lt;div class="row blog-list #if(!$isPublished) unpublished-article#elseif($isHidden) hidden-article#end"&gt;
   &lt;div class="col-xs-12 col-sm-3 col-lg-2 blog-left"&gt;
-    &lt;a href="$postDoc.uRL"&gt;
-      #set ($imageAtt = $postDoc.getAttachment($postObj.getValue('image')))
-      #if ($imageAtt)
+    #set ($imageAtt = $postDoc.getAttachment($postObj.getValue('image')))
+    #if ($imageAtt)
+      &lt;a href="$postDoc.uRL"&gt;
         {{/html}}
 
         {{html clean="false"}}&lt;img class="blog-image" src="$postDoc.getAttachmentURL($postObj.getValue('image'),'download',$imgQs)" alt="$escapetool.xml($postObj.getValue('image'))" /&gt;{{/html}}
 
         {{html clean="false" wiki="true"}}
-      #else
-        #displayBlogDate($postDate)
-      #end
-    &lt;/a&gt;
+      &lt;/a&gt;
+    #else
+      #displayBlogDate($postDate)
+    #end
   &lt;/div&gt;
   &lt;div class="col-xs-12 col-sm-9 col-lg-10 hentry"&gt;
     &lt;div class="pull-right"&gt;
