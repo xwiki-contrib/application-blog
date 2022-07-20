@@ -198,7 +198,11 @@
     &lt;a href="$postDoc.uRL"&gt;
       #set ($imageAtt = $postDoc.getAttachment($postObj.getValue('image')))
       #if ($imageAtt)
-        {{/html}}{{html clean="false"}}&lt;img class="blog-image" src="$postDoc.getAttachmentURL($postObj.getValue('image'),'download',$imgQs)"&gt;{{/html}}{{html clean="false" wiki="true"}}
+        {{/html}}
+
+        {{html clean="false"}}&lt;img class="blog-image" src="$postDoc.getAttachmentURL($postObj.getValue('image'),'download',$imgQs)" alt="$escapetool.xml($postObj.getValue('image'))" /&gt;{{/html}}
+
+        {{html clean="false" wiki="true"}}
       #else
         #displayBlogDate($postDate)
       #end
@@ -224,7 +228,7 @@
       &lt;/div&gt;
     &lt;/div&gt;
     #if($displayTitle)&lt;h3 class="entry-title"&gt;&lt;span class="wikilink"&gt;&lt;a href="$postDoc.uRL"&gt;$!postDoc.display('title', 'view', $postObj)&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;#end
-    &lt;p&gt;
+    &lt;div&gt;
     #set ($postContent = "")
     ## Note: We trim the summary so that if there's some white space it won't cause the summary to be used instead
     ## of the content.
@@ -235,7 +239,7 @@
       #set ($postContent = $postObj.getProperty('content').value)
     #end
     {{html wiki="false"}}$!postDoc.getRenderedContent($postContent, $postDoc.syntax.toIdString()){{/html}}
-    &lt;/p&gt;
+    &lt;/div&gt;
     #displayEntryFooter($postDoc $postObj)
   &lt;/div&gt;
 &lt;/div&gt;
