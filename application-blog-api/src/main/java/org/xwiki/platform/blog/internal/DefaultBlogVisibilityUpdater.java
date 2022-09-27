@@ -117,14 +117,14 @@ public class DefaultBlogVisibilityUpdater implements BlogVisibilityUpdater
 
         BaseObject blogPost = document.getXObject(blogPostClass);
         if (blogPost != null) {
-            // Set the document visibility according to the values of the blog object.
+            // Set the document visibility according to the values of the blog object, only if it's a real blog post,
+            // not the BlogPostTemplate.
             // The change will be saved after because the event is sent before the actual saving.
-            boolean hidden = blogPost.getIntValue("published") == 0 || blogPost.getIntValue("hidden") == 1;
-            document.setHidden(hidden);
-
             final DocumentReference blogPostTemplate = new DocumentReference(BLOG_POST_TEMPLATE,
                 new SpaceReference(BLOG_SPACE, document.getDocumentReference().getWikiReference()));
             if (!blogPostTemplate.equals(document.getDocumentReference())) {
+                boolean hidden = blogPost.getIntValue("published") == 0 || blogPost.getIntValue("hidden") == 1;
+                document.setHidden(hidden);
                 try {
                     if (hidden) {
                         restrictVisibilityToCurrentUser(document);
