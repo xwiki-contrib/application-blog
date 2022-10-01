@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -179,13 +179,11 @@ blog.unpublished.viewall=Показать все
 blog.relatedblogspanel.title=Похожие блоги
 blog.allblogspanel.title=Все блоги
 blog.allblogspanel.manage=Управление блогами
-
 blog.templateProvider.blogpost.name=Сообщение блога
 blog.templateProvider.blogpost.description=Сообщить новости
 blog.categories.all=Все
 blog.changeVisibility.changing=Изменение видимости
 blog.changeVisibility.success=Видимость записи блога успешно изменена
-
 blog.manage.pagetitle=Управление блогами в wiki
 blog.manage.notitle=Не указан заголовок блога. Пожалуйста, укажите заголовок.
 blog.manage.nopage=Страница не предоставлена. Пожалуйста, введите действительную страницу, где блог должен быть создан.
@@ -201,7 +199,7 @@ blog.manage.categoriesLocationPreview.hint=Расположение в иера�
 blog.manage.post.layout=Макет сообщений
 blog.blogpostlist.descriptor_not_found=Не удалось найти дескриптор блога в документе [{0}]
 blog.categories.webhome.title=Все категории
-blog.category.posts.count={0} {0,выбор,0#постов|1#пост|1&lt;поста(ов)}
+blog.category.posts.count={0} {0,choice,0#постов|1#пост|2#поста|5#постов}
 blog.blogpostlayout.notpost=[{0}] не является сообщением в блоге!
 blog.blogpostlayout.post_view_not_allowed=Вам запрещено просматривать сообщения блога [{0}]
 blog.blogpostcreate.wrong_blog=Неправильный дескриптор блога
@@ -264,5 +262,6 @@ blog.panel.unpublishedBlogPosts.pageTitle=Панель неопубликова�
 blog.manage.blogtype=Тип блога\:
 
 ## Used to indicate where deprecated keys end
-#@deprecatedend</content>
+#@deprecatedend
+</content>
 </xwikidoc>
