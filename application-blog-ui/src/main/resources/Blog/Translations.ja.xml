@@ -202,21 +202,21 @@ blog.categories.webhome.title=全てのカテゴリー
 ### Missing: blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
 blog.blogpostlayout.notpost=[{0}]はブログの投稿ではありません！
 ### Missing: blog.blogpostlayout.post_view_not_allowed=You are not allowed to view the blog post [{0}]
-### Missing: blog.blogpostcreate.wrong_blog=Wrong blog descriptor
+blog.blogpostcreate.wrong_blog=正しくないブログの記述子
 
 # Class fields
-### Missing: Blog.BlogClass_postsLayout.full=Calendar
-### Missing: Blog.BlogClass_postsLayout.image=Image thumbnail
-### Missing: Blog.BlogClass_postsLayout.cards=Cards
+Blog.BlogClass_postsLayout.full=カレンダー
+Blog.BlogClass_postsLayout.image=画像のサムネイル
+Blog.BlogClass_postsLayout.cards=カード
 
 # Blogs macro
-### Missing: blog.livetable.title=Title
-### Missing: blog.livetable._actions=Actions
-### Missing: rendering.macro.blogs.name=All Blogs Livetable
+blog.livetable.title=タイトル
+blog.livetable._actions=アクション
+rendering.macro.blogs.name=全てのブログのライブテーブル
 ### Missing: rendering.macro.blogs.description=The blogs macro is used to list on a livetable all the blog available on the wiki.
 
 # Notifications
-### Missing: blog.applicationName=Blog
+blog.applicationName=ブログ
 ### Missing: blog.events.blogpostpublished.description=A blog post is published
 ### Missing: blog.events.blogpostpublished.displayer=A new blog post has been posted: {0}
 ### Missing: blog.events.blogpostpublished.by=by {0}.
