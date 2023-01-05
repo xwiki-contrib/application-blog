@@ -50,7 +50,7 @@ blog.archive.hidden=（非表示）
 ### Missing: blog.archive.postsfor=posts for
 ### Missing: blog.archive.noarticlesmonth=No articles in this month...
 ### Missing: blog.code.blogsheet=Blog sheet
-### Missing: blog.code.sheetexplanation=This sheet should be used to display blog pages.
+blog.code.sheetexplanation=このシートはブログのページを表示するのに使用されます。
 blog.code.notblog=これはブログのページではありません！
 blog.code.published=このブログの投稿はまだ公開されていません。
 blog.code.hidden=このブログの投稿は表示されていません。
@@ -95,7 +95,7 @@ blog.sheet.notpublished=この記事はまだ公開されていません。
 blog.sheet.publish=公開
 blog.sheet.setdate=公開日を設定：
 blog.sheet.image=画像
-### Missing: blog.sheet.image.info=The image field is used to attach a thumbnail to each blog post. The post thumbnails will be visible only in cases where the blog is configured to use the 'image' layout.
+blog.sheet.image.info=画像のフィールドは、ブログの各投稿にサムネイル画像を添付するのに使用されます。投稿のサムネイル画像は、ブログが「画像」レイアウトを使用するよう設定されている場合にのみ表示されます。
 blog.sheet.choose_image=画像を選択
 blog.category.created=カテゴリー {0} を作成しました。
 blog.category.exists=カテゴリー {0} は既に存在しています。
@@ -151,7 +151,7 @@ blog.post.createpost=新しい投稿を作成
 blog.post.title=投稿のタイトル
 blog.post.titleEmptyError=投稿のタイトルを入力してください！
 blog.post.create=作成
-### Missing: blog.post.sheet=Blog post sheet
+blog.post.sheet=ブログの投稿のシート
 blog.categories.existingcategories=既存のカテゴリー
 blog.categories.addcategory=カテゴリーを追加
 blog.categories.deleteselected=選択したカテゴリーを削除
@@ -166,7 +166,7 @@ blog.manage.main=スペースのメインのコンテンツとして
 blog.manage.create=作成
 blog.migration.migrated=過去のブログの記事を新しいブログのアプリケーションに移行しました
 blog.migration.updated=更新しました
-### Missing: blog.migration.inspace=in space
+blog.migration.inspace=スペース内
 ### Missing: blog.migration.skipping=Skipping protected page
 blog.migration.done=完了しました。
 blog.migration.backtoblog=ブログに戻る
@@ -197,11 +197,11 @@ blog.manage.create_default_categories=既定のカテゴリーを作成
 blog.manage.locationPreview.hint=新しいブログを作成するページ階層での位置。
 blog.manage.categoriesLocationPreview.hint=新しいブログのカテゴリーを作成するページ階層での位置。
 blog.manage.post.layout=投稿のレイアウト
-### Missing: blog.blogpostlist.descriptor_not_found=Unable to found a blog descriptor in document [{0}]
+blog.blogpostlist.descriptor_not_found=ブログの記述子がドキュメント [{0}] で見つかりません
 blog.categories.webhome.title=全てのカテゴリー
-### Missing: blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
+blog.category.posts.count={0}件の投稿
 blog.blogpostlayout.notpost=[{0}]はブログの投稿ではありません！
-### Missing: blog.blogpostlayout.post_view_not_allowed=You are not allowed to view the blog post [{0}]
+blog.blogpostlayout.post_view_not_allowed=ブログの投稿 [{0}] の閲覧が許可されていません
 blog.blogpostcreate.wrong_blog=正しくないブログの記述子
 
 # Class fields
@@ -213,45 +213,45 @@ Blog.BlogClass_postsLayout.cards=カード
 blog.livetable.title=タイトル
 blog.livetable._actions=アクション
 rendering.macro.blogs.name=全てのブログのライブテーブル
-### Missing: rendering.macro.blogs.description=The blogs macro is used to list on a livetable all the blog available on the wiki.
+rendering.macro.blogs.description=マクロ Blogs を使用すると、ウィキにある全てのブログをライブテーブルに一覧表示できます。
 
 # Notifications
 blog.applicationName=ブログ
-### Missing: blog.events.blogpostpublished.description=A blog post is published
-### Missing: blog.events.blogpostpublished.displayer=A new blog post has been posted: {0}
-### Missing: blog.events.blogpostpublished.by=by {0}.
-### Missing: notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0}
-### Missing: notifications.events.BlogPostPublishedEvent.description=published the blog post
+blog.events.blogpostpublished.description=ブログの投稿を公開しました
+blog.events.blogpostpublished.displayer=新しいブログの投稿が投稿されました：{0}
+blog.events.blogpostpublished.by={0}により。
+notifications.events.BlogPostPublishedEvent.description.by.1user={0}により公開済
+notifications.events.BlogPostPublishedEvent.description=ブログの投稿を公開しました
 
 # Blog Menu UIX
-### Missing: blog.uixMenu.name=Blog configuration
-### Missing: blog.uixMenu.title=Wizard to configure Blog panels
-### Missing: blog.uixMenu.title.hint=Choose a Blog and enable its panels in the current page and children.
-### Missing: blog.uixMenu.blog.hint=Start typing to get the Blog suggestions. Only one should be selected.
-### Missing: blog.uixMenu.panels.hint=Select from the following list the Blog panels that needs to be displayed.
+blog.uixMenu.name=ブログの設定
+blog.uixMenu.title=ブログのパネルを設定するウィザード
+blog.uixMenu.title.hint=ブログを選択し。現在と下位のページでパネルを有効にする。
+blog.uixMenu.blog.hint=入力を開始するとブログの候補を表示します。1つのみ選択してください。
+blog.uixMenu.panels.hint=以下の一覧から表示するブログのパネルを選択してください。
 ### Missing: blog.uixMenu.inheritPanels.hint=In order to keep the existing displayed panels, make sure this option in checked. Otherwise they will be removed.
 ### Missing: blog.uixMenu.panelsPosition.hint=In case keep the existing panels, select if the Blog panels should be displayed before or after.
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=All Blogs Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=Blog Archive Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=Blog Categories Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=Recent Blog Posts Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Related Blogs Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Unpublished Blog Posts Panel
+Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=ブログの全てのパネル
+Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=ブログのアーカイブのパネル
+Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=ブログのカテゴリーのパネル
+Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=ブログの最近の投稿のパネル
+Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=関係するブログのパネル
+Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=ブログの未公開の投稿のパネル
 
 # Blog Post Cards Layout
 ### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
-### Missing: blog.post.layout.cards.pinnedposts.save=Save
+blog.post.layout.cards.pinnedposts.save=保存
 
 # Blog Post Compact Layout
 ### Missing: blog.post.layout.compact.linktoblog=Direct access to blog
 
 # Panels page title
-### Missing: blog.panel.blogArchive.pageTitle=Blog Archive Panel
-### Missing: blog.panel.allBlogs.pageTitle=All Blogs Panel
-### Missing: blog.panel.blogCategories.pageTitle=Blog Categories Panel
-### Missing: blog.panel.recentBlogPosts.pageTitle=Recent Blog Posts Panel
-### Missing: blog.panel.relatedBlogs.pageTitle=Related Blogs Panel
-### Missing: blog.panel.unpublishedBlogPosts.pageTitle=Unpublished Blog Posts Panel
+blog.panel.blogArchive.pageTitle=ブログのアーカイブのパネル
+blog.panel.allBlogs.pageTitle=ブログの全てのパネル
+blog.panel.blogCategories.pageTitle=ブログのカテゴリーのパネル
+blog.panel.recentBlogPosts.pageTitle=ブログの最近の投稿のパネル
+blog.panel.relatedBlogs.pageTitle=関係するブログのパネル
+blog.panel.unpublishedBlogPosts.pageTitle=ブログの未公開の投稿のパネル
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
@@ -259,7 +259,7 @@ blog.applicationName=ブログ
 ## until 9.9
 #######################################
 
-### Missing: blog.manage.blogtype=Blog type:
+blog.manage.blogtype=ブログの種類：
 
 ## Used to indicate where deprecated keys end
 #@deprecatedend
