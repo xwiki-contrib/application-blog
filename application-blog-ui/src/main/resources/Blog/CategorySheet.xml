@@ -46,6 +46,10 @@
 #set ($discard = $xwiki.jsx.use("Blog.ManageCategories"))
 #set ($obj = $doc.getObject($blogCategoryClassname))
 #if ($obj)
+  #if ($tdoc.content.trim() != '')
+    {{html}}$tdoc.getRenderedContent($tdoc.content, $tdoc.syntax.toIdString()).replace('{{', '&amp;amp;#123;&amp;amp;#123;'){{/html}}
+
+  #end
   {{html wiki=true}}
   #displayCategoryPosts($doc $obj)
   {{/html}}
