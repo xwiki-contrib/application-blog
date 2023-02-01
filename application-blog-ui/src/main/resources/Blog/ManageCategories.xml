@@ -100,6 +100,7 @@
       'template': "${blogCategoryTemplate}",
       'parent': "${request.newCategoryParent}",
       "${blogCategoryClassname}_0_name": $title,
+      "title": $title,
       "${blogCategoryClassname}_0_description": '',
       'xredirect': $xredirect,
       'xhidden': 1,
