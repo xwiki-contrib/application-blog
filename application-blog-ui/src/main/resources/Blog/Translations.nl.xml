@@ -169,7 +169,7 @@ blog.migration.updated=Gewijzigd
 blog.migration.inspace=in paginaruimte
 blog.migration.skipping=Beschermd document overgeslagen
 blog.migration.done=Klaar.
-blog.migration.backtoblog=Terug naar het blog
+blog.migration.backtoblog=Terug naar de blog
 blog.migration.pleaseconfirm=Bevestig alstublieft dat u oude artikelen wilt migreren naar de nieuwe blogapplicatie:
 blog.migration.confirm=Bevestigen
 blog.publisher.published=Artikel gepubliceerd
@@ -188,7 +188,7 @@ blog.manage.pagetitle=Beheer de blogs op deze wiki
 blog.manage.notitle=Geen blogtitel opgegeven. Vul de blogtitel in.
 blog.manage.nopage=Geen pagina opgegeven. Voer een geldige pagina in waar de blog moet worden aangemaakt.
 blog.manage.unallowed_page=De bloglocatie is al in gebruik, vul een andere locatie in.
-blog.manage.location.title=Blogtitel
+blog.manage.location.title=Blog titel
 blog.manage.location.title.hint=Titel van de nieuwe blog
 blog.manage.location.title.placeholder=Nieuwe blog
 blog.manage.categories_location=Categorieën locatie
@@ -205,8 +205,8 @@ blog.blogpostlayout.post_view_not_allowed=Je hebt geen rechten om dit blogberich
 blog.blogpostcreate.wrong_blog=Verkeerde blog descriptor
 
 # Class fields
-Blog.BlogClass_postsLayout.full=Calender
-Blog.BlogClass_postsLayout.image=Afbeelding miniatuur
+Blog.BlogClass_postsLayout.full=Kalender
+Blog.BlogClass_postsLayout.image=Miniatuurafbeelding
 Blog.BlogClass_postsLayout.cards=Kaarten
 
 # Blogs macro
