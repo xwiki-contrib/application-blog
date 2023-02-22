@@ -131,7 +131,7 @@ blog.manageCategories.js.rename.error.403=U heeft onvoldoende rechten om het doc
 blog.manageCategories.js.rename.error.404=Ongeldige categorie, ververs de pagina om de hiërarchie van categorieën te herladen
 blog.manageCategories.js.rename.error.409=Document bestaat al, kies alstublieft een andere naam
 blog.manageCategories.js.add.inProgress=Categorie toevoegen...
-blog.manageCategories.js.add.error.401=U bent uitgelogd. Herlaad de pagina en log in.
+blog.manageCategories.js.add.error.401=U bent uitgelogd. Herlaad de pagina en log in
 blog.manageCategories.js.add.error.403=U heeft onvoldoende rechten om het document te maken
 blog.manageCategories.js.add.error.409=Document bestaat al, kies alstublieft een andere naam
 blog.manageCategories.js.delete.confirm=Weet u zeker dat je deze categorie wil wissen? Deze actie is onomkeerbaar.
@@ -183,7 +183,7 @@ blog.templateProvider.blogpost.name=Blogbericht
 blog.templateProvider.blogpost.description=Communiceer nieuws
 blog.categories.all=Alles
 blog.changeVisibility.changing=Zichtbaarheid wijzigen
-blog.changeVisibility.success=De zichtbaarheid van het blog bericht is succesvol aangepast.
+blog.changeVisibility.success=De zichtbaarheid van het blog bericht is succesvol aangepast
 blog.manage.pagetitle=Beheer de blogs op deze wiki
 blog.manage.notitle=Geen blogtitel opgegeven. Vul de blogtitel in.
 blog.manage.nopage=Geen pagina opgegeven. Voer een geldige pagina in waar de blog moet worden aangemaakt.
@@ -207,7 +207,7 @@ blog.blogpostcreate.wrong_blog=Verkeerde blog descriptor
 # Class fields
 Blog.BlogClass_postsLayout.full=Calender
 Blog.BlogClass_postsLayout.image=Afbeelding miniatuur
-### Missing: Blog.BlogClass_postsLayout.cards=Cards
+Blog.BlogClass_postsLayout.cards=Kaarten
 
 # Blogs macro
 blog.livetable.title=Titel
@@ -225,33 +225,33 @@ notifications.events.BlogPostPublishedEvent.description=publiceerde het blogberi
 
 # Blog Menu UIX
 ### Missing: blog.uixMenu.name=Blog configuration
-### Missing: blog.uixMenu.title=Wizard to configure Blog panels
-### Missing: blog.uixMenu.title.hint=Choose a Blog and enable its panels in the current page and children.
-### Missing: blog.uixMenu.blog.hint=Start typing to get the Blog suggestions. Only one should be selected.
-### Missing: blog.uixMenu.panels.hint=Select from the following list the Blog panels that needs to be displayed.
-### Missing: blog.uixMenu.inheritPanels.hint=In order to keep the existing displayed panels, make sure this option in checked. Otherwise they will be removed.
-### Missing: blog.uixMenu.panelsPosition.hint=In case keep the existing panels, select if the Blog panels should be displayed before or after.
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=All Blogs Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=Blog Archive Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=Blog Categories Panel
+blog.uixMenu.title=Wizard om blog panelen te configureren
+blog.uixMenu.title.hint=Kies een blog en activeer het bijbehorend paneel in de huidige en onderliggende pagina's.
+blog.uixMenu.blog.hint=Begin met typen om de blog suggesties te krijgen. Alleen één kan geselecteerd worden.
+blog.uixMenu.panels.hint=Kies uit de onderstaande lijst de blog panelen die getoond dienen te worden.
+blog.uixMenu.inheritPanels.hint=Om de huidig getoonde panelen te behouden, zorg dat deze optie is geselecteerd. Anders zullen deze verwijderd worden.
+blog.uixMenu.panelsPosition.hint=In het geval van behouden bestaande panelen, kies of de blog panelen getoond moeten worden.
+Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=Alle blog panelen
+Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=Blog archief paneel
+Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=Blog categorieën paneel
 ### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=Recent Blog Posts Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Related Blogs Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Unpublished Blog Posts Panel
+Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Bijbehorende blogs paneel
+Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Ongepubliceerde blog berichten paneel
 
 # Blog Post Cards Layout
-### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
-### Missing: blog.post.layout.cards.pinnedposts.save=Save
+blog.post.layout.cards.pinnedposts.edit=Beheer gepinde blog berichten
+blog.post.layout.cards.pinnedposts.save=Opslaan
 
 # Blog Post Compact Layout
-### Missing: blog.post.layout.compact.linktoblog=Direct access to blog
+blog.post.layout.compact.linktoblog=Directe toegang tot blog
 
 # Panels page title
-### Missing: blog.panel.blogArchive.pageTitle=Blog Archive Panel
-### Missing: blog.panel.allBlogs.pageTitle=All Blogs Panel
-### Missing: blog.panel.blogCategories.pageTitle=Blog Categories Panel
+blog.panel.blogArchive.pageTitle=Blog Archief paneel
+blog.panel.allBlogs.pageTitle=Alle blogs paneel
+blog.panel.blogCategories.pageTitle=Blog Categorieën Paneel
 ### Missing: blog.panel.recentBlogPosts.pageTitle=Recent Blog Posts Panel
-### Missing: blog.panel.relatedBlogs.pageTitle=Related Blogs Panel
-### Missing: blog.panel.unpublishedBlogPosts.pageTitle=Unpublished Blog Posts Panel
+blog.panel.relatedBlogs.pageTitle=Gerelateerde blogs paneel
+blog.panel.unpublishedBlogPosts.pageTitle=Ongepubliceerde blog berichten paneel
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
