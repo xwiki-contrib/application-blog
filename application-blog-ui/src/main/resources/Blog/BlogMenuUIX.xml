@@ -125,10 +125,10 @@
       <code>require(['jquery'], function ($) {
   // The Blog modal can be added by UIX only inside the dropdown element of More Actions. For this reason, the modal
   // will not be displayed and we need a way to make it visible (e.g: move it to another element).
-  $('#tmBlogTrigger').click(function() {
+  $('#tmBlogTrigger').on('click', function() {
     $('#blogModal').prependTo($('#tmMoreActions'));
   });
-  $('#enableBlogPanels').submit(function(event) {
+  $('#enableBlogPanels').on('submit', function(event) {
     event.preventDefault();
     $.post({
       url : $(this).attr('action'),

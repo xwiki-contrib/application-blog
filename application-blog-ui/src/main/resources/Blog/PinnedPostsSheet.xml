@@ -239,7 +239,7 @@ require(['jquery',"$services.webjars.url('jquery-ui', 'jquery-ui.js')",'select2'
     // Apply 'Select2' js plugin on the pinned posts select
     initializePinnedPostsSelector();
     // Initialize the edit pinned posts button
-    $(".editPinnedPosts").click(function(){
+    $(".editPinnedPosts").on('click', function(){
       var editPinnedPostsURL = $('#editPinnedPostsURL').val();
       $('.xdialog-modal-container').remove();
       new XWiki.widgets.pinnedPostsModalPopup({pageURL: editPinnedPostsURL});

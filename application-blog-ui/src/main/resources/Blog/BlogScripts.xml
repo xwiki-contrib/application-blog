@@ -439,7 +439,7 @@ require(['jquery'], function ($) {
     /**
      * Initialize the blog entries toolbar.
      */
-    $('.blog-tool-show,.blog-tool-hide').click(hideShowEntry).each(function () {
+    $('.blog-tool-show,.blog-tool-hide').on('click', hideShowEntry).each(function () {
       // Add "ajax=1" to the URL of the toolbar links
       var link = $(this);
       link.attr('href', link.attr('href').replace(/xredirect=.*?(&amp;|$)/, "ajax=1$1"));
