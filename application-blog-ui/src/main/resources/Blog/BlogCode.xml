@@ -770,8 +770,10 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param entryObj The xobject of the blog post, an instance of the &lt;tt&gt;Blog.BlogPostClass&lt;/tt&gt; xclass.
  * @param onlyExtract If &lt;tt&gt;true&lt;/tt&gt;, try to display only a summary of the entry, instead of the full content.
  * @param entryContent The resulting content.
+ * @param removeEllipsis If &lt;tt&gt;true&lt;/tt&gt;, then don't display an ellipsis at the end of the content (only used when
+ *        &lt;tt&gt;onlyExtract&lt;/tt&gt; is &lt;tt&gt;true&lt;/tt&gt;)
  *###
-#macro(getEntryContent $entryDoc $entryObj $onlyExtract $entryContent)
+#macro(getEntryContent $entryDoc $entryObj $onlyExtract $entryContent $removeEllipsis)
   #if ($onlyExtract)
     ## Note: We trim the summary so that if there's some white space it won't cause the summary to be used instead
     ## of the content.
@@ -786,7 +788,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
 *      #set($macro.result = "${macro.result.substring(0,$i)} *[...&gt;${entryDoc.fullName}]*")
 *    #end
 ## *###
-  #else
+  #elseif (!$removeEllipsis)
     #if($entryDoc.syntax.toIdString() == 'xwiki/1.0')
       #set($macro.result = "${macro.result} &lt;a href='${entryDoc.getURL()}' title='$services.localization.render('blog.code.readpost')'&gt;...&lt;/a&gt;")
     #elseif($entryDoc.syntax.toIdString() == 'xwiki/2.0' || $entryDoc.syntax.toIdString() == 'xwiki/2.1')

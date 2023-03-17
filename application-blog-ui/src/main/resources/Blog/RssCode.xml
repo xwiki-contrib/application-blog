@@ -281,7 +281,7 @@
 #macro(printBlogRssItem $entryDoc)
   #set($entryUrl = $entryDoc.getExternalURL('view', "language=${entryDoc.realLocale}"))
   #getEntryObject($entryDoc $entryObj)
-  #getEntryContent($entryDoc $entryObj true $entryContent)
+  #getEntryContent($entryDoc $entryObj true $entryContent true)
   #if($!entryDoc.syntax.toIdString() == 'xwiki/1.0')
     #set($desc = $entryContent)
   #else
