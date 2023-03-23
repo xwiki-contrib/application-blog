@@ -133,7 +133,7 @@
  *###
 #macro(printBlogRssHeader)
   &lt;?xml version="1.0" encoding="$xwiki.encoding" ?&gt;
-  &lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/"&gt;
+  &lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xwiki="https://xwiki.org"&gt;
 #end
 ##
 ##
@@ -297,6 +297,16 @@
     &lt;dc:subject&gt;$escapetool.xml($entryObj.display('category', 'view'))&lt;/dc:subject&gt;
     &lt;dc:date&gt;$dateFormatter.print($entryDoc.date.time)&lt;/dc:date&gt;
     &lt;dc:creator&gt;$escapetool.xml($xwiki.getUserName($entryDoc.creator, false))&lt;/dc:creator&gt;
+    ## Add the image URL if there's an image for the blog post. Since RSS 1.0 and Dublin Core don't seem to support
+    ## images for feed items, we use an XWiki specific metadata.
+    ## Get the image name from the blog post which always contains the name of an attachment located in the blog post
+    ## doc.
+    #set ($blogPostImageName = $entryObj.getValue('image'))
+    #if ("$!blogPostImageName" != '')
+      #set ($blogPostImageURL = $services.blog.getExternalAttachmentURL($entryDoc, $blogPostImageName))
+      #set ($blogPostImageAttachment = $entryDoc.getAttachment($blogPostImageName))
+      &lt;xwiki:image type="$escapetool.xml($blogPostImageAttachment.mimeType)" length="$escapetool.xml($blogPostImageAttachment.longSize)"&gt;$escapetool.xml($blogPostImageURL)&lt;/xwiki:image&gt;
+    #end
     #if($entryDoc.creator != $entryDoc.author)
       &lt;dc:contributor&gt;
         &lt;rdf:Description link="$xwiki.getURL($entryDoc.author)"&gt;
