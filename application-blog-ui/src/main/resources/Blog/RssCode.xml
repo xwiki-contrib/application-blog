@@ -295,7 +295,14 @@
     ## Some metadata, using the Dublin Core extension to RSS.
     ## TODO: Display this in a better way.
     &lt;dc:subject&gt;$escapetool.xml($entryObj.display('category', 'view'))&lt;/dc:subject&gt;
-    &lt;dc:date&gt;$dateFormatter.print($entryDoc.date.time)&lt;/dc:date&gt;
+    ## Map dc:date to the published date. Note that we don't use the last modified date as otherwise any edit to a blog
+    ## post would reorder the post. To voluntarily reorder a post, change the published date instead.
+    #set ($dcDate = $entryObj.getValue('publishDate').time)
+    #if ("$!dcDate" == '')
+      ## Fallback in the unlikely case when there's no publication date
+      #set ($dcDate = $entryDoc.date.time)
+    #end
+    &lt;dc:date&gt;$dateFormatter.print($dcDate)&lt;/dc:date&gt;
     &lt;dc:creator&gt;$escapetool.xml($xwiki.getUserName($entryDoc.creator, false))&lt;/dc:creator&gt;
     ## Add the image URL if there's an image for the blog post. Since RSS 1.0 and Dublin Core don't seem to support
     ## images for feed items, we use an XWiki specific metadata.
