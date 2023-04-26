@@ -1,0 +1,267 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.3" reference="Blog.Translations" locale="ja">
+  <web>Blog</web>
+  <name>Translations</name>
+  <language>ja</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1466137391000</creationDate>
+  <parent>Main.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1490616853000</date>
+  <contentUpdateDate>1490616821000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Translations</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>blog.application.name=ブログ
+blog.archive.paneltitle=ブログのアーカイブ
+blog.archive.pagetitle=アーカイブ
+blog.archive.noarticle=記事はまだありません…
+### Missing: blog.archive.postsyear=posts for {0}
+blog.archive.unpublished=（未公開）
+blog.archive.hidden=（非表示）
+### Missing: blog.archive.noarticlesyear=No articles in this year...
+### Missing: blog.archive.postsfor=posts for
+### Missing: blog.archive.noarticlesmonth=No articles in this month...
+### Missing: blog.code.blogsheet=Blog sheet
+blog.code.sheetexplanation=このシートはブログのページを表示するのに使用されます。
+blog.code.notblog=これはブログのページではありません！
+blog.code.published=このブログの投稿はまだ公開されていません。
+blog.code.hidden=このブログの投稿は表示されていません。
+blog.code.notpublished=このブログの投稿はまだ公開されていません。公開しましょう。
+blog.code.madevisible=エントリーを表示
+blog.code.hid=非表示のエントリー
+blog.code.makevisible=このブログの投稿は他のユーザーに表示されていません。表示する。
+blog.code.hide=このブログの投稿を他のユーザーに表示しない。
+blog.code.loading=読み込んでいます…
+blog.code.failedToChangeBlogPostVisibility=ブログの投稿の見え方を変更できませんでした。
+blog.code.editpost=このブログの投稿を編集
+blog.code.deletepost=このブログの投稿を削除
+blog.code.readpost=エントリーの全文を読む
+### Missing: blog.code.postedin=Posted in
+blog.code.postedby=投稿者
+blog.code.createdby=作成者
+blog.code.modifiedby=編集者
+blog.code.comments=コメント
+blog.code.permalink=パーマリンク
+blog.code.categories=カテゴリー：
+### Missing: blog.code.in=in
+blog.code.previousweek=先週
+blog.code.nextweek=翌週
+blog.code.previousmonth=先月
+blog.code.nextmonth=翌月
+blog.code.olderposts=以前の投稿
+blog.code.newerposts=以後の投稿
+blog.code.blogcategories=ブログのカテゴリー
+blog.code.description.category=カテゴリー {0} のブログの最新の投稿
+blog.code.description.space=スペース {0} のブログの最新の投稿
+blog.code.description.wiki=このウィキの最近のブログの投稿
+blog.code.title=ブログ
+blog.code.warning=警告：
+blog.sheet.notpost=これはブログの投稿ではありません！
+blog.sheet.category=カテゴリー：
+blog.sheet.summary=要約（オプション）：
+blog.sheet.content=内容：
+blog.sheet.title=タイトル：
+blog.sheet.publicationdate=この記事は{0}に公開されました
+blog.sheet.hidearticle=記事 {0} を非表示とする
+blog.sheet.notpublished=この記事はまだ公開されていません。
+blog.sheet.publish=公開
+blog.sheet.setdate=公開日を設定：
+blog.sheet.image=画像
+blog.sheet.image.info=画像のフィールドは、ブログの各投稿にサムネイル画像を添付するのに使用されます。投稿のサムネイル画像は、ブログが「画像」レイアウトを使用するよう設定されている場合にのみ表示されます。
+blog.sheet.choose_image=画像を選択
+blog.category.created=カテゴリー {0} を作成しました。
+blog.category.exists=カテゴリー {0} は既に存在しています。
+blog.categories.paneltitle=ブログのカテゴリー
+blog.categories.name=名称：
+blog.categories.parentcategory=上位のカテゴリー：
+blog.categories.description=説明：
+blog.categories.add=追加
+blog.categories.new=新しいカテゴリー：
+blog.categories.newName=新しいカテゴリー名：
+blog.categories.parent=上位：
+blog.categories.none=なし
+### Missing: blog.categories.remove=Remove deleted category
+blog.categories.edit=カテゴリーを変更
+blog.categories.subcategories=サブカテゴリー
+blog.categories.addsubcategory=新しいサブカテゴリーを追加
+blog.categories.articles=このカテゴリーの記事
+blog.categories.sheet=カテゴリー表
+blog.categories.sheetmessage=この表はブログのカテゴリーを表示するのに使用されます。
+### Missing: blog.categories.webhome_sheetmessage=Implement the display of blog posts inside the categories home page (Blog.CategoriesSheet).
+blog.categories.notcategory=これはブログのカテゴリーではありません！
+blog.categories.noentries=このカテゴリーにエントリーはありません
+blog.manageCategories.title=ブログのカテゴリーを管理
+blog.manageCategories.create.error.emptyName=有効なカテゴリー名を入力してください
+blog.manageCategories.create.error.alreadyExists=ターゲットのページは既に存在します。異なる名称を設定してください
+blog.manageCategories.create.error.notExists=要求したページが見つかりませんでした。
+blog.manageCategories.create.error.targetNotWritable=ターゲットのページを作成する権限がありません。
+blog.manageCategories.rename.error.emptyName=有効なカテゴリー名を入力してください
+blog.manageCategories.js.fetchingForm=フォームを取得しています…
+blog.manageCategories.js.error.noServer=サーバーの応答がありません
+blog.manageCategories.js.rename.inProgress=カテゴリーの名称を変更しています…
+blog.manageCategories.js.rename.error.403=ターゲットのページの作成は許可されていません
+blog.manageCategories.js.rename.error.404=不正なカテゴリーです。ページの再読み込みを行い、カテゴリーのツリーを更新してください
+blog.manageCategories.js.rename.error.409=ターゲットのページは既に存在します。異なる名称を設定してください
+blog.manageCategories.js.add.inProgress=カテゴリーを追加しています…
+blog.manageCategories.js.add.error.401=ログアウト済です。再読み込みを行い、ログインしてください
+blog.manageCategories.js.add.error.403=ターゲットのページの作成は許可されていません
+blog.manageCategories.js.add.error.409=ターゲットのページは既に存在します。異なる名称を設定してください
+blog.manageCategories.js.delete.confirm=このカテゴリーを削除してよろしいですか？このアクションは取り消せません。
+blog.manageCategories.js.delete.inProgress=カテゴリーを削除しています…
+blog.manageCategories.js.delete.done=削除しました
+blog.manageCategories.js.delete.failed=カテゴリーを削除できませんでした
+blog.manageCategories.comment.updatedParent=上位カテゴリーを更新しました
+### Missing: blog.manageCategories.comment.removedDeletedCategory=Removed deleted category
+blog.manageCategories.comment.updatedRenamedCategory=名称を変更したカテゴリーを更新しました
+blog.manageCategories.comment.updatedCategory=カテゴリー名を更新しました
+blog.manageCategories.forms.add_button_label=追加
+blog.manageCategories.forms.cancel_button_label=キャンセル
+blog.manageCategories.forms.select_none=なし
+### Missing: blog.manageCategories.forms.sub_cat_of=Subcategory of:
+blog.manageCategories.forms.rename_button_label=名称の変更
+blog.post.createpost=新しい投稿を作成
+blog.post.title=投稿のタイトル
+blog.post.titleEmptyError=投稿のタイトルを入力してください！
+blog.post.create=作成
+blog.post.sheet=ブログの投稿のシート
+blog.categories.existingcategories=既存のカテゴリー
+blog.categories.addcategory=カテゴリーを追加
+blog.categories.deleteselected=選択したカテゴリーを削除
+blog.manage.existing=既存のブログ
+blog.manage.createnew=新しいブログを作成
+blog.manage.nospace=スペースが指定されていません。ブログを作成する有効なスペースを入力してください。
+blog.manage.space=スペース：
+blog.manage.title=タイトル：
+blog.manage.blogtitle=ブログのタイトル
+blog.manage.inside=既存のスペースのブログ
+blog.manage.main=スペースのメインのコンテンツとして
+blog.manage.create=作成
+blog.migration.migrated=過去のブログの記事を新しいブログのアプリケーションに移行しました
+blog.migration.updated=更新しました
+blog.migration.inspace=スペース内
+### Missing: blog.migration.skipping=Skipping protected page
+blog.migration.done=完了しました。
+blog.migration.backtoblog=ブログに戻る
+blog.migration.pleaseconfirm=過去の記事を新しいブログのアプリケーションに移行することを承認してください：
+blog.migration.confirm=承認
+blog.publisher.published=公開済の記事
+blog.recentposts.paneltitle=最近のブログの投稿
+blog.unpublished.entries=未公開の記事
+blog.unpublished.viewall=全て閲覧
+blog.relatedblogspanel.title=関係するブログ
+blog.allblogspanel.title=全てのブログ
+blog.allblogspanel.manage=ブログの管理
+blog.templateProvider.blogpost.name=ブログの投稿
+### Missing: blog.templateProvider.blogpost.description=Communicate news
+blog.categories.all=全て
+blog.changeVisibility.changing=見え方を変更しています
+blog.changeVisibility.success=ブログのエントリーの見え方を正常に変更しました
+blog.manage.pagetitle=このウィキのブログを管理
+blog.manage.notitle=ブログのタイトルが指定されていません。入力してください。
+blog.manage.nopage=ページが指定されていません。ブログを作成する有効なページを入力してください。
+blog.manage.unallowed_page=ブログの保存場所は既に使用されています。他の場所を入力してください。
+blog.manage.location.title=ブログのタイトル
+blog.manage.location.title.hint=新しいブログのタイトル
+blog.manage.location.title.placeholder=新しいブログ
+blog.manage.categories_location=カテゴリーの保存場所
+blog.manage.enable_panels=ブログのパネルを有効にする
+blog.manage.create_default_categories=既定のカテゴリーを作成
+blog.manage.locationPreview.hint=新しいブログを作成するページ階層での位置。
+blog.manage.categoriesLocationPreview.hint=新しいブログのカテゴリーを作成するページ階層での位置。
+blog.manage.post.layout=投稿のレイアウト
+blog.blogpostlist.descriptor_not_found=ブログの記述子がドキュメント [{0}] で見つかりません
+blog.categories.webhome.title=全てのカテゴリー
+blog.category.posts.count={0}件の投稿
+blog.blogpostlayout.notpost=[{0}]はブログの投稿ではありません！
+blog.blogpostlayout.post_view_not_allowed=ブログの投稿 [{0}] の閲覧が許可されていません
+blog.blogpostcreate.wrong_blog=正しくないブログの記述子
+
+# Class fields
+Blog.BlogClass_postsLayout.full=カレンダー
+Blog.BlogClass_postsLayout.image=画像のサムネイル
+Blog.BlogClass_postsLayout.cards=カード
+
+# Blogs macro
+blog.livetable.title=タイトル
+blog.livetable._actions=アクション
+rendering.macro.blogs.name=全てのブログのライブテーブル
+rendering.macro.blogs.description=マクロ Blogs を使用すると、ウィキにある全てのブログをライブテーブルに一覧表示できます。
+
+# Notifications
+blog.applicationName=ブログ
+blog.events.blogpostpublished.description=ブログの投稿を公開しました
+blog.events.blogpostpublished.displayer=新しいブログの投稿が投稿されました：{0}
+blog.events.blogpostpublished.by={0}により。
+notifications.events.BlogPostPublishedEvent.description.by.1user={0}により公開済
+notifications.events.BlogPostPublishedEvent.description=ブログの投稿を公開しました
+
+# Blog Menu UIX
+blog.uixMenu.name=ブログの設定
+blog.uixMenu.title=ブログのパネルを設定するウィザード
+blog.uixMenu.title.hint=ブログを選択し。現在と下位のページでパネルを有効にする。
+blog.uixMenu.blog.hint=入力を開始するとブログの候補を表示します。1つのみ選択してください。
+blog.uixMenu.panels.hint=以下の一覧から表示するブログのパネルを選択してください。
+### Missing: blog.uixMenu.inheritPanels.hint=In order to keep the existing displayed panels, make sure this option in checked. Otherwise they will be removed.
+### Missing: blog.uixMenu.panelsPosition.hint=In case keep the existing panels, select if the Blog panels should be displayed before or after.
+Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=ブログの全てのパネル
+Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=ブログのアーカイブのパネル
+Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=ブログのカテゴリーのパネル
+Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=ブログの最近の投稿のパネル
+Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=関係するブログのパネル
+Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=ブログの未公開の投稿のパネル
+
+# Blog Post Cards Layout
+### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
+blog.post.layout.cards.pinnedposts.save=保存
+
+# Blog Post Compact Layout
+### Missing: blog.post.layout.compact.linktoblog=Direct access to blog
+
+# Panels page title
+blog.panel.blogArchive.pageTitle=ブログのアーカイブのパネル
+blog.panel.allBlogs.pageTitle=ブログの全てのパネル
+blog.panel.blogCategories.pageTitle=ブログのカテゴリーのパネル
+blog.panel.recentBlogPosts.pageTitle=ブログの最近の投稿のパネル
+blog.panel.relatedBlogs.pageTitle=関係するブログのパネル
+blog.panel.unpublishedBlogPosts.pageTitle=ブログの未公開の投稿のパネル
+
+## Used to indicate where deprecated keys start
+#@deprecatedstart
+#######################################
+## until 9.9
+#######################################
+
+blog.manage.blogtype=ブログの種類：
+
+## Used to indicate where deprecated keys end
+#@deprecatedend
+</content>
+  </xwikidoc>
