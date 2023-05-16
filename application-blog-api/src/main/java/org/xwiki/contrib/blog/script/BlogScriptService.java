@@ -29,7 +29,10 @@ import org.xwiki.script.service.ScriptService;
 import org.xwiki.stability.Unstable;
 
 import com.xpn.xwiki.XWikiContext;
+import com.xpn.xwiki.XWikiException;
 import com.xpn.xwiki.api.Document;
+import com.xpn.xwiki.web.ExternalServletURLFactory;
+import com.xpn.xwiki.web.XWikiURLFactory;
 
 /**
  * Script APIs for the Blog Application.
@@ -57,5 +60,27 @@ public class BlogScriptService implements ScriptService
         // to get an external attachment URL. See https://jira.xwiki.org/browse/XWIKI-20770
         XWikiContext context = this.xwikiContextProvider.get();
         return document.getDocument().getExternalAttachmentURL(filename, "download", context);
+    }
+
+    /**
+     * Render the passed content to HTML so that it can be used in the {@code <description>} RSS tag. It ensures that
+     * URLS are rendered as absolute URLs.
+     *
+     * @param contentToRender the content to render, written in the syntax of the passed document
+     * @param blogDocument the document containing the content to render
+     * @return the rendered content as HTML
+     * @throws XWikiException if there's an error when rendering the content to HTML
+     * @since 9.14
+     */
+    public String renderRSSDescription(String contentToRender, Document blogDocument) throws XWikiException
+    {
+        XWikiContext context = this.xwikiContextProvider.get();
+        XWikiURLFactory currentURLFactory = context.getURLFactory();
+        try {
+            context.setURLFactory(new ExternalServletURLFactory(context));
+            return blogDocument.getRenderedContent(contentToRender, blogDocument.getSyntax().toIdString());
+        } finally {
+            context.setURLFactory(currentURLFactory);
+        }
     }
 }

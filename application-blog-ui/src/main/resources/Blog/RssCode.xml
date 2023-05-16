@@ -285,7 +285,7 @@
   #if($!entryDoc.syntax.toIdString() == 'xwiki/1.0')
     #set($desc = $entryContent)
   #else
-    #set($desc = $entryDoc.getRenderedContent($entryContent, $entryDoc.getSyntax().toIdString()))
+    #set($desc = $services.blog.renderRSSDescription($entryContent, $entryDoc))
   #end
   #set($desc = $escapetool.xml($desc))
   &lt;item rdf:about="$entryUrl"&gt;
