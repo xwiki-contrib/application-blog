@@ -38,7 +38,7 @@ import com.xpn.xwiki.web.XWikiURLFactory;
  * Script APIs for the Blog Application.
  *
  * @version $Id$
- * @since 9.14
+ * @since 9.13.2
  */
 @Component
 @Named("blog")
@@ -70,7 +70,6 @@ public class BlogScriptService implements ScriptService
      * @param blogDocument the document containing the content to render
      * @return the rendered content as HTML
      * @throws XWikiException if there's an error when rendering the content to HTML
-     * @since 9.14
      */
     public String renderRSSDescription(String contentToRender, Document blogDocument) throws XWikiException
     {
