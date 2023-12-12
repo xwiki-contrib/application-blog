@@ -72,7 +72,7 @@
       <separators/>
       <size>1</size>
       <sort>none</sort>
-      <sql>select doc.fullName from XWikiDocument doc, BaseObject obj where obj.name = doc.fullName and obj.className = 'Blog.BlogClass' and doc.fullName&lt;&gt;'Blog.BlogTemplate' #if(($xwiki.getUserPreference('displayHiddenDocuments') == 0) || ("$!services.user.properties" != '' &amp;&amp; !$services.user.properties.displayHiddenDocuments())) and not doc.hidden #end</sql>
+      <sql>select doc.fullName from XWikiDocument doc, BaseObject obj where obj.name = doc.fullName and obj.className = 'Blog.BlogClass' and doc.fullName&lt;&gt;'Blog.BlogTemplate' #if(($xwiki.getUserPreference('displayHiddenDocuments') == 0) || ("$!services.user.properties" != '' &amp;&amp; !$services.user.properties.displayHiddenDocuments())) and doc.hidden is not true #end</sql>
       <unmodifiable>0</unmodifiable>
       <validationMessage/>
       <validationRegExp/>
