@@ -1,0 +1,267 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.3" reference="Blog.Translations" locale="ko">
+  <web>Blog</web>
+  <name>Translations</name>
+  <language>ko</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1466137391000</creationDate>
+  <parent>Main.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1490616853000</date>
+  <contentUpdateDate>1490616821000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Translations</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>blog.application.name=블로그
+blog.archive.paneltitle=블로그 아카이브
+blog.archive.pagetitle=보관소
+blog.archive.noarticle=아직 기사가 없습니다...
+blog.archive.postsyear={0}에 대한 게시물
+blog.archive.unpublished=(널리 알려지지 않은)
+blog.archive.hidden=(숨겨진)
+blog.archive.noarticlesyear=올해는 기사가 없습니다...
+blog.archive.postsfor=게시물
+blog.archive.noarticlesmonth=이번 달에는 기사가 없습니다...
+blog.code.blogsheet=블로그 시트
+blog.code.sheetexplanation=이 시트는 블로그 페이지를 표시하는 데 사용됩니다.
+blog.code.notblog=이것은 블로그 페이지가 아닙니다!
+blog.code.published=이 블로그 게시물은 아직 게시되지 않았습니다.
+blog.code.hidden=이 블로그 게시물은 숨겨져 있습니다.
+blog.code.notpublished=이 블로그 게시물은 아직 게시되지 않았습니다. 게시하세요.
+blog.code.madevisible=항목을 표시했습니다.
+blog.code.hid=숨겨진 항목
+blog.code.makevisible=이 블로그 게시물은 다른 사용자에게 표시되지 않습니다. 눈에 띄게 만드세요.
+blog.code.hide=다른 사용자가 볼 수 없도록 이 블로그 게시물을 숨기세요.
+blog.code.loading=로드 중...
+blog.code.failedToChangeBlogPostVisibility=블로그 게시물 공개 상태를 변경하지 못했습니다.
+blog.code.editpost=이 블로그 게시물 편집
+blog.code.deletepost=이 블로그 게시물 삭제
+blog.code.readpost=전체 항목 읽기
+blog.code.postedin=에 게시 됨
+blog.code.postedby=게시자:
+blog.code.createdby=작성자:
+blog.code.modifiedby=삭제 진행 중...
+blog.code.comments=삭제 진행 중...
+blog.code.permalink=삭제 진행 중...
+blog.code.categories=삭제 진행 중...
+blog.code.in=삭제 진행 중...
+blog.code.previousweek=삭제 진행 중...
+blog.code.nextweek=삭제 진행 중...
+blog.code.previousmonth=삭제 진행 중...
+blog.code.nextmonth=삭제 진행 중...
+blog.code.olderposts=삭제 진행 중...
+blog.code.newerposts=삭제 진행 중...
+blog.code.blogcategories=삭제 진행 중...
+blog.code.description.category=삭제 진행 중...
+blog.code.description.space=삭제 진행 중...
+blog.code.description.wiki=이 저장되었지만, 일부 새롭게 실패한 검사가 있습니다: 일치하지 않는 마침표(.), 일치하지 않는 물음표(?)
+blog.code.title=이 저장되었지만, 일부 새롭게 실패한 검사가 있습니다: 일치하지 않는 마침표(.), 일치하지 않는 물음표(?)
+blog.code.warning=이 저장되었지만, 일부 새롭게 실패한 검사가 있습니다: 일치하지 않는 마침표(.), 일치하지 않는 물음표(?)
+blog.sheet.notpost=이 저장되었지만, 일부 새롭게 실패한 검사가 있습니다: 일치하지 않는 마침표(.), 일치하지 않는 물음표(?)
+blog.sheet.category=이 저장되었지만, 일부 새롭게 실패한 검사가 있습니다: 일치하지 않는 마침표(.)
+blog.sheet.summary=이 저장되었지만, 일부 새롭게 실패한 검사가 있습니다: 일치하지 않는 마침표(.)
+blog.sheet.content=이 저장되었지만, 일부 새롭게 실패한 검사가 있습니다: 일치하지 않는 콜론(:)
+blog.sheet.title=이 저장되었지만, 일부 새롭게 실패한 검사가 있습니다: 일치하지 않는 물음표(?)
+blog.sheet.publicationdate=이 저장되었지만, 일부 새롭게 실패한 검사가 있습니다: 일치하지 않는 마침표(.)
+blog.sheet.hidearticle=이 저장되었지만, 일부 새롭게 실패한 검사가 있습니다: 일치하지 않는 마침표(.)
+blog.sheet.notpublished=이 저장되었지만, 일부 새롭게 실패한 검사가 있습니다: 일치하지 않는 마침표(.)
+blog.sheet.publish=이 저장되었지만, 일부 새롭게 실패한 검사가 있습니다: 일치하지 않는 마침표(.)
+blog.sheet.setdate=이 저장되었지만, 일부 새롭게 실패한 검사가 있습니다: 일치하지 않는 마침표(.)
+blog.sheet.image=영상
+blog.sheet.image.info=이미지 필드는 각 블로그 게시물에 썸네일을 첨부하는 데 사용됩니다. 게시물 축소판은 블로그가 '이미지' 레이아웃을 사용하도록 구성된 경우에만 표시됩니다.
+blog.sheet.choose_image=이미지를 선택하세요
+blog.category.created={0} 카테고리가 생성되었습니다.
+blog.category.exists={0} 카테고리가 이미 존재합니다.
+blog.categories.paneltitle=블로그 카테고리
+blog.categories.name=이름:
+blog.categories.parentcategory=상위 카테고리:
+blog.categories.description=설명:
+blog.categories.add=추가하다
+blog.categories.new=새 분류:
+blog.categories.newName=새 카테고리 이름:
+blog.categories.parent=부모의:
+blog.categories.none=없음
+blog.categories.remove=삭제된 카테고리 삭제
+blog.categories.edit=카테고리 편집
+blog.categories.subcategories=하위 카테고리
+blog.categories.addsubcategory=새 하위 카테고리 추가
+blog.categories.articles=이 카테고리의 기사
+blog.categories.sheet=카테고리 시트
+blog.categories.sheetmessage=이 시트는 블로그 카테고리를 표시하는 데 사용됩니다.
+blog.categories.webhome_sheetmessage=카테고리 홈 페이지(Blog.CategoriesSheet) 내에 블로그 게시물 표시를 구현합니다.
+blog.categories.notcategory=이것은 블로그 카테고리가 아닙니다!
+blog.categories.noentries=이 카테고리에는 항목이 없습니다.
+blog.manageCategories.title=블로그 카테고리 관리
+blog.manageCategories.create.error.emptyName=올바른 카테고리 이름을 입력하세요.
+blog.manageCategories.create.error.alreadyExists=대상 페이지가 이미 존재합니다. 다른 이름을 선택하세요.
+blog.manageCategories.create.error.notExists=요청하신 페이지를 찾을 수 없습니다.
+blog.manageCategories.create.error.targetNotWritable=대상 페이지를 생성할 권한이 없습니다.
+blog.manageCategories.rename.error.emptyName=올바른 카테고리 이름을 입력하세요.
+blog.manageCategories.js.fetchingForm=양식을 가져오는 중...
+blog.manageCategories.js.error.noServer=서버가 응답하지 않습니다
+blog.manageCategories.js.rename.inProgress=카테고리 이름을 바꾸는 중...
+blog.manageCategories.js.rename.error.403=대상 페이지를 생성할 수 없습니다.
+blog.manageCategories.js.rename.error.404=카테고리가 잘못되었습니다. 카테고리 트리를 업데이트하려면 페이지를 새로 고치세요.
+blog.manageCategories.js.rename.error.409=대상 페이지가 이미 존재합니다. 다른 이름을 선택하세요.
+blog.manageCategories.js.add.inProgress=카테고리 추가 중...
+blog.manageCategories.js.add.error.401=로그아웃되었습니다. 새로고침 후 로그인해 주세요.
+blog.manageCategories.js.add.error.403=대상 페이지를 생성할 수 없습니다.
+blog.manageCategories.js.add.error.409=대상 페이지가 이미 존재합니다. 다른 이름을 선택하세요.
+blog.manageCategories.js.delete.confirm=이 카테고리를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.
+blog.manageCategories.js.delete.inProgress=카테고리 삭제 중...
+blog.manageCategories.js.delete.done=삭제됨
+blog.manageCategories.js.delete.failed=카테고리를 삭제하지 못했습니다.
+blog.manageCategories.comment.updatedParent=업데이트된 카테고리 상위
+blog.manageCategories.comment.removedDeletedCategory=삭제된 카테고리가 삭제되었습니다.
+blog.manageCategories.comment.updatedRenamedCategory=이름이 변경된 카테고리가 업데이트되었습니다.
+blog.manageCategories.comment.updatedCategory=업데이트된 카테고리 이름
+blog.manageCategories.forms.add_button_label=추가하다
+blog.manageCategories.forms.cancel_button_label=취소
+blog.manageCategories.forms.select_none=없음
+blog.manageCategories.forms.sub_cat_of=하위 카테고리:
+blog.manageCategories.forms.rename_button_label=이름 바꾸기
+blog.post.createpost=새 게시물 작성
+blog.post.title=게시물 제목
+blog.post.titleEmptyError=게시물 제목은 비워둘 수 없습니다!
+blog.post.create=만들다
+blog.post.sheet=블로그 게시물 시트
+blog.categories.existingcategories=기존 카테고리
+blog.categories.addcategory=카테고리 추가
+blog.categories.deleteselected=선택한 카테고리 삭제
+blog.manage.existing=기존 블로그
+blog.manage.createnew=새 블로그 만들기
+blog.manage.nospace=공간이 제공되지 않습니다. 블로그를 생성할 유효한 공간을 입력하세요.
+blog.manage.space=공간:
+blog.manage.title=제목:
+blog.manage.blogtitle=블로그 제목
+blog.manage.inside=기존 공간 내부의 블로그
+blog.manage.main=블로그를 공간의 주요 콘텐츠로 활용
+blog.manage.create=만들다
+blog.migration.migrated=이전 블로그 기사를 새 블로그 애플리케이션으로 마이그레이션했습니다.
+blog.migration.updated=업데이트됨
+blog.migration.inspace=우주에서
+blog.migration.skipping=보호된 페이지 건너뛰기
+blog.migration.done=완료.
+blog.migration.backtoblog=블로그로 돌아가기
+blog.migration.pleaseconfirm=이전 기사를 새 블로그 애플리케이션으로 마이그레이션할지 확인하세요.
+blog.migration.confirm=확인하다
+blog.publisher.published=게재된 기사
+blog.recentposts.paneltitle=최근 블로그 게시물
+blog.unpublished.entries=게시되지 않은 기사
+blog.unpublished.viewall=모두보기
+blog.relatedblogspanel.title=관련 블로그
+blog.allblogspanel.title=모든 블로그
+blog.allblogspanel.manage=블로그 관리
+blog.templateProvider.blogpost.name=블로그 게시물
+blog.templateProvider.blogpost.description=소식을 전하다
+blog.categories.all=모두
+blog.changeVisibility.changing=가시성 변경
+blog.changeVisibility.success=블로그 항목의 공개 상태가 성공적으로 변경되었습니다.
+blog.manage.pagetitle=이 위키에서 블로그를 관리하세요
+blog.manage.notitle=제공된 블로그 제목이 없습니다. 블로그 제목을 입력해주세요.
+blog.manage.nopage=제공된 페이지가 없습니다. 블로그를 만들어야 하는 유효한 페이지를 입력하세요.
+blog.manage.unallowed_page=블로그 위치가 이미 사용되었습니다. 다른 위치를 입력하세요.
+blog.manage.location.title=블로그 제목
+blog.manage.location.title.hint=새 블로그 제목
+blog.manage.location.title.placeholder=새 블로그
+blog.manage.categories_location=카테고리 위치
+blog.manage.enable_panels=블로그 패널 활성화
+blog.manage.create_default_categories=기본 카테고리 생성
+blog.manage.locationPreview.hint=이 새 블로그가 생성될 페이지 계층 구조의 위치입니다.
+blog.manage.categoriesLocationPreview.hint=이 새 블로그 카테고리가 생성될 페이지 계층 구조의 위치입니다.
+blog.manage.post.layout=게시물 레이아웃
+blog.blogpostlist.descriptor_not_found=문서 [{0}]에서 블로그 설명자를 찾을 수 없습니다.
+blog.categories.webhome.title=모든 카테고리
+blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
+blog.blogpostlayout.notpost=[{0}]은(는) 블로그 게시물이 아닙니다!
+blog.blogpostlayout.post_view_not_allowed=블로그 게시물 [{0}]을(를) 볼 수 없습니다.
+blog.blogpostcreate.wrong_blog=잘못된 블로그 설명자
+
+# Class fields
+Blog.BlogClass_postsLayout.full=달력
+Blog.BlogClass_postsLayout.image=이미지 썸네일
+Blog.BlogClass_postsLayout.cards=카드
+
+# Blogs macro
+blog.livetable.title=제목
+blog.livetable._actions=행위
+rendering.macro.blogs.name=모든 블로그 라이브테이블
+rendering.macro.blogs.description=블로그 매크로는 위키에서 사용 가능한 모든 블로그를 라이브 테이블에 나열하는 데 사용됩니다.
+
+# Notifications
+blog.applicationName=블로그
+blog.events.blogpostpublished.description=블로그 게시물이 게시되었습니다.
+blog.events.blogpostpublished.displayer=새 블로그 게시물이 게시되었습니다: {0}
+blog.events.blogpostpublished.by={0}까지.
+notifications.events.BlogPostPublishedEvent.description.by.1user=게시자: {0}
+notifications.events.BlogPostPublishedEvent.description=블로그 게시물을 게시했습니다.
+
+# Blog Menu UIX
+blog.uixMenu.name=블로그 구성
+blog.uixMenu.title=블로그 패널을 구성하는 마법사
+blog.uixMenu.title.hint=블로그를 선택하고 현재 페이지와 하위 페이지에서 해당 패널을 활성화합니다.
+blog.uixMenu.blog.hint=블로그 제안을 받으려면 입력을 시작하세요. 하나만 선택해야 합니다.
+blog.uixMenu.panels.hint=다음 목록에서 표시해야 하는 블로그 패널을 선택하세요.
+blog.uixMenu.inheritPanels.hint=기존에 표시된 패널을 유지하려면 이 옵션을 선택했는지 확인하세요. 그렇지 않으면 제거됩니다.
+blog.uixMenu.panelsPosition.hint=기존 패널을 유지하는 경우 블로그 패널을 표시하기 전 또는 후에 표시할지 선택합니다.
+Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=모든 블로그 패널
+Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=블로그 아카이브 패널
+Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=블로그 카테고리 패널
+Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=최근 블로그 게시물 패널
+Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=관련 블로그 패널
+Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=게시되지 않은 블로그 게시물 패널
+
+# Blog Post Cards Layout
+blog.post.layout.cards.pinnedposts.edit=고정된 블로그 게시물 관리
+blog.post.layout.cards.pinnedposts.save=구하다
+
+# Blog Post Compact Layout
+blog.post.layout.compact.linktoblog=블로그에 직접 접속
+
+# Panels page title
+blog.panel.blogArchive.pageTitle=블로그 아카이브 패널
+blog.panel.allBlogs.pageTitle=모든 블로그 패널
+blog.panel.blogCategories.pageTitle=블로그 카테고리 패널
+blog.panel.recentBlogPosts.pageTitle=최근 블로그 게시물 패널
+blog.panel.relatedBlogs.pageTitle=관련 블로그 패널
+blog.panel.unpublishedBlogPosts.pageTitle=게시되지 않은 블로그 게시물 패널
+
+## Used to indicate where deprecated keys start
+#@deprecatedstart
+#######################################
+## until 9.9
+#######################################
+
+blog.manage.blogtype=블로그 유형:
+
+## Used to indicate where deprecated keys end
+#@deprecatedend
+</content>
+  </xwikidoc>
