@@ -202,7 +202,7 @@
 #set ($isAggregatorBlog = false)
 #set ($blogCategoriesLocation = $defaultBlogSpace)
 #set ($blogPostsLocation = $defaultBlogSpace)
-#set ($resutls = [])
+#set ($results = [])
 
 #getAllBlogPostsQuery($hql)
 #set ($queryParams = {})
@@ -260,15 +260,15 @@
       #end
     #end
     #if ($isCategoriesSpace)
-      ## Exclude uncetagorized posts
-      #set ($exculdedCategory = "${categoryParam}.WebHome")
+      ## Exclude uncategorized posts
+      #set ($excludedCategory = "${categoryParam}.WebHome")
       #if ($categoryParam == $defaultBlogSpace)
-        #set ($exculdedCategory = "${categoryParam}.Categories.WebHome")
+        #set ($excludedCategory = "${categoryParam}.Categories.WebHome")
       #end
       #set($sanitizedCategoryParam = $categoryParam.replaceAll('([%_!])', '!$1').concat('.%'))
       #set ($whereQuery = "${whereQuery} and catList&lt;&gt;:excludedCategory and catList like :category escape '!'")
       #set ($discard = $queryParams.put('category', $sanitizedCategoryParam))
-      #set ($discard = $queryParams.put('excludedCategory', $exculdedCategory))
+      #set ($discard = $queryParams.put('excludedCategory', $excludedCategory))
     #else
       ## Get all posts of the category and its sub categories
       #getCategoriesHierarchy ($categoryDoc.space $catTree)
