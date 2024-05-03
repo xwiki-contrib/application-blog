@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -40,9 +40,9 @@
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
   <content>### Missing: blog.application.name=Blog
-### Missing: blog.archive.paneltitle=Blog Archive
-### Missing: blog.archive.pagetitle=Archive
-### Missing: blog.archive.noarticle=No articles yet...
+blog.archive.paneltitle=Arquivo do Blog
+blog.archive.pagetitle=Arquivo
+blog.archive.noarticle=Nenhum artigo ainda...
 ### Missing: blog.archive.postsyear=posts for {0}
 ### Missing: blog.archive.unpublished=(unpublished)
 ### Missing: blog.archive.hidden=(hidden)
@@ -179,13 +179,11 @@ blog.categories.addcategory=Incluir uma categoria
 ### Missing: blog.relatedblogspanel.title=Related Blogs
 ### Missing: blog.allblogspanel.title=All Blogs
 ### Missing: blog.allblogspanel.manage=Manage Blogs
-
 ### Missing: blog.templateProvider.blogpost.name=Blog Post
 ### Missing: blog.templateProvider.blogpost.description=Communicate news
 ### Missing: blog.categories.all=All
 ### Missing: blog.changeVisibility.changing=Changing the visibility
 ### Missing: blog.changeVisibility.success=The visibility of the blog entry has been successfully changed
-
 ### Missing: blog.manage.pagetitle=Manage blogs on this wiki
 ### Missing: blog.manage.notitle=No blog title provided. Please enter the blog title.
 ### Missing: blog.manage.nopage=No page provided. Please enter a valid page where the blog should be created.
@@ -264,5 +262,6 @@ blog.categories.addcategory=Incluir uma categoria
 ### Missing: blog.manage.blogtype=Blog type:
 
 ## Used to indicate where deprecated keys end
-#@deprecatedend</content>
+#@deprecatedend
+</content>
 </xwikidoc>
