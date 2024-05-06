@@ -558,7 +558,7 @@
   ##
   ##
   #macro(initLayoutVars $pDoc $pObj)
-    #set ($postTitle = $pDoc.display('title', 'view', $pObj))
+    #set ($postTitle = $escapetool.xml($pDoc.getValue('title')))
     #set ($imageAtt = $pDoc.getAttachment($pObj.getValue('image')))
     #isPublished($pObj $isPublished)
     #isHidden($pObj $isHidden)
