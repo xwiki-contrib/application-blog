@@ -289,7 +289,7 @@
   #end
   #set($desc = $escapetool.xml($desc))
   &lt;item rdf:about="$entryUrl"&gt;
-    &lt;title&gt;$escapetool.xml($entryDoc.display("title", "view", $entryObj))&lt;/title&gt;
+    &lt;title&gt;$escapetool.xml($entryDoc.getValue('title')&lt;/title&gt;
     &lt;link&gt;$entryUrl&lt;/link&gt;
     &lt;description&gt;$desc&lt;/description&gt;
     ## Some metadata, using the Dublin Core extension to RSS.
