@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -41,7 +41,7 @@
   <hidden>true</hidden>
   <content>blog.application.name=Blog
 blog.archive.paneltitle=Arquivo do Blog
-### Missing: blog.archive.pagetitle=Archive
+blog.archive.pagetitle=Arquivo
 blog.archive.noarticle=Nenhum artigo ainda...
 blog.archive.postsyear=Posts do Blog para {0}
 blog.archive.unpublished=(não publicado)
@@ -95,7 +95,7 @@ blog.sheet.notpublished=Esse artigo não foi publicado ainda.
 blog.sheet.publish=Publicar
 blog.sheet.setdate=Atribuir data de publicação para\:
 blog.sheet.image=Imagem
-### Missing: blog.sheet.image.info=The image field is used to attach a thumbnail to each blog post. The post thumbnails will be visible only in cases where the blog is configured to use the 'image' layout.
+blog.sheet.image.info=O campo de imagem é usado para anexar uma miniatura a cada postagem do blog. As miniaturas das postagens ficarão visíveis apenas nos casos em que o blog estiver configurado para usar o layout  ‘imagem’.
 blog.sheet.choose_image=Escolha uma imagem
 blog.category.created=A categoria {0} ainda não foi criada.
 blog.category.exists=A categoria {0} já existe.
@@ -115,7 +115,7 @@ blog.categories.addsubcategory=Adicionar nova subcategoria
 blog.categories.articles=Artigos dessa categoria
 blog.categories.sheet=Folha de categoria
 blog.categories.sheetmessage=Essa folha deve ser usada para exibir categorias de blog.
-### Missing: blog.categories.webhome_sheetmessage=Implement the display of blog posts inside the categories home page (Blog.CategoriesSheet).
+blog.categories.webhome_sheetmessage=Implemente a exibição de postagens de blog dentro da página inicial das categorias (Blog.CategoriesSheet).
 blog.categories.notcategory=Essa não é uma categoria de blog\!
 blog.categories.noentries=Sem registros nesta categoria
 blog.manageCategories.title=Gerenciar categorias de blog
@@ -176,17 +176,15 @@ blog.publisher.published=Publique o artigo
 blog.recentposts.paneltitle=Postagens Recentes do Blog
 blog.unpublished.entries=Tire artigos de publicação
 blog.unpublished.viewall=Visualize todos
-### Missing: blog.relatedblogspanel.title=Related Blogs
-### Missing: blog.allblogspanel.title=All Blogs
-### Missing: blog.allblogspanel.manage=Manage Blogs
-
+blog.relatedblogspanel.title=Blogs relacionados
+blog.allblogspanel.title=Todos os Blogs
+blog.allblogspanel.manage=Gerenciar blogs
 blog.templateProvider.blogpost.name=Post de Blog
 blog.templateProvider.blogpost.description=Novidades
 blog.categories.all=Todas
 blog.changeVisibility.changing=Alterar a visibilidade
 blog.changeVisibility.success=A visibilidade do blog foi alterada com sucesso
-
-### Missing: blog.manage.pagetitle=Manage blogs on this wiki
+blog.manage.pagetitle=Gerenciar blogs nesta wiki
 blog.manage.notitle=Título do blog não preenchido. Favor preencher o título do blog
 blog.manage.nopage=Página não preenchida. Favor preencher uma página válida onde o blog deverá ser criado
 blog.manage.unallowed_page=A localização do blog já está em uso, por favor preencha outra localização
@@ -199,27 +197,27 @@ blog.manage.create_default_categories=Criar categoria padrão
 blog.manage.locationPreview.hint=Localização na página de hierarquia onde o novo blog será criado.
 blog.manage.categoriesLocationPreview.hint=Localização na página de hierarquia onde a nova categoria de blog será criada.
 blog.manage.post.layout=Layout dos Posts
-### Missing: blog.blogpostlist.descriptor_not_found=Unable to found a blog descriptor in document [{0}]
+blog.blogpostlist.descriptor_not_found=Não foi possível encontrar um descritor de blog no documento [{0}]
 blog.categories.webhome.title=Todas as Categorias
-### Missing: blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
-### Missing: blog.blogpostlayout.notpost=[{0}] is not a blog post!
+blog.category.posts.count={0} {0,choice,0#postagens|1#postagem|1&lt;postagens}
+blog.blogpostlayout.notpost=[{0}] não é uma postagem de blog!
 blog.blogpostlayout.post_view_not_allowed=Você não tem permissão para para visualizar este post do blog [{0}]
-### Missing: blog.blogpostcreate.wrong_blog=Wrong blog descriptor
+blog.blogpostcreate.wrong_blog=Descritor de blog errado
 
 # Class fields
-### Missing: Blog.BlogClass_postsLayout.full=Calendar
-### Missing: Blog.BlogClass_postsLayout.image=Image thumbnail
+Blog.BlogClass_postsLayout.full=Calendário
+Blog.BlogClass_postsLayout.image=Miniatura da imagem
 ### Missing: Blog.BlogClass_postsLayout.cards=Cards
 
 # Blogs macro
-### Missing: blog.livetable.title=Title
-### Missing: blog.livetable._actions=Actions
-### Missing: rendering.macro.blogs.name=All Blogs Livetable
-### Missing: rendering.macro.blogs.description=The blogs macro is used to list on a livetable all the blog available on the wiki.
+blog.livetable.title=Título
+blog.livetable._actions=Ações
+rendering.macro.blogs.name=Todos os blogs Livetable
+rendering.macro.blogs.description=A macro blogs é usada para listar em uma livetable todos os blogs disponíveis no wiki.
 
 # Notifications
 ### Missing: blog.applicationName=Blog
-### Missing: blog.events.blogpostpublished.description=A blog post is published
+blog.events.blogpostpublished.description=Uma postagem no blog é publicada
 ### Missing: blog.events.blogpostpublished.displayer=A new blog post has been posted: {0}
 ### Missing: blog.events.blogpostpublished.by=by {0}.
 ### Missing: notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0}
@@ -264,5 +262,6 @@ blog.blogpostlayout.post_view_not_allowed=Você não tem permissão para para vi
 blog.manage.blogtype=Tipo de blog\:
 
 ## Used to indicate where deprecated keys end
-#@deprecatedend</content>
+#@deprecatedend
+</content>
 </xwikidoc>
