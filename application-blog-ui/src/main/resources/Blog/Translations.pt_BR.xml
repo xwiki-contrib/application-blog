@@ -207,7 +207,7 @@ blog.blogpostcreate.wrong_blog=Descritor de blog errado
 # Class fields
 Blog.BlogClass_postsLayout.full=Calendário
 Blog.BlogClass_postsLayout.image=Miniatura da imagem
-### Missing: Blog.BlogClass_postsLayout.cards=Cards
+Blog.BlogClass_postsLayout.cards=Cartões
 
 # Blogs macro
 blog.livetable.title=Título
@@ -218,10 +218,10 @@ rendering.macro.blogs.description=A macro blogs é usada para listar em uma live
 # Notifications
 ### Missing: blog.applicationName=Blog
 blog.events.blogpostpublished.description=Uma postagem no blog é publicada
-### Missing: blog.events.blogpostpublished.displayer=A new blog post has been posted: {0}
-### Missing: blog.events.blogpostpublished.by=by {0}.
-### Missing: notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0}
-### Missing: notifications.events.BlogPostPublishedEvent.description=published the blog post
+blog.events.blogpostpublished.displayer=Uma nova postagem no blog foi postada: {0}
+blog.events.blogpostpublished.by=por {0}.
+notifications.events.BlogPostPublishedEvent.description.by.1user=publicado por {0}
+notifications.events.BlogPostPublishedEvent.description=publicou a postagem do blog
 
 # Blog Menu UIX
 ### Missing: blog.uixMenu.name=Blog configuration
