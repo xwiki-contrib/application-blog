@@ -59,12 +59,12 @@ blog.code.madevisible=Tornar%20post%20visível
 blog.code.hid=Post%20escondido
 blog.code.makevisible=Este blog não é visível para os outros usuários. Torne-o visível.
 blog.code.hide=Esconda esse post do blog para os outros usuários.
-blog.code.loading=Carregando
-blog.code.failedToChangeBlogPostVisibility=Falha ao alterar a visibilidade do post do blog
+blog.code.loading=Carregando...
+blog.code.failedToChangeBlogPostVisibility=Falha ao alterar a visibilidade do post do blog.
 blog.code.editpost=Editar este post do Blog
 blog.code.deletepost=Remover esse post de blog
 blog.code.readpost=Ler o post completo
-### Missing: blog.code.postedin=Posted in
+blog.code.postedin=Postado em
 blog.code.postedby=Enviado por
 blog.code.createdby=Criado por
 blog.code.modifiedby=Atualizado por
@@ -83,7 +83,7 @@ blog.code.description.category=Blog mais recente na categoria {0}
 blog.code.description.space=Post mais recente no espaço {0}
 blog.code.description.wiki=A Postagem mais recentes no wiki
 blog.code.title=Blog
-blog.code.warning=Alerta
+blog.code.warning=Alerta:
 blog.sheet.notpost=Esta não é uma entrada de blog\!
 blog.sheet.category=Categoria\:
 blog.sheet.summary=Resumo (opcional)\:
@@ -95,7 +95,7 @@ blog.sheet.notpublished=Esse artigo não foi publicado ainda.
 blog.sheet.publish=Publicar
 blog.sheet.setdate=Atribuir data de publicação para\:
 blog.sheet.image=Imagem
-blog.sheet.image.info=O campo de imagem é usado para anexar uma miniatura a cada postagem do blog. As miniaturas das postagens ficarão visíveis apenas nos casos em que o blog estiver configurado para usar o layout  ‘imagem’.
+blog.sheet.image.info=O campo de imagem é usado para anexar uma miniatura a cada postagem do blog. As miniaturas das postagens ficarão visíveis apenas nos casos em que o blog estiver configurado para usar o layout ‘imagem’.
 blog.sheet.choose_image=Escolha uma imagem
 blog.category.created=A categoria {0} ainda não foi criada.
 blog.category.exists=A categoria {0} já existe.
@@ -151,7 +151,7 @@ blog.post.createpost=Criar um novo post
 blog.post.title=Título do Post
 blog.post.titleEmptyError=O título do post não deve ficar vazio\!
 blog.post.create=Criar
-### Missing: blog.post.sheet=Blog post sheet
+blog.post.sheet=Folha de postagem do blog
 blog.categories.existingcategories=Categorias existentes
 blog.categories.addcategory=Adicionar uma categoria
 blog.categories.deleteselected=Remover as categorias selecionadas
@@ -185,9 +185,9 @@ blog.categories.all=Todas
 blog.changeVisibility.changing=Alterar a visibilidade
 blog.changeVisibility.success=A visibilidade do blog foi alterada com sucesso
 blog.manage.pagetitle=Gerenciar blogs nesta wiki
-blog.manage.notitle=Título do blog não preenchido. Favor preencher o título do blog
-blog.manage.nopage=Página não preenchida. Favor preencher uma página válida onde o blog deverá ser criado
-blog.manage.unallowed_page=A localização do blog já está em uso, por favor preencha outra localização
+blog.manage.notitle=Título do blog não preenchido. Favor preencher o título do blog.
+blog.manage.nopage=Página não preenchida. Favor preencher uma página válida onde o blog deverá ser criado.
+blog.manage.unallowed_page=A localização do blog já está em uso, por favor preencha outra localização.
 blog.manage.location.title=Título do blog
 blog.manage.location.title.hint=Título do novo Blog
 blog.manage.location.title.placeholder=Novo Blog
@@ -216,7 +216,7 @@ rendering.macro.blogs.name=Todos os blogs Livetable
 rendering.macro.blogs.description=A macro blogs é usada para listar em uma livetable todos os blogs disponíveis no wiki.
 
 # Notifications
-### Missing: blog.applicationName=Blog
+blog.applicationName=Blog
 blog.events.blogpostpublished.description=Uma postagem no blog é publicada
 blog.events.blogpostpublished.displayer=Uma nova postagem no blog foi postada: {0}
 blog.events.blogpostpublished.by=por {0}.
@@ -225,33 +225,33 @@ notifications.events.BlogPostPublishedEvent.description=publicou a postagem do b
 
 # Blog Menu UIX
 ### Missing: blog.uixMenu.name=Blog configuration
-### Missing: blog.uixMenu.title=Wizard to configure Blog panels
-### Missing: blog.uixMenu.title.hint=Choose a Blog and enable its panels in the current page and children.
-### Missing: blog.uixMenu.blog.hint=Start typing to get the Blog suggestions. Only one should be selected.
-### Missing: blog.uixMenu.panels.hint=Select from the following list the Blog panels that needs to be displayed.
-### Missing: blog.uixMenu.inheritPanels.hint=In order to keep the existing displayed panels, make sure this option in checked. Otherwise they will be removed.
-### Missing: blog.uixMenu.panelsPosition.hint=In case keep the existing panels, select if the Blog panels should be displayed before or after.
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=All Blogs Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=Blog Archive Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=Blog Categories Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=Recent Blog Posts Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Related Blogs Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Unpublished Blog Posts Panel
+blog.uixMenu.title=Assistente para configurar painéis do Blog
+blog.uixMenu.title.hint=Escolha um Blog e habilite seus painéis na página atual e nos filhos.
+blog.uixMenu.blog.hint=Comece a digitar para obter sugestões do Blog. Apenas um deve ser selecionado.
+blog.uixMenu.panels.hint=Selecione na lista a seguir os painéis do Blog que precisam ser exibidos.
+blog.uixMenu.inheritPanels.hint=Para manter os painéis exibidos existentes, certifique-se de que esta opção esteja marcada. Caso contrário, eles serão removidos.
+blog.uixMenu.panelsPosition.hint=Caso mantenha os painéis existentes, selecione se os painéis do Blog deverão ser exibidos antes ou depois.
+Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=Painel Todos os Blogs
+Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=Painel de arquivo de blog
+Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=Painel de categorias de blog
+Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=Painel de postagens recentes do blog
+Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Painel de blogs relacionados
+Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Painel de postagens de blog não publicadas
 
 # Blog Post Cards Layout
-### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
-### Missing: blog.post.layout.cards.pinnedposts.save=Save
+blog.post.layout.cards.pinnedposts.edit=Gerenciar postagens de blog fixadas
+blog.post.layout.cards.pinnedposts.save=Salvar
 
 # Blog Post Compact Layout
-### Missing: blog.post.layout.compact.linktoblog=Direct access to blog
+blog.post.layout.compact.linktoblog=Acesso direto ao blog
 
 # Panels page title
-### Missing: blog.panel.blogArchive.pageTitle=Blog Archive Panel
-### Missing: blog.panel.allBlogs.pageTitle=All Blogs Panel
-### Missing: blog.panel.blogCategories.pageTitle=Blog Categories Panel
-### Missing: blog.panel.recentBlogPosts.pageTitle=Recent Blog Posts Panel
-### Missing: blog.panel.relatedBlogs.pageTitle=Related Blogs Panel
-### Missing: blog.panel.unpublishedBlogPosts.pageTitle=Unpublished Blog Posts Panel
+blog.panel.blogArchive.pageTitle=Painel de arquivo de blog
+blog.panel.allBlogs.pageTitle=Painel Todos os Blogs
+blog.panel.blogCategories.pageTitle=Painel de categorias de blog
+blog.panel.recentBlogPosts.pageTitle=Painel de postagens recentes do blog
+blog.panel.relatedBlogs.pageTitle=Painel de blogs relacionados
+blog.panel.unpublishedBlogPosts.pageTitle=Painel de postagens de blog não publicadas
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
