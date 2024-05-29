@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -60,11 +60,11 @@ blog.code.hid=Intrare ascunsă
 blog.code.makevisible=Acest post nu este vizibil pentru alți utilizatori. Activează vizibilitatea.
 blog.code.hide=Ascunde această postare pentru alți utilizatori.
 blog.code.loading=Se încarcă...
-### Missing: blog.code.failedToChangeBlogPostVisibility=Failed to change blog post visibility.
-blog.code.editpost=Editează această postare
-blog.code.deletepost=Șterge această postare
+blog.code.failedToChangeBlogPostVisibility=Nu s-a reușit modificarea vizibilității postărilor de pe blog.
+blog.code.editpost=Editează această postare de blog
+blog.code.deletepost=Șterge această postare de blog
 blog.code.readpost=Citește întreaga intrare
-### Missing: blog.code.postedin=Posted in
+blog.code.postedin=Publicat în
 blog.code.postedby=Postat de
 blog.code.createdby=Creat de
 blog.code.modifiedby=Modificat de
@@ -78,30 +78,30 @@ blog.code.previousmonth=Luna precedentă
 blog.code.nextmonth=Următoarea lună
 blog.code.olderposts=Postări mai vechi
 blog.code.newerposts=Postări mai noi
-### Missing: blog.code.blogcategories=Blog categories
-### Missing: blog.code.description.category=Most recent blog posts in the {0} category
-### Missing: blog.code.description.space=Most recent blog posts in the {0} space
-### Missing: blog.code.description.wiki=Most recent blog posts in the wiki
+blog.code.blogcategories=Categorii de blog
+blog.code.description.category=Cele mai recente articole de blog din categoria {0}
+blog.code.description.space=Cele mai recente postări pe blog în spațiul {0}
+blog.code.description.wiki=Cele mai recente postări de pe blog în wiki
 blog.code.title=Blog
-### Missing: blog.code.warning=Warning:
-blog.sheet.notpost=Aceasta nu este o postare!
+blog.code.warning=Avertisment:
+blog.sheet.notpost=Aceasta nu este o postare de blog!
 blog.sheet.category=Categorie:
-blog.sheet.summary=Rezumat(opțional):
+blog.sheet.summary=Rezumat (opțional):
 blog.sheet.content=Conţinut:
 blog.sheet.title=Titlu:
 blog.sheet.publicationdate=Acest articol a fost publicat pe data de {0}
 blog.sheet.hidearticle=Ascunde articolul {0}
 blog.sheet.notpublished=Acest articol nu a fost încă publicat.
 blog.sheet.publish=Publică
-blog.sheet.setdate=Publică la data de:
-### Missing: blog.sheet.image=Image
-### Missing: blog.sheet.image.info=The image field is used to attach a thumbnail to each blog post. The post thumbnails will be visible only in cases where the blog is configured to use the 'image' layout.
-### Missing: blog.sheet.choose_image=Choose an image
+blog.sheet.setdate=Setați data de publicare la:
+blog.sheet.image=Imagine
+blog.sheet.image.info=Câmpul imagine este utilizat pentru a atașa o miniatură la fiecare articol de blog. Miniaturile posturilor vor fi vizibile numai în cazul în care blogul este configurat să utilizeze aspectul "imagine".
+blog.sheet.choose_image=Selectați o imagine
 blog.category.created=Categoria {0} a fost creată.
 blog.category.exists=Categoria {0} există deja.
-### Missing: blog.categories.paneltitle=Blog Categories
+blog.categories.paneltitle=Categorii de bloguri
 blog.categories.name=Nume:
-blog.categories.parentcategory=Categorie părinte
+blog.categories.parentcategory=Categorie părinte:
 blog.categories.description=Descriere:
 blog.categories.add=Adaugă
 blog.categories.new=Categorie nouă:
@@ -115,17 +115,17 @@ blog.categories.addsubcategory=Adaugă o nouă subcategorie
 blog.categories.articles=Articole din acestă categorie
 blog.categories.sheet=Foaie de categorii
 blog.categories.sheetmessage=Aceasă foaie ar trebui folosită pentru a afișa categoriile unui blog.
-### Missing: blog.categories.webhome_sheetmessage=Implement the display of blog posts inside the categories home page (Blog.CategoriesSheet).
+blog.categories.webhome_sheetmessage=Implementarea afișării postărilor de pe blog în cadrul paginii de pornire a categoriilor (Blog.CategoriesSheet).
 blog.categories.notcategory=Categorie inexistentă în cadrul blogului!
-### Missing: blog.categories.noentries=No entries in this category
+blog.categories.noentries=Nu există intrări în această categorie
 blog.manageCategories.title=Administrați categoriile blogului
-### Missing: blog.manageCategories.create.error.emptyName=Please enter a valid category name
-### Missing: blog.manageCategories.create.error.alreadyExists=Target page already exists, please choose a different name
-### Missing: blog.manageCategories.create.error.notExists=The requested page could not be found.
-### Missing: blog.manageCategories.create.error.targetNotWritable=You don't have the right to create the target page.
-### Missing: blog.manageCategories.rename.error.emptyName=Please enter a valid category name
+blog.manageCategories.create.error.emptyName=Vă rugăm să introduceți un nume de categorie valid
+blog.manageCategories.create.error.alreadyExists=Pagina de destinatie există deja, vă rugăm să alegeți un alt nume
+blog.manageCategories.create.error.notExists=Nu a fost găsită pagina solicitată.
+blog.manageCategories.create.error.targetNotWritable=Nu aveți dreptul de a crea pagina de destinație.
+blog.manageCategories.rename.error.emptyName=Vă rugăm să introduceți un nume de categorie valid
 blog.manageCategories.js.fetchingForm=Nu sunteți autorizat să creați documentul ales
-### Missing: blog.manageCategories.js.error.noServer=Server not responding
+blog.manageCategories.js.error.noServer=Serverul nu răspunde
 blog.manageCategories.js.rename.inProgress=Se redenumește categoria...
 blog.manageCategories.js.rename.error.403=Nu sunteți autorizat să creați documentul ales
 blog.manageCategories.js.rename.error.404=Categoria este invalidă, vă rugăm să dați refresh la pagină pentru actualizarea arborelui de categorii.
@@ -142,16 +142,16 @@ blog.manageCategories.comment.updatedParent=Părintele categoriei a fost actuali
 blog.manageCategories.comment.removedDeletedCategory=Categoria a fost ștearsă
 blog.manageCategories.comment.updatedRenamedCategory=Categoria a fost actualizată
 blog.manageCategories.comment.updatedCategory=Numele categoriei a fost actualizat
-### Missing: blog.manageCategories.forms.add_button_label=Add
-### Missing: blog.manageCategories.forms.cancel_button_label=Cancel
-### Missing: blog.manageCategories.forms.select_none=None
-### Missing: blog.manageCategories.forms.sub_cat_of=Subcategory of:
-### Missing: blog.manageCategories.forms.rename_button_label=Rename
+blog.manageCategories.forms.add_button_label=Adăugați
+blog.manageCategories.forms.cancel_button_label=Anulează
+blog.manageCategories.forms.select_none=Nici unul
+blog.manageCategories.forms.sub_cat_of=Subcategorie a:
+blog.manageCategories.forms.rename_button_label=Redenumiți
 blog.post.createpost=Crează o postare nouă
 blog.post.title=Titlul postării
-### Missing: blog.post.titleEmptyError=The post title should not be empty!
+blog.post.titleEmptyError=Titlul postării nu trebuie să fie gol!
 blog.post.create=Creează
-### Missing: blog.post.sheet=Blog post sheet
+blog.post.sheet=Fișa postului de blog
 blog.categories.existingcategories=Categorii existente
 blog.categories.addcategory=Adaugă o categorie
 blog.categories.deleteselected=Şterge categoriile selectate
@@ -173,87 +173,85 @@ blog.migration.backtoblog=Înapoi la blog
 blog.migration.pleaseconfirm=Vă rog să confirmați mutarea articolelor vechi în cadrul noului blog:
 blog.migration.confirm=Confirmă
 blog.publisher.published=Publică articolul
-### Missing: blog.recentposts.paneltitle=Recent Blog Posts
+blog.recentposts.paneltitle=Postări recente de pe blog
 blog.unpublished.entries=Articole nepublicate
-blog.unpublished.viewall=Vizualizare completă
-### Missing: blog.relatedblogspanel.title=Related Blogs
-### Missing: blog.allblogspanel.title=All Blogs
-### Missing: blog.allblogspanel.manage=Manage Blogs
-
-### Missing: blog.templateProvider.blogpost.name=Blog Post
-### Missing: blog.templateProvider.blogpost.description=Communicate news
-### Missing: blog.categories.all=All
-### Missing: blog.changeVisibility.changing=Changing the visibility
-### Missing: blog.changeVisibility.success=The visibility of the blog entry has been successfully changed
-
-### Missing: blog.manage.pagetitle=Manage blogs on this wiki
-### Missing: blog.manage.notitle=No blog title provided. Please enter the blog title.
-### Missing: blog.manage.nopage=No page provided. Please enter a valid page where the blog should be created.
-### Missing: blog.manage.unallowed_page=The blog location is already used, please enter another location.
-### Missing: blog.manage.location.title=Blog title
-### Missing: blog.manage.location.title.hint=Title of the new blog
-### Missing: blog.manage.location.title.placeholder=New blog
-### Missing: blog.manage.categories_location=Categories location
-### Missing: blog.manage.enable_panels=Enable blog panels
-### Missing: blog.manage.create_default_categories=Create default categories
-### Missing: blog.manage.locationPreview.hint=Location in the page hierarchy where this new blog will be created.
-### Missing: blog.manage.categoriesLocationPreview.hint=Location in the page hierarchy where this new blog categories will be created.
-### Missing: blog.manage.post.layout=Posts layout
-### Missing: blog.blogpostlist.descriptor_not_found=Unable to found a blog descriptor in document [{0}]
+blog.unpublished.viewall=Vizualizați toate
+blog.relatedblogspanel.title=Bloguri asociate
+blog.allblogspanel.title=Toate blogurile
+blog.allblogspanel.manage=Gestionați blogurile
+blog.templateProvider.blogpost.name=Postare pe blog
+blog.templateProvider.blogpost.description=Comunicați noutăți
+blog.categories.all=Tot
+blog.changeVisibility.changing=Modificarea vizibilității
+blog.changeVisibility.success=Vizibilitatea intrării pe blog a fost modificată cu succes
+blog.manage.pagetitle=Gestionați blogurile de pe acest wiki
+blog.manage.notitle=Nu a fost furnizat niciun titlu de blog. Vă rugăm să introduceți titlul blogului.
+blog.manage.nopage=Nu este prevăzută nicio pagină. Vă rugăm să introduceți o pagină validă unde ar trebui creat blogul.
+blog.manage.unallowed_page=Locația blogului este deja utilizată, vă rugăm să introduceți o altă locație.
+blog.manage.location.title=Titlu blog
+blog.manage.location.title.hint=Titlul noului blog
+blog.manage.location.title.placeholder=Blog nou
+blog.manage.categories_location=Categorii locație
+blog.manage.enable_panels=Activați panourile blogului
+blog.manage.create_default_categories=Creați categorii implicite
+blog.manage.locationPreview.hint=Locația în ierarhia paginii în care va fi creat acest nou blog.
+blog.manage.categoriesLocationPreview.hint=Locația în ierarhia paginii unde va fi creată această nouă categorie de blog.
+blog.manage.post.layout=Configurația posturilor
+blog.blogpostlist.descriptor_not_found=Nu s-a putut găsi un descriptor de blog în documentul [{0}]
 blog.categories.webhome.title=Toate categoriile
-### Missing: blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
-### Missing: blog.blogpostlayout.notpost=[{0}] is not a blog post!
-### Missing: blog.blogpostlayout.post_view_not_allowed=You are not allowed to view the blog post [{0}]
-### Missing: blog.blogpostcreate.wrong_blog=Wrong blog descriptor
+blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
+blog.blogpostlayout.notpost=[{0}] nu este o postare pe blog!
+blog.blogpostlayout.post_view_not_allowed=Nu aveți voie să vizualizați articolul [{0}]
+blog.blogpostcreate.wrong_blog=Descrierea greșită a blogului
 
 # Class fields
 Blog.BlogClass_postsLayout.full=Calendar
-### Missing: Blog.BlogClass_postsLayout.image=Image thumbnail
-### Missing: Blog.BlogClass_postsLayout.cards=Cards
+Blog.BlogClass_postsLayout.image=Imaginea în miniatură
+Blog.BlogClass_postsLayout.cards=Carduri
 
 # Blogs macro
 blog.livetable.title=Titlu
 blog.livetable._actions=Acțiuni
-### Missing: rendering.macro.blogs.name=All Blogs Livetable
-### Missing: rendering.macro.blogs.description=The blogs macro is used to list on a livetable all the blog available on the wiki.
+rendering.macro.blogs.name=Toate blogurile Livetable
+rendering.macro.blogs.description=Macroul bloguri este utilizat pentru a lista pe un livetable toate blogurile disponibile pe wiki.
 
 # Notifications
 blog.applicationName=Blog
-### Missing: blog.events.blogpostpublished.description=A blog post is published
-### Missing: blog.events.blogpostpublished.displayer=A new blog post has been posted: {0}
+blog.events.blogpostpublished.description=Se publică un articol pe blog
+blog.events.blogpostpublished.displayer=A fost postat un nou articol pe blog: {0}
 blog.events.blogpostpublished.by=de {0}.
 notifications.events.BlogPostPublishedEvent.description.by.1user=publicat de {0}
-### Missing: notifications.events.BlogPostPublishedEvent.description=published the blog post
+notifications.events.BlogPostPublishedEvent.description=a publicat postul de blog
 
 # Blog Menu UIX
-### Missing: blog.uixMenu.name=Blog configuration
-### Missing: blog.uixMenu.title=Wizard to configure Blog panels
-### Missing: blog.uixMenu.title.hint=Choose a Blog and enable its panels in the current page and children.
-### Missing: blog.uixMenu.blog.hint=Start typing to get the Blog suggestions. Only one should be selected.
-### Missing: blog.uixMenu.panels.hint=Select from the following list the Blog panels that needs to be displayed.
-### Missing: blog.uixMenu.inheritPanels.hint=In order to keep the existing displayed panels, make sure this option in checked. Otherwise they will be removed.
-### Missing: blog.uixMenu.panelsPosition.hint=In case keep the existing panels, select if the Blog panels should be displayed before or after.
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=All Blogs Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=Blog Archive Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=Blog Categories Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=Recent Blog Posts Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Related Blogs Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Unpublished Blog Posts Panel
+blog.uixMenu.name=Configurarea blogului
+blog.uixMenu.title=Asistent pentru configurarea panourilor Blog
+blog.uixMenu.title.hint=Alegeți un blog și activați panourile sale în pagina curentă și în copii.
+blog.uixMenu.blog.hint=Începeți să tastați pentru a primi sugestii de bloguri. Ar trebui să fie selectat doar unul singur.
+blog.uixMenu.panels.hint=Selectați din lista următoare panourile Blog care trebuie afișate.
+blog.uixMenu.inheritPanels.hint=Pentru a păstra panourile afișate existente, asigurați-vă că această opțiune este bifată. În caz contrar, acestea vor fi eliminate.
+blog.uixMenu.panelsPosition.hint=Pentru a păstra panourile afișate existente, asigurați-vă că această opțiune este bifată. În caz contrar, acestea vor fi eliminate.
+Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=Panou toate blogurile
+Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=Panou arhiva bloguri
+Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=Panou categorii Bloguri
+Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=Panou de postări recente pe blog
+Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Panou de bloguri conexe
+Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Panou de bloguri nepublicate
 
 # Blog Post Cards Layout
-### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
-### Missing: blog.post.layout.cards.pinnedposts.save=Save
+blog.post.layout.cards.pinnedposts.edit=Gestionați postările de blog fixate
+blog.post.layout.cards.pinnedposts.save=Salvează
 
 # Blog Post Compact Layout
-### Missing: blog.post.layout.compact.linktoblog=Direct access to blog
+blog.post.layout.compact.linktoblog=Acces direct la blog
 
 # Panels page title
-### Missing: blog.panel.blogArchive.pageTitle=Blog Archive Panel
-### Missing: blog.panel.allBlogs.pageTitle=All Blogs Panel
-### Missing: blog.panel.blogCategories.pageTitle=Blog Categories Panel
-### Missing: blog.panel.recentBlogPosts.pageTitle=Recent Blog Posts Panel
-### Missing: blog.panel.relatedBlogs.pageTitle=Related Blogs Panel
-### Missing: blog.panel.unpublishedBlogPosts.pageTitle=Unpublished Blog Posts Panel
+blog.panel.blogArchive.pageTitle=Panou arhiva blog
+blog.panel.allBlogs.pageTitle=Panou toate blogurile
+blog.panel.blogCategories.pageTitle=Panoul de categorii de bloguri
+blog.panel.recentBlogPosts.pageTitle=Panou de postări recente pe blog
+blog.panel.relatedBlogs.pageTitle=Panou de bloguri conexe
+blog.panel.unpublishedBlogPosts.pageTitle=Panou de bloguri nepublicate
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
@@ -264,5 +262,6 @@ notifications.events.BlogPostPublishedEvent.description.by.1user=publicat de {0}
 blog.manage.blogtype=Tipul blogului:
 
 ## Used to indicate where deprecated keys end
-#@deprecatedend</content>
+#@deprecatedend
+</content>
 </xwikidoc>
