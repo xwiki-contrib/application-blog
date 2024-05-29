@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.xwiki.contrib.blog</groupId>
     <artifactId>application-blog</artifactId>
-    <version>9.13.9</version>
+    <version>9.13.10-SNAPSHOT</version>
   </parent>
   <artifactId>application-blog-api</artifactId>
   <name>Blog - API</name>
