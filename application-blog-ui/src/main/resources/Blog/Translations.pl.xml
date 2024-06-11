@@ -191,67 +191,67 @@ blog.manage.unallowed_page=Lokalizacja bloga jest już używana, wprowadź inną
 blog.manage.location.title=Tytuł bloga
 blog.manage.location.title.hint=Tytuł nowego bloga
 blog.manage.location.title.placeholder=Nowy blog
-### Missing: blog.manage.categories_location=Categories location
-### Missing: blog.manage.enable_panels=Enable blog panels
-### Missing: blog.manage.create_default_categories=Create default categories
-### Missing: blog.manage.locationPreview.hint=Location in the page hierarchy where this new blog will be created.
-### Missing: blog.manage.categoriesLocationPreview.hint=Location in the page hierarchy where this new blog categories will be created.
-### Missing: blog.manage.post.layout=Posts layout
-### Missing: blog.blogpostlist.descriptor_not_found=Unable to found a blog descriptor in document [{0}]
-### Missing: blog.categories.webhome.title=All categories
-### Missing: blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
-### Missing: blog.blogpostlayout.notpost=[{0}] is not a blog post!
-### Missing: blog.blogpostlayout.post_view_not_allowed=You are not allowed to view the blog post [{0}]
-### Missing: blog.blogpostcreate.wrong_blog=Wrong blog descriptor
+blog.manage.categories_location=Kategoria lokalizacji
+blog.manage.enable_panels=Włączanie paneli blogów
+blog.manage.create_default_categories=Tworzenie kategorii domyślnych
+blog.manage.locationPreview.hint=Lokalizacja w hierarchii stron, w której zostanie utworzony nowy blog.
+blog.manage.categoriesLocationPreview.hint=Lokalizacja w hierarchii stron, w której zostaną utworzone nowe kategorie blogów.
+blog.manage.post.layout=Układ postów
+blog.blogpostlist.descriptor_not_found=Nie można odnaleźć deskryptora blogu w dokumencie [{0}]
+blog.categories.webhome.title=Wszystkie kategorie
+blog.category.posts.count={0} {0,wybór,0#posty|1#post|1&lt;posty}
+blog.blogpostlayout.notpost=[{0}] nie jest wpisem na blogu!
+blog.blogpostlayout.post_view_not_allowed=Nie możesz wyświetlić wpisu na blogu [{0}]
+blog.blogpostcreate.wrong_blog=Nieprawidłowy deskryptor bloga
 
 # Class fields
-### Missing: Blog.BlogClass_postsLayout.full=Calendar
-### Missing: Blog.BlogClass_postsLayout.image=Image thumbnail
-### Missing: Blog.BlogClass_postsLayout.cards=Cards
+Blog.BlogClass_postsLayout.full=Kalendarz
+Blog.BlogClass_postsLayout.image=Miniatura obrazu
+Blog.BlogClass_postsLayout.cards=Karty
 
 # Blogs macro
-blog.livetable.title=TYtuł
-blog.livetable._actions=AKcje
+blog.livetable.title=Tytuł
+blog.livetable._actions=Akcje
 rendering.macro.blogs.name=Wszystkie blogi Tapety
 rendering.macro.blogs.description=Makro blogs służy do wyświetlania na tablicy na żywo wszystkich blogów dostępnych na wiki.
 
 # Notifications
-### Missing: blog.applicationName=Blog
+blog.applicationName=Blog
 blog.events.blogpostpublished.description=Opublikowano wpis w blogu
 blog.events.blogpostpublished.displayer=Opublikowano nowy wpis na blogu: {0}
 blog.events.blogpostpublished.by=przez {0}.
 notifications.events.BlogPostPublishedEvent.description.by.1user=Opublikowany przez {0}
-### Missing: notifications.events.BlogPostPublishedEvent.description=published the blog post
+notifications.events.BlogPostPublishedEvent.description=opublikował wpis na blogu
 
 # Blog Menu UIX
-### Missing: blog.uixMenu.name=Blog configuration
-### Missing: blog.uixMenu.title=Wizard to configure Blog panels
-### Missing: blog.uixMenu.title.hint=Choose a Blog and enable its panels in the current page and children.
-### Missing: blog.uixMenu.blog.hint=Start typing to get the Blog suggestions. Only one should be selected.
-### Missing: blog.uixMenu.panels.hint=Select from the following list the Blog panels that needs to be displayed.
-### Missing: blog.uixMenu.inheritPanels.hint=In order to keep the existing displayed panels, make sure this option in checked. Otherwise they will be removed.
-### Missing: blog.uixMenu.panelsPosition.hint=In case keep the existing panels, select if the Blog panels should be displayed before or after.
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=All Blogs Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=Blog Archive Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=Blog Categories Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=Recent Blog Posts Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Related Blogs Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Unpublished Blog Posts Panel
+blog.uixMenu.name=Konfiguracja bloga
+blog.uixMenu.title=Kreator konfiguracji paneli Bloga
+blog.uixMenu.title.hint=Wybierz blog i włącz jego panele na bieżącej stronie i na stronie podrzędnej.
+blog.uixMenu.blog.hint=Zacznij pisać, aby uzyskać sugestie dotyczące bloga. Należy wybrać tylko jedną.
+blog.uixMenu.panels.hint=Wybierz z poniższej listy panele Blog, które mają być wyświetlane.
+blog.uixMenu.inheritPanels.hint=Aby zachować istniejące wyświetlane panele, upewnij się, że ta opcja jest zaznaczona. W przeciwnym razie zostaną usunięte.
+blog.uixMenu.panelsPosition.hint=Jeśli zachowasz istniejące panele, wybierz, czy panele Blog mają być wyświetlane przed, czy po.
+Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=Panel Wszystkie bloga
+Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=Panel Archiwum blogów
+Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=Panel Kategorii blogów
+Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=Panel Ostatnie wpisy na blogu
+Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Panel powiązanych blogów
+Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Panel Niepublikowane wpisy na blogu
 
 # Blog Post Cards Layout
-### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
-### Missing: blog.post.layout.cards.pinnedposts.save=Save
+blog.post.layout.cards.pinnedposts.edit=Zarządzanie przypiętymi wpisami na blogu
+blog.post.layout.cards.pinnedposts.save=Zapisz
 
 # Blog Post Compact Layout
-### Missing: blog.post.layout.compact.linktoblog=Direct access to blog
+blog.post.layout.compact.linktoblog=Bezpośredni dostęp do bloga
 
 # Panels page title
-### Missing: blog.panel.blogArchive.pageTitle=Blog Archive Panel
-### Missing: blog.panel.allBlogs.pageTitle=All Blogs Panel
-### Missing: blog.panel.blogCategories.pageTitle=Blog Categories Panel
-### Missing: blog.panel.recentBlogPosts.pageTitle=Recent Blog Posts Panel
-### Missing: blog.panel.relatedBlogs.pageTitle=Related Blogs Panel
-### Missing: blog.panel.unpublishedBlogPosts.pageTitle=Unpublished Blog Posts Panel
+blog.panel.blogArchive.pageTitle=Panel Archiwum blogów
+blog.panel.allBlogs.pageTitle=Panel Wszystkich blogów
+blog.panel.blogCategories.pageTitle=Panel Kategorii blogów
+blog.panel.recentBlogPosts.pageTitle=Panel Ostatnich wpisów na blogu
+blog.panel.relatedBlogs.pageTitle=Panel powiązanych blogów
+blog.panel.unpublishedBlogPosts.pageTitle=Panel Niepublikowanych wpisów na blogu
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
@@ -259,7 +259,7 @@ notifications.events.BlogPostPublishedEvent.description.by.1user=Opublikowany pr
 ## until 9.9
 #######################################
 
-### Missing: blog.manage.blogtype=Blog type:
+blog.manage.blogtype=Typ bloga:
 
 ## Used to indicate where deprecated keys end
 #@deprecatedend
