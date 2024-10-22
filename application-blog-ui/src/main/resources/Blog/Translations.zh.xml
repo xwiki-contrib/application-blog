@@ -195,9 +195,9 @@ blog.manage.categories_location=类别位置
 blog.manage.enable_panels=启用博客面板
 blog.manage.create_default_categories=创建默认类别
 blog.manage.locationPreview.hint=页面层次结构中将创建此新博客的位置。
-### Missing: blog.manage.categoriesLocationPreview.hint=Location in the page hierarchy where this new blog categories will be created.
-### Missing: blog.manage.post.layout=Posts layout
-### Missing: blog.blogpostlist.descriptor_not_found=Unable to found a blog descriptor in document [{0}]
+blog.manage.categoriesLocationPreview.hint=在页面层次结构中，将在此处创建新的博客分类。
+blog.manage.post.layout=文章的布局
+blog.blogpostlist.descriptor_not_found=在文档 [{0}] 中找不到博客描述符
 ### Missing: blog.categories.webhome.title=All categories
 ### Missing: blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
 ### Missing: blog.blogpostlayout.notpost=[{0}] is not a blog post!
@@ -205,12 +205,12 @@ blog.manage.locationPreview.hint=页面层次结构中将创建此新博客的�
 ### Missing: blog.blogpostcreate.wrong_blog=Wrong blog descriptor
 
 # Class fields
-### Missing: Blog.BlogClass_postsLayout.full=Calendar
-### Missing: Blog.BlogClass_postsLayout.image=Image thumbnail
+Blog.BlogClass_postsLayout.full=日历
+Blog.BlogClass_postsLayout.image=图像缩略图
 Blog.BlogClass_postsLayout.cards=卡片
 
 # Blogs macro
-### Missing: blog.livetable.title=Title
+blog.livetable.title=标题
 ### Missing: blog.livetable._actions=Actions
 ### Missing: rendering.macro.blogs.name=All Blogs Livetable
 ### Missing: rendering.macro.blogs.description=The blogs macro is used to list on a livetable all the blog available on the wiki.
