@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -40,8 +40,8 @@
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
   <content>blog.application.name=部落格
-### Missing: blog.archive.paneltitle=Blog Archive
-### Missing: blog.archive.pagetitle=Archive
+blog.archive.paneltitle=部落格存檔
+blog.archive.pagetitle=存檔
 blog.archive.noarticle=目前沒有文章...
 blog.archive.postsyear={0} 部落格文章
 blog.archive.unpublished=(尚未發佈)
@@ -50,17 +50,17 @@ blog.archive.noarticlesyear=本年沒有文章...
 blog.archive.postsfor=部落格文章
 blog.archive.noarticlesmonth=本月沒有文章...
 blog.code.blogsheet=部落格 sheet
-blog.code.sheetexplanation=此 sheet 用來顯示部落格文件
-blog.code.notblog=這不是一個部落格文件!
-blog.code.published=此部落格文章尚未發佈
-blog.code.hidden=此部落格文章已隱藏
-blog.code.notpublished=此部落格文章尚未發佈. 發佈它!
+blog.code.sheetexplanation=此 sheet 用來顯示部落格文件。
+blog.code.notblog=這不是一個部落格文件！
+blog.code.published=此部落格文章尚未發佈。
+blog.code.hidden=此部落格文章已隱藏。
+blog.code.notpublished=此部落格文章尚未發佈。發佈它。
 blog.code.madevisible=公開它
 blog.code.hid=隱藏項目
 blog.code.makevisible=其他使用者看不到這篇部落格文章. 公開它.
-blog.code.hide=讓其他使用者看不到這篇部落格文章
-### Missing: blog.code.loading=Loading...
-### Missing: blog.code.failedToChangeBlogPostVisibility=Failed to change blog post visibility.
+blog.code.hide=對其他使用者隱藏此篇部落格文章。
+blog.code.loading=載入中...
+blog.code.failedToChangeBlogPostVisibility=無法更改部落格發布的可見性。
 blog.code.editpost=編輯此部落格文章
 blog.code.deletepost=刪除此部落格文章
 blog.code.readpost=讀取所有項目
@@ -70,7 +70,7 @@ blog.code.createdby=建立者
 blog.code.modifiedby=修改者
 blog.code.comments=評論
 blog.code.permalink=永久鏈結
-blog.code.categories=類別:
+blog.code.categories=分類：
 blog.code.in=在
 blog.code.previousweek=上一週
 blog.code.nextweek=下一週
@@ -78,33 +78,33 @@ blog.code.previousmonth=上個月
 blog.code.nextmonth=下個月
 blog.code.olderposts=更舊的文章
 blog.code.newerposts=更新的文章
-### Missing: blog.code.blogcategories=Blog categories
-### Missing: blog.code.description.category=Most recent blog posts in the {0} category
-### Missing: blog.code.description.space=Most recent blog posts in the {0} space
-### Missing: blog.code.description.wiki=Most recent blog posts in the wiki
+blog.code.blogcategories=部落格分類
+blog.code.description.category={0} 分類中的最新部落格文章
+blog.code.description.space={0}空間中的最新部落格文章
+blog.code.description.wiki=維基百科中最新的部落格文章
 ### Missing: blog.code.title=Blog
-### Missing: blog.code.warning=Warning:
-blog.sheet.notpost=這不是部落格文章
-blog.sheet.category=類別:
-blog.sheet.summary=摘要 (非必填):
-blog.sheet.content=內容:
-blog.sheet.title=標題:
+blog.code.warning=警告：
+blog.sheet.notpost=這不是部落格文章！
+blog.sheet.category=分類：
+blog.sheet.summary=摘要 (非必填)：
+blog.sheet.content=內容：
+blog.sheet.title=標題：
 blog.sheet.publicationdate=此文章發佈於 {0}
 blog.sheet.hidearticle=隱藏文章 {0}
-blog.sheet.notpublished=此文章尚未發佈
+blog.sheet.notpublished=此文章尚未發佈。
 blog.sheet.publish=發佈
-blog.sheet.setdate=設定發佈日期至:
-### Missing: blog.sheet.image=Image
+blog.sheet.setdate=設定發佈日期：
+blog.sheet.image=圖片
 ### Missing: blog.sheet.image.info=The image field is used to attach a thumbnail to each blog post. The post thumbnails will be visible only in cases where the blog is configured to use the 'image' layout.
-### Missing: blog.sheet.choose_image=Choose an image
-blog.category.created=類別 {0} 已新增
-blog.category.exists=類別 {0} 已存在
+blog.sheet.choose_image=選擇一張圖片
+blog.category.created=已新增分類 {0} 。
+blog.category.exists=已存在 {0} 分類。
 ### Missing: blog.categories.paneltitle=Blog Categories
-blog.categories.name=名稱:
+blog.categories.name=名稱：
 blog.categories.parentcategory=父類別:
-blog.categories.description=描述:
+blog.categories.description=描述：
 blog.categories.add=新增
-blog.categories.new=新增類別:
+blog.categories.new=新增分類：
 blog.categories.newName=新增類別名稱:
 blog.categories.parent=父類別:
 blog.categories.none=無
@@ -114,18 +114,18 @@ blog.categories.subcategories=子類別
 blog.categories.addsubcategory=新增子類別
 blog.categories.articles=類別文章
 blog.categories.sheet=類別 sheet
-blog.categories.sheetmessage=此 sheet 用來顯示部落格類別
+blog.categories.sheetmessage=此 sheet 用來顯示部落格類別。
 ### Missing: blog.categories.webhome_sheetmessage=Implement the display of blog posts inside the categories home page (Blog.CategoriesSheet).
-blog.categories.notcategory=這不是部落格類別!
+blog.categories.notcategory=這不是部落格分類！
 ### Missing: blog.categories.noentries=No entries in this category
 blog.manageCategories.title=管理部落格類別
 blog.manageCategories.create.error.emptyName=請輸入合法的類別名稱
 ### Missing: blog.manageCategories.create.error.alreadyExists=Target page already exists, please choose a different name
 ### Missing: blog.manageCategories.create.error.notExists=The requested page could not be found.
 ### Missing: blog.manageCategories.create.error.targetNotWritable=You don't have the right to create the target page.
-blog.manageCategories.rename.error.emptyName=請輸入合法類別名稱
-blog.manageCategories.js.fetchingForm=擷取
-### Missing: blog.manageCategories.js.error.noServer=Server not responding
+blog.manageCategories.rename.error.emptyName=請輸入合法分類名稱
+blog.manageCategories.js.fetchingForm=擷取...
+blog.manageCategories.js.error.noServer=伺服器沒有回應
 blog.manageCategories.js.rename.inProgress=類別更名中...
 blog.manageCategories.js.rename.error.403=您不被允許新增目標文件
 blog.manageCategories.js.rename.error.404=錯誤的類別，請更新頁面以更新類別樹
@@ -137,12 +137,12 @@ blog.manageCategories.js.add.error.409=目標文件已存在，請選擇其他�
 blog.manageCategories.js.delete.confirm=確定要刪除此類別? 此操作不可回復.
 blog.manageCategories.js.delete.inProgress=刪除類別中...
 blog.manageCategories.js.delete.done=已刪除
-blog.manageCategories.js.delete.failed=刪除類別失敗
+blog.manageCategories.js.delete.failed=刪除分類失敗
 blog.manageCategories.comment.updatedParent=已更新父類別
-blog.manageCategories.comment.removedDeletedCategory=移除已刪除的類別
+blog.manageCategories.comment.removedDeletedCategory=移除已刪除的分類
 blog.manageCategories.comment.updatedRenamedCategory=已更名的類別
 blog.manageCategories.comment.updatedCategory=已更新類別名稱
-### Missing: blog.manageCategories.forms.add_button_label=Add
+blog.manageCategories.forms.add_button_label=添加
 ### Missing: blog.manageCategories.forms.cancel_button_label=Cancel
 ### Missing: blog.manageCategories.forms.select_none=None
 ### Missing: blog.manageCategories.forms.sub_cat_of=Subcategory of:
@@ -157,7 +157,7 @@ blog.categories.addcategory=新增類別
 blog.categories.deleteselected=刪除所選類別
 blog.manage.existing=已存在的部落格
 blog.manage.createnew=新增部落格
-blog.manage.nospace=未提供空間. 請輸入一個合法的部落格空間
+blog.manage.nospace=未提供空間。請輸入一個合法的部落格空間。
 blog.manage.space=空間:
 blog.manage.title=標題:
 blog.manage.blogtitle=部落格標題
@@ -168,62 +168,60 @@ blog.migration.migrated=搬移舊的文章到新的部落格系統
 blog.migration.updated=已修改
 blog.migration.inspace=在空間
 blog.migration.skipping=略過受保護文件
-blog.migration.done=已完成
+blog.migration.done=已完成。
 blog.migration.backtoblog=回到部落格
-blog.migration.pleaseconfirm=請確認您要將舊的文章搬移到新的部落格系統中
+blog.migration.pleaseconfirm=請確認您要將舊的文章搬移到新的部落格系統中：
 blog.migration.confirm=確定
 blog.publisher.published=已發佈文章
-### Missing: blog.recentposts.paneltitle=Recent Blog Posts
+blog.recentposts.paneltitle=最新部落格文章
 blog.unpublished.entries=未發佈的文章
 blog.unpublished.viewall=顯示全部
 ### Missing: blog.relatedblogspanel.title=Related Blogs
 ### Missing: blog.allblogspanel.title=All Blogs
 ### Missing: blog.allblogspanel.manage=Manage Blogs
-
 ### Missing: blog.templateProvider.blogpost.name=Blog Post
 ### Missing: blog.templateProvider.blogpost.description=Communicate news
-### Missing: blog.categories.all=All
-### Missing: blog.changeVisibility.changing=Changing the visibility
+blog.categories.all=全部
+blog.changeVisibility.changing=更改可見性
 ### Missing: blog.changeVisibility.success=The visibility of the blog entry has been successfully changed
-
-### Missing: blog.manage.pagetitle=Manage blogs on this wiki
-### Missing: blog.manage.notitle=No blog title provided. Please enter the blog title.
-### Missing: blog.manage.nopage=No page provided. Please enter a valid page where the blog should be created.
-### Missing: blog.manage.unallowed_page=The blog location is already used, please enter another location.
-### Missing: blog.manage.location.title=Blog title
-### Missing: blog.manage.location.title.hint=Title of the new blog
-### Missing: blog.manage.location.title.placeholder=New blog
-### Missing: blog.manage.categories_location=Categories location
-### Missing: blog.manage.enable_panels=Enable blog panels
-### Missing: blog.manage.create_default_categories=Create default categories
+blog.manage.pagetitle=在此 wiki 管理部落格
+blog.manage.notitle=未提供部落格標題。請輸入部落格標題。
+blog.manage.nopage=沒有提供頁面。請輸入應建立部落格的有效頁面。
+blog.manage.unallowed_page=該部落格位置已被使用，請輸入其他位置。
+blog.manage.location.title=部落格標題
+blog.manage.location.title.hint=新的部落格標題
+blog.manage.location.title.placeholder=新部落格
+blog.manage.categories_location=分類位置
+blog.manage.enable_panels=啟用部落格面板
+blog.manage.create_default_categories=建立預設分類
 ### Missing: blog.manage.locationPreview.hint=Location in the page hierarchy where this new blog will be created.
 ### Missing: blog.manage.categoriesLocationPreview.hint=Location in the page hierarchy where this new blog categories will be created.
 ### Missing: blog.manage.post.layout=Posts layout
 ### Missing: blog.blogpostlist.descriptor_not_found=Unable to found a blog descriptor in document [{0}]
-### Missing: blog.categories.webhome.title=All categories
+blog.categories.webhome.title=全部分類
 ### Missing: blog.category.posts.count={0} {0,choice,0#posts|1#post|1&lt;posts}
 ### Missing: blog.blogpostlayout.notpost=[{0}] is not a blog post!
-### Missing: blog.blogpostlayout.post_view_not_allowed=You are not allowed to view the blog post [{0}]
+blog.blogpostlayout.post_view_not_allowed=您無法觀看此部落格文章 [{0}]
 ### Missing: blog.blogpostcreate.wrong_blog=Wrong blog descriptor
 
 # Class fields
-### Missing: Blog.BlogClass_postsLayout.full=Calendar
+Blog.BlogClass_postsLayout.full=日曆
 ### Missing: Blog.BlogClass_postsLayout.image=Image thumbnail
-### Missing: Blog.BlogClass_postsLayout.cards=Cards
+Blog.BlogClass_postsLayout.cards=卡片
 
 # Blogs macro
-### Missing: blog.livetable.title=Title
+blog.livetable.title=標題
 ### Missing: blog.livetable._actions=Actions
 ### Missing: rendering.macro.blogs.name=All Blogs Livetable
 ### Missing: rendering.macro.blogs.description=The blogs macro is used to list on a livetable all the blog available on the wiki.
 
 # Notifications
 ### Missing: blog.applicationName=Blog
-### Missing: blog.events.blogpostpublished.description=A blog post is published
+blog.events.blogpostpublished.description=部落格已被發布
 ### Missing: blog.events.blogpostpublished.displayer=A new blog post has been posted: {0}
 ### Missing: blog.events.blogpostpublished.by=by {0}.
-### Missing: notifications.events.BlogPostPublishedEvent.description.by.1user=published by {0}
-### Missing: notifications.events.BlogPostPublishedEvent.description=published the blog post
+notifications.events.BlogPostPublishedEvent.description.by.1user=由 {0} 發布
+notifications.events.BlogPostPublishedEvent.description=發布部落格文章
 
 # Blog Menu UIX
 ### Missing: blog.uixMenu.name=Blog configuration
@@ -235,23 +233,23 @@ blog.unpublished.viewall=顯示全部
 ### Missing: blog.uixMenu.panelsPosition.hint=In case keep the existing panels, select if the Blog panels should be displayed before or after.
 ### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.AllBlogsPanel=All Blogs Panel
 ### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.ArchivePanel=Blog Archive Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=Blog Categories Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=Recent Blog Posts Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=Related Blogs Panel
-### Missing: Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=Unpublished Blog Posts Panel
+Blog.EnablePanelsConfigurationClass_panels_Blog.CategoriesPanel=部落格分類面板
+Blog.EnablePanelsConfigurationClass_panels_Blog.RecentPostsPanel=最新部落格發布面板
+Blog.EnablePanelsConfigurationClass_panels_Blog.RelatedBlogsPanel=相關部落格面板
+Blog.EnablePanelsConfigurationClass_panels_Blog.UnpublishedPanel=未發布部落格面板
 
 # Blog Post Cards Layout
-### Missing: blog.post.layout.cards.pinnedposts.edit=Manage pinned blog posts
-### Missing: blog.post.layout.cards.pinnedposts.save=Save
+blog.post.layout.cards.pinnedposts.edit=管理已被釘選的部落格
+blog.post.layout.cards.pinnedposts.save=儲存
 
 # Blog Post Compact Layout
-### Missing: blog.post.layout.compact.linktoblog=Direct access to blog
+blog.post.layout.compact.linktoblog=直接訪向部落格
 
 # Panels page title
-### Missing: blog.panel.blogArchive.pageTitle=Blog Archive Panel
-### Missing: blog.panel.allBlogs.pageTitle=All Blogs Panel
-### Missing: blog.panel.blogCategories.pageTitle=Blog Categories Panel
-### Missing: blog.panel.recentBlogPosts.pageTitle=Recent Blog Posts Panel
+blog.panel.blogArchive.pageTitle=部落格存檔面板
+blog.panel.allBlogs.pageTitle=全部部落格面板
+blog.panel.blogCategories.pageTitle=部落格分類面板
+blog.panel.recentBlogPosts.pageTitle=最新部落格發布面板
 ### Missing: blog.panel.relatedBlogs.pageTitle=Related Blogs Panel
 ### Missing: blog.panel.unpublishedBlogPosts.pageTitle=Unpublished Blog Posts Panel
 
@@ -261,8 +259,9 @@ blog.unpublished.viewall=顯示全部
 ## until 9.9
 #######################################
 
-blog.manage.blogtype=部落格類型:
+blog.manage.blogtype=部落格類型：
 
 ## Used to indicate where deprecated keys end
-#@deprecatedend</content>
+#@deprecatedend
+</content>
 </xwikidoc>
