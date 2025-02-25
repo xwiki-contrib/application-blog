@@ -173,7 +173,7 @@
 #set ($hiddenParam = $xcontext.macro.params.hidden)
 #set ($limitParam = $xcontext.macro.params.limit)
 #set ($layoutParam = $xcontext.macro.params.layout)
-#set ($paginatedParam = $xcontext.macro.params.paginated)
+#set ($paginated = "$!xcontext.macro.params.paginated" != 'no')
 #set ($layoutAdditionalParams = $xcontext.macro.params.layoutParams)
 ## Passing the blog posts list parameters to the layout macro
 #foreach($p in $xcontext.macro.params.getParameterNames())
@@ -345,7 +345,7 @@
   #bindQueryParameters($query $queryParams)
   #bindQueryParameters($countQuery $queryParams)
 
-  #if ("$!paginatedParam" == 'yes')
+  #if ($paginated)
     #if ("$!limitParam" == '')
       #if ($isValidBlog) ## Get the blog itemsPerPage parameter
         #getBlogProperty($blogDescriptorDoc 'itemsPerPage' '10' $limitParam)
@@ -399,7 +399,7 @@
     #end
   #end
   ## Pagination
-  #if ("$!paginatedParam" == 'yes')
+  #if ($paginated)
     #set ($xdom = $services.rendering.parse("{{html wiki='true'}}#displayNavigationLinks($NULL){{/html}}", $xwiki.getCurrentContentSyntaxId()).getChildren())
     #set ($discard = $XDOMList.addAll($xdom))
   #end
@@ -1092,7 +1092,7 @@ The naming convention for the layout macros is: "BlogPostLayout${macroName}"</de
       </name>
     </class>
     <property>
-      <defaultValue>no</defaultValue>
+      <defaultValue>yes</defaultValue>
     </property>
     <property>
       <description>Used to enble/disable the pagination of the the blogPostList macro results</description>

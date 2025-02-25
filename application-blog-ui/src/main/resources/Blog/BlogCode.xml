@@ -1144,8 +1144,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param limit the number of posts to display
  *###
 #macro(displayBlogPostsBasedOnContext $targetDoc $postsVisiblity $layout $layoutParams $limit)
-  #if ($postLayout == 'full')
-    #set ($macro.paginated = 'yes')
+  #if ($layout == 'link')
+    #set ($macro.paginated = 'no')
   #end
   #if ($targetDoc.space == $defaultBlogSpace &amp;&amp; !$targetDoc.getObject($blogCategoryClassname))
     ## Display all posts that are in the default blog space('Blog') or in category 'Blog.%'
@@ -1154,7 +1154,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       #set ($layout = $postsLayout)
     #end
     #if ($postsVisiblity == 'recent')
-    {{blogpostlist blog="${defaultBlogSpace.replaceAll('~', '~~').replaceAll('"', '~"')}.WebHome" published='yes' hidden='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" limit="$limit" /}}
+    {{blogpostlist blog="${defaultBlogSpace.replaceAll('~', '~~').replaceAll('"', '~"')}.WebHome" published='yes' hidden='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$!macro.paginated" limit="$limit" /}}
     #elseif($postsVisiblity == 'unpublished')
     {{blogpostlist blog="${defaultBlogSpace.replaceAll('~', '~~').replaceAll('"', '~"')}.WebHome" published='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$!macro.paginated" limit="$limit" /}}
     #end
@@ -1166,7 +1166,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       #set ($layout = $postsLayout)
     #end
     #if ($postsVisiblity == 'recent')
-    {{blogpostlist category="$targetDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" published='yes' hidden='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" limit="$limit" /}}
+    {{blogpostlist category="$targetDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" published='yes' hidden='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$!macro.paginated" limit="$limit" /}}
     #elseif($postsVisiblity == 'unpublished')
     {{blogpostlist category="$targetDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" published='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$!macro.paginated" limit="$limit" /}}
     #end
@@ -1178,7 +1178,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       #set ($layout = $postsLayout)
     #end
     #if ($postsVisiblity == 'recent')
-    {{blogpostlist category="$targetDoc.space.replaceAll('~', '~~').replaceAll('"', '~"')" published='yes' hidden='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" limit="$limit" /}}
+    {{blogpostlist category="$targetDoc.space.replaceAll('~', '~~').replaceAll('"', '~"')" published='yes' hidden='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$!macro.paginated" limit="$limit" /}}
     #elseif($postsVisiblity == 'unpublished')
     {{blogpostlist category="$targetDoc.space.replaceAll('~', '~~').replaceAll('"', '~"')" published='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$!macro.paginated" limit="$limit" /}}
     #end
@@ -1190,7 +1190,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       #set ($layout = $postsLayout)
     #end
     #if ($postsVisiblity == 'recent')
-    {{blogpostlist blog="$blogDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" published='yes' hidden='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" limit="$limit" /}}
+    {{blogpostlist blog="$blogDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" published='yes' hidden='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$!macro.paginated" limit="$limit" /}}
     #elseif($postsVisiblity == 'unpublished')
     {{blogpostlist blog="$blogDoc.fullName.replaceAll('~', '~~').replaceAll('"', '~"')" published='no' layout="$!layout.replaceAll('~', '~~').replaceAll('"', '~"')" layoutParams="$!layoutParams.replaceAll('~', '~~').replaceAll('"', '~"')" paginated="$!macro.paginated" limit="$limit" /}}
     #end
