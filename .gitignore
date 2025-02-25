@@ -27,6 +27,7 @@ bin
 nbproject
 
 # Other
+.DS_Store
 *.log.*
 *.log
 .sonar-ide.properties
