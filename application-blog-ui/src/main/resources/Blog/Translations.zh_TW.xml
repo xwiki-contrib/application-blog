@@ -177,10 +177,10 @@ blog.recentposts.paneltitle=最新部落格文章
 blog.unpublished.entries=未發佈的文章
 blog.unpublished.viewall=顯示全部
 blog.relatedblogspanel.title=相關部落格
-### Missing: blog.allblogspanel.title=All Blogs
-### Missing: blog.allblogspanel.manage=Manage Blogs
+blog.allblogspanel.title=全部部落格
+blog.allblogspanel.manage=管理部落格
 ### Missing: blog.templateProvider.blogpost.name=Blog Post
-### Missing: blog.templateProvider.blogpost.description=Communicate news
+blog.templateProvider.blogpost.description=社群新聞
 blog.categories.all=全部
 blog.changeVisibility.changing=更改可見性
 ### Missing: blog.changeVisibility.success=The visibility of the blog entry has been successfully changed
@@ -216,7 +216,7 @@ blog.livetable.title=標題
 ### Missing: rendering.macro.blogs.description=The blogs macro is used to list on a livetable all the blog available on the wiki.
 
 # Notifications
-### Missing: blog.applicationName=Blog
+blog.applicationName=部落格
 blog.events.blogpostpublished.description=部落格已被發布
 ### Missing: blog.events.blogpostpublished.displayer=A new blog post has been posted: {0}
 ### Missing: blog.events.blogpostpublished.by=by {0}.
@@ -226,8 +226,8 @@ notifications.events.BlogPostPublishedEvent.description=發布部落格文章
 # Blog Menu UIX
 blog.uixMenu.name=部落格設定
 ### Missing: blog.uixMenu.title=Wizard to configure Blog panels
-### Missing: blog.uixMenu.title.hint=Choose a Blog and enable its panels in the current page and children.
-### Missing: blog.uixMenu.blog.hint=Start typing to get the Blog suggestions. Only one should be selected.
+blog.uixMenu.title.hint=選擇一個部落格並在目前頁面及其子頁面中啟用其面板。
+blog.uixMenu.blog.hint=開始輸入以獲取博客建議。只能選擇一個。
 ### Missing: blog.uixMenu.panels.hint=Select from the following list the Blog panels that needs to be displayed.
 ### Missing: blog.uixMenu.inheritPanels.hint=In order to keep the existing displayed panels, make sure this option in checked. Otherwise they will be removed.
 ### Missing: blog.uixMenu.panelsPosition.hint=In case keep the existing panels, select if the Blog panels should be displayed before or after.
