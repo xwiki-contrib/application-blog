@@ -211,7 +211,7 @@ Blog.BlogClass_postsLayout.cards=卡片
 
 # Blogs macro
 blog.livetable.title=標題
-### Missing: blog.livetable._actions=Actions
+blog.livetable._actions=操作
 ### Missing: rendering.macro.blogs.name=All Blogs Livetable
 ### Missing: rendering.macro.blogs.description=The blogs macro is used to list on a livetable all the blog available on the wiki.
 
