@@ -40,8 +40,8 @@
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
   <content>blog.application.name=博客
-blog.archive.paneltitle=博客存档
-blog.archive.pagetitle=存档
+blog.archive.paneltitle=归档博客
+blog.archive.pagetitle=归档
 blog.archive.noarticle=当前没有文章......
 blog.archive.postsyear={0} 文章的Post请求
 blog.archive.unpublished=（未发布）
