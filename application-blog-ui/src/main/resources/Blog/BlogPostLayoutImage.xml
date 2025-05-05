@@ -229,16 +229,7 @@
     &lt;/div&gt;
     #if($displayTitle)&lt;h3 class="entry-title"&gt;&lt;span class="wikilink"&gt;&lt;a href="$postDoc.uRL"&gt;$!postDoc.display('title', 'view', $postObj)&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;#end
     &lt;div&gt;
-    #set ($postContent = "")
-    ## Note: We trim the summary so that if there's some white space it won't cause the summary to be used instead
-    ## of the content.
-    #if ($useSummary)
-      #set ($postContent = $postObj.getProperty('extract').value.trim())
-    #end
-    #if ("$!postContent" == '')
-      #set ($postContent = $postObj.getProperty('content').value)
-    #end
-    {{html wiki="false"}}$!postDoc.getRenderedContent($postContent, $postDoc.syntax.toIdString()){{/html}}
+    {{html wiki="false"}}$services.blog.renderContentHTML($postDoc, $postObj, $useSummary, false, false){{/html}}
     &lt;/div&gt;
     #displayEntryFooter($postDoc $postObj)
   &lt;/div&gt;

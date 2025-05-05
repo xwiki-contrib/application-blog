@@ -281,13 +281,7 @@
 #macro(printBlogRssItem $entryDoc)
   #set($entryUrl = $entryDoc.getExternalURL('view', "language=${entryDoc.realLocale}"))
   #getEntryObject($entryDoc $entryObj)
-  #getEntryContent($entryDoc $entryObj true $entryContent true)
-  #if($!entryDoc.syntax.toIdString() == 'xwiki/1.0')
-    #set($desc = $entryContent)
-  #else
-    #set($desc = $services.blog.renderRSSDescription($entryContent, $entryDoc))
-  #end
-  #set($desc = $escapetool.xml($desc))
+  #set($desc = $escapetool.xml($services.blog.renderContentHTML($entryDoc, $entryObj, true, true, true)))
   &lt;item rdf:about="$entryUrl"&gt;
     &lt;title&gt;$escapetool.xml($entryDoc.getValue('title'))&lt;/title&gt;
     &lt;link&gt;$entryUrl&lt;/link&gt;

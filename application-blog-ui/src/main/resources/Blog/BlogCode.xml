@@ -732,12 +732,14 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param entryObj The xobject of the blog post, an instance of the &lt;tt&gt;Blog.BlogPostClass&lt;/tt&gt; xclass.
  *###
 #macro(displayEntryTitle $entryDoc $entryObj)
+  #set($escapedRenderedTitle = $services.rendering.escape($entryDoc.display('title', 'view', $entryObj), $xwiki.getCurrentContentSyntaxId()))
   #if($doc.fullName == $entryDoc.fullName)
     (% class="entry-title" %)
-    = $services.rendering.escape($entryDoc.display('title', 'view', $entryObj), $xwiki.getCurrentContentSyntaxId()) =
+    = $escapedRenderedTitle =
   #else
     (% class="entry-title" %)
-    === [[$services.rendering.escape($entryDoc.display('title', 'view', $entryObj),$xwiki.getCurrentContentSyntaxId())&gt;&gt;doc:$services.rendering.escape($services.model.serialize($entryDoc.getDocumentReference(),'default'),$xwiki.getCurrentContentSyntaxId())]] ===
+    ## Link content requires double escaping.
+    === [[$services.rendering.escape($escapedRenderedTitle,$xwiki.getCurrentContentSyntaxId())&gt;&gt;doc:$services.rendering.escape($services.model.serialize($entryDoc.getDocumentReference(),'default'),$xwiki.getCurrentContentSyntaxId())]] ===
   #end
 #end
 ##
@@ -752,10 +754,9 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  *###
 #macro(displayEntryContent $entryDoc $entryObj $onlyExtract)
   (% class="#if($onlyExtract)entry-summary#{else}entry-content#end" %)(((
-  #getEntryContent($entryDoc $entryObj $onlyExtract $entryContent)
   ## FIXME: This causes the blog's content to not be annotatable. See http://jira.xwiki.org/browse/XWIKI-6328
   ##        Should probably be replaced by a display macro call with a reference to the object property holding the post's content
-  {{html wiki="false"}}$entryDoc.getRenderedContent($entryContent, $entryDoc.syntax.toIdString()){{/html}}
+  {{html wiki="false"}}$services.blog.renderContentHTML($entryDoc, $entryObj, $onlyExtract, false, false){{/html}}
   ))) ## entry-content
   (% class="clearfloats" %)((()))
 #end
@@ -772,6 +773,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param entryContent The resulting content.
  * @param removeEllipsis If &lt;tt&gt;true&lt;/tt&gt;, then don't display an ellipsis at the end of the content (only used when
  *        &lt;tt&gt;onlyExtract&lt;/tt&gt; is &lt;tt&gt;true&lt;/tt&gt;)
+ * @deprecated Use $services.blog.renderContentHTML instead.
  *###
 #macro(getEntryContent $entryDoc $entryObj $onlyExtract $entryContent $removeEllipsis)
   #if ($onlyExtract)
@@ -875,7 +877,10 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
           #else
             , ##
           #end##
-          [[$!{categoryDoc.getObject($blogCategoryClassname).getValue('name')}&gt;&gt;${category}||rel='tag']]##
+          #set($escapedName = $services.rendering.escape($categoryDoc.getObject($blogCategoryClassname).getValue('name'), $xwiki.getCurrentContentSyntaxId()))
+          #set($escapedName = $services.rendering.escape($escapedName, $xwiki.getCurrentContentSyntaxId()))
+          #set($escapedCategory = $services.rendering.escape($category, $xwiki.getCurrentContentSyntaxId()))
+          [[$!{escapedName}&gt;&gt;${escapedCategory}||rel='tag']]##
         #end##
       #end##
     #end

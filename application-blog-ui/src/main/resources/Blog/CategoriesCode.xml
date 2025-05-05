@@ -367,7 +367,7 @@
 #macro(displaySimpleCategory $name $level)
   #getEntriesForCategory($name $discard $totalEntries)
   #set($nameUrl = $escapetool.url($name))
-  #foreach($i in [1..$level])*#end (% class="blog-category-level" %)((( [[#toolImage('rss')&gt;&gt;$name||queryString="xpage=plain&amp;sheet=Blog.CategoryRss" title="RSS"]] &lt;span class="wikilink"&gt;&lt;a href="$services.rendering.escape($xwiki.getURL($name), $xwiki.getCurrentContentSyntaxId())"&gt;#getCategoryName($xwiki.getDocument($name)) &lt;span class="itemCount"&gt;($totalEntries)&lt;/span&gt;&lt;/a&gt;&lt;/span&gt;)))
+  #foreach($i in [1..$level])*#end (% class="blog-category-level" %)((( [[#toolImage('rss')&gt;&gt;$services.rendering.escape($name, $xwiki.getCurrentContentSyntaxId())||queryString="xpage=plain&amp;sheet=Blog.CategoryRss" title="RSS"]] &lt;span class="wikilink"&gt;&lt;a href="$services.rendering.escape($xwiki.getURL($name), $xwiki.getCurrentContentSyntaxId())"&gt;#getCategoryName($xwiki.getDocument($name)) &lt;span class="itemCount"&gt;($totalEntries)&lt;/span&gt;&lt;/a&gt;&lt;/span&gt;)))
 #end
 ##
 ##

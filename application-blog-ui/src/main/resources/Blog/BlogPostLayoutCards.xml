@@ -485,8 +485,9 @@
           #end
           #if ($displaySummaryOnPinnedPosts)
             &lt;div class="text-left post-summary"&gt;
-             #set ($postContent = $pObj.getProperty('extract').value)
-             $!pDoc.getRenderedContent($postContent, $pDoc.syntax.toIdString())
+            #if ($stringtool.isNotBlank($pObj.getProperty('extract').value))
+              $services.blog.renderContentHTML($pDoc, $pObj, true, true, false)
+            #end
             &lt;/div&gt;
           #end
           #displayPostDetails($pDoc)
