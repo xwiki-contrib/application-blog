@@ -204,10 +204,15 @@ blog.blogpostlayout.notpost=[{0}]はブログの投稿ではありません！
 blog.blogpostlayout.post_view_not_allowed=ブログの投稿 [{0}] の閲覧が許可されていません
 blog.blogpostcreate.wrong_blog=正しくないブログの記述子
 
-# Class fields
-Blog.BlogClass_postsLayout.full=カレンダー
-Blog.BlogClass_postsLayout.image=画像のサムネイル
-Blog.BlogClass_postsLayout.cards=カード
+# Blog class list property values.
+### Missing: Blog.BlogClass_displayType_paginated=Paginated
+### Missing: Blog.BlogClass_displayType_weekly=Group posts weekly
+### Missing: Blog.BlogClass_displayType_monthly=Group posts monthly
+### Missing: Blog.BlogClass_displayType_all=Show all posts
+### Missing: Blog.BlogClass_postsLayout_image=Image thumbnail
+### Missing: Blog.BlogClass_postsLayout_full=Calendar
+### Missing: Blog.BlogClass_postsLayout_cards=Cards
+### Missing: Blog.BlogClass_postsLayout_compact=Compact
 
 # Blogs macro
 blog.livetable.title=タイトル
