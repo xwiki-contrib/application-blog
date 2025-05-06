@@ -204,10 +204,15 @@ blog.blogpostlayout.notpost=[{0}] não é uma postagem de blog!
 blog.blogpostlayout.post_view_not_allowed=Você não tem permissão para para visualizar este post do blog [{0}]
 blog.blogpostcreate.wrong_blog=Descritor de blog errado
 
-# Class fields
-Blog.BlogClass_postsLayout.full=Calendário
-Blog.BlogClass_postsLayout.image=Miniatura da imagem
-Blog.BlogClass_postsLayout.cards=Cartões
+# Blog class list property values.
+### Missing: Blog.BlogClass_displayType_paginated=Paginated
+### Missing: Blog.BlogClass_displayType_weekly=Group posts weekly
+### Missing: Blog.BlogClass_displayType_monthly=Group posts monthly
+### Missing: Blog.BlogClass_displayType_all=Show all posts
+### Missing: Blog.BlogClass_postsLayout_image=Image thumbnail
+### Missing: Blog.BlogClass_postsLayout_full=Calendar
+### Missing: Blog.BlogClass_postsLayout_cards=Cards
+### Missing: Blog.BlogClass_postsLayout_compact=Compact
 
 # Blogs macro
 blog.livetable.title=Título
