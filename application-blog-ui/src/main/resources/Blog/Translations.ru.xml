@@ -204,10 +204,15 @@ blog.blogpostlayout.notpost=[{0}] не является сообщением в 
 blog.blogpostlayout.post_view_not_allowed=Вам запрещено просматривать сообщения блога [{0}]
 blog.blogpostcreate.wrong_blog=Неправильный дескриптор блога
 
-# Class fields
-Blog.BlogClass_postsLayout.full=Календарь
-Blog.BlogClass_postsLayout.image=Миниатюра изображения
-Blog.BlogClass_postsLayout.cards=Карты
+# Blog class list property values.
+### Missing: Blog.BlogClass_displayType_paginated=Paginated
+### Missing: Blog.BlogClass_displayType_weekly=Group posts weekly
+### Missing: Blog.BlogClass_displayType_monthly=Group posts monthly
+### Missing: Blog.BlogClass_displayType_all=Show all posts
+### Missing: Blog.BlogClass_postsLayout_image=Image thumbnail
+### Missing: Blog.BlogClass_postsLayout_full=Calendar
+### Missing: Blog.BlogClass_postsLayout_cards=Cards
+### Missing: Blog.BlogClass_postsLayout_compact=Compact
 
 # Blogs macro
 blog.livetable.title=Название
