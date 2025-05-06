@@ -142,7 +142,7 @@
 #template('colorThemeInit.vm')
 ##
 ## text
-#set($textColor = "$!theme.textColor")
+#set($textColor = "$!theme.linkColor")
 ##
 ## background
 #set($bgColor = "$!theme.pageContentBackgroundColor")
@@ -331,7 +331,7 @@ div.edit-categories, div.manage-blogs-link {
   background-color: $bgColor;
 }
 .blogrefpath&gt;.breadcrumb .active a {
-  color: $theme.linkColor;
+  color: $textColor;
 }
 
 .newBlogPostForm {
