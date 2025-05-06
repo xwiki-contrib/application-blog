@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -179,13 +179,11 @@ blog.unpublished.viewall=Vis alle
 blog.relatedblogspanel.title=Tilsvarende blogs
 blog.allblogspanel.title=All blogs
 blog.allblogspanel.manage=Administrer Blogs
-
 blog.templateProvider.blogpost.name=Blogartikel
 blog.templateProvider.blogpost.description=Udsend nyt
 blog.categories.all=Alt
 blog.changeVisibility.changing=Ændre synlighed
 blog.changeVisibility.success=Synlighed af blogartikel er blevet ændret
-
 blog.manage.pagetitle=Administrér blog i denne wiki
 blog.manage.notitle=Blogtitel mangler. Angiv en titel for bloggen.
 blog.manage.nopage=Ingen side angivet. Angiv en side, hvor blogget skal oprettes.
@@ -206,10 +204,15 @@ blog.blogpostlayout.notpost=[{0}] er ikke en blogartikel!
 blog.blogpostlayout.post_view_not_allowed=Du har ikke rettigheder til at se artiklen [{0}]
 blog.blogpostcreate.wrong_blog=Forkert blog-beskrivelse
 
-# Class fields
-Blog.BlogClass_postsLayout.full=Kalender
-Blog.BlogClass_postsLayout.image=Billedminiature
-Blog.BlogClass_postsLayout.cards=Kort
+# Blog class list property values.
+### Missing: Blog.BlogClass_displayType_paginated=Paginated
+### Missing: Blog.BlogClass_displayType_weekly=Group posts weekly
+### Missing: Blog.BlogClass_displayType_monthly=Group posts monthly
+### Missing: Blog.BlogClass_displayType_all=Show all posts
+### Missing: Blog.BlogClass_postsLayout_image=Image thumbnail
+### Missing: Blog.BlogClass_postsLayout_full=Calendar
+### Missing: Blog.BlogClass_postsLayout_cards=Cards
+### Missing: Blog.BlogClass_postsLayout_compact=Compact
 
 # Blogs macro
 blog.livetable.title=Titel
@@ -264,5 +267,6 @@ blog.panel.unpublishedBlogPosts.pageTitle=Upublicerede artikler panel
 blog.manage.blogtype=Blogtype:
 
 ## Used to indicate where deprecated keys end
-#@deprecatedend</content>
+#@deprecatedend
+</content>
 </xwikidoc>
