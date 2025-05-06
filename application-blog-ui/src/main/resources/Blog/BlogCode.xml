@@ -94,7 +94,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     ## Keep testing for inline action for backward compatibility with older blogs.
     #if($xcontext.action == 'edit' || $xcontext.action == 'inline')
       #macro(displayProperty $blogDoc $propname)
-        ; #displayPropName($xwiki.getClass($blogClassname).get($propname)):
+        ; $blogDoc.displayPrettyName($propname):
         : $blogDoc.display($propname)
       #end
       #displayProperty($blogDoc 'title')

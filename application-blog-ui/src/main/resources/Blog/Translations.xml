@@ -206,10 +206,15 @@ blog.blogpostlayout.notpost=[{0}] is not a blog post!
 blog.blogpostlayout.post_view_not_allowed=You are not allowed to view the blog post [{0}]
 blog.blogpostcreate.wrong_blog=Wrong blog descriptor
 
-# Class fields
-Blog.BlogClass_postsLayout.full=Calendar
-Blog.BlogClass_postsLayout.image=Image thumbnail
-Blog.BlogClass_postsLayout.cards=Cards
+# Blog class list property values.
+Blog.BlogClass_displayType_paginated=Paginated
+Blog.BlogClass_displayType_weekly=Group posts weekly
+Blog.BlogClass_displayType_monthly=Group posts monthly
+Blog.BlogClass_displayType_all=Show all posts
+Blog.BlogClass_postsLayout_image=Image thumbnail
+Blog.BlogClass_postsLayout_full=Calendar
+Blog.BlogClass_postsLayout_cards=Cards
+Blog.BlogClass_postsLayout_compact=Compact
 
 # Blogs macro
 blog.livetable.title=Title
