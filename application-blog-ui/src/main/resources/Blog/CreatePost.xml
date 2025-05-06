@@ -71,7 +71,7 @@
     #end
     $services.icon.renderHTML('add')&lt;label class="createPost" for="entryTitle"&gt;$services.localization.render('blog.post.createpost') &lt;/label&gt;
     &lt;input type="text" id="entryTitle" name="entryTitle" size="30" placeholder="$services.localization.render('blog.post.title')"/&gt; &lt;span class="buttonwrapper"&gt;
-    &lt;input type="submit" value="${escapetool.xml($services.localization.render('blog.post.create'))}" class="btn btn-success button"/&gt;&lt;/span&gt;
+    &lt;input type="submit" value="${escapetool.xml($services.localization.render('blog.post.create'))}" class="btn btn-primary button"/&gt;&lt;/span&gt;
   &lt;/div&gt;
   &lt;/form&gt;
   #elseif("$!request.entryTitle" != '')## !hasEdit &amp;&amp; form submitted

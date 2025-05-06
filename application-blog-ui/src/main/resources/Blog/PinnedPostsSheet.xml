@@ -60,7 +60,7 @@
         &lt;input type="hidden" id="Blog.PinnedPostsClass_0_orderedPosts" name="Blog.PinnedPostsClass_0_orderedPosts" value="$!escapetool.xml($vdoc.getObject('Blog.PinnedPostsClass').getProperty('orderedPosts').value)"/&gt;
         &lt;input type="hidden" name="form_token" value="$services.csrf.token"/&gt;
         &lt;div&gt;
-          &lt;input class="btn btn-success" type="submit" name="action_save" value="$escapetool.xml($services.localization.render('blog.post.layout.cards.pinnedposts.save'))" id="savePinnedPostsBtn"/&gt;
+          &lt;input class="btn btn-primary" type="submit" name="action_save" value="$escapetool.xml($services.localization.render('blog.post.layout.cards.pinnedposts.save'))" id="savePinnedPostsBtn"/&gt;
         &lt;/div&gt;
       &lt;/form&gt;
 
