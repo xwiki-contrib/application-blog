@@ -274,12 +274,6 @@
 div.edit-categories, div.manage-blogs-link {
   font-size: 75%;
 }
-/* Trick for making the entry title appear larger in the form editor */
-#Blog\.BlogPostClass_0_title {
-  font-size: 140%;
-  width: 100%;
-  font-weight: bold;
-}
 .createPost {
   font-size: 80%;
   font-weight: bold;
