@@ -204,10 +204,15 @@ blog.blogpostlayout.notpost=[{0}] nu este o postare pe blog!
 blog.blogpostlayout.post_view_not_allowed=Nu aveți voie să vizualizați articolul [{0}]
 blog.blogpostcreate.wrong_blog=Descrierea greșită a blogului
 
-# Class fields
-Blog.BlogClass_postsLayout.full=Calendar
-Blog.BlogClass_postsLayout.image=Imaginea în miniatură
-Blog.BlogClass_postsLayout.cards=Carduri
+# Blog class list property values.
+### Missing: Blog.BlogClass_displayType_paginated=Paginated
+### Missing: Blog.BlogClass_displayType_weekly=Group posts weekly
+### Missing: Blog.BlogClass_displayType_monthly=Group posts monthly
+### Missing: Blog.BlogClass_displayType_all=Show all posts
+### Missing: Blog.BlogClass_postsLayout_image=Image thumbnail
+### Missing: Blog.BlogClass_postsLayout_full=Calendar
+### Missing: Blog.BlogClass_postsLayout_cards=Cards
+### Missing: Blog.BlogClass_postsLayout_compact=Compact
 
 # Blogs macro
 blog.livetable.title=Titlu

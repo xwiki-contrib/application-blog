@@ -204,10 +204,15 @@ blog.blogpostlayout.notpost=[{0}]은(는) 블로그 게시물이 아닙니다!
 blog.blogpostlayout.post_view_not_allowed=블로그 게시물 [{0}]을(를) 볼 수 없습니다
 blog.blogpostcreate.wrong_blog=잘못된 블로그 설명자
 
-# Class fields
-Blog.BlogClass_postsLayout.full=달력
-Blog.BlogClass_postsLayout.image=이미지 썸네일
-Blog.BlogClass_postsLayout.cards=카드
+# Blog class list property values.
+### Missing: Blog.BlogClass_displayType_paginated=Paginated
+### Missing: Blog.BlogClass_displayType_weekly=Group posts weekly
+### Missing: Blog.BlogClass_displayType_monthly=Group posts monthly
+### Missing: Blog.BlogClass_displayType_all=Show all posts
+### Missing: Blog.BlogClass_postsLayout_image=Image thumbnail
+### Missing: Blog.BlogClass_postsLayout_full=Calendar
+### Missing: Blog.BlogClass_postsLayout_cards=Cards
+### Missing: Blog.BlogClass_postsLayout_compact=Compact
 
 # Blogs macro
 blog.livetable.title=제목

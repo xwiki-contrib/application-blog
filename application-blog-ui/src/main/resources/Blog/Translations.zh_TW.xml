@@ -204,10 +204,15 @@ blog.category.posts.count={0} {0,choice,0#篇|1#篇|1&lt;篇}
 blog.blogpostlayout.post_view_not_allowed=您無法觀看此部落格文章 [{0}]
 ### Missing: blog.blogpostcreate.wrong_blog=Wrong blog descriptor
 
-# Class fields
-Blog.BlogClass_postsLayout.full=日曆
-### Missing: Blog.BlogClass_postsLayout.image=Image thumbnail
-Blog.BlogClass_postsLayout.cards=卡片
+# Blog class list property values.
+### Missing: Blog.BlogClass_displayType_paginated=Paginated
+### Missing: Blog.BlogClass_displayType_weekly=Group posts weekly
+### Missing: Blog.BlogClass_displayType_monthly=Group posts monthly
+### Missing: Blog.BlogClass_displayType_all=Show all posts
+### Missing: Blog.BlogClass_postsLayout_image=Image thumbnail
+### Missing: Blog.BlogClass_postsLayout_full=Calendar
+### Missing: Blog.BlogClass_postsLayout_cards=Cards
+### Missing: Blog.BlogClass_postsLayout_compact=Compact
 
 # Blogs macro
 blog.livetable.title=標題

@@ -95,7 +95,7 @@ blog.sheet.notpublished=Cet article n'a pas encore été publié.
 blog.sheet.publish=Publier
 blog.sheet.setdate=Date de publication :
 blog.sheet.image=Image
-blog.sheet.image.info=Le champ «Image» est utilisé pour attacher une vignette à chaque post. Cette vignette sera affichée uniquement si le blog est configuré pour utiliser la disposition «Image».
+blog.sheet.image.info=Le champ «Image» est utilisé pour attacher une vignette à chaque post. Cette vignette sera affichée uniquement si le blog est configuré pour utiliser la disposition {0}, {1} ou {2}.
 blog.sheet.choose_image=Sélectionner une image
 blog.category.created=La catégorie {0} a été créée.
 blog.category.exists=La catégorie {0} existe déjà.
@@ -204,10 +204,15 @@ blog.blogpostlayout.notpost=[{0}] n''est pas un article de blog !
 blog.blogpostlayout.post_view_not_allowed=Vous n''êtes pas autorisé à voir cet article de blog [{0}]
 blog.blogpostcreate.wrong_blog=Descripteur de blog incorrect
 
-# Class fields
-Blog.BlogClass_postsLayout.full=Calendrier
-Blog.BlogClass_postsLayout.image=Miniature
-Blog.BlogClass_postsLayout.cards=Cartes
+# Blog class list property values.
+### Missing: Blog.BlogClass_displayType_paginated=Paginated
+### Missing: Blog.BlogClass_displayType_weekly=Group posts weekly
+### Missing: Blog.BlogClass_displayType_monthly=Group posts monthly
+### Missing: Blog.BlogClass_displayType_all=Show all posts
+### Missing: Blog.BlogClass_postsLayout_image=Image thumbnail
+### Missing: Blog.BlogClass_postsLayout_full=Calendar
+### Missing: Blog.BlogClass_postsLayout_cards=Cards
+### Missing: Blog.BlogClass_postsLayout_compact=Compact
 
 # Blogs macro
 blog.livetable.title=Titre

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -179,13 +179,11 @@ blog.unpublished.viewall=Visa alla
 ### Missing: blog.relatedblogspanel.title=Related Blogs
 ### Missing: blog.allblogspanel.title=All Blogs
 ### Missing: blog.allblogspanel.manage=Manage Blogs
-
 ### Missing: blog.templateProvider.blogpost.name=Blog Post
 ### Missing: blog.templateProvider.blogpost.description=Communicate news
 ### Missing: blog.categories.all=All
 ### Missing: blog.changeVisibility.changing=Changing the visibility
 ### Missing: blog.changeVisibility.success=The visibility of the blog entry has been successfully changed
-
 ### Missing: blog.manage.pagetitle=Manage blogs on this wiki
 ### Missing: blog.manage.notitle=No blog title provided. Please enter the blog title.
 ### Missing: blog.manage.nopage=No page provided. Please enter a valid page where the blog should be created.
@@ -206,10 +204,15 @@ blog.unpublished.viewall=Visa alla
 ### Missing: blog.blogpostlayout.post_view_not_allowed=You are not allowed to view the blog post [{0}]
 ### Missing: blog.blogpostcreate.wrong_blog=Wrong blog descriptor
 
-# Class fields
-### Missing: Blog.BlogClass_postsLayout.full=Calendar
-### Missing: Blog.BlogClass_postsLayout.image=Image thumbnail
-### Missing: Blog.BlogClass_postsLayout.cards=Cards
+# Blog class list property values.
+### Missing: Blog.BlogClass_displayType_paginated=Paginated
+### Missing: Blog.BlogClass_displayType_weekly=Group posts weekly
+### Missing: Blog.BlogClass_displayType_monthly=Group posts monthly
+### Missing: Blog.BlogClass_displayType_all=Show all posts
+### Missing: Blog.BlogClass_postsLayout_image=Image thumbnail
+### Missing: Blog.BlogClass_postsLayout_full=Calendar
+### Missing: Blog.BlogClass_postsLayout_cards=Cards
+### Missing: Blog.BlogClass_postsLayout_compact=Compact
 
 # Blogs macro
 ### Missing: blog.livetable.title=Title
@@ -264,5 +267,6 @@ blog.unpublished.viewall=Visa alla
 blog.manage.blogtype=Bloggtyp\:
 
 ## Used to indicate where deprecated keys end
-#@deprecatedend</content>
+#@deprecatedend
+</content>
 </xwikidoc>

@@ -204,10 +204,15 @@ blog.unpublished.viewall=Tüm
 ### Missing: blog.blogpostlayout.post_view_not_allowed=You are not allowed to view the blog post [{0}]
 ### Missing: blog.blogpostcreate.wrong_blog=Wrong blog descriptor
 
-# Class fields
-### Missing: Blog.BlogClass_postsLayout.full=Calendar
-### Missing: Blog.BlogClass_postsLayout.image=Image thumbnail
-### Missing: Blog.BlogClass_postsLayout.cards=Cards
+# Blog class list property values.
+### Missing: Blog.BlogClass_displayType_paginated=Paginated
+### Missing: Blog.BlogClass_displayType_weekly=Group posts weekly
+### Missing: Blog.BlogClass_displayType_monthly=Group posts monthly
+### Missing: Blog.BlogClass_displayType_all=Show all posts
+### Missing: Blog.BlogClass_postsLayout_image=Image thumbnail
+### Missing: Blog.BlogClass_postsLayout_full=Calendar
+### Missing: Blog.BlogClass_postsLayout_cards=Cards
+### Missing: Blog.BlogClass_postsLayout_compact=Compact
 
 # Blogs macro
 ### Missing: blog.livetable.title=Title
