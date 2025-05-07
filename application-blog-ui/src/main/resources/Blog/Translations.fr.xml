@@ -205,14 +205,14 @@ blog.blogpostlayout.post_view_not_allowed=Vous n''êtes pas autorisé à voir ce
 blog.blogpostcreate.wrong_blog=Descripteur de blog incorrect
 
 # Blog class list property values.
-### Missing: Blog.BlogClass_displayType_paginated=Paginated
-### Missing: Blog.BlogClass_displayType_weekly=Group posts weekly
-### Missing: Blog.BlogClass_displayType_monthly=Group posts monthly
-### Missing: Blog.BlogClass_displayType_all=Show all posts
-### Missing: Blog.BlogClass_postsLayout_image=Image thumbnail
-### Missing: Blog.BlogClass_postsLayout_full=Calendar
-### Missing: Blog.BlogClass_postsLayout_cards=Cards
-### Missing: Blog.BlogClass_postsLayout_compact=Compact
+Blog.BlogClass_displayType_paginated=Avec pagination
+Blog.BlogClass_displayType_weekly=Grouper les articles par semaine
+Blog.BlogClass_displayType_monthly=Grouper les articles par mois
+Blog.BlogClass_displayType_all=Afficher tous les articles
+Blog.BlogClass_postsLayout_image=Miniature de l'image
+Blog.BlogClass_postsLayout_full=Calendrier
+Blog.BlogClass_postsLayout_cards=Cartes
+Blog.BlogClass_postsLayout_compact=Compacte
 
 # Blogs macro
 blog.livetable.title=Titre
