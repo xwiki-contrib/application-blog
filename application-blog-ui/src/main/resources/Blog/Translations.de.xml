@@ -95,7 +95,7 @@ blog.sheet.notpublished=Der Beitrag wurde noch nicht veröffentlicht.
 blog.sheet.publish=Veröffentlichen
 blog.sheet.setdate=Setze das Veröffentlichungsdatum auf:
 blog.sheet.image=Bild
-blog.sheet.image.info=Das Bild-Feld wird verwendet, um an jeden Blogbeitrag ein Vorschaubild anzuhängen. Die Vorschaubilder werden nur angezeigt, wenn für den Blog das 'Image'-Layout konfiguriert wurde.
+blog.sheet.image.info=Das Bild-Feld wird verwendet, um an jeden Blogbeitrag ein Vorschaubild anzuhängen. Die Vorschaubilder werden nur angezeigt, wenn für den Blog das {0}, {1} oder {2}-Layout konfiguriert wurde.
 blog.sheet.choose_image=Wählen Sie ein Bild aus
 blog.category.created=Die Kategorie {0} wurde erstellt.
 blog.category.exists=Die Kategorie {0} existiert bereits.
@@ -205,14 +205,14 @@ blog.blogpostlayout.post_view_not_allowed=Sie haben nicht die Berechtigung den B
 blog.blogpostcreate.wrong_blog=Falscher Blog-Deskriptor
 
 # Blog class list property values.
-### Missing: Blog.BlogClass_displayType_paginated=Paginated
-### Missing: Blog.BlogClass_displayType_weekly=Group posts weekly
-### Missing: Blog.BlogClass_displayType_monthly=Group posts monthly
-### Missing: Blog.BlogClass_displayType_all=Show all posts
-### Missing: Blog.BlogClass_postsLayout_image=Image thumbnail
-### Missing: Blog.BlogClass_postsLayout_full=Calendar
-### Missing: Blog.BlogClass_postsLayout_cards=Cards
-### Missing: Blog.BlogClass_postsLayout_compact=Compact
+Blog.BlogClass_displayType_paginated=mit Seitenzahlen
+Blog.BlogClass_displayType_weekly=Nachrichten in Wochen gruppiert
+Blog.BlogClass_displayType_monthly=Nachrichten in Monaten gruppiert
+Blog.BlogClass_displayType_all=Alle Nachrichten anzeigen
+Blog.BlogClass_postsLayout_image=Vorschaubild
+Blog.BlogClass_postsLayout_full=Kalender
+Blog.BlogClass_postsLayout_cards=Kartenansicht
+Blog.BlogClass_postsLayout_compact=Kompaktansicht
 
 # Blogs macro
 blog.livetable.title=Titel
