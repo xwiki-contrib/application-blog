@@ -50,7 +50,8 @@
   #set ($discard = $queryParams.put('creator', $xcontext.user))
   #set ($query = "$!{query} and (doc.creator = :creator or (isPublished.value = 1 and hidden.value = 0))")
   ## Create a Jodatime date formatter that will be used to format dates
-  #set($monthFormatter = $xwiki.jodatime.getDateTimeFormatterForPattern('MMMM'))
+  #set($currentLocale = $xcontext.locale)
+  #set($monthFormatter = $xwiki.jodatime.getDateTimeFormatterForPattern('MMMM').withLocale($currentLocale))
   #set($tempDate = $xwiki.jodatime.mutableDateTime)
   #set($currentYear = $xwiki.formatDate($datetool.date, 'yyyy'))
   #set($currentMonth = $xwiki.formatDate($datetool.date, 'M'))
