@@ -95,7 +95,7 @@ blog.sheet.notpublished=该文章当前尚未发表。
 blog.sheet.publish=发布
 blog.sheet.setdate=设置发布日期：
 blog.sheet.image=图片
-blog.sheet.image.info=image字段用于将缩略图附加到每个博客文章。仅当博客配置为使用"image"布局时，帖子缩略图才可见。
+blog.sheet.image.info=图像字段用于为每篇博客文章附加一个缩略图。只有在博客配置为使用 {0}、{1} 或 {2} 布局时，文章缩略图才会显示。
 blog.sheet.choose_image=选择一张图片
 blog.category.created={0}类已创建。
 blog.category.exists={0}类已存在。
@@ -205,14 +205,14 @@ blog.blogpostlayout.post_view_not_allowed=您不允许查看博客文章 [{0}]
 blog.blogpostcreate.wrong_blog=错误的博客描述符
 
 # Blog class list property values.
-### Missing: Blog.BlogClass_displayType_paginated=Paginated
-### Missing: Blog.BlogClass_displayType_weekly=Group posts weekly
-### Missing: Blog.BlogClass_displayType_monthly=Group posts monthly
-### Missing: Blog.BlogClass_displayType_all=Show all posts
-### Missing: Blog.BlogClass_postsLayout_image=Image thumbnail
-### Missing: Blog.BlogClass_postsLayout_full=Calendar
-### Missing: Blog.BlogClass_postsLayout_cards=Cards
-### Missing: Blog.BlogClass_postsLayout_compact=Compact
+Blog.BlogClass_displayType_paginated=分页
+Blog.BlogClass_displayType_weekly=每周群消息
+Blog.BlogClass_displayType_monthly=每月群消息
+Blog.BlogClass_displayType_all=显示所有帖子
+Blog.BlogClass_postsLayout_image=图像缩略图
+Blog.BlogClass_postsLayout_full=日历
+Blog.BlogClass_postsLayout_cards=卡片
+Blog.BlogClass_postsLayout_compact=紧凑
 
 # Blogs macro
 blog.livetable.title=标题
