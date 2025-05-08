@@ -50,7 +50,7 @@
   #set ($discard = $queryParams.put('creator', $xcontext.user))
   #set ($query = "$!{query} and (doc.creator = :creator or (isPublished.value = 1 and hidden.value = 0))")
   ## Create a Jodatime date formatter that will be used to format dates
-  #set($monthFormatter = $xwiki.jodatime.getDateTimeFormatterForPattern('MMMM'))
+  #set($monthFormatter = $xwiki.jodatime.getDateTimeFormatterForPattern('MMMM').withLocale($xcontext.locale))
   #set($tempDate = $xwiki.jodatime.mutableDateTime)
   #set($currentYear = $xwiki.formatDate($datetool.date, 'yyyy'))
   #set($currentMonth = $xwiki.formatDate($datetool.date, 'M'))
@@ -108,7 +108,7 @@
   #set($query = "${query} and year(publishDate.value) = :year")
   #set ($discard = $queryParams.put('year', $numbertool.toNumber($year).intValue()))
   ## Create a Jodatime date formatter that will be used to format dates
-  #set($monthFormatter = $xwiki.jodatime.getDateTimeFormatterForPattern('MMMM'))
+  #set($monthFormatter = $xwiki.jodatime.getDateTimeFormatterForPattern('MMMM').withLocale($xcontext.locale))
   #set($tempDate = $xwiki.jodatime.mutableDateTime)
   #set ($yearArticleCountQueryObj = $services.query.hql($query).addFilter('unique'))
   #bindQueryParameters($yearArticleCountQueryObj $queryParams)
