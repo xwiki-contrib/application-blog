@@ -448,43 +448,39 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
 ##
 ##
 #macro(displayCategoryManagementTree $space $displayType)
-&lt;div class="blog-categories-list"&gt;
-  #getCategoriesHierarchy("$!{space}" $tree)
-  #set ($categoriesDocFullName = 'Blog.Categories')
-  #if ("$!space" != $defaultBlogSpace)
-    #set ($defaultCategoryParent = "${space}.WebHome")
+  &lt;div class="blog-categories-list"&gt;
+    #getCategoriesHierarchy($space $tree)
+    #set ($categoriesDocFullName = 'Blog.Categories')
+    #if ("$!space" != $defaultBlogSpace)
+      #set ($defaultCategoryParent = "${space}.WebHome")
 
-    #getBlogCategoriesLocation($doc.space,  $categoriesLocation)
-    #set ($categoriesDocFullName = "${categoriesLocation}.WebHome")
-  #end
-  #displayCategoriesHierarchy($tree $displayType)
-  #if($xwiki.hasAccessLevel('edit', $xcontext.user, $categoriesDocFullName))
-    #set($addCategURL = $doc.getURL('view', $escapetool.url({
-      'xaction' : 'showAddCategory',
-      'parentCategory' : '',
-      'categoriesSpace': $space
-    })))
-    #if($isBlogPost || ("$!request.entry" != '' &amp;&amp; "$!request.entryObjNb" != ''))
-      #set($entryParam = $!doc.fullName)
-      #set($entryObjNbParam = $!entryObj.number)
-      #if(!$isBlogPost)
-        #set($entryParam = $!request.entry)
-        #set($entryObjNbParam = $!request.entryObjNb)
-      #end
-      #set($addCategURL = $doc.getURL('view', $escapetool.url({
+      #getBlogCategoriesLocation($doc.space,  $categoriesLocation)
+      #set ($categoriesDocFullName = "${categoriesLocation}.WebHome")
+    #end
+    #displayCategoriesHierarchy($tree $displayType)
+    #if ($xwiki.hasAccessLevel('edit', $xcontext.user, $categoriesDocFullName))
+      #set ($queryString = {
         'xaction' : 'showAddCategory',
         'parentCategory' : '',
-        'entry' : $entryParam,
-        'entryObjNb' : $entryObjNbParam,
         'categoriesSpace': $space
-      })))
+      })
+      #if ($isBlogPost || ("$!request.entry" != '' &amp;&amp; "$!request.entryObjNb" != ''))
+        #set ($entryParam = $doc.fullName)
+        #set ($entryObjNbParam = $entryObj.number)
+        #if (!$isBlogPost)
+          #set ($entryParam = $request.entry)
+          #set ($entryObjNbParam = $request.entryObjNb)
+        #end
+        #set ($discard = $queryString.put('entry', $entryParam))
+        #set ($discard = $queryString.put('entryObjNb', $entryObjNbParam))
+      #end
+      #set ($addCategURL = $doc.getURL('view', $escapetool.url($queryString)))
+      * &lt;span class="blog-add-category-label"&gt;$services.icon.renderHTML('add')&amp;nbsp;&lt;a href="$escapetool.xml($addCategURL)"&gt;$services.localization.render('blog.categories.addcategory')&lt;/a&gt;&lt;/span&gt;
+       #if ("$!request.xaction" == 'showAddCategory' &amp;&amp; "$!request.parentCategory" == '')
+         #addCategoryForm()
+       #end
     #end
-    * &lt;span class="blog-add-category-label"&gt;$services.icon.renderHTML('add')&amp;nbsp;&lt;a href="$escapetool.xml($addCategURL)"&gt;$services.localization.render('blog.categories.addcategory')&lt;/a&gt;&lt;/span&gt;
-     #if("$!{request.xaction}" == "showAddCategory" &amp;&amp; "$!{request.parentCategory}" == "") #addCategoryForm() #end
-  #end
-
-
-&lt;/div&gt;
+  &lt;/div&gt;
 #end
 ##
 ##
