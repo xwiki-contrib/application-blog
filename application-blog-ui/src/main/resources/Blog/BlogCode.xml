@@ -732,7 +732,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param entryObj The xobject of the blog post, an instance of the &lt;tt&gt;Blog.BlogPostClass&lt;/tt&gt; xclass.
  *###
 #macro(displayEntryTitle $entryDoc $entryObj)
-  #set($escapedRenderedTitle = $services.rendering.escape($entryDoc.display('title', 'view', $entryObj), $xwiki.getCurrentContentSyntaxId()))
+  #set($escapedRenderedTitle = $services.rendering.escape($entryDoc.getValue('title'), $xwiki.getCurrentContentSyntaxId()))
   #if($doc.fullName == $entryDoc.fullName)
     (% class="entry-title" %)
     = $escapedRenderedTitle =

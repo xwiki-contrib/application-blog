@@ -129,7 +129,7 @@
           #getEntryObject($entryDoc $entryObj)
           #isPublished($entryObj $isPublished)
           #isHidden($entryObj $isHidden)
-          * [[$entryDoc.display('title', 'view', $entryObj)&gt;&gt;$entryDoc]]#if(!$isPublished) $services.localization.render('blog.archive.unpublished')#elseif($isHidden) $services.localization.render('blog.archive.hidden')#end
+          * [[$entryDoc.getValue('title')&gt;&gt;$entryDoc]]#if(!$isPublished) $services.localization.render('blog.archive.unpublished')#elseif($isHidden) $services.localization.render('blog.archive.hidden')#end
 
         #end
       #end
