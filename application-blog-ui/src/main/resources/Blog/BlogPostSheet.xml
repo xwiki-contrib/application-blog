@@ -69,7 +69,7 @@ $xwiki.ssx.use('Blog.ManageCategories')##
   #getBlogCategoriesLocation($doc.space $categoriesLocation)
   #set ($defaultPostCategory = "${categoriesLocation}.WebHome")
   #if ($categoriesLocation == 'Blog')
-    #set ($defaultPostCategory = "Blog.Categories.WebHome")
+    #set ($defaultPostCategory = 'Blog.Categories')
   #end
   #set($discard = $xwiki.jsx.use('Blog.BlogPostSheet'))
   #set($discard = $xwiki.ssx.use('Blog.BlogPostSheet'))
@@ -107,6 +107,7 @@ $xwiki.ssx.use('Blog.ManageCategories')##
         &lt;dt&gt;&lt;label&gt;{{translation key='blog.sheet.category'/}}&lt;/label&gt;&lt;/dt&gt;
         &lt;dd&gt;
           #displayCategoryManagementTree($categoriesLocation 'selectable') &lt;input type="hidden" name="Blog.BlogPostClass_0_category" id="defaultPostCategory"/&gt;&lt;input type="hidden" id="blogCategoriesWebHome" value="${escapetool.xml($defaultPostCategory)}"/&gt;
+          #checkCategorySelectionModal
         &lt;/dd&gt;
       &lt;/dl&gt;
     &lt;/div&gt;
@@ -228,27 +229,6 @@ $xwiki.ssx.use('Blog.ManageCategories')##
     </property>
     <property>
       <code>require(['jquery'], function($){
-  function hasCategories () {
-    return $('div.blog-categories-list input:checkbox:checked').length &gt; 0 ? true: false;
-  }
-
-  function setDefaultCategory () {
-    $("input[type='hidden']#defaultPostCategory").val($("input[type='hidden']#blogCategoriesWebHome").val());
-  }
-
-  if (!hasCategories()) {
-    setDefaultCategory();
-  }
- 
-  $( "body" ).on( "click", "div.blog-categories-list input:checkbox", function() {
-    if(!hasCategories()){
-      setDefaultCategory();
-    }
-    else
-    {
-      $("input[type='hidden']#defaultPostCategory").val('');
-    }
-  });
   // Reset the "dirty state" of the CKEDITOR editors
   $("body").on("click", "form#uploadAttachment input[name='action_upload']", function(event){
     if( typeof(CKEDITOR) !== "undefined" ) {
@@ -262,6 +242,58 @@ $xwiki.ssx.use('Blog.ManageCategories')##
       }
     }
   });
+
+  // Ask for selecting a category.
+  $(document).on('xwiki:actions:beforeSave', function(event, data) {
+    const isSaveAndView = data.originalEvent.target.name === 'action_save';
+    const selectedCategories = $("input[name='Blog\\.BlogPostClass_0_category']:checked")
+    .map((_, el) =&gt; $(el).val()).get();
+
+    if (selectedCategories.length &gt; 0) return;
+
+    event.preventDefault();
+    const modal = $('#checkCategorySelection');
+    modal.modal('show');
+    let userConfirmed = false;
+    $(document).one('click', '#continueCategorySelection', () =&gt; {
+      userConfirmed = true;
+    });
+    // Listen for modal dismissal and proceed with the save.
+    modal.one('hidden.bs.modal', () =&gt; {
+      if (userConfirmed) {
+        highlightCategorySelection();
+      } else {
+        // Use default category.
+        $('#defaultPostCategory').val($('#blogCategoriesWebHome').val());
+        triggerManualSave(isSaveAndView);
+      }
+    });
+  });
+
+  function highlightCategorySelection() {
+    const blogCategories = $('.blog-categories-list').closest('dl');
+    const originalBg = blogCategories.css('background-color');
+
+    blogCategories[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    blogCategories.css('background-color', '#f2dede');
+
+    setTimeout(() =&gt; {
+      blogCategories.css('background-color', originalBg);
+    }, 3000);
+  }
+
+  function triggerManualSave(isSaveAndView) {
+    $(document).trigger('xwiki:actions:save', {
+      continue: true,
+      form: $('#inline')[0]
+    });
+
+    if (isSaveAndView) {
+      $(document).one('xwiki:document:saved', () =&gt; {
+        window.location.href = XWiki.currentDocument.getURL();
+      });
+    }
+  }
 });</code>
     </property>
     <property>

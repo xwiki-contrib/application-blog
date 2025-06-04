@@ -260,6 +260,10 @@ blog.panel.recentBlogPosts.pageTitle=Recent Blog Posts Panel
 blog.panel.relatedBlogs.pageTitle=Related Blogs Panel
 blog.panel.unpublishedBlogPosts.pageTitle=Unpublished Blog Posts Panel
 
+blog.modal.checkCategorySelection.header=Select a Category
+blog.modal.checkCategorySelection.body=You have not selected any categories for your blog post. Selection of a category makes it easier to find your post later on. Do you want to select a category?
+blog.modal.checkCategorySelection.footer.no=No, save without
+
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
 #######################################

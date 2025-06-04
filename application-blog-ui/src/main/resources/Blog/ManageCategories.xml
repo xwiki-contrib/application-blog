@@ -749,10 +749,6 @@ document.observe('xwiki:dom:loaded', function() {
     <property>
       <code>#template('colorThemeInit.vm')
 
-.blog-categories-list {
-  float: left;
-  padding: 8px 0;
-}
 .blog-categories-list .subcategories {
   background: $theme.backgroundSecondaryColor;
   margin-top: 1.4em;

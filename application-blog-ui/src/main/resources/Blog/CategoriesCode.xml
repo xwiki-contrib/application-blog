@@ -620,5 +620,34 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
     #end
   #end
 #end
+##
+##
+##
+#*
+  Provide a modal box to notify the user when the category is not set on a blog post creation/update.
+*#
+#macro(checkCategorySelectionModal)
+  &lt;div class="modal fade" id="checkCategorySelection" tabindex="-1" role="dialog"&gt;
+    &lt;div class="modal-dialog"&gt;
+      &lt;div class="modal-content"&gt;
+        &lt;div class="modal-header"&gt;
+          &lt;button type="button" class="close" data-dismiss="modal"&gt;&amp;times;&lt;/button&gt;
+          &lt;h4 class="modal-title"&gt;$services.localization.render('blog.modal.checkCategorySelection.header')&lt;/h4&gt;
+        &lt;/div&gt;
+        &lt;div class="modal-body"&gt;
+          &lt;div&gt;
+            $services.localization.render('blog.modal.checkCategorySelection.body')
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="modal-footer"&gt;
+          &lt;input id="continueCategorySelection" type="button" class="btn btn-default" data-dismiss="modal"
+            value="$escapetool.xml($services.localization.render('yesno_1'))"&gt;
+          &lt;input type="button" class="btn btn-danger" data-dismiss="modal"
+            value="$escapetool.xml($services.localization.render('blog.modal.checkCategorySelection.footer.no'))"&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+#end
 {{/velocity}}</content>
 </xwikidoc>
