@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.xwiki.contrib</groupId>
     <artifactId>parent-platform</artifactId>
-    <version>8.4-12</version>
+    <version>9.11.9</version>
   </parent>
   <groupId>org.xwiki.contrib.blog</groupId>
   <artifactId>application-blog</artifactId>
@@ -50,9 +50,6 @@
     </developer>
   </developers>
   <properties>
-    <!-- We need to depend on 8.4.2 since we use new ExtensionUpgradedEvent(String) which is only available in
-         8.4.2+ -->
-    <commons.version>8.4.2</commons.version>
     <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
     <xwiki.issueManagement.jira.id>BLOG</xwiki.issueManagement.jira.id>
   </properties>

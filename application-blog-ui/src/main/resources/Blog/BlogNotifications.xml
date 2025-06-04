@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.3">
+<xwikidoc version="1.3" reference="Blog.BlogNotifications" locale="">
   <web>Blog</web>
   <name>BlogNotifications</name>
   <language/>
@@ -31,8 +31,8 @@
   <parent>Blog.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1498833851000</date>
-  <contentUpdateDate>1498829066000</contentUpdateDate>
+  <date>1749062581000</date>
+  <contentUpdateDate>1749062273000</contentUpdateDate>
   <version>1.1</version>
   <title>BlogNotifications</title>
   <comment/>
@@ -140,6 +140,18 @@
         <values/>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </objectType>
+      <target>
+        <contenttype>VelocityCode</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>target</name>
+        <number>10</number>
+        <prettyName>Target</prettyName>
+        <rows>3</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </target>
       <validationExpression>
         <contenttype>VelocityCode</contenttype>
         <disabled>0</disabled>
@@ -181,6 +193,9 @@
       <objectType>
         <value>Blog.BlogPostClass</value>
       </objectType>
+    </property>
+    <property>
+      <target/>
     </property>
     <property>
       <validationExpression>#set($blogClassReference = $services.model.createDocumentReference('', 'Blog', 'BlogPostClass'))
@@ -235,52 +250,7 @@ true
     </property>
     <property>
       <notificationTemplate>#template('notification/macros.vm')
-#if ($services.extension.core.getCoreExtension('org.xwiki.platform:xwiki-platform-oldcore').id.version.compareTo('9.10') &gt;= 0)
-  #displayNotificationEvent($event)
-#else
-  ###
-  ### Content
-  ###
-  #define($content)
-    #set ($document = $xwiki.getDocument($event.document))
-    &lt;p&gt;&lt;strong&gt;$escapetool.xml($services.localization.render('blog.applicationName'))&lt;/strong&gt;&lt;/p&gt;
-    &lt;p&gt;$services.localization.render('blog.events.blogpostpublished.displayer', ["&lt;a href='$document.getURL()'&gt;$!escapetool.xml($document.getRenderedTitle('html/5.0'))&lt;/a&gt;"])&lt;/p&gt;
-    &lt;p&gt;$services.localization.render('notifications.events.by', ["#displayNotificationEventUsers($event.users)"])&lt;/p&gt;
-    #set ($dates = $event.dates)
-    #if ($dates.size() &gt; 1)
-      &lt;p&gt;&lt;small&gt;$services.localization.render('notifications.events.lastChange', [$xwiki.formatDate($event.dates.get(0))])&lt;/small&gt;&lt;/p&gt;
-    #else
-      &lt;p&gt;&lt;small&gt;$escapetool.xml($xwiki.formatDate($event.dates.get(0)))&lt;/small&gt;&lt;/p&gt;
-    #end
-  #end
-  ###
-  ### Details
-  ###
-  #define($details)
-    #if ($event.events.size() &gt; 1)
-      #define($rows)
-        #foreach($ev in $event.events)
-          &lt;tr&gt;
-            #set ($type = "$!ev.type")
-            #set ($icon = 'page')
-            #if ($type == 'org.xwiki.platform.blog.events.BlogPostPublishedEvent')
-              #set ($type = $services.localization.render('blog.publisher.published'))
-              #set ($icon = 'rss')
-            #end
-            &lt;td&gt;$!services.icon.renderHTML($icon) $!escapetool.xml($type)&lt;/td&gt;
-            &lt;td&gt;#displayNotificationEventUser($ev.user)&lt;/td&gt;
-            &lt;td class="text-right"&gt;$escapetool.xml($xwiki.formatDate($ev.date))&lt;/td&gt;
-          &lt;/tr&gt;
-        #end
-      #end
-      #displayNotificationEventDetailsSkeletons($event.events.size(), $rows)
-    #end
-  #end
-  ###
-  ### Display the notification
-  ###
-  #displayNotificationEventSkeleton('rss', $content, $details)
-#end
+#displayNotificationEvent($event)
 </notificationTemplate>
     </property>
   </object>
