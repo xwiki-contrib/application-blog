@@ -257,6 +257,9 @@ blog.panel.blogCategories.pageTitle=Blog Kategorien Panel
 blog.panel.recentBlogPosts.pageTitle=Neueste Blog Beiträge Panel
 blog.panel.relatedBlogs.pageTitle=Ähnliche Blogs Panel
 blog.panel.unpublishedBlogPosts.pageTitle=Unveröffentlichte Blog Beiträge Panel
+blog.modal.checkCategorySelection.header=Kategorie auswählen
+blog.modal.checkCategorySelection.body=Es ist keine Kategorien für den Blogbeitrag ausgewählt. Die Auswahl einer Kategorie erleichtert es, den Beitrag später zu finden. Eine Kategorie auswählen?
+blog.modal.checkCategorySelection.footer.no=Nein, ohne Kategorie speichern
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
