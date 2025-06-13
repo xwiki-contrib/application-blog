@@ -31,8 +31,8 @@
   <parent>Blog.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1749062273000</date>
-  <contentUpdateDate>1749062273000</contentUpdateDate>
+  <date>1749827422000</date>
+  <contentUpdateDate>1749827422000</contentUpdateDate>
   <version>1.1</version>
   <title>Style enhancements for the blog application</title>
   <comment/>
@@ -56,6 +56,7 @@
       <validationScript/>
       <cache>
         <cache>0</cache>
+        <defaultValue>long</defaultValue>
         <disabled>0</disabled>
         <displayType>select</displayType>
         <multiSelect>0</multiSelect>
