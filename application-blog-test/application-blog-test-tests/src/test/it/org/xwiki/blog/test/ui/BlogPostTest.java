@@ -68,7 +68,6 @@ public class BlogPostTest extends AbstractTest
 
         blogPostInlinePage.setTitle("Test blog title");
         blogPostInlinePage.setContent("Test blog content");
-        blogPostInlinePage.setSummary("Test blog summary");
         blogPostInlinePage.setCategories(Collections.singletonList("Personal"));
         BlogPostViewPage blogPostViewPage = blogPostInlinePage.clickSaveAndView();
 
@@ -83,14 +82,12 @@ public class BlogPostTest extends AbstractTest
 
         Assert.assertEquals("Test blog title", blogPostInlinePage.getTitle());
         Assert.assertEquals("Test blog content", blogPostInlinePage.getContent());
-        Assert.assertEquals("Test blog summary", blogPostInlinePage.getSummary());
         Assert.assertEquals(Collections.singletonList("Personal"), blogPostInlinePage.getCategories());
         Assert.assertFalse(blogPostInlinePage.isPublished());
 
         // Modify the blog post.
         blogPostInlinePage.setTitle("Modified title");
         blogPostInlinePage.setContent("Modified content");
-        blogPostInlinePage.setSummary("Modified summary");
         blogPostInlinePage.setCategories(Arrays.asList("News", "Personal"));
         blogPostInlinePage.setPublished(true);
 
