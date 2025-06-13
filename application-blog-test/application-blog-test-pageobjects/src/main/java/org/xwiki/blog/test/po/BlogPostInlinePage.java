@@ -57,14 +57,16 @@ public class BlogPostInlinePage extends InlinePage
     private WebElement hiddenCheckBox;
 
     /**
-     * The WYSIWYG editor used to edit the blog post content.
+     * The text area used to edit the blog post content.
      */
-    private final EditorElement contentEditor = new EditorElement("Blog.BlogPostClass_0_content");
+    @FindBy(id = "Blog.BlogPostClass_0_content")
+    private WebElement contentTextArea;
 
     /**
-     * The WYSIWYG editor used to edit the blog post summary.
+     * The text area used to edit the blog post summary.
      */
-    private final EditorElement summaryEditor = new EditorElement("Blog.BlogPostClass_0_extract");
+    @FindBy(id = "Blog.BlogPostClass_0_extract")
+    private WebElement summaryTextArea;
 
     /**
      * Sets the value of the title input field.
@@ -92,15 +94,31 @@ public class BlogPostInlinePage extends InlinePage
      */
     public void setContent(String content)
     {
-        RichTextAreaElement richTextArea = contentEditor.getRichTextArea();
-        richTextArea.clear();
-        richTextArea.sendKeys(content);
+        contentTextArea.clear();
+        contentTextArea.sendKeys(content);
     }
 
     @Override
     public String getContent()
     {
-        return contentEditor.getRichTextArea().getText();
+        return contentTextArea.getText();
+    }
+
+    /**
+     * Sets the value of the blog post summary field.
+     *
+     * @param content the new blog post summary
+     */
+    public void setSummary(String summary)
+    {
+        summaryTextArea.clear();
+        summaryTextArea.sendKeys(summary);
+    }
+
+    @Override
+    public String getSummary()
+    {
+        return summaryTextArea.getText();
     }
 
     /**
@@ -184,15 +202,6 @@ public class BlogPostInlinePage extends InlinePage
         if (hiddenCheckBox.isSelected() != hidden) {
             hiddenCheckBox.click();
         }
-    }
-
-    /**
-     * Wait for the WYSIWYG editors used to edit the blog content and summary to load.
-     */
-    public void waitToLoad()
-    {
-        contentEditor.waitToLoad();
-        summaryEditor.waitToLoad();
     }
 
     @Override

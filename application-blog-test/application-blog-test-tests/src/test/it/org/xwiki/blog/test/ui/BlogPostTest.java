@@ -63,33 +63,35 @@ public class BlogPostTest extends AbstractTest
         CreateBlogPostPane createBlogPostPane = BlogHomePage.gotoPage().getCreateBlogPostPane();
         createBlogPostPane.setTitle(getTestMethodName());
         BlogPostInlinePage blogPostInlinePage = createBlogPostPane.clickCreateButton();
-        blogPostInlinePage.waitToLoad();
 
         Assert.assertEquals(getTestMethodName(), blogPostInlinePage.getTitle());
 
         blogPostInlinePage.setTitle("Test blog title");
         blogPostInlinePage.setContent("Test blog content");
+        blogPostInlinePage.setSummary("Test blog summary");
         blogPostInlinePage.setCategories(Collections.singletonList("Personal"));
         BlogPostViewPage blogPostViewPage = blogPostInlinePage.clickSaveAndView();
 
         // Assert the result.
         Assert.assertEquals("Test blog title", blogPostViewPage.getDocumentTitle());
         Assert.assertEquals("Test blog content", blogPostViewPage.getContent());
+        Assert.assertEquals("Test blog summary", blogPostViewPage.getSummary());
         Assert.assertEquals(Collections.singletonList("Personal"), blogPostViewPage.getCategories());
         Assert.assertFalse(blogPostViewPage.isPublished());
 
         // Edit the blog post.
         blogPostInlinePage = blogPostViewPage.clickEditBlogPostIcon();
-        blogPostInlinePage.waitToLoad();
 
         Assert.assertEquals("Test blog title", blogPostInlinePage.getTitle());
         Assert.assertEquals("Test blog content", blogPostInlinePage.getContent());
+        Assert.assertEquals("Test blog summary", blogPostInlinePage.getSummary());
         Assert.assertEquals(Collections.singletonList("Personal"), blogPostInlinePage.getCategories());
         Assert.assertFalse(blogPostInlinePage.isPublished());
 
         // Modify the blog post.
         blogPostInlinePage.setTitle("Modified title");
         blogPostInlinePage.setContent("Modified content");
+        blogPostInlinePage.setSummary("Modified summary");
         blogPostInlinePage.setCategories(Arrays.asList("News", "Personal"));
         blogPostInlinePage.setPublished(true);
 
@@ -98,6 +100,7 @@ public class BlogPostTest extends AbstractTest
 
         Assert.assertEquals("Modified title", blogPostViewPage.getDocumentTitle());
         Assert.assertEquals("Modified content", blogPostViewPage.getContent());
+        Assert.assertEquals("Modified summary", blogPostViewPage.getSummary());
         Assert.assertEquals(Arrays.asList("News", "Personal"), blogPostViewPage.getCategories());
         Assert.assertTrue(blogPostViewPage.isPublished());
         Assert.assertFalse(blogPostViewPage.isHidden());
