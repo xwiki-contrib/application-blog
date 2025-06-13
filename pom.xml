@@ -20,7 +20,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.xwiki.contrib</groupId>
@@ -59,7 +60,7 @@
     <module>application-blog-api</module>
     <module>application-blog-ui</module>
   </modules>
-    <build>
+  <build>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -71,6 +72,36 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.revapi</groupId>
+        <artifactId>revapi-maven-plugin</artifactId>
+        <configuration>
+          <analysisConfiguration><![CDATA[
+            {
+              "revapi": {
+                "ignore" : [
+                  {
+                    "code": "java.class.nonFinalClassInheritsFromNewClass",
+                    "old": "class org.xwiki.model.reference.DocumentReference",
+                    "new": "class org.xwiki.model.reference.DocumentReference",
+                    "superClass": "org.xwiki.model.reference.AbstractLocalizedEntityReference",
+                    "justification": "Not a breakage"
+                  },
+                  {
+                    "code": "java.class.nonFinalClassInheritsFromNewClass",
+                    "old": "class org.xwiki.model.reference.LocalDocumentReference",
+                    "new": "class org.xwiki.model.reference.LocalDocumentReference",
+                    "superClass": "org.xwiki.model.reference.AbstractLocalizedEntityReference",
+                    "justification": "Not a breakage"
+                  }
+                ]
+              }
+            }
+          ]]></analysisConfiguration>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
   <profiles>
     <profile>
