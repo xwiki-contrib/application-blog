@@ -22,7 +22,7 @@ package org.xwiki.blog.test.po;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -113,7 +113,9 @@ public class BlogPostInlinePage extends InlinePage
         summaryTextArea.sendKeys(summary);
     }
 
-    @Override
+    /**
+     * @return the summary of the blog post
+     */
     public String getSummary()
     {
         return summaryTextArea.getText();
