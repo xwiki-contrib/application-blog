@@ -73,7 +73,7 @@ public class ManageCategoriesPage extends BasePage
     /**
      * Add a new top-level category with the given name, {@link #clickAddCategory()} should be called first
      * 
-     * @param name
+     * @param name the name of the category
      */
     public void addCategory(String name)
     {
@@ -130,6 +130,7 @@ public class ManageCategoriesPage extends BasePage
      * Check if the given category is present in the categories tree
      * 
      * @param name category name
+     * @return true if the category is found, false otherwise
      */
     public boolean isCategoryPresent(String name)
     {

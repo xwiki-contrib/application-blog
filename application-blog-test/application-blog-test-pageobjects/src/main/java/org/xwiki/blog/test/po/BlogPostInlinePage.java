@@ -105,7 +105,7 @@ public class BlogPostInlinePage extends InlinePage
     /**
      * Sets the value of the blog post summary field.
      *
-     * @param content the new blog post summary
+     * @param summary the new blog post summary
      */
     public void setSummary(String summary)
     {

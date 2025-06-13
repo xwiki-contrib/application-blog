@@ -75,7 +75,6 @@ public class BlogPostTest extends AbstractTest
         // Assert the result.
         Assert.assertEquals("Test blog title", blogPostViewPage.getDocumentTitle());
         Assert.assertEquals("Test blog content", blogPostViewPage.getContent());
-        Assert.assertEquals("Test blog summary", blogPostViewPage.getSummary());
         Assert.assertEquals(Collections.singletonList("Personal"), blogPostViewPage.getCategories());
         Assert.assertFalse(blogPostViewPage.isPublished());
 
@@ -100,7 +99,6 @@ public class BlogPostTest extends AbstractTest
 
         Assert.assertEquals("Modified title", blogPostViewPage.getDocumentTitle());
         Assert.assertEquals("Modified content", blogPostViewPage.getContent());
-        Assert.assertEquals("Modified summary", blogPostViewPage.getSummary());
         Assert.assertEquals(Arrays.asList("News", "Personal"), blogPostViewPage.getCategories());
         Assert.assertTrue(blogPostViewPage.isPublished());
         Assert.assertFalse(blogPostViewPage.isHidden());

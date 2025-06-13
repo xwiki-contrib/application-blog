@@ -38,15 +38,6 @@
     <xwiki.surefire.captureconsole.skip>true</xwiki.surefire.captureconsole.skip>
   </properties>
   <dependencies>
-    <!-- Note we need the WYSIWYG to test editing a Blog post in WYSIWYG mode -->
-    <dependency>
-      <!-- Keep the WYSIWYG Editor war before the platform war, otherwise it overwrites web.xml -->
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-wysiwyg-war</artifactId>
-      <version>${platform.version}</version>
-      <type>war</type>
-      <scope>runtime</scope>
-    </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-web</artifactId>
@@ -60,14 +51,6 @@
       <artifactId>xwiki-platform-tool-rootwebapp</artifactId>
       <version>${platform.version}</version>
       <type>war</type>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <!-- Used to configure the WYSIWYG Editor -->
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-wysiwyg-ui</artifactId>
-      <version>${platform.version}</version>
-      <type>xar</type>
       <scope>runtime</scope>
     </dependency>
     <dependency>
@@ -125,12 +108,6 @@
             </goals>
           </execution>
         </executions>
-        <configuration>
-          <contextPathMapping>
-            <!-- Merge the WYSIWYG editor WAR with the platform web WAR. -->
-            <xwiki-platform-wysiwyg-war>xwiki</xwiki-platform-wysiwyg-war>
-          </contextPathMapping>
-        </configuration>
       </plugin>
     </plugins>
   </build>
