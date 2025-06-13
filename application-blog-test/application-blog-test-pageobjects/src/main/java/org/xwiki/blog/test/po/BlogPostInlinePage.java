@@ -27,8 +27,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.xwiki.test.ui.po.InlinePage;
-import org.xwiki.test.ui.po.editor.wysiwyg.EditorElement;
-import org.xwiki.test.ui.po.editor.wysiwyg.RichTextAreaElement;
 
 /**
  * The "Inline form" edit mode page for a blog post.
