@@ -257,6 +257,9 @@ blog.panel.blogCategories.pageTitle=博客类别面板
 blog.panel.recentBlogPosts.pageTitle=最近的博客帖子面板
 blog.panel.relatedBlogs.pageTitle=相关博客面板
 blog.panel.unpublishedBlogPosts.pageTitle=未发布的博客帖子面板
+blog.modal.checkCategorySelection.header=选择一个类别
+blog.modal.checkCategorySelection.body=您尚未为您的博客文章选择任何类别。选择一个类别可以让你以后更容易找到你的文章。您想选择一个类别吗？
+blog.modal.checkCategorySelection.footer.no=不，拒绝保存
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
