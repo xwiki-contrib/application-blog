@@ -130,6 +130,7 @@
       #if($categoryParent == '')
         #set($categoryParent = $defaultCategoryParent)
       #end
+      #set($categoryParent = $services.model.serialize($categoryParent, 'local'))
       #if(!$result.containsKey($categoryParent))
         #set($discard = $result.put($categoryParent, []))
       #end

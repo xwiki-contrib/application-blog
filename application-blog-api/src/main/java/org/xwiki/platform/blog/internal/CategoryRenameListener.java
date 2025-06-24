@@ -19,12 +19,13 @@
  */
 package org.xwiki.platform.blog.internal;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.model.reference.DocumentReference;
+import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.observation.EventListener;
@@ -34,6 +35,7 @@ import org.xwiki.query.QueryException;
 import org.xwiki.query.QueryFilter;
 import org.xwiki.query.QueryManager;
 import org.xwiki.refactoring.event.DocumentRenamedEvent;
+import org.xwiki.refactoring.event.DocumentRenamingEvent;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -63,13 +65,15 @@ public class CategoryRenameListener implements EventListener
 
     private static final String BLOG_SPACE = "Blog";
 
-    private static final List<Event> EVENTS = Collections.singletonList(new DocumentRenamedEvent());
+    private static final List<Event> EVENTS = Arrays.asList(new DocumentRenamedEvent(), new DocumentRenamingEvent());
 
     private static final LocalDocumentReference BLOG_CATEGORY_CLASS =
         new LocalDocumentReference(BLOG_SPACE, "CategoryClass");
 
     private static final LocalDocumentReference BLOG_POST_CLASS =
         new LocalDocumentReference(BLOG_SPACE, "BlogPostClass");
+
+    private static final String OLD_CATEGORY_PARENT = "oldCategoryParent";
 
     @Inject
     @Named("compactwiki")
@@ -105,30 +109,70 @@ public class CategoryRenameListener implements EventListener
     {
         XWikiContext context = contextProvider.get();
         XWiki xwiki = context.getWiki();
-        DocumentRenamedEvent renamedEvent = (DocumentRenamedEvent) event;
-        DocumentReference newCategoryReference = renamedEvent.getTargetReference();
-
-        try {
-            XWikiDocument newCategoryDocument = xwiki.getDocument(newCategoryReference, context);
-            if (newCategoryDocument.getXObject(BLOG_CATEGORY_CLASS) != null) {
-                String oldCategory = compactWikiSerializer.serialize(renamedEvent.getSourceReference());
-                String statement =
-                    "from doc.object(Blog.BlogPostClass) as blogPost where :category member of blogPost.category";
-                Query query = queryManager.createQuery(statement, Query.XWQL);
-                List<DocumentReference> blogPostReferences =
-                    query.bindValue(CATEGORY, oldCategory).addFilter(documentQueryFilter).execute();
-                for (DocumentReference blogPostReference : blogPostReferences) {
-                    XWikiDocument blogPostDoc = xwiki.getDocument(blogPostReference, context);
-                    BaseObject blogPostObj = blogPostDoc.getXObject(BLOG_POST_CLASS);
-                    List<String> categories = blogPostObj.getListValue(CATEGORY);
-                    categories.remove(oldCategory);
-                    categories.add(compactWikiSerializer.serialize(newCategoryReference));
-                    blogPostObj.setStringListValue(CATEGORY, categories);
-                    xwiki.saveDocument(blogPostDoc, "Update blog post after category refactoring.", context);
-                }
+        if (event instanceof DocumentRenamingEvent) {
+            DocumentRenamingEvent renamingEvent = (DocumentRenamingEvent) event;
+            DocumentReference oldCategoryRef = renamingEvent.getSourceReference();
+            try {
+                XWikiDocument oldCategoryDoc = xwiki.getDocument(oldCategoryRef, context);
+                context.put(OLD_CATEGORY_PARENT, oldCategoryDoc.getParentReference());
+            } catch (XWikiException e) {
+                logger.error("Failed to get the source category document", e);
             }
-        } catch (XWikiException | QueryException e) {
-            logger.error("Failed to update categories", e);
+        } else {
+            DocumentRenamedEvent renamedEvent = (DocumentRenamedEvent) event;
+            DocumentReference newCategoryRef = renamedEvent.getTargetReference();
+            try {
+                XWikiDocument newCategoryDoc = xwiki.getDocument(newCategoryRef, context);
+                if (newCategoryDoc.getXObject(BLOG_CATEGORY_CLASS) != null) {
+                    // Preserve the parent of the old category which is lost on rename.
+                    updateCategoryParent(newCategoryDoc, context, xwiki);
+
+                    updateBlogPostsCategory(renamedEvent.getSourceReference(), newCategoryRef, xwiki, context);
+                }
+            } catch (XWikiException | QueryException e) {
+                logger.error("Failed to update categories", e);
+            }
         }
+    }
+
+    private void updateCategoryParent(XWikiDocument newCategoryDoc, XWikiContext context, XWiki xwiki)
+        throws XWikiException
+    {
+        newCategoryDoc.setParentReference((EntityReference) context.get(OLD_CATEGORY_PARENT));
+        context.remove(OLD_CATEGORY_PARENT);
+        newCategoryDoc.setMetaDataDirty(false);
+        newCategoryDoc.setContentDirty(false);
+        xwiki.saveDocument(newCategoryDoc, context);
+    }
+
+    private void updateBlogPostsCategory(DocumentReference oldCategoryRef, DocumentReference newCategoryRef,
+        XWiki xwiki, XWikiContext context)
+        throws QueryException, XWikiException
+    {
+        String oldCategory = compactWikiSerializer.serialize(oldCategoryRef);
+        String newCategory = compactWikiSerializer.serialize(newCategoryRef);
+        String statement =
+            "from doc.object(Blog.BlogPostClass) as blogPost where :category member of blogPost.category";
+        Query query = queryManager.createQuery(statement, Query.XWQL);
+        List<DocumentReference> blogPostRefs =
+            query.bindValue(CATEGORY, oldCategory).addFilter(documentQueryFilter).execute();
+
+        for (DocumentReference blogPostRef : blogPostRefs) {
+            updateBlogPostCategory(blogPostRef, xwiki, context, oldCategory, newCategory);
+        }
+    }
+
+    private void updateBlogPostCategory(DocumentReference blogPostRef, XWiki xwiki, XWikiContext context,
+        String oldCategory, String newCategory) throws XWikiException
+    {
+        XWikiDocument blogPostDoc = xwiki.getDocument(blogPostRef, context);
+        BaseObject blogPostObj = blogPostDoc.getXObject(BLOG_POST_CLASS);
+        List<String> categories = blogPostObj.getListValue(CATEGORY);
+        categories.remove(oldCategory);
+        categories.add(newCategory);
+        blogPostObj.setStringListValue(CATEGORY, categories);
+        blogPostDoc.setMetaDataDirty(false);
+        blogPostDoc.setContentDirty(false);
+        xwiki.saveDocument(blogPostDoc, context);
     }
 }
