@@ -131,7 +131,7 @@ public class BlogPostInlinePage extends InlinePage
         for (String categoryName : categories) {
             String categoryReference = categoryName;
             if (categoryReference.indexOf('.') < 0) {
-                categoryReference = "Blog." + categoryName;
+                categoryReference = "Blog.Categories." + categoryName;
             }
             String categoryXPath =
                 "//input[@name = 'Blog.BlogPostClass_0_category' and @value = '" + categoryReference + "']";
@@ -152,7 +152,7 @@ public class BlogPostInlinePage extends InlinePage
         for (WebElement category : categoryList.findElements(By
             .xpath("//input[@name = 'Blog.BlogPostClass_0_category']"))) {
             if (category.isSelected()) {
-                categories.add(StringUtils.substringAfter(category.getAttribute("value"), "."));
+                categories.add(StringUtils.substringAfter(category.getAttribute("value"), "Blog.Categories."));
             }
         }
         return categories;
