@@ -20,15 +20,15 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.3" reference="Blog.Other" locale="">
-  <web>Blog</web>
-  <name>Other</name>
+<xwikidoc version="1.3" reference="Blog.Categories.News" locale="">
+  <web>Blog.Categories</web>
+  <name>News</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <creationDate>1229921575000</creationDate>
-  <parent>Blog.Categories</parent>
+  <creationDate>1229921526000</creationDate>
+  <parent>Blog.Categories.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <date>1749827423000</date>
@@ -41,10 +41,10 @@
   <hidden>true</hidden>
   <content/>
   <object>
-    <name>Blog.Other</name>
+    <name>Blog.Categories.News</name>
     <number>0</number>
     <className>Blog.CategoryClass</className>
-    <guid>daf5b2fb-ab1f-4dcf-9047-459ea9d08115</guid>
+    <guid>c3730798-1276-4a94-89b0-24d5545ba3fa</guid>
     <class>
       <name>Blog.CategoryClass</name>
       <customClass/>
@@ -87,10 +87,10 @@
       </name>
     </class>
     <property>
-      <description>Blog posts that don't fit in any other category.</description>
+      <description>Blog posts that can be considered as public interest news.</description>
     </property>
     <property>
-      <name>Other</name>
+      <name>News</name>
     </property>
   </object>
 </xwikidoc>

@@ -101,13 +101,13 @@
 ##
 #**
  * Builds a tree of categories, respecting the parent&lt;-&gt;subcategory relation. Each node holds the
- * full name of the category's document. The root of the tree is 'Blog.Categories' or 'aCategorySpace.WebHome'.
+ * full name of the category's document. The root of the tree is 'Blog.Categories.WebHome' or 'aCategorySpace.WebHome'.
  * 
  * @param space The space where to search for categories. If this parameter is an emptry string or
  *        null, all the categories in the wiki are returned.
  * @param tree Return parameter, HashMap&lt;String, List&lt;String&gt;&gt; structure holding the categories
  *        hierarchy, where the key is the name of a category, and the value contains the names of
- *        all its subcategories. To obtain the full hierarchy, start with the key 'Blog.Categories'.
+ *        all its subcategories. To obtain the full hierarchy, start with the key 'Blog.Categories.WebHome'.
  *###
 #macro(getCategoriesHierarchy $space $tree)
   #set ($tree = $NULL)
@@ -451,13 +451,8 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
 #macro(displayCategoryManagementTree $space $displayType)
   &lt;div class="blog-categories-list"&gt;
     #getCategoriesHierarchy($space $tree)
-    #set ($categoriesDocFullName = 'Blog.Categories')
-    #if ("$!space" != $defaultBlogSpace)
-      #set ($defaultCategoryParent = "${space}.WebHome")
-
-      #getBlogCategoriesLocation($doc.space,  $categoriesLocation)
-      #set ($categoriesDocFullName = "${categoriesLocation}.WebHome")
-    #end
+    #set ($defaultCategoryParent = "${space}.WebHome")
+    #set ($categoriesDocFullName = "${space}.WebHome")
     #displayCategoriesHierarchy($tree $displayType)
     #if ($xwiki.hasAccessLevel('edit', $xcontext.user, $categoriesDocFullName))
       #set ($queryString = {

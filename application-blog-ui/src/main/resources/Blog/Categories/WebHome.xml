@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.3" reference="Blog.Categories" locale="">
-  <web>Blog</web>
-  <name>Categories</name>
+<xwikidoc version="1.3" reference="Blog.Categories.WebHome" locale="">
+  <web>Blog.Categories</web>
+  <name>WebHome</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
@@ -71,10 +71,10 @@ $xwiki.jsx.use('Blog.ManageCategories')##
     <filesize>16888</filesize>
   </attachment>
   <object>
-    <name>Blog.Categories</name>
+    <name>Blog.Categories.WebHome</name>
     <number>0</number>
     <className>Blog.CategoryClass</className>
-    <guid>10b04d01-8109-4726-9cd1-c4b15d41375b</guid>
+    <guid>f34664a1-1c8c-4639-8129-f406c9b08b81</guid>
     <class>
       <name>Blog.CategoryClass</name>
       <customClass/>
@@ -124,10 +124,10 @@ $xwiki.jsx.use('Blog.ManageCategories')##
     </property>
   </object>
   <object>
-    <name>Blog.Categories</name>
+    <name>Blog.Categories.WebHome</name>
     <number>0</number>
     <className>XWiki.DocumentSheetBinding</className>
-    <guid>7a373890-940d-4ba1-9a3a-78449bfb7483</guid>
+    <guid>3b7c0512-de94-4bfb-83b0-783214969b60</guid>
     <class>
       <name>XWiki.DocumentSheetBinding</name>
       <customClass/>
@@ -168,10 +168,10 @@ $xwiki.jsx.use('Blog.ManageCategories')##
     </property>
   </object>
   <object>
-    <name>Blog.Categories</name>
+    <name>Blog.Categories.WebHome</name>
     <number>0</number>
     <className>XWiki.SheetDescriptorClass</className>
-    <guid>eb043d8b-ba7d-4b37-ab55-5d490f53818f</guid>
+    <guid>35e9277c-5f31-4e19-b8b6-4e58cd6d4537</guid>
     <class>
       <name>XWiki.SheetDescriptorClass</name>
       <customClass/>

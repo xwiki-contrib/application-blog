@@ -68,9 +68,6 @@ $xwiki.ssx.use('Blog.ManageCategories')##
   #end
   #getBlogCategoriesLocation($doc.space $categoriesLocation)
   #set ($defaultPostCategory = "${categoriesLocation}.WebHome")
-  #if ($categoriesLocation == 'Blog')
-    #set ($defaultPostCategory = 'Blog.Categories')
-  #end
   #set($discard = $xwiki.jsx.use('Blog.BlogPostSheet'))
   #set($discard = $xwiki.ssx.use('Blog.BlogPostSheet'))
   (% class="xform" %)(((

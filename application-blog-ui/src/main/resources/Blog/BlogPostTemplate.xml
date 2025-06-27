@@ -72,7 +72,7 @@
         <separators/>
         <size>1</size>
         <sort>value</sort>
-        <sql>select doc.fullName, catName.value, doc.parent from XWikiDocument doc, BaseObject as obj, StringProperty as catName where doc.fullName = obj.name and obj.className = 'Blog.CategoryClass' and  doc.fullName not in ('Blog.CategoryTemplate', 'Blog.Categories') and catName.id.id = obj.id and catName.id.name = 'name'</sql>
+        <sql>select doc.fullName, catName.value, doc.parent from XWikiDocument doc, BaseObject as obj, StringProperty as catName where doc.fullName = obj.name and obj.className = 'Blog.CategoryClass' and  doc.fullName not in ('Blog.CategoryTemplate', 'Blog.Categories.WebHome') and catName.id.id = obj.id and catName.id.name = 'name'</sql>
         <tooltip/>
         <unmodifiable>0</unmodifiable>
         <validationMessage/>

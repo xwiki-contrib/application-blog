@@ -1080,7 +1080,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  *###
 #macro(getBlogCategoriesLocation $blogSpace $categoriesLocation)
   #getBlogDocument($blogSpace $blogDoc)
-  #getBlogProperty($blogDoc 'categoriesLocation' 'Blog' $result)
+  #getBlogProperty($blogDoc 'categoriesLocation' 'Blog.Categories' $result)
   #set ($postsLocation = $NULL)
   #setVariable ("$categoriesLocation" $result)
 #end

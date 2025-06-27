@@ -55,8 +55,7 @@
 #set($blogCategoryTemplate = 'Blog.CategoryTemplate')
 #set($blogCategorySheet = 'Blog.CategorySheet')
 #set($blogCategoriesSheet = 'Blog.CategoriesSheet')
-#set($oldBlogCategoryClassname = 'Blog.Categories')
-#set($defaultCategoryParent = 'Blog.Categories')
+#set($defaultCategoryParent = 'Blog.Categories.WebHome')
 ## Style
 #set($blogStyleDocumentName = 'Blog.BlogStyle')
 #set($blogStyleDocument = $xwiki.getDocument($blogStyleDocumentName))
