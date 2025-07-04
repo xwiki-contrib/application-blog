@@ -120,7 +120,7 @@ blog.categories.notcategory=Ceci n'est pas une catégorie de blog !
 blog.categories.noentries=Aucune entrée pour cette catégorie
 blog.manageCategories.title=Administrer les catégories du blog
 blog.manageCategories.create.error.emptyName=Veuillez entrer un nom de catégorie valide
-blog.manageCategories.create.error.alreadyExists=Le document cible existe déjà. Veuillez choisir un autre nom.
+blog.manageCategories.create.error.alreadyExists=La page cible existe déjà, veuillez choisir un autre nom
 blog.manageCategories.create.error.notExists=La page demandée est introuvable.
 blog.manageCategories.create.error.targetNotWritable=Vous ne détenez pas les droits nécessaires de créer cette page.
 blog.manageCategories.rename.error.emptyName=Veuillez entrer un nom de catégorie valide
@@ -257,6 +257,9 @@ blog.panel.blogCategories.pageTitle=Panneau Catégories du blog
 blog.panel.recentBlogPosts.pageTitle=Panneau Billets récents
 blog.panel.relatedBlogs.pageTitle=Panneau Blogs similaires
 blog.panel.unpublishedBlogPosts.pageTitle=Panneau Billets non publiés
+blog.modal.checkCategorySelection.header=Sélectionnez une catégorie
+blog.modal.checkCategorySelection.body=Vous n'avez pas sélectionné de catégorie pour votre article de blog. La sélection d'une catégorie rend votre article plus facile à trouver. Voulez-vous sélectionner une catégorie ?
+blog.modal.checkCategorySelection.footer.no=Non, enregistrer sans
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
