@@ -259,7 +259,7 @@ blog.panel.relatedBlogs.pageTitle=Panneau Blogs similaires
 blog.panel.unpublishedBlogPosts.pageTitle=Panneau Billets non publiés
 blog.modal.checkCategorySelection.header=Sélectionnez une catégorie
 blog.modal.checkCategorySelection.body=Vous n'avez pas sélectionné de catégorie pour votre article de blog. La sélection d'une catégorie rend votre article plus facile à trouver. Voulez-vous sélectionner une catégorie ?
-blog.modal.checkCategorySelection.footer.no=Non, sauver sans
+blog.modal.checkCategorySelection.footer.no=Non, enregistrer sans
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
