@@ -1,0 +1,72 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.4" reference="Blog.Code.CategoriesLocationMigrator" locale="">
+  <web>Blog.Code</web>
+  <name>CategoriesLocationMigrator</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1752465671000</creationDate>
+  <parent>Main.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1752496920000</date>
+  <contentUpdateDate>1752496920000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Categories Location Migrator</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <content>{{job id="{{velocity}}$!request.jobId{{/velocity}}" start="{{velocity}}$!request.confirm{{/velocity}}"}}
+{{groovy}}
+  services.blog.migrateCategoryLocation()
+{{/groovy}}
+{{/job}}
+
+{{velocity}}
+#if ($hasAdmin)
+  #if ("$!request.jobId" == '')
+    #set ($jobId = "$datetool.get('yyyy-MM-dd')/$datetool.get('HH-mm-ss-SSS')")
+    #set ($categoryStatement = "from doc.object(Blog.CategoryClass) as category where doc.space = 'Blog' and doc.name &lt;&gt; 'CategoryTemplate'")
+    #set ($blogPostStatement = "from doc.object(Blog.BlogPostClass) as blogPost where ('Blog.News' member of blogPost.category) or ('Blog.Other' member of blogPost.category) or ('Blog.Personal' member of blogPost.category) or ('Blog.Categories' member of blogPost.category)")
+    #foreach ($wikiId in $services.wiki.allIds)
+      #set ($categories = $services.query.xwql($categoryStatement).setWiki($wikiId).execute())
+      $services.localization.render('blog.migration.status.categories', [$wikiId, $categories.size()])
+      #foreach ($result in $categories)
+        $result
+      #end
+      #set ($blogPosts = $services.query.xwql($blogPostStatement).setWiki($wikiId).execute())
+      $services.localization.render('blog.migration.status.blogPosts', [$wikiId, $blogPosts.size()])
+      #foreach ($result in $blogPosts)
+        $result
+      #end
+    #end
+    [[$services.localization.render('blog.migration.start')&gt;&gt;$doc.fullName||queryString="jobId=$!{escapetool.url($jobId)}&amp;confirm=true" class="btn btn-primary"]]
+  #elseif ($!request.confirm)
+    $response.sendRedirect($doc.getURL('view',"jobId=$request.jobId"))
+  #end
+#end
+{{/velocity}}</content>
+</xwikidoc>

@@ -30,6 +30,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.localization.ContextualLocalizationManager;
 import org.xwiki.model.reference.EntityReferenceSerializer;
+import org.xwiki.platform.blog.internal.CategoryLocationMigration;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.LinkBlock;
 import org.xwiki.rendering.block.WordBlock;
@@ -78,6 +79,9 @@ public class BlogScriptService implements ScriptService
 
     @Inject
     private EntityReferenceSerializer<String> referenceSerializer;
+
+    @Inject
+    private CategoryLocationMigration categoryLocationMigration;
 
     /**
      * @param document the document containing the attachment
@@ -192,5 +196,15 @@ public class BlogScriptService implements ScriptService
         Property extractProperty = blogPostObject.getProperty(EXTRACT_PROPERTY_NAME);
         return extractProperty != null && extractProperty.getValue() != null
             && StringUtils.isNotBlank(extractProperty.getValue().toString());
+    }
+
+    /**
+     * Initiates the migration of category locations within the wiki farm.
+     *
+     * @since 9.15
+     */
+    public void migrateCategoryLocation()
+    {
+        categoryLocationMigration.migrate();
     }
 }
