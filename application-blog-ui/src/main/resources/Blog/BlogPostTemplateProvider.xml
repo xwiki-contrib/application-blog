@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.3" reference="Blog.BlogPostTemplateProvider" locale="">
+<xwikidoc version="1.4" reference="Blog.BlogPostTemplateProvider" locale="">
   <web>Blog</web>
   <name>BlogPostTemplateProvider</name>
   <language/>
@@ -72,7 +72,7 @@
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
-        <values>edit|saveandedit</values>
+        <values>edit|saveandedit|saveandview</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </action>
       <creationRestrictions>
