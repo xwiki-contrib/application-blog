@@ -75,6 +75,11 @@
       <version>${rendering.version}</version>
       <scope>runtime</scope>
     </dependency>
+    <dependency>
+      <groupId>org.xwiki.contrib</groupId>
+      <artifactId>macro-job</artifactId>
+      <version>2.2.0</version>
+    </dependency>
     <!-- Select2 WebJar used by the cards blog post layout -->
     <dependency>
       <groupId>org.webjars</groupId>

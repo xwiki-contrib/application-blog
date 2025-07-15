@@ -20,33 +20,33 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Blog.UnpublishedPanel" locale="">
-  <web>Blog</web>
-  <name>UnpublishedPanel</name>
+<xwikidoc version="1.4" reference="Blog.Code.MigrationUIX" locale="">
+  <web>Blog.Code</web>
+  <name>MigrationUIX</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <creationDate>1373016402000</creationDate>
-  <parent>Panels.WebHome</parent>
+  <creationDate>1752463332000</creationDate>
+  <parent>Main.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1749827422000</date>
-  <contentUpdateDate>1749827422000</contentUpdateDate>
+  <date>1752499578000</date>
+  <contentUpdateDate>1752496920000</contentUpdateDate>
   <version>1.1</version>
-  <title>$services.localization.render('blog.panel.unpublishedBlogPosts.pageTitle')</title>
+  <title>MigrationUIX</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content/>
   <object>
-    <name>Blog.UnpublishedPanel</name>
+    <name>Blog.Code.MigrationUIX</name>
     <number>0</number>
-    <className>Panels.PanelClass</className>
-    <guid>068ead4b-e950-45d3-a10f-d35b71df2bb7</guid>
+    <className>XWiki.UIExtensionClass</className>
+    <guid>e3856c44-5626-4ad4-a1ed-11dcbf493324</guid>
     <class>
-      <name>Panels.PanelClass</name>
+      <name>XWiki.UIExtensionClass</name>
       <customClass/>
       <customMapping/>
       <defaultViewSheet/>
@@ -60,7 +60,7 @@
         <displayFormType>select</displayFormType>
         <displayType/>
         <name>async_cached</name>
-        <number>7</number>
+        <number>3</number>
         <prettyName>Cached</prettyName>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
@@ -73,7 +73,7 @@
         <largeStorage>0</largeStorage>
         <multiSelect>1</multiSelect>
         <name>async_context</name>
-        <number>8</number>
+        <number>4</number>
         <prettyName>Context elements</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator>, </separator>
@@ -89,127 +89,115 @@
         <displayFormType>select</displayFormType>
         <displayType/>
         <name>async_enabled</name>
-        <number>6</number>
+        <number>2</number>
         <prettyName>Asynchronous rendering</prettyName>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
       </async_enabled>
-      <category>
-        <cache>0</cache>
-        <disabled>0</disabled>
-        <displayType>select</displayType>
-        <freeText>forbidden</freeText>
-        <largeStorage>0</largeStorage>
-        <multiSelect>0</multiSelect>
-        <name>category</name>
-        <number>1</number>
-        <prettyName>Category</prettyName>
-        <relationalStorage>0</relationalStorage>
-        <separator> </separator>
-        <separators>|, </separators>
-        <size>1</size>
-        <unmodifiable>0</unmodifiable>
-        <values>Information|Navigation|Tools|Administration|Other</values>
-        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </category>
       <content>
         <disabled>0</disabled>
         <editor>Text</editor>
         <name>content</name>
-        <number>5</number>
+        <number>1</number>
         <prettyName>Executed Content</prettyName>
         <rows>25</rows>
         <size>120</size>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </content>
-      <description>
+      <extensionPointId>
         <disabled>0</disabled>
-        <editor>Text</editor>
-        <name>description</name>
-        <number>2</number>
-        <prettyName>Description</prettyName>
-        <rows>5</rows>
-        <size>40</size>
+        <name>extensionPointId</name>
+        <number>5</number>
+        <prettyName>Extension Point ID</prettyName>
+        <size>30</size>
         <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </description>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </extensionPointId>
       <name>
         <disabled>0</disabled>
         <name>name</name>
-        <number>3</number>
-        <prettyName>Name</prettyName>
-        <size>40</size>
+        <number>6</number>
+        <prettyName>Extension ID</prettyName>
+        <size>30</size>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
-      <type>
+      <parameters>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>parameters</name>
+        <number>7</number>
+        <prettyName>Extension Parameters</prettyName>
+        <rows>10</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </parameters>
+      <scope>
         <cache>0</cache>
         <disabled>0</disabled>
         <displayType>select</displayType>
         <freeText>forbidden</freeText>
         <largeStorage>0</largeStorage>
         <multiSelect>0</multiSelect>
-        <name>type</name>
-        <number>4</number>
-        <prettyName>Panel type</prettyName>
+        <name>scope</name>
+        <number>8</number>
+        <prettyName>Extension Scope</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
         <separators>|, </separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
-        <values>view|edit</values>
+        <values>wiki=Current Wiki|user=Current User|global=Global</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </type>
+      </scope>
     </class>
     <property>
-      <async_cached/>
+      <async_cached>0</async_cached>
     </property>
     <property>
       <async_context/>
     </property>
     <property>
-      <async_enabled/>
+      <async_enabled>0</async_enabled>
     </property>
     <property>
-      <category>Navigation</category>
-    </property>
-    <property>
-      <content>{{include reference="Blog.BlogCode"/}}
-
-{{velocity}}
-#getAllBlogPostsQueryBasedOnDisplayContext($doc $query $queryParams)
-#set ($discard = $queryParams.put('creator', $xcontext.user))
-#set ($query = "$!{query} and isPublished.value = 0 and doc.creator = :creator")
-#set ($queryObj = $services.query.hql("${query} order by publishDate.value desc").addFilter("unique"))
-#bindQueryParameters($queryObj $queryParams)
-#set ($count = $queryObj.count())
-#if ($count &gt; 0 || $showEmptyPanels)
-  #panelheader($services.localization.render('blog.unpublished.entries'))
-  #displayBlogPostsBasedOnContext($doc 'unpublished' 'link' '' 5)
-
-  #set($viewAllTarget = 'Blog.Unpublished')
-  #if($isCategoryPage)
-    #set($viewAllTarget = "${doc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
-  #elseif($isCategoriesHomePage)
-    #set($viewAllTarget = "${doc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
-  #else
-    #getBlogDocument($doc.space $blogDoc)
-    #set($viewAllTarget = "${blogDoc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
+      <content>{{velocity}}
+#if ($hasAdmin)
+  #set ($needsUpdate = false)
+  #set ($categoryStatement = "from doc.object(Blog.CategoryClass) as category where doc.space = 'Blog' and doc.name &lt;&gt; 'CategoryTemplate'")
+  #set ($blogPostStatement = "from doc.object(Blog.BlogPostClass) as blogPost where ('Blog.News' member of blogPost.category) or ('Blog.Other' member of blogPost.category) or ('Blog.Personal' member of blogPost.category) or ('Blog.Categories' member of blogPost.category)")
+  #foreach ($wikiId in $services.wiki.allIds)
+    #if (!$needsUpdate)
+      #set ($categoriesNumber = $services.query.xwql($categoryStatement).setWiki($wikiId).count())
+      #set ($blogPostsNumber = $services.query.xwql($blogPostStatement).setWiki($wikiId).count())
+      #if ($categoriesNumber &gt; 0 || $blogPostsNumber &gt; 0)
+        #set ($needsUpdate = true)
+      #end
+    #end
   #end
-  [[$services.localization.render('blog.unpublished.viewall') (% class="itemCount" %)($count)(%%)&gt;&gt;$viewAllTarget]]
-  #panelfooter()
+  #if ($needsUpdate)
+    #set ($migrationDoc = $xwiki.getDocument('Blog.Code.CategoriesLocationMigrator'))
+    {{error}}
+    $services.localization.render('blog.migraiton.uix.notification', ['[[', "&gt;&gt;doc:$migrationDoc.fullName]]"])
+    {{/error}}
+  #end
 #end
 {{/velocity}}</content>
     </property>
     <property>
-      <description>Shows the most recent unpublished blog entries.</description>
+      <extensionPointId>org.xwiki.platform.template.header.after</extensionPointId>
     </property>
     <property>
-      <name>Unpublished Blog Posts</name>
+      <name>org.xwiki.platform.template.header.after.blogMigration</name>
     </property>
     <property>
-      <type>view</type>
+      <parameters/>
+    </property>
+    <property>
+      <scope/>
     </property>
   </object>
 </xwikidoc>

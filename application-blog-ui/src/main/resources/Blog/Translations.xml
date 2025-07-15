@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.3" reference="Blog.Translations" locale="">
+<xwikidoc version="1.4" reference="Blog.Translations" locale="">
   <web>Blog</web>
   <name>Translations</name>
   <language/>
@@ -264,6 +264,11 @@ blog.modal.checkCategorySelection.header=Select a Category
 blog.modal.checkCategorySelection.body=You have not selected any categories for your blog post. Selection of a category makes it easier to find your post later on. Do you want to select a category?
 blog.modal.checkCategorySelection.footer.no=No, save without
 
+blog.migraiton.uix.notification=**Important: Blog Categories Migration Required.** If this migration is not completed, category-related features may not function properly.\n\nFollowing the recent upgrade of the Blog Application, existing blog categories must be migrated to the new location: Blog.Categories (from their previous location in Blog).\nThis change introduces improved permission control for category management and resolves naming conflicts between blog posts and categories.\nNavigate to the {0}Categories Location Migrator{1} in order to start the migration process.
+blog.migration.status.categories=In the **{0}** wiki there are {1} categories to migrate.
+blog.migration.status.blogPosts=In the **{0}** wiki there are {1} blog posts that need category update.
+blog.migration.start=Start migration
+
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
 #######################################
@@ -292,6 +297,8 @@ blog.manage.blogtype=Blog type:
         <cache>0</cache>
         <disabled>0</disabled>
         <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
         <multiSelect>0</multiSelect>
         <name>scope</name>
         <number>1</number>

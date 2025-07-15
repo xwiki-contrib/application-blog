@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.3" reference="Blog.Translations" locale="de">
+<xwikidoc version="1.4" reference="Blog.Translations" locale="de">
   <web>Blog</web>
   <name>Translations</name>
   <language>de</language>
@@ -260,6 +260,11 @@ blog.panel.unpublishedBlogPosts.pageTitle=Unveröffentlichte Blog Beiträge Pane
 blog.modal.checkCategorySelection.header=Kategorie auswählen
 blog.modal.checkCategorySelection.body=Sie haben keine Kategorien für Ihren Blogbeitrag ausgewählt. Die Auswahl von Kategorien erleichtert es, den Beitrag später zu finden. Möchten Sie doch eine Kategorie auswählen?
 blog.modal.checkCategorySelection.footer.no=Nein, ohne Kategorie speichern
+
+blog.migraiton.uix.notification=**Wichtig: Migration der Blog-Kategorien erforderlich.** Wenn diese Migration nicht durchgeführt wird, funktionieren kategorienbezogene Funktionen möglicherweise nicht richtig.\n\nNach dem kürzlichen Upgrade der Blog-Anwendung müssen bestehende Blog-Kategorien an den neuen Speicherort Blog.Categories (vom vorherigen Speicherort Blog) migriert werden.\nDiese Änderung ermöglicht eine verbesserte Berechtigungsverwaltung für Kategorien und behebt Namenskonflikte zwischen Blogbeiträgen und Kategorien.\nNavigieren Sie zum {0}Kategorie-Speicherort-Migrator{1}, um den Migrationsprozess zu starten.
+blog.migration.status.categories=Im Wiki **{0}** gibt es {1} Kategorien, die migriert werden müssen.
+blog.migration.status.blogPosts=Im Wiki **{0}** gibt es {1} Blogbeiträge, deren Kategorien aktualisiert werden müssen.
+blog.migration.start=Transfer starten
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
