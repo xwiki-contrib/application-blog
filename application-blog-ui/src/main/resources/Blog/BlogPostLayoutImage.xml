@@ -300,7 +300,9 @@
         $!dateStr
       &lt;/div&gt;
     &lt;/div&gt;
-    #if($displayTitle)&lt;h3 class="entry-title"&gt;&lt;span class="wikilink"&gt;&lt;a href="$postDoc.uRL"&gt;$!postDoc.display('title', 'view', $postObj)&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;#end
+    #if ($displayTitle)
+      #displayEntryTitle($postDoc $postObj)
+    #end
     &lt;div&gt;
     {{html wiki="false"}}$services.blog.renderContentHTML($postDoc, $postObj, $useSummary, false, false){{/html}}
     &lt;/div&gt;
