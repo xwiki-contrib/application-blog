@@ -95,7 +95,7 @@ blog.sheet.notpublished=Denne artikel er ikke publiceret.
 blog.sheet.publish=Publicér
 blog.sheet.setdate=Sæt dato for offentliggørelse til:
 blog.sheet.image=Billede
-blog.sheet.image.info=Billedfeltet bruges til at tilknytte en miniature til hver blogartikel. Miniaturen er kun synlig, hvor blog er indstillet til at vise 'image' layout.
+blog.sheet.image.info=Billedfeltet bruges til at tilknytte en miniature til hver blogartikel. Miniaturen er kun synlig, hvor blog er indstillet til at vise {0}, {1} eller {2} layoutet.
 blog.sheet.choose_image=Vælg et billede
 blog.category.created=Kategorien {0} er oprettet.
 blog.category.exists=Kategorien {0} findes allerede.
@@ -205,14 +205,14 @@ blog.blogpostlayout.post_view_not_allowed=Du har ikke rettigheder til at se arti
 blog.blogpostcreate.wrong_blog=Forkert blog-beskrivelse
 
 # Blog class list property values.
-### Missing: Blog.BlogClass_displayType_paginated=Paginated
-### Missing: Blog.BlogClass_displayType_weekly=Group posts weekly
-### Missing: Blog.BlogClass_displayType_monthly=Group posts monthly
-### Missing: Blog.BlogClass_displayType_all=Show all posts
-### Missing: Blog.BlogClass_postsLayout_image=Image thumbnail
-### Missing: Blog.BlogClass_postsLayout_full=Calendar
-### Missing: Blog.BlogClass_postsLayout_cards=Cards
-### Missing: Blog.BlogClass_postsLayout_compact=Compact
+Blog.BlogClass_displayType_paginated=Sideindeling
+Blog.BlogClass_displayType_weekly=Artikler ugentlig
+Blog.BlogClass_displayType_monthly=Artikler månedlig
+Blog.BlogClass_displayType_all=Vis alle artikler
+Blog.BlogClass_postsLayout_image=Billedminiature
+Blog.BlogClass_postsLayout_full=Kalender
+Blog.BlogClass_postsLayout_cards=Kort
+Blog.BlogClass_postsLayout_compact=Kompakt
 
 # Blogs macro
 blog.livetable.title=Titel
@@ -257,6 +257,13 @@ blog.panel.blogCategories.pageTitle=Blogkategori panel
 blog.panel.recentBlogPosts.pageTitle=Seneste artikler panel
 blog.panel.relatedBlogs.pageTitle=Relaterede blog panel
 blog.panel.unpublishedBlogPosts.pageTitle=Upublicerede artikler panel
+blog.modal.checkCategorySelection.header=Vælg en kategori
+blog.modal.checkCategorySelection.body=Du har ikke valgt en kategori for din blogartikel. Et valg gør det er lettere af finde artkler senere. Vil du vælge en kategori?
+blog.modal.checkCategorySelection.footer.no=Nej, gem uden
+blog.migraiton.uix.notification=**Vigtig: Flytning af blog-kategorier skal udføres.** Hvis flytninig ikke gøres færdig, vil nogle katogori-funktioner ikke virked korrekt.\n\nEfter den nylige opgradering af Blog-app''en, skal de eksistrerende blog-kategorier flyttes til en ny placering: Blog.Categories (var placeret i Blog).\nÆndringen giver forbedret adgangskontrol for kategori-håndtering og løser navnekonflikter mellem artikler og kategorier.\nGå til {0}Categories Locacation Migrator{1} for at starte flytningen.
+blog.migration.status.categories=I **{0}** wikien skal der flyttes {1} kategorier.
+blog.migration.status.blogPosts=I **{0}** wikien er der {1} artikler, som skal have rettet kategorien.
+blog.migration.start=Start flytning
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
