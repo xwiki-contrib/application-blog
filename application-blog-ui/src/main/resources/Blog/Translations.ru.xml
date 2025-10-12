@@ -205,14 +205,14 @@ blog.blogpostlayout.post_view_not_allowed=Вам запрещено просма
 blog.blogpostcreate.wrong_blog=Неправильный дескриптор блога
 
 # Blog class list property values.
-### Missing: Blog.BlogClass_displayType_paginated=Paginated
-### Missing: Blog.BlogClass_displayType_weekly=Group posts weekly
-### Missing: Blog.BlogClass_displayType_monthly=Group posts monthly
-### Missing: Blog.BlogClass_displayType_all=Show all posts
-### Missing: Blog.BlogClass_postsLayout_image=Image thumbnail
-### Missing: Blog.BlogClass_postsLayout_full=Calendar
-### Missing: Blog.BlogClass_postsLayout_cards=Cards
-### Missing: Blog.BlogClass_postsLayout_compact=Compact
+Blog.BlogClass_displayType_paginated=Постранично
+Blog.BlogClass_displayType_weekly=Группировать по неделям
+Blog.BlogClass_displayType_monthly=Группировать по месяцам
+Blog.BlogClass_displayType_all=Показать все
+Blog.BlogClass_postsLayout_image=Миниатюра изображения
+Blog.BlogClass_postsLayout_full=Календарь
+Blog.BlogClass_postsLayout_cards=Карточки
+Blog.BlogClass_postsLayout_compact=Компактный вид
 
 # Blogs macro
 blog.livetable.title=Название
@@ -257,6 +257,13 @@ blog.panel.blogCategories.pageTitle=Панель категорий блога
 blog.panel.recentBlogPosts.pageTitle=Панель недавних сообщений блога
 blog.panel.relatedBlogs.pageTitle=Панель похожих сообщений блога
 blog.panel.unpublishedBlogPosts.pageTitle=Панель неопубликованных сообщений блога
+### Missing: blog.modal.checkCategorySelection.header=Select a Category
+### Missing: blog.modal.checkCategorySelection.body=You have not selected any categories for your blog post. Selection of a category makes it easier to find your post later on. Do you want to select a category?
+### Missing: blog.modal.checkCategorySelection.footer.no=No, save without
+### Missing: blog.migraiton.uix.notification=**Important: Blog Categories Migration Required.** If this migration is not completed, category-related features may not function properly.\n\nFollowing the recent upgrade of the Blog Application, existing blog categories must be migrated to the new location: Blog.Categories (from their previous location in Blog).\nThis change introduces improved permission control for category management and resolves naming conflicts between blog posts and categories.\nNavigate to the {0}Categories Location Migrator{1} in order to start the migration process.
+### Missing: blog.migration.status.categories=In the **{0}** wiki there are {1} categories to migrate.
+### Missing: blog.migration.status.blogPosts=In the **{0}** wiki there are {1} blog posts that need category update.
+### Missing: blog.migration.start=Start migration
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
