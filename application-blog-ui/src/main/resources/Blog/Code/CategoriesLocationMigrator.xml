@@ -41,37 +41,24 @@
   <hidden>true</hidden>
   <content>{{job id="{{velocity}}$!request.jobId{{/velocity}}" start="{{velocity}}$!request.confirm{{/velocity}}"}}
 {{groovy}}
-  services.blog.migrateCategoryLocation()
+  services.blog.migrateCategoryLocation(services.wiki.currentWikiId)
 {{/groovy}}
 {{/job}}
 
 {{velocity}}
-#if ($hasAdmin)
+#if ($hasAdmin &amp;&amp; $blog.services.hasLegacyCategoryAssignments())
   #if ("$!request.jobId" == '')
     #set ($jobId = "$datetool.get('yyyy-MM-dd')/$datetool.get('HH-mm-ss-SSS')")
     #set ($categoryStatement = "from doc.object(Blog.CategoryClass) as category where doc.space = 'Blog' and doc.name &lt;&gt; 'CategoryTemplate'")
-    #set ($blogPostStatement = "from doc.object(Blog.BlogPostClass) as blogPost where ('Blog.News' member of blogPost.category) or ('Blog.Other' member of blogPost.category) or ('Blog.Personal' member of blogPost.category) or ('Blog.Categories' member of blogPost.category)")
-    #foreach ($wikiId in $services.wiki.allIds)
-      #set ($blogCategoriesReference = $services.model.createDocumentReference($wikiId, ['Blog', 'Categories'], 'WebHome'))
-      #if ($xwiki.exists($blogCategoriesReference))
-        #set ($categories = $services.query.xwql($categoryStatement).setWiki($wikiId).execute())
-        #set ($categoriesSize = $categories.size())
-        #if ($categoriesSize &gt; 0)
-          $services.localization.render('blog.migration.status.categories', [$wikiId, $categoriesSize])
-          #foreach ($result in $categories)
-            $result
-          #end
-        #else
-          ## If only the default categories exists, display the blog post that need to be updated.
-          #set ($blogPosts = $services.query.xwql($blogPostStatement).setWiki($wikiId).execute())
-          $services.localization.render('blog.migration.status.blogPosts', [$wikiId, $blogPosts.size()])
-          #foreach ($result in $blogPosts)
-            $result
-          #end
-        #end
+    #set ($categories = $services.query.xwql($categoryStatement).execute())
+    #set ($categoriesSize = $categories.size())
+    #if ($categoriesSize &gt; 0)
+      $services.localization.render('blog.migration.status.categories', [$services.wiki.currentWikiId, $categoriesSize])
+      #foreach ($result in $categories)
+        $result
       #end
+      [[$services.localization.render('blog.migration.start')&gt;&gt;$doc.fullName||queryString="jobId=$!{escapetool.url($jobId)}&amp;confirm=true" class="btn btn-primary"]]
     #end
-    [[$services.localization.render('blog.migration.start')&gt;&gt;$doc.fullName||queryString="jobId=$!{escapetool.url($jobId)}&amp;confirm=true" class="btn btn-primary"]]
   #elseif ($!request.confirm)
     $response.sendRedirect($doc.getURL('view',"jobId=$request.jobId"))
   #end

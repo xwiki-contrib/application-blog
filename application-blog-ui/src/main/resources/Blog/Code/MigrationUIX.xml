@@ -165,7 +165,7 @@
     </property>
     <property>
       <content>{{velocity}}
-#if ($hasAdmin)
+#if ($hasAdmin &amp;&amp; $blog.services.hasLegacyCategoryAssignments())
   #set ($needsUpdate = false)
   #set ($categoryStatement = "from doc.object(Blog.CategoryClass) as category where doc.space = 'Blog' and doc.name &lt;&gt; 'CategoryTemplate'")
   #set ($blogPostStatement = "from doc.object(Blog.BlogPostClass) as blogPost where ('Blog.News' member of blogPost.category) or ('Blog.Other' member of blogPost.category) or ('Blog.Personal' member of blogPost.category) or ('Blog.Categories' member of blogPost.category)")
@@ -180,9 +180,9 @@
   #end
   #if ($needsUpdate)
     #set ($migrationDoc = $xwiki.getDocument('Blog.Code.CategoriesLocationMigrator'))
-    {{error}}
+    {{info}}
     $services.localization.render('blog.migraiton.uix.notification', ['[[', "&gt;&gt;doc:$migrationDoc.fullName]]"])
-    {{/error}}
+    {{/info}}
   #end
 #end
 {{/velocity}}</content>

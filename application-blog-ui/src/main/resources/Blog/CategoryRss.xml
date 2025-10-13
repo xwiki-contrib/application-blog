@@ -37,7 +37,7 @@
   <title>Blog category RSS Feed Generator</title>
   <comment/>
   <minorEdit>false</minorEdit>
-  <syntaxId>xwiki/2.0</syntaxId>
+  <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{include reference="Blog.RssCode"/}}
 
@@ -53,8 +53,21 @@ $response.setContentType('application/rss+xml')
 #macro(getTargetCategory $categoryDoc)
   #set($category = "$!{request.category}")
   #if($category == '')
-    #if("$!doc.getObject($blogCategoryClassname)" != '' || $doc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
-      #set ($category = $doc.fullName)
+    #set ($categoryDoc = $doc)
+    ## Since 9.15, category data may exist in Blog or Blog.Categories. Code supports both paths to maintain backward compatibility.
+    ## This code checks whether a category exists in its original location (e.g., Blog.News).
+    ## If the category is not found, it assumes a migration has occurred and automatically sets the category to its new location in the Blog.Categories namespace (e.g., Blog.Categories.News).
+    #if (!$xwiki.exists($categoryDoc.documentReference))
+      ## When accessing "Blog/News?xpage=plain&amp;sheet=Blog.CategoryRss" if the Blog.News document is missing, the current doc is Blog.News.WebHome and that needs to be translated into the migrated category Blog.Categories.News.
+      #set ($oldCategoryRef = $categoryDoc.documentReference.parent)
+      #set ($newCategoriesSpaceRef = $services.model.createSpaceReference('Categories', $oldCategoryRef.parent))
+      #set ($newCategoryRef = $services.model.createDocumentReference($oldCategoryRef.name, $newCategoriesSpaceRef))
+      #if ($xwiki.exists($newCategoryRef))
+        #set ($categoryDoc = $xwiki.getDocument($newCategoryRef))
+      #end
+    #end
+    #if("$!categoryDoc.getObject($blogCategoryClassname)" != '' || $categoryDoc.getObject('XWiki.DocumentSheetBinding').sheet == 'Blog.CategoriesSheet')
+      #set ($category = $categoryDoc.fullName)
     #else
       #set($category = $defaultCategoryParent)
     #end

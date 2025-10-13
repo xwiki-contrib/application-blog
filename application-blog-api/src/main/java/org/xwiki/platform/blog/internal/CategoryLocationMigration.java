@@ -23,7 +23,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,7 +34,6 @@ import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
-import org.xwiki.component.manager.NamespacedComponentManager;
 import org.xwiki.job.event.status.JobProgressManager;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.DocumentReferenceResolver;
@@ -46,8 +44,8 @@ import org.xwiki.query.Query;
 import org.xwiki.query.QueryException;
 import org.xwiki.query.QueryFilter;
 import org.xwiki.query.QueryManager;
+import org.xwiki.stability.Unstable;
 import org.xwiki.wiki.descriptor.WikiDescriptorManager;
-import org.xwiki.wiki.manager.WikiManagerException;
 
 import com.xpn.xwiki.XWiki;
 import com.xpn.xwiki.XWikiContext;
@@ -113,27 +111,44 @@ public class CategoryLocationMigration
 
     /**
      * Performs the migration on the categories from the specified wiki.
+     *
+     * @param wikiId the id of the wiki where the blog categories are migrated
      */
-    public void migrate()
+    public void migrate(String wikiId)
     {
-        boolean hasNamespace = componentManager instanceof NamespacedComponentManager;
-        Collection<String> wikis =
-            getTargetWikis(hasNamespace ? ((NamespacedComponentManager) componentManager).getNamespace() : null);
-        progress.pushLevelProgress(wikis.size(), this);
-        wikis.forEach(
-            wikiId -> {
-                progress.startStep(this);
-                logger.info(String.format("Start migration of blog categories from [%s] wiki.", wikiId));
-                try {
-                    migrateDefaultCategories(wikiId);
-                    migrateCustomCategories(wikiId);
-                } catch (QueryException | XWikiException e) {
-                    this.logger.error("Failed to get the list of categories to migrate.", e);
-                }
-                logger.info(String.format("End migration of blog categories from [%s] wiki.", wikiId));
-                progress.endStep(this);
-            });
-        progress.popLevelProgress(this);
+        progress.startStep(this);
+        logger.info(String.format("Start migration of blog categories from [%s] wiki.", wikiId));
+        try {
+            migrateDefaultCategories(wikiId);
+            migrateCustomCategories(wikiId);
+        } catch (QueryException | XWikiException e) {
+            this.logger.error("Failed to get the list of categories to migrate.", e);
+        }
+        logger.info(String.format("End migration of blog categories from [%s] wiki.", wikiId));
+        progress.endStep(this);
+    }
+
+    /**
+     * Checks whether any blog posts are still associated with legacy categories located in the {@code Blog} space
+     * (i.e., categories that have not yet been migrated to the new {@code Blog.Categories} location).
+     *
+     * @return {@code true} if one or more blog posts still reference legacy Blog categories; {@code false} otherwise or
+     *     if the query fails
+     * @since 9.15.3
+     */
+    @Unstable
+    public boolean hasLegacyCategoryAssignments()
+    {
+        String statement = "from Document postDoc, doc.object(Blog.CategoryClass) as category, postDoc.object(Blog"
+            + ".BlogPostClass) blogPost where doc.fullName member of blogPost.category and doc.space = 'Blog'";
+        try {
+            Query query = queryManager.createQuery(statement, Query.XWQL);
+            List<DocumentReference> categories = query.execute();
+            return !categories.isEmpty();
+        } catch (QueryException e) {
+            this.logger.error("Failed to get the list of old categories.", e);
+        }
+        return false;
     }
 
     private void migrateCustomCategories(String wiki) throws QueryException, XWikiException
@@ -323,20 +338,5 @@ public class CategoryLocationMigration
         blogPostDoc.setMetaDataDirty(false);
         blogPostDoc.setContentDirty(false);
         xwiki.saveDocument(blogPostDoc, context);
-    }
-
-    private Collection<String> getTargetWikis(String namespace)
-    {
-        // Checking also for null namespace since it could mean that the upgrade is done on farm level.
-        if (namespace != null && namespace.startsWith("wiki:")) {
-            return Collections.singleton(namespace.substring(5));
-        } else {
-            try {
-                return this.wikiDescriptorManager.getAllIds();
-            } catch (WikiManagerException e) {
-                this.logger.error("Failed to get the list of wikis.", e);
-                return Collections.emptySet();
-            }
-        }
     }
 }

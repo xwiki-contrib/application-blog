@@ -58,9 +58,13 @@
         <cache>0</cache>
         <classname>Blog.CategoryClass</classname>
         <customDisplay/>
+        <defaultValue/>
         <disabled>0</disabled>
         <displayType>checkbox</displayType>
+        <freeText/>
+        <hint/>
         <idField>doc.fullName</idField>
+        <largeStorage>0</largeStorage>
         <multiSelect>1</multiSelect>
         <name>category</name>
         <number>4</number>
@@ -72,7 +76,7 @@
         <separators/>
         <size>1</size>
         <sort>value</sort>
-        <sql>select doc.fullName, catName.value, doc.parent from XWikiDocument doc, BaseObject as obj, StringProperty as catName where doc.fullName = obj.name and obj.className = 'Blog.CategoryClass' and  doc.fullName not in ('Blog.CategoryTemplate', 'Blog.Categories.WebHome') and catName.id.id = obj.id and catName.id.name = 'name'</sql>
+        <sql>select doc.fullName, catName.value, doc.parent from XWikiDocument doc, BaseObject as obj, StringProperty as catName where doc.fullName = obj.name and obj.className = 'Blog.CategoryClass' and  doc.fullName not in ('Blog.CategoryTemplate', 'Blog.Categories', 'Blog.Categories.WebHome') and catName.id.id = obj.id and catName.id.name = 'name'</sql>
         <tooltip/>
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
@@ -85,6 +89,7 @@
         <customDisplay/>
         <disabled>0</disabled>
         <editor>---</editor>
+        <hint/>
         <name>content</name>
         <number>2</number>
         <picker>0</picker>
@@ -102,6 +107,7 @@
         <customDisplay/>
         <disabled>0</disabled>
         <editor>---</editor>
+        <hint/>
         <name>extract</name>
         <number>3</number>
         <picker>0</picker>
@@ -120,6 +126,7 @@
         <disabled>0</disabled>
         <displayFormType>checkbox</displayFormType>
         <displayType/>
+        <hint/>
         <name>hidden</name>
         <number>5</number>
         <prettyName>Is hidden</prettyName>
@@ -132,6 +139,7 @@
       <image>
         <customDisplay/>
         <disabled>0</disabled>
+        <hint/>
         <name>image</name>
         <number>8</number>
         <picker>0</picker>
@@ -147,6 +155,7 @@
         <dateFormat>dd/MM/yyyy HH:mm:ss</dateFormat>
         <disabled>0</disabled>
         <emptyIsToday>1</emptyIsToday>
+        <hint/>
         <name>publishDate</name>
         <number>7</number>
         <picker>1</picker>
@@ -164,6 +173,7 @@
         <disabled>0</disabled>
         <displayFormType>checkbox</displayFormType>
         <displayType/>
+        <hint/>
         <name>published</name>
         <number>6</number>
         <prettyName>Is published</prettyName>
@@ -176,6 +186,7 @@
       <title>
         <customDisplay/>
         <disabled>0</disabled>
+        <hint/>
         <name>title</name>
         <number>1</number>
         <picker>0</picker>

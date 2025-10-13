@@ -264,7 +264,7 @@ blog.modal.checkCategorySelection.header=Select a Category
 blog.modal.checkCategorySelection.body=You have not selected any categories for your blog post. Selection of a category makes it easier to find your post later on. Do you want to select a category?
 blog.modal.checkCategorySelection.footer.no=No, save without
 
-blog.migraiton.uix.notification=**Important: Blog Categories Migration Required.** If this migration is not completed, category-related features may not function properly.\n\nFollowing the recent upgrade of the Blog Application, existing blog categories must be migrated to the new location: Blog.Categories (from their previous location in Blog).\nThis change introduces improved permission control for category management and resolves naming conflicts between blog posts and categories.\nNavigate to the {0}Categories Location Migrator{1} in order to start the migration process.
+blog.migraiton.uix.notification=**Blog Categories Migration (Recommended)**\nYou can migrate your existing blog categories from the old location Blog to the new location Blog.Categories.\n\nThis update enhances permission control, improves category management, and eliminates naming conflicts between blog posts and categories.\nMigrating ensures your blog continues to run smoothly and takes full advantage of these improvements.\n\nNavigate to the {0}//Categories Location Migrator//{1} in order to start the migration process.
 blog.migration.status.categories=In the **{0}** wiki there are {1} categories to migrate.
 blog.migration.status.blogPosts=In the **{0}** wiki there are {1} blog posts that need category update.
 blog.migration.start=Start migration

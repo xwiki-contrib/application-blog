@@ -68,6 +68,10 @@ $xwiki.ssx.use('Blog.ManageCategories')##
   #end
   #getBlogCategoriesLocation($doc.space $categoriesLocation)
   #set ($defaultPostCategory = "${categoriesLocation}.WebHome")
+  ## Since 9.15, category data may exist in Blog or Blog.Categories. Code supports both paths to maintain backward compatibility.
+  #if ($categoriesLocation == 'Blog')
+    #set ($defaultPostCategory = 'Blog.Categories')
+  #end
   #set($discard = $xwiki.jsx.use('Blog.BlogPostSheet'))
   #set($discard = $xwiki.ssx.use('Blog.BlogPostSheet'))
   (% class="xform" %)(((

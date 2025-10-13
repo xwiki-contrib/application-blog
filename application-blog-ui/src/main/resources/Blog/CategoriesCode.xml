@@ -451,8 +451,10 @@ $escapetool.xml($!categoryDoc.getObject(${blogCategoryClassname}).getProperty('d
 #macro(displayCategoryManagementTree $space $displayType)
   &lt;div class="blog-categories-list"&gt;
     #getCategoriesHierarchy($space $tree)
-    #set ($defaultCategoryParent = "${space}.WebHome")
-    #set ($categoriesDocFullName = "${space}.WebHome")
+    #if ("$!space" != $defaultBlogSpace)
+      #set ($defaultCategoryParent = "${space}.WebHome")
+    #end
+    #set ($categoriesDocFullName = $defaultCategoryParent)
     #displayCategoriesHierarchy($tree $displayType)
     #if ($xwiki.hasAccessLevel('edit', $xcontext.user, $categoriesDocFullName))
       #set ($queryString = {

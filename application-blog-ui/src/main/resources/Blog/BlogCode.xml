@@ -1080,7 +1080,12 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  *###
 #macro(getBlogCategoriesLocation $blogSpace $categoriesLocation)
   #getBlogDocument($blogSpace $blogDoc)
-  #getBlogProperty($blogDoc 'categoriesLocation' 'Blog.Categories' $result)
+  ## Since 9.15, category data may exist in Blog or Blog.Categories. Code supports both paths to maintain backward compatibility.
+  #set ($defaultBlogCategoryLocation = 'Blog.Categories')
+  #if ($services.blog.hasLegacyCategoryAssignments())
+    #set ($defaultBlogCategoryLocation = 'Blog')
+  #end
+  #getBlogProperty($blogDoc 'categoriesLocation' $defaultBlogCategoryLocation $result)
   #set ($postsLocation = $NULL)
   #setVariable ("$categoriesLocation" $result)
 #end

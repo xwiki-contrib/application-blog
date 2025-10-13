@@ -201,10 +201,26 @@ public class BlogScriptService implements ScriptService
     /**
      * Initiates the migration of category locations within the wiki farm.
      *
+     * @param wikiId the id of the wiki where the blog categories are migrated
      * @since 9.15
      */
-    public void migrateCategoryLocation()
+    @Unstable
+    public void migrateCategoryLocation(String wikiId)
     {
-        categoryLocationMigration.migrate();
+        categoryLocationMigration.migrate(wikiId);
+    }
+
+    /**
+     * Checks whether any blog posts are still associated with legacy categories located in the {@code Blog} space
+     * (i.e., categories that have not yet been migrated to the new {@code Blog.Categories} location).
+     *
+     * @return {@code true} if one or more blog posts still reference legacy Blog categories; {@code false} otherwise or
+     *     if the query fails
+     * @since 9.15.3
+     */
+    @Unstable
+    public boolean hasLegacyCategoryAssignments()
+    {
+        return categoryLocationMigration.hasLegacyCategoryAssignments();
     }
 }
