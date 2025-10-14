@@ -73,59 +73,6 @@ $xwiki.jsx.use('Blog.ManageCategories')##
   <object>
     <name>Blog.Categories.WebHome</name>
     <number>0</number>
-    <className>Blog.CategoryClass</className>
-    <guid>f34664a1-1c8c-4639-8129-f406c9b08b81</guid>
-    <class>
-      <name>Blog.CategoryClass</name>
-      <customClass/>
-      <customMapping/>
-      <defaultViewSheet/>
-      <defaultEditSheet/>
-      <defaultWeb/>
-      <nameField/>
-      <validationScript/>
-      <description>
-        <contenttype>FullyRenderedText</contenttype>
-        <customDisplay/>
-        <disabled>0</disabled>
-        <editor>---</editor>
-        <name>description</name>
-        <number>2</number>
-        <picker>0</picker>
-        <prettyName>Description</prettyName>
-        <rows>5</rows>
-        <size>40</size>
-        <tooltip/>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </description>
-      <name>
-        <customDisplay/>
-        <disabled>0</disabled>
-        <name>name</name>
-        <number>1</number>
-        <picker>0</picker>
-        <prettyName>Name</prettyName>
-        <size>40</size>
-        <tooltip/>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </name>
-    </class>
-    <property>
-      <description/>
-    </property>
-    <property>
-      <name>Blog categories</name>
-    </property>
-  </object>
-  <object>
-    <name>Blog.Categories.WebHome</name>
-    <number>0</number>
     <className>XWiki.DocumentSheetBinding</className>
     <guid>3b7c0512-de94-4bfb-83b0-783214969b60</guid>
     <class>
