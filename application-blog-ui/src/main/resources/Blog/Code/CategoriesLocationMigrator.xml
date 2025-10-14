@@ -46,7 +46,7 @@
 {{/job}}
 
 {{velocity}}
-#if ($hasAdmin &amp;&amp; $blog.services.hasLegacyCategoryAssignments())
+#if ($hasAdmin &amp;&amp; $services.blog.hasLegacyCategoryAssignments())
   #if ("$!request.jobId" == '')
     #set ($jobId = "$datetool.get('yyyy-MM-dd')/$datetool.get('HH-mm-ss-SSS')")
     #set ($categoryStatement = "from doc.object(Blog.CategoryClass) as category where doc.space = 'Blog' and doc.name &lt;&gt; 'CategoryTemplate'")
