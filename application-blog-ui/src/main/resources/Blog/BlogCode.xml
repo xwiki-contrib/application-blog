@@ -93,9 +93,12 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #if($blogDoc.getObject($blogClassname))
     ## Keep testing for inline action for backward compatibility with older blogs.
     #if($xcontext.action == 'edit' || $xcontext.action == 'inline')
+      #set ($blogObj = $blogDoc.getObject($blogClassname))
       #macro(displayProperty $blogDoc $propname)
+        #set ($hint = "$!blogObj.xWikiClass.get($propname).hint")
         ; $blogDoc.displayPrettyName($propname):
         : $blogDoc.display($propname)
+        (% class="xHint"%) $!escapetool.xml($services.localization.render($hint))
       #end
       #displayProperty($blogDoc 'title')
       #displayProperty($blogDoc 'description')
@@ -103,6 +106,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       #displayProperty($blogDoc 'itemsPerPage')
       #displayProperty($blogDoc 'postsLayout')
       #displayProperty($blogDoc 'postsLayoutParameters')
+      #displayProperty($blogDoc 'forceCategorySelection')
     #else
       $blogDoc.display('description')
     #end

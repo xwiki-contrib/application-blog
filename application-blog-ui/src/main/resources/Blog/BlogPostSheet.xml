@@ -108,7 +108,9 @@ $xwiki.ssx.use('Blog.ManageCategories')##
         &lt;dt&gt;&lt;label&gt;{{translation key='blog.sheet.category'/}}&lt;/label&gt;&lt;/dt&gt;
         &lt;dd&gt;
           #displayCategoryManagementTree($categoriesLocation 'selectable') &lt;input type="hidden" name="Blog.BlogPostClass_0_category" id="defaultPostCategory"/&gt;&lt;input type="hidden" id="blogCategoriesWebHome" value="${escapetool.xml($defaultPostCategory)}"/&gt;
-          #checkCategorySelectionModal
+          #if ($blogDoc.getValue('forceCategorySelection') == 1)
+            #checkCategorySelectionModal
+          #end
         &lt;/dd&gt;
       &lt;/dl&gt;
     &lt;/div&gt;
@@ -249,16 +251,27 @@ $xwiki.ssx.use('Blog.ManageCategories')##
     }
   });
 
-  // Ask for selecting a category.
+  // Ensure a category is selected before saving a blog post.
   $(document).on('xwiki:actions:beforeSave', function(event, data) {
-    const isSaveAndView = data.originalEvent.target.name === 'action_save';
-    const selectedCategories = $("input[name='Blog\\.BlogPostClass_0_category']:checked")
-    .map((_, el) =&gt; $(el).val()).get();
+    const modal = $('#checkCategorySelection');
+    const isForceCategorySelectionEnabled = modal.length &gt; 0
+    if (!isForceCategorySelectionEnabled) {
+      return;
+    }
 
-    if (selectedCategories.length &gt; 0) return;
+    const isSaveAndView = data.originalEvent.target.name === 'action_save';
+    const categoryInput = $("input[name='Blog\\.BlogPostClass_0_category']");
+    if (categoryInput.length === 0) {
+      return;
+    }
+
+    const selectedCategories = categoryInput.filter(":checked").map((_, el) =&gt; $(el).val()).get();
+    if (selectedCategories.length &gt; 0) {
+      return;
+    }
 
     event.preventDefault();
-    const modal = $('#checkCategorySelection');
+
     modal.modal('show');
     let userConfirmed = false;
     $(document).one('click', '#continueCategorySelection', () =&gt; {

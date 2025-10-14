@@ -52,6 +52,7 @@
     <categoriesLocation>
       <customDisplay/>
       <disabled>0</disabled>
+      <hint/>
       <name>categoriesLocation</name>
       <number>5</number>
       <picker>0</picker>
@@ -67,6 +68,7 @@
       <customDisplay/>
       <disabled>0</disabled>
       <editor>---</editor>
+      <hint/>
       <name>description</name>
       <number>2</number>
       <picker>0</picker>
@@ -82,8 +84,12 @@
     <displayType>
       <cache>0</cache>
       <customDisplay/>
+      <defaultValue/>
       <disabled>0</disabled>
       <displayType>select</displayType>
+      <freeText/>
+      <hint/>
+      <largeStorage>0</largeStorage>
       <multiSelect>0</multiSelect>
       <name>displayType</name>
       <number>3</number>
@@ -101,9 +107,25 @@
       <values>paginated=Paginated|weekly=Group posts weekly|monthly=Group posts monthly|all=Show all posts</values>
       <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
     </displayType>
+    <forceCategorySelection>
+      <customDisplay/>
+      <defaultValue/>
+      <disabled>0</disabled>
+      <displayFormType>checkbox</displayFormType>
+      <displayType/>
+      <hint>Indicates whether category selection is mandatory when creating blog posts.</hint>
+      <name>forceCategorySelection</name>
+      <number>9</number>
+      <prettyName>Force category selection</prettyName>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+    </forceCategorySelection>
     <itemsPerPage>
       <customDisplay/>
       <disabled>0</disabled>
+      <hint/>
       <name>itemsPerPage</name>
       <number>4</number>
       <numberType>integer</numberType>
@@ -118,8 +140,12 @@
     <postsLayout>
       <cache>0</cache>
       <customDisplay/>
+      <defaultValue/>
       <disabled>0</disabled>
       <displayType>select</displayType>
+      <freeText/>
+      <hint/>
+      <largeStorage>0</largeStorage>
       <multiSelect>0</multiSelect>
       <name>postsLayout</name>
       <number>7</number>
@@ -183,6 +209,7 @@
 {{/html}}
 {{/velocity}}</customDisplay>
       <disabled>0</disabled>
+      <hint/>
       <name>title</name>
       <number>1</number>
       <picker>0</picker>
