@@ -57,9 +57,12 @@ $response.setContentType('application/rss+xml')
     ## Since 9.15, category data may exist in Blog or Blog.Categories. Code supports both paths to maintain backward compatibility.
     ## This code checks whether a category exists in its original location (e.g., Blog.News).
     ## If the category is not found, it assumes a migration has occurred and automatically sets the category to its new location in the Blog.Categories namespace (e.g., Blog.Categories.News).
-    #if (!$xwiki.exists($categoryDoc.documentReference))
-      ## When accessing "Blog/News?xpage=plain&amp;sheet=Blog.CategoryRss" if the Blog.News document is missing, the current doc is Blog.News.WebHome and that needs to be translated into the migrated category Blog.Categories.News.
-      #set ($oldCategoryRef = $categoryDoc.documentReference.parent)
+    #if (!$services.blog.hasLegacyCategoryAssignments())
+      #set ($oldCategoryRef = $categoryDoc.documentReference)
+      ## When accessing "Blog/News?xpage=plain&amp;sheet=Blog.CategoryRss" and the Blog.News document is missing, the current doc is Blog.News.WebHome and that needs to be translated into the migrated category Blog.Categories.News.
+      #if ($oldCategoryRef.name == 'WebHome')
+        #set ($oldCategoryRef = $categoryDoc.documentReference.parent)
+      #end
       #set ($newCategoriesSpaceRef = $services.model.createSpaceReference('Categories', $oldCategoryRef.parent))
       #set ($newCategoryRef = $services.model.createDocumentReference($oldCategoryRef.name, $newCategoriesSpaceRef))
       #if ($xwiki.exists($newCategoryRef))
