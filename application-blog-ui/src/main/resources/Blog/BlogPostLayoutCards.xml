@@ -510,13 +510,13 @@
       </visibility>
     </class>
     <property>
-      <async_cached/>
+      <async_cached>0</async_cached>
     </property>
     <property>
       <async_context/>
     </property>
     <property>
-      <async_enabled/>
+      <async_enabled>0</async_enabled>
     </property>
     <property>
       <code>{{include reference='Blog.BlogCode' /}}
@@ -720,7 +720,7 @@
         #if ("$!pinnedPostsObj" != '')
           #set ($orderedPinnedPostsJSON = $pinnedPostsObj.getProperty('orderedPosts').value)
           #if ("$!orderedPinnedPostsJSON" != '')
-            #set ($pinnedPosts = $jsontool.parse($orderedPinnedPostsJSON))
+            #set ($pinnedPosts = $jsontool.fromString($orderedPinnedPostsJSON))
           #else
             #set ($pinnedPosts = $pinnedPostsObj.getProperty('posts').value)
           #end
