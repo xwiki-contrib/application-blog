@@ -39,11 +39,15 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{velocity}}
-#set ($discard = $xwiki.jsx.use("Blog.PinnedPostsSheet"))
-##
+  <content>{{velocity output="false"}}
+#macro (stripHTMLMacro $displayOutput)
+  $stringtool.removeEnd($stringtool.removeStart($displayOutput, '{{html clean="false" wiki="false"}}'), '{{/html}}')
+#end
+{{/velocity}}
 
-{{html wiki="true"}}
+{{velocity}}
+#set ($discard = $xwiki.jsx.use('Blog.PinnedPostsSheet'))
+{{html clean="false"}}
 &lt;div class="row"&gt;
   &lt;div class="col-md-12"&gt;
     &lt;h3&gt;
@@ -56,14 +60,15 @@
         #else
           #set ($vdoc = $xwiki.getDocument("Blog.PinnedPostsTemplate"))
         #end
-        $vdoc.display("posts", "edit")
-        &lt;input type="hidden" id="Blog.PinnedPostsClass_0_orderedPosts" name="Blog.PinnedPostsClass_0_orderedPosts" value="$!escapetool.xml($jsontool.serialize($vdoc.getObject('Blog.PinnedPostsClass').getValue('orderedPosts')))"/&gt;
+        #set ($displayOutput = $vdoc.display('posts', 'edit'))
+        #stripHTMLMacro($displayOutput)
+        #set ($orderedPosts = $jsontool.serialize($vdoc.getObject('Blog.PinnedPostsClass').getValue('orderedPosts')))
+        &lt;input type="hidden" id="Blog.PinnedPostsClass_0_orderedPosts" name="Blog.PinnedPostsClass_0_orderedPosts" value="$escapetool.xml($orderedPosts)"/&gt;
         &lt;input type="hidden" name="form_token" value="$services.csrf.token"/&gt;
         &lt;div&gt;
           &lt;input class="btn btn-primary" type="submit" name="action_save" value="$escapetool.xml($services.localization.render('blog.post.layout.cards.pinnedposts.save'))" id="savePinnedPostsBtn"/&gt;
         &lt;/div&gt;
       &lt;/form&gt;
-
       &lt;div id="errors-container"&gt;&lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
