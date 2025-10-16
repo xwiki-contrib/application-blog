@@ -48,6 +48,10 @@
       <id>xwikidev</id>
       <name>XWiki Development Team</name>
     </developer>
+    <developer>
+      <id>acotiuga</id>
+      <name>Alex Cotiugă</name>
+    </developer>
   </developers>
   <properties>
     <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
