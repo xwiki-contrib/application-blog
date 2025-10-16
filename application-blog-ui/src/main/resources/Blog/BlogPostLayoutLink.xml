@@ -357,13 +357,13 @@
       </visibility>
     </class>
     <property>
-      <async_cached/>
+      <async_cached>0</async_cached>
     </property>
     <property>
       <async_context/>
     </property>
     <property>
-      <async_enabled/>
+      <async_enabled>0</async_enabled>
     </property>
     <property>
       <code>{{velocity}}
@@ -372,8 +372,11 @@
   #set ($postObj = $postDoc.getObject('Blog.BlogPostClass'))
   #if ("$!postObj" != '')
     #set ($discard = $xwiki.ssx.use('Blog.BlogPostLayoutLink'))
+    #set ($escapedRenderedTitle = $services.rendering.escape($postDoc.display('title', 'view', $postObj), $xwiki.getCurrentContentSyntaxId()))
+    #set ($escapedReference = $services.rendering.escape($services.model.serialize($postDoc.documentReference,'default'), $xwiki.getCurrentContentSyntaxId()))
     (% class='blog-post-layout-link' %)
-    * $services.icon.render('right') [[$!{postDoc.display('title', 'view', $postObj)}&gt;&gt;$!{services.rendering.escape($services.model.serialize($postDoc.documentReference,'default'),$xwiki.getCurrentContentSyntaxId())}]]
+    ## The title needs to be escaped twice in the wiki link.
+    * $services.icon.render('right') [[$services.rendering.escape($escapedRenderedTitle, $xwiki.getCurrentContentSyntaxId())&gt;&gt;$escapedReference]]
   #else
     {{error}}$services.localization.render('blog.blogpostlayout.notpost', [$xcontext.macro.params.reference]){{/error}}
   #end
