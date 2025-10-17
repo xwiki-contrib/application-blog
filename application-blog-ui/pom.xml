@@ -78,7 +78,7 @@
     <dependency>
       <groupId>org.xwiki.contrib</groupId>
       <artifactId>macro-job</artifactId>
-      <version>2.2.0</version>
+      <version>2.2.1</version>
     </dependency>
     <!-- Select2 WebJar used by the cards blog post layout -->
     <dependency>
