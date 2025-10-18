@@ -62,7 +62,7 @@
         #end
         #set ($displayOutput = $vdoc.display('posts', 'edit'))
         #stripHTMLMacro($displayOutput)
-        #set ($orderedPosts = $jsontool.serialize($vdoc.getObject('Blog.PinnedPostsClass').getValue('orderedPosts')))
+        #set ($orderedPosts = $vdoc.getObject('Blog.PinnedPostsClass').getValue('orderedPosts'))
         &lt;input type="hidden" id="Blog.PinnedPostsClass_0_orderedPosts" name="Blog.PinnedPostsClass_0_orderedPosts" value="$escapetool.xml($orderedPosts)"/&gt;
         &lt;input type="hidden" name="form_token" value="$services.csrf.token"/&gt;
         &lt;div&gt;
@@ -207,7 +207,7 @@ require(['jquery',"$services.webjars.url('jquery-ui', 'jquery-ui.js')",'select2'
     var pinnedPostsContainerSelector = "#pinnedPostsContainer";
     var pinnedPostsSelect = $(pinnedPostsContainerSelector + " select");
     var orderedPinnedPostsInputSelector = 'input[type="hidden"][name="Blog.PinnedPostsClass_0_orderedPosts"';
-    var orderedPinnedPosts = $(orderedPinnedPostsInputSelector).length &gt; 0 &amp;&amp; $(orderedPinnedPostsInputSelector).val() !='' ? $(orderedPinnedPostsInputSelector).val() : [];
+    var orderedPinnedPosts = $(orderedPinnedPostsInputSelector).length &gt; 0 &amp;&amp; $(orderedPinnedPostsInputSelector).val() !='' ? JSON.parse($(orderedPinnedPostsInputSelector).val()) : [];
     var pinnedPostsUlSelector = "#pinnedPostsContainer ul.select2-selection__rendered";
     pinnedPostsSelect.select2({templateSelection: function(data){
       return $("&lt;span&gt;&lt;/span&gt;").text(data.text).append($('&lt;input type="hidden"/&gt;').val(data.id));
