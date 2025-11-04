@@ -95,7 +95,7 @@ blog.sheet.notpublished=Acest articol nu a fost încă publicat.
 blog.sheet.publish=Publică
 blog.sheet.setdate=Setați data de publicare la:
 blog.sheet.image=Imagine
-blog.sheet.image.info=Câmpul imagine este utilizat pentru a atașa o miniatură la fiecare articol de blog. Miniaturile posturilor vor fi vizibile numai în cazul în care blogul este configurat să utilizeze aspectul "imagine".
+blog.sheet.image.info=Câmpul pentru imagine este folosit pentru a atașa o imagine reprezentativă fiecărei postări de blog. Imaginile reprezentative vor fi vizibile doar dacă blogul este configurat să folosească layout-ul {0}, {1} sau {2}.
 blog.sheet.choose_image=Selectați o imagine
 blog.category.created=Categoria {0} a fost creată.
 blog.category.exists=Categoria {0} există deja.
@@ -205,13 +205,13 @@ blog.blogpostlayout.post_view_not_allowed=Nu aveți voie să vizualizați artico
 blog.blogpostcreate.wrong_blog=Descrierea greșită a blogului
 
 # Blog class list property values.
-### Missing: Blog.BlogClass_displayType_paginated=Paginated
-### Missing: Blog.BlogClass_displayType_weekly=Group posts weekly
-### Missing: Blog.BlogClass_displayType_monthly=Group posts monthly
-### Missing: Blog.BlogClass_displayType_all=Show all posts
-### Missing: Blog.BlogClass_postsLayout_image=Image thumbnail
+Blog.BlogClass_displayType_paginated=Paginat
+Blog.BlogClass_displayType_weekly=Grupează postările săptămânal
+Blog.BlogClass_displayType_monthly=Grupează postările lunar
+Blog.BlogClass_displayType_all=Afișează toate postările
+Blog.BlogClass_postsLayout_image=Imagine reprezentativă (thumbnail)
 ### Missing: Blog.BlogClass_postsLayout_full=Calendar
-### Missing: Blog.BlogClass_postsLayout_cards=Cards
+Blog.BlogClass_postsLayout_cards=Carduri
 ### Missing: Blog.BlogClass_postsLayout_compact=Compact
 
 # Blogs macro
@@ -260,10 +260,10 @@ blog.panel.unpublishedBlogPosts.pageTitle=Panou de bloguri nepublicate
 blog.modal.checkCategorySelection.header=Selectează o categorie
 blog.modal.checkCategorySelection.body=Nu ai selectat nicio categorie pentru articolul tău de blog. Alegerea unei categorii te va ajuta să-l găsești mai ușor mai târziu. Vrei să alegi o categorie?
 blog.modal.checkCategorySelection.footer.no=Nu, salvează fără
-### Missing: blog.migraiton.uix.notification=**Important: Blog Categories Migration Required.** If this migration is not completed, category-related features may not function properly.\n\nFollowing the recent upgrade of the Blog Application, existing blog categories must be migrated to the new location: Blog.Categories (from their previous location in Blog).\nThis change introduces improved permission control for category management and resolves naming conflicts between blog posts and categories.\nNavigate to the {0}Categories Location Migrator{1} in order to start the migration process.
-### Missing: blog.migration.status.categories=In the **{0}** wiki there are {1} categories to migrate.
-### Missing: blog.migration.status.blogPosts=In the **{0}** wiki there are {1} blog posts that need category update.
-### Missing: blog.migration.start=Start migration
+blog.migraiton.uix.notification=**Migrarea categoriilor de blog (Recomandat)**\nPoți migra categoriile existente ale blogului din locația veche Blog în noua locație Blog.Categories.\n\nAceastă actualizare îmbunătățește controlul permisiunilor, îmbunătățește gestionarea categoriilor și elimină conflictele de denumire între postările de blog și categorii.\nMigrarea asigură funcționarea fără probleme a blogului tău și îți permite să beneficiezi pe deplin de aceste îmbunătățiri.\n\nNavighează la {0}//Categories Location Migrator//{1} pentru a începe procesul de migrare.
+blog.migration.status.categories=În **{0}** wiki există {1} categorii de migrat.
+blog.migration.status.blogPosts=În **{0}** wiki există {1} postări de blog care necesită actualizarea categoriei.
+blog.migration.start=Începe migrarea
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
