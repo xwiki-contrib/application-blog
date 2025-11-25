@@ -257,6 +257,13 @@ blog.panel.blogCategories.pageTitle=Панель категорій блогу
 blog.panel.recentBlogPosts.pageTitle=Панель останніх публікацій у блозі
 blog.panel.relatedBlogs.pageTitle=Панель схожих блогів
 blog.panel.unpublishedBlogPosts.pageTitle=Панель неопублікованих публікацій блогу
+blog.modal.checkCategorySelection.header=Оберіть Категорію
+blog.modal.checkCategorySelection.body=Ви не обрали жодної категорії для свого допису в блозі. Вибір категорії полегшує пошук вашого допису в майбутньому. Чи хочете ви вибрати категорію?
+blog.modal.checkCategorySelection.footer.no=Ні, зберегти без
+### Missing: blog.migraiton.uix.notification=**Blog Categories Migration (Recommended)**\nYou can migrate your existing blog categories from the old location Blog to the new location Blog.Categories.\n\nThis update enhances permission control, improves category management, and eliminates naming conflicts between blog posts and categories.\nMigrating ensures your blog continues to run smoothly and takes full advantage of these improvements.\n\nNavigate to the {0}//Categories Location Migrator//{1} in order to start the migration process.
+blog.migration.status.categories=У вікі **{0}** є {1} категорій для міграції.
+blog.migration.status.blogPosts=У вікі **{0}** є {1} публікацій у блозі, що потребують оновлення категорії.
+blog.migration.start=Розпочати міграцію
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
