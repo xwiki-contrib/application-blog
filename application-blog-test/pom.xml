@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.xwiki.contrib.blog</groupId>
     <artifactId>application-blog</artifactId>
-    <version>9.15.8-SNAPSHOT</version>
+    <version>9.15.8</version>
   </parent>
   <artifactId>application-blog-test</artifactId>
   <name>Blog - Tests - Parent POM</name>
