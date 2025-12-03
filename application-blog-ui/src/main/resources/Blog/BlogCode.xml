@@ -737,7 +737,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  *###
 #macro(displayEntryTitle $entryDoc $entryObj)
   ## This is executed in the context of a global HTML macro, so we need to escape html too
-  #set($escapedRenderedTitle = $escapetool.html($services.rendering.escape($entryDoc.getValue('title'), $xwiki.getCurrentContentSyntaxId())))
+  #set($escapedRenderedTitle = $escapetool.xml($services.rendering.escape($entryDoc.getValue('title'), $xwiki.getCurrentContentSyntaxId())))
   #if($doc.fullName == $entryDoc.fullName)
     (% class="entry-title" %)
     = $escapedRenderedTitle =
