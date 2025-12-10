@@ -260,6 +260,10 @@ blog.panel.unpublishedBlogPosts.pageTitle=未发布的博客帖子面板
 blog.modal.checkCategorySelection.header=选择一个类别
 blog.modal.checkCategorySelection.body=您尚未为您的博客文章选择任何类别。选择一个类别可以让你以后更容易找到你的文章。您想选择一个类别吗？
 blog.modal.checkCategorySelection.footer.no=不，拒绝保存
+blog.migraiton.uix.notification=**博客分类迁移（推荐）**\n您可以将现有博客分类从旧位置“Blog”迁移到新位置“Blog.Categories”。\n\n此次更新增强了权限控制，改进了分类管理，并消除了博客文章与分类之间的命名冲突。\n迁移可确保您的博客继续流畅运行，并充分利用这些改进。\n\n请前往{0}//分类位置迁移工具//{1}以开始迁移过程。
+blog.migration.status.categories=在**{0}** wiki中，有{1}个类别要迁移。
+blog.migration.status.blogPosts=在**{0}** wiki中，有{1}篇博客文章需要更新类别。
+blog.migration.start=开始迁移
 
 ## Used to indicate where deprecated keys start
 #@deprecatedstart
