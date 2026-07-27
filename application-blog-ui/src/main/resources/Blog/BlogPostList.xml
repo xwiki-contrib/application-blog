@@ -315,7 +315,9 @@
 
 #if ("$!blogDescriptorParam" != '' &amp;&amp; !$isValidBlog)
   #set ($XDOMList = [])
-  #set ($toParse = "{{error}}${services.localization.render('blog.blogpostlist.descriptor_not_found', [$blogDescriptorParam])}{{/error}}")
+  #set ($escapedRef = $services.rendering.escape($blogDescriptorParam, $xwiki.getCurrentContentSyntaxId()))
+  #set ($errorMsg = $services.localization.render('blog.blogpostlist.descriptor_not_found', [$escapedRef]))
+  #set ($toParse = "{{error}}${errorMsg}{{/error}}")
   #set ($xdom = $services.rendering.parse($toParse, $xwiki.getCurrentContentSyntaxId()).getChildren())
   #set ($discard = $XDOMList.addAll($xdom))
   #set($xcontext.macro.result = $XDOMList)

@@ -288,10 +288,12 @@
 #displayEntry($postDoc $postObj $useSummary $displayTitle $displayActions)
 #if ($displayCalendar))))#end
 #else
-{{error}}$services.localization.render('blog.blogpostlayout.notpost', [$xcontext.macro.params.reference]){{/error}}
+#set ($escapedRef = $services.rendering.escape($xcontext.macro.params.reference, $xwiki.getCurrentContentSyntaxId()))
+{{error}}$services.localization.render('blog.blogpostlayout.notpost', [$escapedRef]){{/error}}
 #end
 #else
-{{error}}$services.localization.render('blog.blogpostlayout.post_view_not_allowed', [$xcontext.macro.params.reference]){{/error}}
+#set ($escapedRef = $services.rendering.escape($xcontext.macro.params.reference, $xwiki.getCurrentContentSyntaxId()))
+{{error}}$services.localization.render('blog.blogpostlayout.post_view_not_allowed', [$escapedRef]){{/error}}
 #end
 {{/velocity}}</code>
     </property>
