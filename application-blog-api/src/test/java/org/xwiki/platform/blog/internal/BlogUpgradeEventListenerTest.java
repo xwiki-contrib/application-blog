@@ -49,13 +49,49 @@ public class BlogUpgradeEventListenerTest
 
     private BlogVisibilityMigration blogVisibilityMigration;
 
+    private BlogTitleMigration blogTitleMigration;
+
     private WikiDescriptorManager wikiDescriptorManager;
 
     @Before
     public void setUp() throws Exception
     {
         blogVisibilityMigration = mocker.getInstance(BlogVisibilityMigration.class);
+        blogTitleMigration = mocker.getInstance(BlogTitleMigration.class);
         wikiDescriptorManager = mocker.getInstance(WikiDescriptorManager.class);
+    }
+
+    private void testTitleMigrationFromContribVersion(String previousVersion, boolean executedExpected)
+        throws Exception
+    {
+        InstalledExtension previous = mock(InstalledExtension.class);
+        when(previous.getId())
+            .thenReturn(new ExtensionId("org.xwiki.contrib.blog:application-blog-ui", previousVersion));
+
+        ExtensionUpgradedEvent event = new ExtensionUpgradedEvent(
+            new ExtensionId("org.xwiki.contrib.blog:application-blog-ui", "9.15.11"), "wiki:chocolate");
+
+        mocker.getComponentUnderTest().onEvent(event, null, Arrays.asList(previous));
+
+        if (executedExpected) {
+            verify(blogTitleMigration).execute(eq(new WikiReference("chocolate")));
+        } else {
+            verifyZeroInteractions(blogTitleMigration);
+        }
+        // The visibility migration must never run for a contrib-to-contrib upgrade.
+        verifyZeroInteractions(blogVisibilityMigration);
+    }
+
+    @Test
+    public void titleMigrationFromPreviousVersion() throws Exception
+    {
+        testTitleMigrationFromContribVersion("9.15.10", true);
+    }
+
+    @Test
+    public void titleMigrationFromSameVersion() throws Exception
+    {
+        testTitleMigrationFromContribVersion("9.15.11", false);
     }
 
     private void testWithVersion(String version, boolean executedExpected) throws Exception

@@ -252,7 +252,7 @@
       <postsLocation/>
     </property>
     <property>
-      <title>$services.localization.render('blog.code.title')</title>
+      <title/>
     </property>
   </object>
 </xwikidoc>

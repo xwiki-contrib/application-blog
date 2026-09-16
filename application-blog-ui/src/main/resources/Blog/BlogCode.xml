@@ -180,7 +180,10 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param title The resulting title.
  *###
 #macro(getBlogTitle $blogDoc $title)
-  ## Titles can contain velocity code (most commonly translations), so we should evaluate them.
+  ## The blog title is the rendered document title. It is displayed as data (never evaluated as
+  ## Velocity), so an unprivileged user storing script in Blog.BlogClass.title cannot run it. See
+  ## Blog.BlogSheet, which renders the title literally and falls back to the blog.code.title
+  ## translation when the stored title is empty.
   #set ($title = $NULL)
   #setVariable ("$title" $!blogDoc.displayTitle)
 #end

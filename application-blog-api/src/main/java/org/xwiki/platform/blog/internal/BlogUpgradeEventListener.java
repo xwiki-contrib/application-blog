@@ -74,8 +74,17 @@ public class BlogUpgradeEventListener extends AbstractEventListener
      */
     private static final VersionConstraint VERSION_CONSTRAINT = new DefaultVersionConstraint("(,7.4.6),[8.0,8.4.3)");
 
+    /**
+     * The blog sheet stopped evaluating the stored blog title in 9.15.11 (BLOG-265), so blogs upgraded from an
+     * earlier version may still store the default title expression and need the title migration.
+     */
+    private static final VersionConstraint TITLE_VERSION_CONSTRAINT = new DefaultVersionConstraint("(,9.15.11)");
+
     @Inject
     private BlogVisibilityMigration blogVisibilityMigration;
+
+    @Inject
+    private BlogTitleMigration blogTitleMigration;
 
     @Inject
     private WikiDescriptorManager wikiDescriptorManager;
@@ -96,49 +105,70 @@ public class BlogUpgradeEventListener extends AbstractEventListener
     {
         ExtensionUpgradedEvent extensionUpgradedEvent = (ExtensionUpgradedEvent) event;
 
-        Version previousVersion = getPreviousVersion((Collection<InstalledExtension>) previousExtensions);
+        Collection<InstalledExtension> previous = (Collection<InstalledExtension>) previousExtensions;
 
-        if (previousVersion != null && VERSION_CONSTRAINT.containsVersion(previousVersion)) {
+        boolean visibilityMigrationNeeded = isConstraintMatched(previous, PREVIOUS_EXTENSION_ID, VERSION_CONSTRAINT);
+        // The blog title existed under both the current and the previous (platform) extension id, so check both.
+        boolean titleMigrationNeeded = isConstraintMatched(previous, EXTENSION_ID, TITLE_VERSION_CONSTRAINT)
+            || isConstraintMatched(previous, PREVIOUS_EXTENSION_ID, TITLE_VERSION_CONSTRAINT);
+
+        if (visibilityMigrationNeeded || titleMigrationNeeded) {
             String namespace = extensionUpgradedEvent.getNamespace();
             if (namespace == null) {
                 // When the namespace is null, it means the application is installed on the root namespace, ie. on
                 // the farm.
-                migrateAllWikis();
+                migrateAllWikis(visibilityMigrationNeeded, titleMigrationNeeded);
             } else if (namespace.startsWith("wiki:")) {
-                migrateWiki(new WikiReference(namespace.substring(5)));
+                migrateWiki(new WikiReference(namespace.substring(5)), visibilityMigrationNeeded, titleMigrationNeeded);
             }
         }
     }
 
-    private void migrateAllWikis()
+    private void migrateAllWikis(boolean visibilityMigrationNeeded, boolean titleMigrationNeeded)
     {
         try {
             for (String wikiId : wikiDescriptorManager.getAllIds()) {
-                migrateWiki(new WikiReference(wikiId));
+                migrateWiki(new WikiReference(wikiId), visibilityMigrationNeeded, titleMigrationNeeded);
             }
         } catch (WikiManagerException e) {
-            logger.warn("Failed to migrate the visibility of non published blog posts.", e);
+            logger.warn("Failed to migrate the blogs.", e);
         }
     }
 
-    private void migrateWiki(WikiReference wikiReference)
+    private void migrateWiki(WikiReference wikiReference, boolean visibilityMigrationNeeded,
+        boolean titleMigrationNeeded)
     {
-        try {
-            blogVisibilityMigration.execute(wikiReference);
-        } catch (Exception e) {
-            logger.warn("Failed to migrate the visibility of non published blog posts on the wiki [{}].",
-                wikiReference.getName(), e);
+        if (visibilityMigrationNeeded) {
+            try {
+                blogVisibilityMigration.execute(wikiReference);
+            } catch (Exception e) {
+                logger.warn("Failed to migrate the visibility of non published blog posts on the wiki [{}].",
+                    wikiReference.getName(), e);
+            }
+        }
+        if (titleMigrationNeeded) {
+            try {
+                blogTitleMigration.execute(wikiReference);
+            } catch (Exception e) {
+                logger.warn("Failed to migrate the blog titles on the wiki [{}].", wikiReference.getName(), e);
+            }
         }
     }
 
-    private Version getPreviousVersion(Collection<InstalledExtension> previousExtensions)
+    private boolean isConstraintMatched(Collection<InstalledExtension> previousExtensions, String extensionId,
+        VersionConstraint constraint)
+    {
+        Version previousVersion = getPreviousVersion(previousExtensions, extensionId);
+        return previousVersion != null && constraint.containsVersion(previousVersion);
+    }
+
+    private Version getPreviousVersion(Collection<InstalledExtension> previousExtensions, String extensionId)
     {
         for (InstalledExtension extension : previousExtensions) {
-            if (extension.getId().getId().equals(PREVIOUS_EXTENSION_ID)) {
+            if (extension.getId().getId().equals(extensionId)) {
                 return extension.getId().getVersion();
             }
         }
-        // Should never happen
         return null;
     }
 }

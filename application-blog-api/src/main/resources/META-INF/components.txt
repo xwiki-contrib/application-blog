@@ -1,4 +1,5 @@
 org.xwiki.platform.blog.internal.BlogDocumentSavingListener
+org.xwiki.platform.blog.internal.BlogTitleMigration
 org.xwiki.platform.blog.internal.BlogUpgradeEventListener
 org.xwiki.platform.blog.internal.CategoryLocationMigration
 org.xwiki.platform.blog.internal.CategoryRenameListener
