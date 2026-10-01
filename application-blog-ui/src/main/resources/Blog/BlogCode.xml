@@ -927,29 +927,38 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #else
     ## Paginated
     #if(($totalPages &gt; 1))
-      #set($queryString = '')
-      #foreach($p in $request.getParameterNames())
-        #if($p != 'page' &amp;&amp; $p != 'ipp')
-          #foreach($v in $request.getParameterValues($p))
-            #set($queryString = "${queryString}&amp;${escapetool.url($p)}=${escapetool.url($v)}")
-          #end
-        #end
+      ## Use the syntax of the macro invocation: a 2.0 blog page can be rendered through the 2.1 BlogSheet.
+      ## XWiki 2.0 links need the query string in the target instead of a queryString link parameter.
+      #set ($isXWiki20Syntax = $wikimacro.context.syntax.toIdString() == 'xwiki/2.0')
+      #set ($pageReference = $services.rendering.escape($doc.documentReference.name, $wikimacro.context.syntax))
+      #set ($queryParameters = {})
+      #foreach ($name in $request.getParameterNames())
+        #set ($discard = $queryParameters.put($name, $request.getParameter($name)))
       #end
+      #set ($discard = $queryParameters.put('ipp', $itemsPerPage))
       (% class="pagingLinks" %)(((
-      #if ($currentPageNumber &lt; $totalPages)
-        #set($currentPageNumber = $currentPageNumber + 1)
-        (% class="prevPage" %)**[[« {{translation key='blog.code.olderposts'/}}&gt;&gt;$services.rendering.escape($doc.documentReference.name,$doc.syntax)||queryString="page=${currentPageNumber}&amp;ipp=${itemsPerPage}$queryString" class="button"]]**(%%)
-        #set($currentPageNumber = $currentPageNumber - 1)
-      #end
-      #if ($currentPageNumber &gt; 1)
         #if ($currentPageNumber &lt; $totalPages)
-          #sep()
+          #set ($discard = $queryParameters.put('page', $mathtool.add($currentPageNumber, 1)))
+          #set ($queryString = $escapetool.url($queryParameters))
+          #set ($querySyntax = "||queryString='$queryString' ")
+          #if ($isXWiki20Syntax)
+            #set ($querySyntax = "?$queryString||")
+          #end
+          (% class="prevPage" %)**[[« {{translation key='blog.code.olderposts'/}}&gt;&gt;$pageReference${querySyntax}class="button"]]**(%%)
         #end
-        #set($currentPageNumber = $currentPageNumber - 1)
-        (% class="nextPage" %)**[[{{translation key='blog.code.newerposts'/}} »&gt;&gt;$services.rendering.escape($doc.documentReference.name,$doc.syntax)||queryString="page=${currentPageNumber}&amp;ipp=${itemsPerPage}$queryString" class="button"]]**(%%)
-        #set($currentPageNumber = $currentPageNumber + 1)
-      #end
-      (% class="clear" %)(%%)
+        #if ($currentPageNumber &gt; 1)
+          #if ($currentPageNumber &lt; $totalPages)
+            #sep()
+          #end
+          #set ($discard = $queryParameters.put('page', $mathtool.sub($currentPageNumber, 1)))
+          #set ($queryString = $escapetool.url($queryParameters))
+          #set ($querySyntax = "||queryString='$queryString' ")
+          #if ($isXWiki20Syntax)
+            #set ($querySyntax = "?$queryString||")
+          #end
+          (% class="nextPage" %)**[[{{translation key='blog.code.newerposts'/}} »&gt;&gt;$pageReference${querySyntax}class="button"]]**(%%)
+        #end
+        (% class="clear" %)(%%)
       )))## pagingLinks
     #end
   #end
