@@ -98,7 +98,7 @@
       <plugin>
         <groupId>org.xwiki.commons</groupId>
         <artifactId>xwiki-commons-tool-xar-plugin</artifactId>
-        <version>10.4</version>
+        <version>${commons.version}</version>
         <configuration>
           <skip>true</skip>
           <entries>
