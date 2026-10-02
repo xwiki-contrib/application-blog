@@ -420,7 +420,7 @@
       <categoryIcon/>
     </property>
     <property>
-      <codeToExecute>{{include reference='Blog.Management' /}}</codeToExecute>
+      <codeToExecute>{{include reference="Blog.Management"/}}</codeToExecute>
     </property>
     <property>
       <configurationClass/>

@@ -78,6 +78,5 @@
  * @param $imgName The name of the icon from icons set to use.
  *#
 #macro(toolImage $imgName)(% class="icon-manage"%)$services.icon.render($imgName)(%%)#end
-{{/velocity}}
-</content>
+{{/velocity}}</content>
 </xwikidoc>
