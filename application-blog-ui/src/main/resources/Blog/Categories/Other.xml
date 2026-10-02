@@ -24,7 +24,7 @@
   <web>Blog.Categories</web>
   <name>Other</name>
   <language/>
-  <defaultLanguage/>
+  <defaultLanguage>en</defaultLanguage>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
   <parent>Blog.Categories.WebHome</parent>

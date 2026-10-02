@@ -24,7 +24,7 @@
   <web>Blog</web>
   <name>BlogIntroduction</name>
   <language/>
-  <defaultLanguage/>
+  <defaultLanguage>en</defaultLanguage>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
   <parent>Blog.WebHome</parent>

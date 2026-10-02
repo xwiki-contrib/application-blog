@@ -98,31 +98,14 @@
       <plugin>
         <groupId>org.xwiki.commons</groupId>
         <artifactId>xwiki-commons-tool-xar-plugin</artifactId>
-        <version>${commons.version}</version>
         <configuration>
-          <skip>true</skip>
-          <entries>
-            <entry>
-              <document>Blog.BlogIntroduction</document>
-              <type>demo</type>
-            </entry>
-            <entry>
-              <document>Blog.News</document>
-              <type>demo</type>
-            </entry>
-            <entry>
-              <document>Blog.Other</document>
-              <type>demo</type>
-            </entry>
-            <entry>
-              <document>Blog.Personal</document>
-              <type>demo</type>
-            </entry>
-            <entry>
-              <document>Blog.WebHome</document>
-              <type>customizable</type>
-            </entry>
-          </entries>
+          <contentPages>
+            <contentPage>.*/Blog/WebHome\.xml</contentPage>
+            <contentPage>.*/Blog/BlogIntroduction\.xml</contentPage>
+            <contentPage>.*/Blog/Categories/News\.xml</contentPage>
+            <contentPage>.*/Blog/Categories/Other\.xml</contentPage>
+            <contentPage>.*/Blog/Categories/Personal\.xml</contentPage>
+          </contentPages>
         </configuration>
       </plugin>
     </plugins>
