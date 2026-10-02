@@ -60,6 +60,7 @@ $xwiki.jsx.use('Blog.ManageCategories')##
 {{/velocity}}</content>
   <attachment>
     <filename>icon.png</filename>
+    <mimetype>image/png</mimetype>
     <author>xwiki:XWiki.Admin</author>
     <version>1.1</version>
     <comment/>
