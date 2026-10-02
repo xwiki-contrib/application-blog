@@ -368,7 +368,7 @@
   #set ($postObj = $postDoc.getObject('Blog.BlogPostClass'))
   #if ("$!postObj" != '')
     #set ($discard = $xwiki.ssx.use('Blog.BlogPostLayoutLink'))
-    #set ($escapedRenderedTitle = $services.rendering.escape($postDoc.display('title', 'view', $postObj), $xwiki.getCurrentContentSyntaxId()))
+    #set ($escapedRenderedTitle = $services.rendering.escape($postDoc.getValue('title'), $xwiki.getCurrentContentSyntaxId()))
     #set ($escapedReference = $services.rendering.escape($services.model.serialize($postDoc.documentReference,'default'), $xwiki.getCurrentContentSyntaxId()))
     (% class='blog-post-layout-link' %)
     ## The title needs to be escaped twice in the wiki link.
