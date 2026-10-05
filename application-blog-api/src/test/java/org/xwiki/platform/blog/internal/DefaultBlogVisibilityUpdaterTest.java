@@ -19,99 +19,289 @@
  */
 package org.xwiki.platform.blog.internal;
 
-import org.junit.Rule;
-import org.junit.Test;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.inject.Provider;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.DocumentReference;
-import org.xwiki.test.mockito.MockitoComponentMockingRule;
+import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.EntityReferenceSerializer;
+import org.xwiki.test.LogLevel;
+import org.xwiki.test.junit5.LogCaptureExtension;
+import org.xwiki.test.junit5.mockito.ComponentTest;
+import org.xwiki.test.junit5.mockito.InjectMockComponents;
+import org.xwiki.test.junit5.mockito.MockComponent;
 
 import com.xpn.xwiki.XWikiContext;
+import com.xpn.xwiki.XWikiException;
 import com.xpn.xwiki.doc.XWikiDocument;
-import com.xpn.xwiki.internal.XWikiContextProvider;
 import com.xpn.xwiki.objects.BaseObject;
 import com.xpn.xwiki.objects.BaseProperty;
 import com.xpn.xwiki.objects.classes.BaseClass;
 import com.xpn.xwiki.objects.classes.PropertyClass;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
+ * Unit tests for {@link DefaultBlogVisibilityUpdater}.
+ *
  * @version $Id$
  */
-public class DefaultBlogVisibilityUpdaterTest
+@ComponentTest
+class DefaultBlogVisibilityUpdaterTest
 {
-    @Rule
-    public MockitoComponentMockingRule<DefaultBlogVisibilityUpdater> mocker =
-            new MockitoComponentMockingRule<>(DefaultBlogVisibilityUpdater.class);
+    private static final EntityReference RIGHTS_CLASS = new EntityReference("XWikiRights", EntityType.DOCUMENT,
+        new EntityReference("XWiki", EntityType.SPACE));
 
-    @Rule
-    public MockitoComponentMockingRule<XWikiContextProvider> mockContextProvider =
-            new MockitoComponentMockingRule<>(XWikiContextProvider.class);
+    private static final DocumentReference BLOG_POST_REFERENCE =
+        new DocumentReference("chocolate", "Blog", "HelloWorld");
 
-    private void test(boolean isPublished, boolean isHidden, boolean hiddenExpected) throws Exception
+    private static final DocumentReference USER_REFERENCE = new DocumentReference("chocolate", "XWiki", "Alice");
+
+    private static final String USER = "chocolate:XWiki.Alice";
+
+    @InjectMockComponents
+    private DefaultBlogVisibilityUpdater updater;
+
+    @MockComponent
+    private Provider<XWikiContext> contextProvider;
+
+    @MockComponent
+    private EntityReferenceSerializer<String> serializer;
+
+    @RegisterExtension
+    private LogCaptureExtension logCapture = new LogCaptureExtension(LogLevel.WARN);
+
+    private XWikiContext context;
+
+    private XWikiDocument document;
+
+    private BaseObject blogPostObject;
+
+    private List<BaseObject> rightsObjects;
+
+    @BeforeEach
+    void setUp()
     {
-        // Mock
-        XWikiDocument document = mock(XWikiDocument.class);
-        when(document.getDocumentReference()).thenReturn(new DocumentReference("chocolate", "Blog", "HelloWorld"));
-        BaseObject object = mock(BaseObject.class);
-        when(document.getXObject(eq(new DocumentReference("chocolate", "Blog", "BlogPostClass")))).thenReturn(object);
-        when(object.getIntValue("published")).thenReturn(isPublished ? 1 : 0);
-        when(object.getIntValue("hidden")).thenReturn(isHidden ? 1 : 0);
+        this.context = mock(XWikiContext.class);
+        when(this.contextProvider.get()).thenReturn(this.context);
+        when(this.context.getUserReference()).thenReturn(USER_REFERENCE);
+        when(this.serializer.serialize(USER_REFERENCE)).thenReturn(USER);
+        when(this.serializer.serialize(BLOG_POST_REFERENCE)).thenReturn("chocolate:Blog.HelloWorld");
 
-        // even more mocks for the rights fiddeling (not tested yet)
-        XWikiContext mockContext = mock(XWikiContext.class);
-        when(mocker.getComponentUnderTest().getContextProvider().get()).thenReturn(mockContext);
+        this.document = mock(XWikiDocument.class);
+        this.blogPostObject = mock(BaseObject.class);
+        this.rightsObjects = new ArrayList<>();
+        mockDocument(BLOG_POST_REFERENCE);
+    }
 
-        BaseObject rightsMock = mock(BaseObject.class);
-        when(document.newXObject(any(), any())).thenReturn(rightsMock);
-        BaseClass userClass = mock(BaseClass.class);
-        PropertyClass userProps = mock(PropertyClass.class);
-        BaseProperty<?> userPropValue = mock(BaseProperty.class);
-        when(rightsMock.getXClass(mockContext)).thenReturn(userClass);
-        when(userClass.get(any())).thenReturn(userProps);
-        when(userProps.fromStringArray(any())).thenReturn(userPropValue);
+    private void mockDocument(DocumentReference reference)
+    {
+        when(this.document.getDocumentReference()).thenReturn(reference);
+        when(this.document.getXObject(new DocumentReference("chocolate", "Blog", "BlogPostClass")))
+            .thenReturn(this.blogPostObject);
+        when(this.document.getXObjects(RIGHTS_CLASS)).thenReturn(this.rightsObjects);
+        // BaseObject#equals() requires a component manager, so the removal is based on identity.
+        doAnswer(invocation -> this.rightsObjects.removeIf(object -> object == invocation.getArgument(0)))
+            .when(this.document).removeXObject(any());
+    }
 
-        // Test
-        mocker.getComponentUnderTest().synchronizeHiddenMetadata(document);
+    private void mockBlogPost(boolean published, boolean hidden)
+    {
+        when(this.blogPostObject.getIntValue("published")).thenReturn(published ? 1 : 0);
+        when(this.blogPostObject.getIntValue("hidden")).thenReturn(hidden ? 1 : 0);
+    }
 
-        // Verify
-        verify(document).setHidden(hiddenExpected);
+    private BaseObject rightsObject(int allow, String users, String groups, String levels)
+    {
+        BaseObject rights = new BaseObject();
+        rights.setIntValue("allow", allow);
+        rights.setLargeStringValue("users", users);
+        rights.setLargeStringValue("groups", groups);
+        rights.setStringValue("levels", levels);
+        return rights;
+    }
+
+    private void assertRightsObjects(BaseObject... expected)
+    {
+        assertEquals(expected.length, this.rightsObjects.size());
+        for (int i = 0; i < expected.length; i++) {
+            assertSame(expected[i], this.rightsObjects.get(i));
+        }
+    }
+
+    private BaseObject viewRestriction()
+    {
+        return rightsObject(1, USER, "", "view");
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "false, false, true",
+        "false, true, true",
+        "true, false, false",
+        "true, true, true"
+    })
+    void synchronizeHiddenMetadataSetsHiddenFlag(boolean published, boolean hidden, boolean expectedHidden)
+        throws Exception
+    {
+        // Keep the restriction already present so that no new rights object needs to be created.
+        this.rightsObjects.add(viewRestriction());
+        mockBlogPost(published, hidden);
+
+        this.updater.synchronizeHiddenMetadata(this.document);
+
+        verify(this.document).setHidden(expectedHidden);
     }
 
     @Test
-    public void testNonPublishedNotHidden() throws Exception
+    void synchronizeHiddenMetadataWhenNoBlogPostObject()
     {
-        test(false, false, true);
+        when(this.document.getXObject(new DocumentReference("chocolate", "Blog", "BlogPostClass")))
+            .thenReturn(null);
+
+        this.updater.synchronizeHiddenMetadata(this.document);
+
+        verify(this.document, never()).setHidden(anyBoolean());
+        verify(this.document, never()).getXObjects(any(EntityReference.class));
     }
 
     @Test
-    public void testPublishedNotHidden() throws Exception
+    void synchronizeHiddenMetadataIgnoresBlogPostTemplate()
     {
-        test(true, false, false);
+        mockDocument(new DocumentReference("chocolate", "Blog", "BlogPostTemplate"));
+        mockBlogPost(false, false);
+
+        this.updater.synchronizeHiddenMetadata(this.document);
+
+        verify(this.document, never()).setHidden(anyBoolean());
+        verify(this.document, never()).getXObjects(any(EntityReference.class));
     }
 
     @Test
-    public void testPublishedAndHidden() throws Exception
+    void synchronizeHiddenMetadataRestrictsViewToCurrentUser() throws Exception
     {
-        test(true, true, true);
+        mockBlogPost(false, false);
+
+        BaseObject newRights = mock(BaseObject.class);
+        when(this.document.newXObject(RIGHTS_CLASS, this.context)).thenReturn(newRights);
+        BaseClass rightsClass = mock(BaseClass.class);
+        when(newRights.getXClass(this.context)).thenReturn(rightsClass);
+
+        PropertyClass usersClass = mock(PropertyClass.class);
+        when(rightsClass.get("users")).thenReturn(usersClass);
+        BaseProperty<?> usersProperty = mock(BaseProperty.class);
+        when(usersClass.fromStringArray(new String[] { USER })).thenReturn(usersProperty);
+        when(usersProperty.getValue()).thenReturn(USER);
+
+        PropertyClass levelsClass = mock(PropertyClass.class);
+        when(rightsClass.get("levels")).thenReturn(levelsClass);
+        BaseProperty<?> levelsProperty = mock(BaseProperty.class);
+        when(levelsClass.fromStringArray(new String[] { "view" })).thenReturn(levelsProperty);
+        when(levelsProperty.getValue()).thenReturn(Arrays.asList("view"));
+
+        this.updater.synchronizeHiddenMetadata(this.document);
+
+        verify(this.document).setHidden(true);
+        verify(newRights).set("allow", 1, this.context);
+        verify(newRights).set("users", USER, this.context);
+        verify(newRights).set("levels", Arrays.asList("view"), this.context);
     }
 
     @Test
-    public void testWhenNoObject() throws Exception
+    void synchronizeHiddenMetadataDoesNotDuplicateExistingRestriction() throws Exception
     {
-        // Mock
-        XWikiDocument document = mock(XWikiDocument.class);
-        when(document.getDocumentReference()).thenReturn(new DocumentReference("chocolate", "Blog", "HelloWorld"));
+        BaseObject restriction = viewRestriction();
+        this.rightsObjects.add(restriction);
+        mockBlogPost(true, true);
 
-        // Test
-        mocker.getComponentUnderTest().synchronizeHiddenMetadata(document);
+        this.updater.synchronizeHiddenMetadata(this.document);
 
-        // Verify
-        verify(document, never()).setHidden(anyBoolean());
+        verify(this.document).setHidden(true);
+        verify(this.document, never()).newXObject(any(EntityReference.class), any(XWikiContext.class));
+        assertRightsObjects(restriction);
+    }
+
+    @Test
+    void synchronizeHiddenMetadataLogsWarningWhenRestrictionCannotBeCreated() throws Exception
+    {
+        mockBlogPost(false, false);
+        when(this.document.newXObject(RIGHTS_CLASS, this.context))
+            .thenThrow(new XWikiException(0, 0, "Failed to create object"));
+
+        this.updater.synchronizeHiddenMetadata(this.document);
+
+        verify(this.document).setHidden(true);
+        assertEquals(1, this.logCapture.size());
+        assertEquals("could not set/clear user rights on blog post [chocolate:Blog.HelloWorld]",
+            this.logCapture.getMessage(0));
+    }
+
+    @Test
+    void synchronizeHiddenMetadataRemovesRestrictionWhenPublished()
+    {
+        BaseObject otherUser = rightsObject(1, "chocolate:XWiki.Bob", "", "view");
+        BaseObject deny = rightsObject(0, USER, "", "view");
+        BaseObject otherLevel = rightsObject(1, USER, "", "edit");
+        BaseObject withGroups = rightsObject(1, USER, "XWiki.XWikiAdminGroup", "view");
+        this.rightsObjects.addAll(Arrays.asList(otherUser, null, viewRestriction(), deny, otherLevel, withGroups,
+            viewRestriction()));
+        mockBlogPost(true, false);
+
+        this.updater.synchronizeHiddenMetadata(this.document);
+
+        verify(this.document).setHidden(false);
+        verify(this.document, times(2)).removeXObject(any(BaseObject.class));
+        assertRightsObjects(otherUser, null, deny, otherLevel, withGroups);
+    }
+
+    @Test
+    void synchronizeHiddenMetadataWhenPublishedWithoutRightsObjects()
+    {
+        when(this.document.getXObjects(RIGHTS_CLASS)).thenReturn(null);
+        mockBlogPost(true, false);
+
+        this.updater.synchronizeHiddenMetadata(this.document);
+
+        verify(this.document).setHidden(false);
+        verify(this.document, never()).removeXObject(any(BaseObject.class));
+    }
+
+    @Test
+    void synchronizeHiddenMetadataLogsErrorWhenRestrictionCannotBeRemoved()
+    {
+        BaseObject restriction = viewRestriction();
+        this.rightsObjects.add(restriction);
+        doReturn(false).when(this.document).removeXObject(restriction);
+        mockBlogPost(true, false);
+
+        this.updater.synchronizeHiddenMetadata(this.document);
+
+        verify(this.document).setHidden(false);
+        // The removal is retried a bounded number of times instead of looping forever.
+        verify(this.document, times(5)).removeXObject(restriction);
+        assertEquals(5, this.logCapture.size());
+        for (int i = 0; i < 5; i++) {
+            assertEquals("failed to remove visibility restriction for blog post [chocolate:Blog.HelloWorld] "
+                + "on publication", this.logCapture.getMessage(i));
+        }
     }
 }

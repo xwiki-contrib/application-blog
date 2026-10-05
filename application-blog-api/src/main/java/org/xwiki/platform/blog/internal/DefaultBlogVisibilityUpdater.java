@@ -208,11 +208,4 @@ public class DefaultBlogVisibilityUpdater implements BlogVisibilityUpdater
 
         return rightsObject;
     }
-
-    // FIXME: only exists for the unit tests :(
-    Provider<XWikiContext> getContextProvider()
-    {
-        return contextProvider;
-    }
-
 }
