@@ -19,15 +19,15 @@
  */
 package org.xwiki.blog.test.po;
 
-import org.xwiki.test.ui.po.ViewPage;
+import org.xwiki.model.reference.EntityReference;
 
 /**
  * Represents the blog home page.
- * 
+ *
  * @version $Id$
  * @since 4.2M1
  */
-public class BlogHomePage extends ViewPage
+public class BlogHomePage extends BlogPostListPage
 {
     /**
      * The create blog post form.
@@ -42,6 +42,19 @@ public class BlogHomePage extends ViewPage
     public static BlogHomePage gotoPage()
     {
         getUtil().gotoPage("Blog", "WebHome");
+        return new BlogHomePage();
+    }
+
+    /**
+     * Opens the home page of the given blog.
+     *
+     * @param blog the reference of the blog home page
+     * @return the blog home page
+     * @since 9.15.13
+     */
+    public static BlogHomePage gotoPage(EntityReference blog)
+    {
+        getUtil().gotoPage(blog);
         return new BlogHomePage();
     }
 

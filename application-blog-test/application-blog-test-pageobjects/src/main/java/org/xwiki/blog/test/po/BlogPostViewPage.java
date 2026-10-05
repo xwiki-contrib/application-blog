@@ -26,6 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.xwiki.model.reference.EntityReference;
 import org.xwiki.test.ui.po.ViewPage;
 
 /**
@@ -64,6 +65,19 @@ public class BlogPostViewPage extends ViewPage
      */
     @FindBy(xpath = "//*[@class = 'blog-entry-toolbox']//a[contains(@title, 'Edit')]")
     private WebElement editIcon;
+
+    /**
+     * Opens a blog post.
+     *
+     * @param reference the reference of the blog post page
+     * @return the blog post page
+     * @since 9.15.13
+     */
+    public static BlogPostViewPage gotoPage(EntityReference reference)
+    {
+        getUtil().gotoPage(reference);
+        return new BlogPostViewPage();
+    }
 
     @Override
     public String getContent()
