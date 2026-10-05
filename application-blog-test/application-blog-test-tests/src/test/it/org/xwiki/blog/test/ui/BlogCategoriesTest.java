@@ -19,11 +19,14 @@
  */
 package org.xwiki.blog.test.ui;
 
-import java.lang.Exception;import java.lang.String;import org.junit.Assert;
+import java.util.Arrays;
+import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.test.ui.AbstractTest;
 import org.xwiki.test.ui.SuperAdminAuthenticationRule;
 import org.xwiki.test.ui.browser.IgnoreBrowser;
@@ -51,13 +54,18 @@ public class BlogCategoriesTest extends AbstractTest
     private static final String CATEGORY_RENAME_2 =
         "A category with [[//wiki// syntax]] # || onclick=\"alert('fail');return false;\"";
 
+    /**
+     * The space where the categories of the default blog are created.
+     */
+    private static final List<String> CATEGORIES_SPACE = Arrays.asList("Blog", "Categories");
+
     @Before
     public void setUp() throws Exception
     {
         // clean up
-        getUtil().deletePage("Blog", CATEGORY);
-        getUtil().deletePage("Blog", CATEGORY_RENAME);
-        getUtil().deletePage("Blog", CATEGORY_RENAME_2);
+        getUtil().deletePage(new LocalDocumentReference(CATEGORIES_SPACE, CATEGORY));
+        getUtil().deletePage(new LocalDocumentReference(CATEGORIES_SPACE, CATEGORY_RENAME));
+        getUtil().deletePage(new LocalDocumentReference(CATEGORIES_SPACE, CATEGORY_RENAME_2));
     }
 
     @Test

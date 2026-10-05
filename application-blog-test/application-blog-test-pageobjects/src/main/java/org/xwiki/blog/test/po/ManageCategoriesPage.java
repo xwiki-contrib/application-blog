@@ -32,7 +32,7 @@ import org.xwiki.test.ui.po.BasePage;
  */
 public class ManageCategoriesPage extends BasePage
 {
-    @FindBy(xpath = "//li/span[@class='blog-add-category-label']/a")
+    @FindBy(xpath = "//span[@class='blog-add-category-label']//a")
     private WebElement addCategoryLink;
 
     @FindBy(xpath = "//form[@class='category-add-form']//input[@type='submit']")
@@ -47,6 +47,11 @@ public class ManageCategoriesPage extends BasePage
     @FindBy(xpath = "//form[@class='category-rename-form']//input[@type='submit']")
     private WebElement renameButton;
 
+    /**
+     * Open the page that manages the categories of the default blog.
+     *
+     * @return the category management page
+     */
     public static ManageCategoriesPage gotoPage()
     {
         getUtil().gotoPage("Blog", "ManageCategories", "view");
