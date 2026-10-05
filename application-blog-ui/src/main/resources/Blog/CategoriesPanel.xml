@@ -115,6 +115,7 @@
         <name>content</name>
         <number>5</number>
         <prettyName>Executed Content</prettyName>
+        <restricted>0</restricted>
         <rows>25</rows>
         <size>120</size>
         <unmodifiable>0</unmodifiable>
@@ -126,6 +127,7 @@
         <name>description</name>
         <number>2</number>
         <prettyName>Description</prettyName>
+        <restricted>0</restricted>
         <rows>5</rows>
         <size>40</size>
         <unmodifiable>0</unmodifiable>

@@ -148,6 +148,7 @@
         <name>target</name>
         <number>10</number>
         <prettyName>Target</prettyName>
+        <restricted>0</restricted>
         <rows>3</rows>
         <size>40</size>
         <unmodifiable>0</unmodifiable>
@@ -160,6 +161,7 @@
         <name>validationExpression</name>
         <number>9</number>
         <prettyName>Validation expression</prettyName>
+        <restricted>0</restricted>
         <rows>3</rows>
         <size>40</size>
         <unmodifiable>0</unmodifiable>
@@ -240,6 +242,7 @@ true
         <name>notificationTemplate</name>
         <number>2</number>
         <prettyName>Notification template</prettyName>
+        <restricted>0</restricted>
         <rows>3</rows>
         <size>40</size>
         <unmodifiable>0</unmodifiable>
@@ -276,6 +279,7 @@ true
         <name>emailSubject</name>
         <number>4</number>
         <prettyName>Email subject template</prettyName>
+        <restricted>0</restricted>
         <rows>3</rows>
         <size>40</size>
         <unmodifiable>0</unmodifiable>
@@ -297,6 +301,7 @@ true
         <name>htmlTemplate</name>
         <number>2</number>
         <prettyName>HTML template</prettyName>
+        <restricted>0</restricted>
         <rows>3</rows>
         <size>40</size>
         <unmodifiable>0</unmodifiable>
@@ -309,6 +314,7 @@ true
         <name>plainTextTemplate</name>
         <number>3</number>
         <prettyName>Plain text template</prettyName>
+        <restricted>0</restricted>
         <rows>3</rows>
         <size>40</size>
         <unmodifiable>0</unmodifiable>

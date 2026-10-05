@@ -112,6 +112,7 @@
         <name>code</name>
         <number>2</number>
         <prettyName>Code</prettyName>
+        <restricted>0</restricted>
         <rows>20</rows>
         <size>50</size>
         <unmodifiable>0</unmodifiable>
@@ -347,6 +348,7 @@ require(['jquery',"$services.webjars.url('jquery-ui', 'jquery-ui.js')",'select2'
         <name>code</name>
         <number>2</number>
         <prettyName>Code</prettyName>
+        <restricted>0</restricted>
         <rows>20</rows>
         <size>50</size>
         <unmodifiable>0</unmodifiable>
@@ -504,6 +506,7 @@ XWiki.widgets.pinnedPostsModalPopup = Class.create(XWiki.widgets.ModalPopup, {
         <name>code</name>
         <number>2</number>
         <prettyName>Code</prettyName>
+        <restricted>0</restricted>
         <rows>20</rows>
         <size>50</size>
         <unmodifiable>0</unmodifiable>

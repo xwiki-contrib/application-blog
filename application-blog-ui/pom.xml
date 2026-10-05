@@ -85,6 +85,21 @@
       <groupId>org.xwiki.contrib</groupId>
       <artifactId>macro-job</artifactId>
       <version>2.2.2</version>
+      <!-- Job Macro 2.2.2 targets XWiki 12.10.3. Use the platform dependencies from this application's parent. -->
+      <exclusions>
+        <exclusion>
+          <groupId>org.xwiki.commons</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.xwiki.rendering</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.xwiki.platform</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <!-- Select2 WebJar used by the cards blog post layout -->
     <dependency>

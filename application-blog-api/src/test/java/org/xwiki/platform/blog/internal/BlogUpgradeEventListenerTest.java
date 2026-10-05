@@ -35,7 +35,7 @@ import org.xwiki.wiki.descriptor.WikiDescriptorManager;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 /**
@@ -76,10 +76,10 @@ public class BlogUpgradeEventListenerTest
         if (executedExpected) {
             verify(blogTitleMigration).execute(eq(new WikiReference("chocolate")));
         } else {
-            verifyZeroInteractions(blogTitleMigration);
+            verifyNoInteractions(blogTitleMigration);
         }
         // The visibility migration must never run for a contrib-to-contrib upgrade.
-        verifyZeroInteractions(blogVisibilityMigration);
+        verifyNoInteractions(blogVisibilityMigration);
     }
 
     @Test
@@ -117,7 +117,7 @@ public class BlogUpgradeEventListenerTest
         if (executedExpected) {
             verify(blogVisibilityMigration).execute(eq(new WikiReference("chocolate")));
         } else {
-            verifyZeroInteractions(blogVisibilityMigration);
+            verifyNoInteractions(blogVisibilityMigration);
         }
     }
 
@@ -166,7 +166,7 @@ public class BlogUpgradeEventListenerTest
         mocker.getComponentUnderTest().onEvent(event, null, Arrays.asList(installedExtension1));
 
         // Verify
-        verifyZeroInteractions(blogVisibilityMigration);
+        verifyNoInteractions(blogVisibilityMigration);
     }
 
     @Test
