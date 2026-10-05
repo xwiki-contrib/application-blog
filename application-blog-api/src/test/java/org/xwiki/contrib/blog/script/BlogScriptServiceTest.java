@@ -47,6 +47,7 @@ import org.xwiki.test.junit5.mockito.InjectComponentManager;
 import org.xwiki.test.junit5.mockito.InjectMockComponents;
 import org.xwiki.test.junit5.mockito.MockComponent;
 import org.xwiki.test.mockito.MockitoComponentManager;
+import org.xwiki.xml.html.HTMLElementSanitizer;
 
 import com.xpn.xwiki.XWiki;
 import com.xpn.xwiki.XWikiContext;
@@ -115,6 +116,12 @@ class BlogScriptServiceTest
     @MockComponent
     private EntityResourceActionLister entityResourceActionLister;
 
+    /**
+     * Asked by the HTML renderers which elements and attributes they may output.
+     */
+    @MockComponent
+    private HTMLElementSanitizer htmlElementSanitizer;
+
     @InjectComponentManager
     private MockitoComponentManager componentManager;
 
@@ -138,6 +145,9 @@ class BlogScriptServiceTest
         when(this.contextProvider.get()).thenReturn(this.xwikiContext);
         Utils.setComponentManager(this.componentManager);
         this.componentManager.registerComponent(ComponentManager.class, "context", this.componentManager);
+        // These tests check how the blog builds the content, not how HTML is sanitized, so allow everything.
+        when(this.htmlElementSanitizer.isElementAllowed(any())).thenReturn(true);
+        when(this.htmlElementSanitizer.isAttributeAllowed(any(), any(), any())).thenReturn(true);
 
         XWiki mockXWiki = mock(XWiki.class);
         when(this.xwikiContext.getWiki()).thenReturn(mockXWiki);

@@ -137,7 +137,7 @@ public class BlogPostInlinePage extends InlinePage
                 "//input[@name = 'Blog.BlogPostClass_0_category' and @value = '" + categoryReference + "']";
             for (WebElement category : categoryList.findElements(By.xpath(categoryXPath))) {
                 if (!category.isSelected()) {
-                    category.click();
+                    clickCheckBox(category);
                 }
             }
         }
@@ -179,7 +179,7 @@ public class BlogPostInlinePage extends InlinePage
     {
         for (WebElement publishCheckBox : getDriver().findElements(By.id("Blog.BlogPostClass_0_published"))) {
             if (publishCheckBox.isSelected() != published) {
-                publishCheckBox.click();
+                clickCheckBox(publishCheckBox);
             }
         }
     }
@@ -200,8 +200,20 @@ public class BlogPostInlinePage extends InlinePage
     public void setHidden(boolean hidden)
     {
         if (hiddenCheckBox.isSelected() != hidden) {
-            hiddenCheckBox.click();
+            clickCheckBox(hiddenCheckBox);
         }
+    }
+
+    /**
+     * Clicks a check box after scrolling it to the middle of the window, so that it isn't covered by the bar of form
+     * buttons that sticks to the bottom of the window.
+     *
+     * @param checkBox the check box to click
+     */
+    private void clickCheckBox(WebElement checkBox)
+    {
+        getDriver().executeScript("arguments[0].scrollIntoView({block: 'center'});", checkBox);
+        checkBox.click();
     }
 
     @Override

@@ -19,6 +19,7 @@
  */
 package org.xwiki.blog.test.po;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.xwiki.test.ui.po.ViewPage;
@@ -60,7 +61,9 @@ public class BlogManagementPage extends ViewPage
     public void setTitle(String title)
     {
         this.titleInput.clear();
-        this.titleInput.sendKeys(title);
+        // Leave the field so that its change event, which computes the page name from the title, is fired now rather
+        // than when another field takes the focus.
+        this.titleInput.sendKeys(title, Keys.TAB);
     }
 
     /**
@@ -68,6 +71,8 @@ public class BlogManagementPage extends ViewPage
      */
     public void setName(String name)
     {
+        // The name field is disabled while the name is computed from the title.
+        getDriver().waitUntilCondition(driver -> this.nameInput.isEnabled());
         this.nameInput.clear();
         this.nameInput.sendKeys(name);
     }
