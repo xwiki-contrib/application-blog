@@ -19,6 +19,7 @@
  */
 package org.xwiki.blog.test.ui;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import org.xwiki.blog.test.po.BlogPostViewPage;
 import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.test.ui.AbstractTest;
 import org.xwiki.test.ui.SuperAdminAuthenticationRule;
+import org.xwiki.test.ui.po.RenamePage;
 
 /**
  * Verify that a new blog can be created and that its posts are kept separate from the posts of the default blog.
@@ -102,5 +104,32 @@ public class BlogManagementTest extends AbstractTest
         editPage.setCategories(Collections.singletonList(categoriesLocation + ".News"));
         BlogPostViewPage post = editPage.clickSaveAndView();
         Assert.assertEquals(Collections.singletonList("News"), post.getCategories());
+    }
+
+    @Test
+    public void moveBlogAndPublishPostInIt()
+    {
+        String blogName = getTestClassName() + "Moved";
+        String newParent = getTestClassName() + "Parent";
+        getUtil().deletePage(new LocalDocumentReference(blogName, "WebHome"), true);
+        getUtil().deletePage(new LocalDocumentReference(newParent, "WebHome"), true);
+        getUtil().createPage(new LocalDocumentReference(newParent, "WebHome"), "", newParent);
+
+        BlogManagementPage managementPage = BlogManagementPage.gotoPage();
+        managementPage.setTitle(blogName);
+        managementPage.setName(blogName);
+        RenamePage renamePage = managementPage.clickCreate().rename();
+        renamePage.getDocumentPicker().setParent(newParent);
+        renamePage.clickRenameButton().waitUntilFinished();
+
+        // The posts of the moved blog are created and listed at its new location.
+        LocalDocumentReference movedBlog = new LocalDocumentReference(Arrays.asList(newParent, blogName), "WebHome");
+        BlogHomePage blogHomePage = BlogHomePage.gotoPage(movedBlog);
+        blogHomePage.getCreateBlogPostPane().setTitle(POST_TITLE);
+        BlogPostInlinePage editPage = blogHomePage.getCreateBlogPostPane().clickCreateButton();
+        editPage.setPublished(true);
+        BlogPostViewPage post = editPage.clickSaveAndView();
+        Assert.assertEquals(newParent + "." + blogName, post.getMetaDataValue("space"));
+        Assert.assertEquals(Collections.singletonList(POST_TITLE), BlogHomePage.gotoPage(movedBlog).getPostTitles());
     }
 }
