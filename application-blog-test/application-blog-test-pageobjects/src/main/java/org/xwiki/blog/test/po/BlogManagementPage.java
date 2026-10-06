@@ -38,6 +38,12 @@ public class BlogManagementPage extends ViewPage
     @FindBy(id = "blogLocationName")
     private WebElement nameInput;
 
+    @FindBy(id = "blogCategoriesLocationParentReference")
+    private WebElement categoriesParentInput;
+
+    @FindBy(id = "blogCategoriesLocationName")
+    private WebElement categoriesNameInput;
+
     @FindBy(xpath = "//form[@id = 'newBlog']//input[@name = 'createDefaultCategories']")
     private WebElement createDefaultCategoriesCheckBox;
 
@@ -78,6 +84,21 @@ public class BlogManagementPage extends ViewPage
     }
 
     /**
+     * Sets where the categories of the new blog are created, which is under the new blog by default.
+     *
+     * @param parent the parent of the categories page, e.g. {@code Path.To}
+     * @param name the name of the categories page
+     * @since 9.15.13
+     */
+    public void setCategoriesLocation(String parent, String name)
+    {
+        this.categoriesParentInput.clear();
+        this.categoriesParentInput.sendKeys(parent);
+        this.categoriesNameInput.clear();
+        this.categoriesNameInput.sendKeys(name);
+    }
+
+    /**
      * @param createDefaultCategories whether to create the default categories (News, Other, Personal) in the new blog
      */
     public void setCreateDefaultCategories(boolean createDefaultCategories)
@@ -94,7 +115,10 @@ public class BlogManagementPage extends ViewPage
      */
     public BlogHomePage clickCreate()
     {
+        // The form is submitted only after the location previews are updated, so the click may not load the page.
+        getDriver().addPageNotYetReloadedMarker();
         this.createButton.click();
+        getDriver().waitUntilPageIsReloaded();
         return new BlogHomePage();
     }
 }

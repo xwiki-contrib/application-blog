@@ -88,6 +88,12 @@
           #set ($discard = $blogObj.set('displayType', 'paginated'))
           #set ($discard = $blogObj.set('itemsPerPage', 10))
           #set ($categoriesLocation = "${blogDocName}.Categories")
+          #if ("$!request.categoriesName" != '')
+            #set ($categoriesLocation = $request.categoriesName)
+            #if ("$!request.categoriesParent" != '')
+              #set ($categoriesLocation = "${request.categoriesParent}.${categoriesLocation}")
+            #end
+          #end
           #set ($postsLocation = "${blogDocName}")
           #set ($discard = $blogObj.set('categoriesLocation', $categoriesLocation))
           #set ($discard = $blogObj.set('postsLocation', $postsLocation))
@@ -167,17 +173,27 @@
 &lt;div&gt;
   &lt;input type="hidden" name="form_token" value="$!{services.csrf.getToken()}" /&gt;
   &lt;input type="hidden" name="createBlog" value="1"/&gt;
-  &lt;dl&gt;
-    &lt;dt&gt;
-      &lt;label for="blogSpace"&gt;$services.localization.render('blog.manage.categories_location')&lt;/label&gt;
-      &lt;span class="xHint"&gt;$services.localization.render('blog.manage.categoriesLocationPreview.hint')&lt;/span&gt;
-    &lt;/dt&gt;
-    &lt;dd&gt;&lt;div id="catLocation"&gt;
-      &lt;div class="breadcrumb-container"&gt;
-        &lt;ol id="blogCategoriesLocation" class="breadcrumb"&gt;&lt;/ol&gt;
-      &lt;/div&gt;
-    &lt;/dd&gt;
-  &lt;/dl&gt;
+  #locationPicker({
+    'id': 'blogCategoriesLocation',
+    'preview': {
+      'label': 'blog.manage.categories_location',
+      'hint': 'blog.manage.categoriesLocationPreview.hint'
+    },
+    'parent': {
+      'label': 'core.create.spaceReference.label',
+      'hint': 'core.create.spaceReference.hint',
+      'name': 'categoriesParent',
+      'reference': $doc.documentReference.parent.parent,
+      'placeholder': 'core.create.spaceReference.placeholder'
+    },
+    'name': {
+      'label': 'core.create.name.label',
+      'hint': 'core.create.name.hint',
+      'name': 'categoriesName',
+      'value': 'Categories',
+      'placeholder': 'core.create.name.placeholder'
+    }
+  })
   &lt;dl&gt;
     &lt;dt&gt;&lt;label for="blogSpace"&gt;$services.localization.render('blog.manage.enable_panels')&lt;/label&gt;
       &lt;input type="checkbox" name="enablePanels" value="1" checked="checked" /&gt;
@@ -569,21 +585,21 @@
       <cache>long</cache>
     </property>
     <property>
-      <code>require(['jquery'], function($){
-  function updateCategoriesLocation(){
-    var catLocation = $('#blogCategoriesLocation');
-    catLocation.html($('#newBlog ol.breadcrumb:first').html());
-    if($('#newBlog ol.breadcrumb:first li:last').html() == ''){
-      $('li:last', catLocation).remove();
-    }
-    else
-    {
-      $('li:last', catLocation).html('&lt;a href="javascript:;"&gt;' + $('li:last', catLocation).html() + '&lt;/a&gt;');
-    }
-    catLocation.append('&lt;li class="active"&gt;Categories&lt;/li&gt;');
-  }
-  $(document).on('DOMSubtreeModified', '#newBlog ol.breadcrumb:first', function() {
-    updateCategoriesLocation();
+      <code>require(['jquery'], function($) {
+  // Create the categories under the new blog, unless their parent is changed.
+  $(function() {
+    var blogParent = $('#blogLocationParentReference');
+    var blogName = $('#blogLocationName');
+    var categoriesParent = $('#blogCategoriesLocationParentReference');
+    var categoriesParentChanged = false;
+    categoriesParent.on('input xwiki:suggest:selected', function() {
+      categoriesParentChanged = true;
+    });
+    blogParent.add(blogName).on('input change xwiki:suggest:selected', function() {
+      if (!categoriesParentChanged) {
+        categoriesParent.val([blogParent.val(), blogName.val()].filter(Boolean).join('.')).trigger('change');
+      }
+    });
   });
 });</code>
     </property>

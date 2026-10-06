@@ -78,4 +78,29 @@ public class BlogManagementTest extends AbstractTest
         titles = BlogHomePage.gotoPage().getPostTitles();
         Assert.assertFalse(titles.toString(), titles.contains(POST_TITLE));
     }
+
+    @Test
+    public void createBlogWithCategoriesInAnotherLocation()
+    {
+        String blogName = getTestClassName() + "OtherCategories";
+        String categoriesParent = getTestClassName() + "Categories";
+        String categoriesLocation = categoriesParent + ".Categories";
+        LocalDocumentReference blog = new LocalDocumentReference(blogName, "WebHome");
+        getUtil().deletePage(blog, true);
+        getUtil().deletePage(new LocalDocumentReference(categoriesParent, "WebHome"), true);
+
+        BlogManagementPage managementPage = BlogManagementPage.gotoPage();
+        managementPage.setTitle(blogName);
+        managementPage.setName(blogName);
+        managementPage.setCategoriesLocation(categoriesParent, "Categories");
+        managementPage.setCreateDefaultCategories(true);
+        BlogHomePage blogHomePage = managementPage.clickCreate();
+
+        // The posts of the new blog are categorized with the default categories created in the chosen location.
+        blogHomePage.getCreateBlogPostPane().setTitle(POST_TITLE);
+        BlogPostInlinePage editPage = blogHomePage.getCreateBlogPostPane().clickCreateButton();
+        editPage.setCategories(Collections.singletonList(categoriesLocation + ".News"));
+        BlogPostViewPage post = editPage.clickSaveAndView();
+        Assert.assertEquals(Collections.singletonList("News"), post.getCategories());
+    }
 }
