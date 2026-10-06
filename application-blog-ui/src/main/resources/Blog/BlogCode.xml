@@ -906,10 +906,10 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
     (% class="pagingLinks" %)(((
     #getRequestedWeek($weekDate)
     $weekDate.addWeeks(-1)##
-    (% class="prevPage" %)**[[« {{translation key='blog.code.previousweek'/}}&gt;&gt;$doc.documentReference.name||queryString="year=$weekDate.weekyear&amp;week=$weekDate.weekOfWeekyear" class="button"]]**(%%)
+    (% class="prevPage" %)**[[« {{translation key='blog.code.previousweek'/}}&gt;&gt;$services.rendering.escape($doc.documentReference.name, $doc.syntax)||queryString="year=$weekDate.weekyear&amp;week=$weekDate.weekOfWeekyear" class="button"]]**(%%)
     #sep()
     $weekDate.addWeeks(2)## 2 because we already subtracted 1 above
-    (% class="nextPage" %)**[[{{translation key='blog.code.nextweek'/}} »&gt;&gt;$doc.documentReference.name||queryString="year=$weekDate.weekyear&amp;week=$weekDate.weekOfWeekyear" class="button"]]**(%%)
+    (% class="nextPage" %)**[[{{translation key='blog.code.nextweek'/}} »&gt;&gt;$services.rendering.escape($doc.documentReference.name, $doc.syntax)||queryString="year=$weekDate.weekyear&amp;week=$weekDate.weekOfWeekyear" class="button"]]**(%%)
     )))
   #elseif($displayType == 'monthly')
     (% class="pagingLinks" %)(((
