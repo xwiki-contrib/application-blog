@@ -194,7 +194,7 @@ XWiki.Blog = {
       depth++;
       tmpParent = tmpParent.up("li");
     }
-    option.appendChild(document.createTextNode("&amp;nbsp;".unescapeHTML().times(2*depth) + name)); // TODO: Indent
+    option.appendChild(document.createTextNode("\u00a0".repeat(2 * depth) + name)); // TODO: Indent
     var selectBox = $("blog_category_selectBox");
     for (var i = 0; i &lt; children.size(); ++i) {
       if (children[i].down("label").id &gt; myId) {
