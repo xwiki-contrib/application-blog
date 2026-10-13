@@ -380,7 +380,7 @@
 ## Don't indent!
 #set($result = "$!categoryDoc.getObject(${blogCategoryClassname}).getProperty('name').value.trim()")##
 #if($result == '')
-#set($result = $categoryDoc.name)
+#set($result = $categoryDoc.documentReference.name)
 #end
 ## Escape wiki syntax, if any.
 #set ($result = "$services.rendering.escape($result, $xwiki.currentContentSyntaxId)")
