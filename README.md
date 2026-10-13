@@ -9,9 +9,9 @@ Create and manage blog posts.
 * [Development Practices](http://dev.xwiki.org)
 * Minimal XWiki version supported: XWiki 14.10.20
 * License: LGPL 2.1
-* Translations: [![Translation status](https://l10n.xwiki.org/widgets/xwiki-contrib/-/blog-translations/svg-badge.svg)](https://l10n.xwiki.org/projects/xwiki-contrib/blog-translations/)
+* Translations: [![Translation status](https://l10n.xwiki.org/widget/xwiki-contrib/blog-translations/svg-badge.svg)](https://l10n.xwiki.org/projects/xwiki-contrib/blog-translations/)
 * Sonar Dashboard: N/A
-* Continuous Integration Status: [![Build Status](http://ci.xwiki.org/job/XWiki%20Contrib/job/application-blog/job/master/badge/icon)](http://ci.xwiki.org/job/XWiki%20Contrib/job/application-blog/job/master/)
+* Continuous Integration Status: [![Build Status](https://ci.xwiki.org/job/XWiki%20Contrib/job/application-blog/job/master/badge/icon)](https://ci.xwiki.org/job/XWiki%20Contrib/job/application-blog/job/master/)
 
 # Release
 
