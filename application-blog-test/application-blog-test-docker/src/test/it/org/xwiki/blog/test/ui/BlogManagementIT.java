@@ -170,8 +170,8 @@ class BlogManagementIT
     {
         setup.loginAsSuperAdmin();
         BlogTestData data = new BlogTestData(setup);
-        // Once the categories of the default blog have been migrated to Blog.Categories, the legacy category pages of
-        // the Blog space are gone (they are moved onto the new ones, see BLOG-275).
+        // A legacy category page of the Blog space can be gone: deleted by an admin, or moved to Blog.Categories by
+        // the category migration when the new page was missing.
         DocumentReference legacyCategory = new DocumentReference(WIKI, "Blog", "Other");
         if (data.exists(legacyCategory)) {
             setup.rest().delete(legacyCategory);
