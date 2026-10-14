@@ -137,4 +137,45 @@ class BlogMoveListenerTest
 
         verify(this.xwiki, never()).saveDocument(any(), any());
     }
+
+    @Test
+    void onEventIgnoresARenameInsideTheSameSpace() throws Exception
+    {
+        DocumentReference renamedBlogReference = new DocumentReference("wiki", "MyBlog", "OtherName");
+        when(this.xwiki.getDocument(renamedBlogReference, this.context)).thenReturn(this.blogDoc);
+        when(this.blogDoc.getXObject(new LocalDocumentReference("Blog", "BlogClass"))).thenReturn(this.blogObj);
+        when(this.blogObj.getStringValue(POSTS_LOCATION)).thenReturn("MyBlog");
+        when(this.blogObj.getStringValue(CATEGORIES_LOCATION)).thenReturn("MyBlog.Categories");
+
+        this.listener.onEvent(new DocumentRenamedEvent(OLD_BLOG_REFERENCE, renamedBlogReference), null, null);
+
+        verify(this.blogObj, never()).setStringValue(anyString(), anyString());
+        verify(this.xwiki, never()).saveDocument(any(), any());
+    }
+
+    @Test
+    void onEventIgnoresTheCategoriesSpaceMovedAlone() throws Exception
+    {
+        DocumentReference oldCategoriesReference =
+            new DocumentReference("wiki", Arrays.asList("MyBlog", "Categories"), "WebHome");
+        DocumentReference newCategoriesReference =
+            new DocumentReference("wiki", Arrays.asList("TestPage", "Categories"), "WebHome");
+        when(this.localSerializer.serialize(oldCategoriesReference.getLastSpaceReference()))
+            .thenReturn("MyBlog.Categories");
+        when(this.localSerializer.serialize(newCategoriesReference.getLastSpaceReference()))
+            .thenReturn("TestPage.Categories");
+        when(this.xwiki.getDocument(newCategoriesReference, this.context)).thenReturn(mock(XWikiDocument.class));
+        // The blog keeps its categories under its space.
+        when(this.xwiki.getDocument(OLD_BLOG_REFERENCE, this.context)).thenReturn(this.blogDoc);
+        when(this.blogDoc.getXObject(new LocalDocumentReference("Blog", "BlogClass"))).thenReturn(this.blogObj);
+        when(this.blogObj.getStringValue(CATEGORIES_LOCATION)).thenReturn("MyBlog.Categories");
+
+        this.listener.onEvent(new DocumentRenamedEvent(oldCategoriesReference, newCategoriesReference), null, null);
+
+        // The blog keeps pointing to the old location of its categories, so it loses them and creates the new ones
+        // there. Its categories location should follow the move: BLOG-277 "Moving the categories of a blog alone
+        // doesn't update the blog's categories location".
+        verify(this.blogObj, never()).setStringValue(anyString(), anyString());
+        verify(this.xwiki, never()).saveDocument(any(), any());
+    }
 }
