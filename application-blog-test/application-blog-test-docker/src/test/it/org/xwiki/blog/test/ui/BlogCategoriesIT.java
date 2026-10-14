@@ -19,31 +19,23 @@
  */
 package org.xwiki.blog.test.ui;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.xwiki.model.reference.LocalDocumentReference;
-import org.xwiki.test.ui.AbstractTest;
-import org.xwiki.test.ui.SuperAdminAuthenticationRule;
-import org.xwiki.test.ui.browser.IgnoreBrowser;
-import org.xwiki.test.ui.browser.IgnoreBrowsers;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.xwiki.blog.test.po.ManageCategoriesPage;
+import org.xwiki.test.docker.junit5.UITest;
+import org.xwiki.test.ui.TestUtils;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test Blog categories. Tested features: add, rename, delete.
- * 
+ *
  * @version $Id$
- * @since 2.3M2
  */
-public class BlogCategoriesTest extends AbstractTest
+@UITest
+class BlogCategoriesIT
 {
-    @Rule
-    public SuperAdminAuthenticationRule authenticationRule = new SuperAdminAuthenticationRule(getUtil());
-
     /**
      * We make sure to have spaces and special chars to ensure categories can be named with any char.
      */
@@ -54,27 +46,12 @@ public class BlogCategoriesTest extends AbstractTest
     private static final String CATEGORY_RENAME_2 =
         "A category with [[//wiki// syntax]] # || onclick=\"alert('fail');return false;\"";
 
-    /**
-     * The space where the categories of the default blog are created.
-     */
-    private static final List<String> CATEGORIES_SPACE = Arrays.asList("Blog", "Categories");
-
-    @Before
-    public void setUp() throws Exception
-    {
-        // clean up
-        getUtil().deletePage(new LocalDocumentReference(CATEGORIES_SPACE, CATEGORY));
-        getUtil().deletePage(new LocalDocumentReference(CATEGORIES_SPACE, CATEGORY_RENAME));
-        getUtil().deletePage(new LocalDocumentReference(CATEGORIES_SPACE, CATEGORY_RENAME_2));
-    }
-
     @Test
-    @IgnoreBrowsers({
-    @IgnoreBrowser(value = "internet.*", version = "8\\.*", reason="See http://jira.xwiki.org/browse/XE-1146"),
-    @IgnoreBrowser(value = "internet.*", version = "9\\.*", reason="See http://jira.xwiki.org/browse/XE-1177")
-    })
-    public void testCategoryAddRenameRemove()
+    @Order(1)
+    void categoryAddRenameRemove(TestUtils setup)
     {
+        setup.loginAsSuperAdmin();
+
         categoryAdd(CATEGORY);
         categoryRename(CATEGORY, CATEGORY_RENAME);
         categoryRename(CATEGORY_RENAME, CATEGORY_RENAME_2);
@@ -82,48 +59,48 @@ public class BlogCategoriesTest extends AbstractTest
     }
 
     /**
-     * Helper method that adds a new category and checks for success
-     * 
-     * @param name
+     * Adds a new category and checks for success.
+     *
+     * @param name the name of the category to add
      */
     private void categoryAdd(String name)
     {
         ManageCategoriesPage categoriesPage = ManageCategoriesPage.gotoPage();
-        Assert.assertFalse(categoriesPage.isCategoryPresent(name));
+        assertFalse(categoriesPage.isCategoryPresent(name));
 
         categoriesPage.clickAddCategory();
         categoriesPage.addCategory(name);
-        Assert.assertTrue(categoriesPage.isCategoryPresent(name));
+        assertTrue(categoriesPage.isCategoryPresent(name));
     }
 
     /**
-     * Helper method that renames a category and checks for success
-     * 
+     * Renames a category and checks for success.
+     *
      * @param fromName source name, must exist
      * @param toName target name, must not exist
      */
     private void categoryRename(String fromName, String toName)
     {
         ManageCategoriesPage categoriesPage = ManageCategoriesPage.gotoPage();
-        Assert.assertTrue(categoriesPage.isCategoryPresent(fromName));
-        Assert.assertFalse(categoriesPage.isCategoryPresent(toName));
+        assertTrue(categoriesPage.isCategoryPresent(fromName));
+        assertFalse(categoriesPage.isCategoryPresent(toName));
 
         categoriesPage.renameCategory(fromName, toName);
-        Assert.assertFalse(categoriesPage.isCategoryPresent(fromName));
-        Assert.assertTrue(categoriesPage.isCategoryPresent(toName));
+        assertFalse(categoriesPage.isCategoryPresent(fromName));
+        assertTrue(categoriesPage.isCategoryPresent(toName));
     }
 
     /**
-     * Helper method that removes a category and checks for success
-     * 
+     * Removes a category and checks for success.
+     *
      * @param name category name, must exist
      */
     private void categoryRemove(String name)
     {
         ManageCategoriesPage categoriesPage = ManageCategoriesPage.gotoPage();
-        Assert.assertTrue(categoriesPage.isCategoryPresent(name));
+        assertTrue(categoriesPage.isCategoryPresent(name));
 
         categoriesPage.deleteCategory(name);
-        Assert.assertFalse(categoriesPage.isCategoryPresent(name));
+        assertFalse(categoriesPage.isCategoryPresent(name));
     }
 }

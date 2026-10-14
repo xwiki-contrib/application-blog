@@ -20,10 +20,15 @@
 package org.xwiki.blog.test.ui;
 
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.junit.Assert;
-import org.junit.Test;
-import org.xwiki.test.ui.AbstractTest;
-import org.xwiki.test.ui.po.ViewPage;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.xwiki.test.docker.junit5.TestReference;
+import org.xwiki.test.docker.junit5.UITest;
+import org.xwiki.test.ui.TestUtils;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
 
 /**
  * Verify that the title of a {@code Blog.BlogClass} object is displayed as data and never evaluated as Velocity, so
@@ -34,9 +39,9 @@ import org.xwiki.test.ui.po.ViewPage;
  * programming-right APIs stored in the attacker-controlled title property.
  *
  * @version $Id$
- * @since 9.15.11
  */
-public class BlogTitleSecurityTest extends AbstractTest
+@UITest
+class BlogTitleSecurityIT
 {
     private static final String BLOG_CLASS = "Blog.BlogClass";
 
@@ -54,44 +59,37 @@ public class BlogTitleSecurityTest extends AbstractTest
     private static final String MALICIOUS_TITLE = MARKER + " " + PROGRAMMING_RIGHTS_PROBE;
 
     @Test
-    public void blogTitleIsDisplayedAsDataAndNotEvaluated()
+    @Order(1)
+    void blogTitleIsDisplayedAsDataAndNotEvaluated(TestUtils setup, TestReference testReference)
     {
-        String space = getTestClassName();
-        String page = getTestMethodName();
-        String user = space + "_" + page;
-
-        // Clean up any left-over from a previous run.
-        getUtil().loginAsSuperAdmin();
-        getUtil().deletePage(space, page);
-        getUtil().deletePage("XWiki", user);
+        String user = testReference.getLastSpaceReference().getParent().getName() + "_"
+            + testReference.getLastSpaceReference().getName();
 
         // Act as a plain registered user with only EDIT rights (no SCRIPT, PROGRAM or ADMIN right), both in the
         // browser and for the REST calls below, so that the created page and object are authored by that user.
-        getUtil().createUserAndLogin(user, PASSWORD);
+        setup.loginAsSuperAdmin();
+        setup.createUserAndLogin(user, PASSWORD);
         UsernamePasswordCredentials previousCredentials =
-            getUtil().setDefaultCredentials(new UsernamePasswordCredentials(user, PASSWORD));
+            setup.setDefaultCredentials(new UsernamePasswordCredentials(user, PASSWORD));
         try {
-            getUtil().createPage(space, page, "Blog title security check.", "Initial title");
+            setup.createPage(testReference, "Blog title security check.", "Initial title");
             // Adding a Blog.BlogClass object makes the page render through Blog.BlogSheet (class-sheet binding).
-            getUtil().addObject(space, page, BLOG_CLASS,
+            setup.addObject(testReference, BLOG_CLASS,
                 "title", MALICIOUS_TITLE,
                 "itemsPerPage", "10",
                 "displayType", "paginated");
         } finally {
-            getUtil().setDefaultCredentials(previousCredentials);
+            setup.setDefaultCredentials(previousCredentials);
         }
 
         // View the page as that same unprivileged user and read the rendered document title.
-        ViewPage viewPage = getUtil().gotoPage(space, page);
-        String displayedTitle = viewPage.getDocumentTitle();
+        String displayedTitle = setup.gotoPage(testReference).getDocumentTitle();
 
         // The stored Velocity must appear verbatim: it is displayed, not executed.
-        Assert.assertTrue(
-            "The blog title must be displayed as literal data but was: [" + displayedTitle + "]",
-            displayedTitle.contains(PROGRAMMING_RIGHTS_PROBE));
+        assertThat("The blog title must be displayed as literal data", displayedTitle,
+            containsString(PROGRAMMING_RIGHTS_PROBE));
         // And it must never have been evaluated with the sheet's programming rights.
-        Assert.assertFalse(
-            "The blog title was evaluated as Velocity, leaking programming rights: [" + displayedTitle + "]",
-            displayedTitle.contains(MARKER + " true"));
+        assertThat("The blog title was evaluated as Velocity, leaking programming rights", displayedTitle,
+            not(containsString(MARKER + " true")));
     }
 }

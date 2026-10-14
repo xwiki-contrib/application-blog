@@ -19,6 +19,7 @@
  */
 package org.xwiki.blog.test.po;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -78,6 +79,7 @@ public class BlogManagementPage extends ViewPage
     public void setName(String name)
     {
         // The name field is disabled while the name is computed from the title.
+        openLocationEdit(this.nameInput);
         getDriver().waitUntilCondition(driver -> this.nameInput.isEnabled());
         this.nameInput.clear();
         this.nameInput.sendKeys(name);
@@ -92,6 +94,7 @@ public class BlogManagementPage extends ViewPage
      */
     public void setCategoriesLocation(String parent, String name)
     {
+        openLocationEdit(this.categoriesParentInput);
         this.categoriesParentInput.clear();
         this.categoriesParentInput.sendKeys(parent);
         this.categoriesNameInput.clear();
@@ -120,5 +123,21 @@ public class BlogManagementPage extends ViewPage
         this.createButton.click();
         getDriver().waitUntilPageIsReloaded();
         return new BlogHomePage();
+    }
+
+    /**
+     * The fields of a location picker are hidden behind its "edit" button when the document tree is available (it is
+     * not in every XWiki distribution), so show them if needed.
+     *
+     * @param field a field of the location picker
+     */
+    private void openLocationEdit(WebElement field)
+    {
+        if (!field.isDisplayed()) {
+            field.findElement(By.xpath("./ancestor::div[contains(@class, 'location-edit')]"
+                + "/preceding-sibling::div[contains(@class, 'breadcrumb-container')]"
+                + "//a[contains(@class, 'location-action-edit')]")).click();
+            getDriver().waitUntilCondition(driver -> field.isDisplayed());
+        }
     }
 }
