@@ -125,4 +125,13 @@ public class BlogPostViewPage extends ViewPage
         editIcon.click();
         return new BlogPostInlinePage();
     }
+
+    /**
+     * @return the "Blog Categories" panel of the page
+     * @since 9.15.15
+     */
+    public CategoriesPanel getCategoriesPanel()
+    {
+        return new CategoriesPanel();
+    }
 }

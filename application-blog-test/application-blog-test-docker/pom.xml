@@ -64,6 +64,15 @@
       <version>${project.version}</version>
       <type>xar</type>
     </dependency>
+    <!-- Defines the XWiki.DocumentSheetBinding class, through which the categories home page of a blog created by
+         Blog.Management is displayed with Blog.CategoriesSheet. Every XWiki distribution has it, but not the minimal
+         instance of the tests, where the binding of such a page would be lost. -->
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-sheet-ui</artifactId>
+      <version>${platform.version}</version>
+      <type>xar</type>
+    </dependency>
     <!-- Test dependencies -->
     <dependency>
       <groupId>org.xwiki.platform</groupId>

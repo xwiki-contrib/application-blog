@@ -39,6 +39,9 @@ public class BlogManagementPage extends ViewPage
     @FindBy(id = "blogLocationName")
     private WebElement nameInput;
 
+    @FindBy(id = "blogLocationParentReference")
+    private WebElement parentInput;
+
     @FindBy(id = "blogCategoriesLocationParentReference")
     private WebElement categoriesParentInput;
 
@@ -74,7 +77,18 @@ public class BlogManagementPage extends ViewPage
     }
 
     /**
-     * @param name the name of the page of the new blog, created at the top level of the wiki
+     * @param parent the parent of the page of the new blog, e.g. {@code Path.To}; the top level of the wiki by default
+     * @since 9.15.15
+     */
+    public void setParent(String parent)
+    {
+        openLocationEdit(this.parentInput);
+        this.parentInput.clear();
+        this.parentInput.sendKeys(parent);
+    }
+
+    /**
+     * @param name the name of the page of the new blog, created under the parent set with {@link #setParent(String)}
      */
     public void setName(String name)
     {
@@ -88,7 +102,7 @@ public class BlogManagementPage extends ViewPage
     /**
      * Sets where the categories of the new blog are created, which is under the new blog by default.
      *
-     * @param parent the parent of the categories page, e.g. {@code Path.To}
+     * @param parent the parent of the categories page, e.g. {@code Path.To}, empty for the top level of the wiki
      * @param name the name of the categories page
      * @since 9.15.13
      */
@@ -96,7 +110,9 @@ public class BlogManagementPage extends ViewPage
     {
         openLocationEdit(this.categoriesParentInput);
         this.categoriesParentInput.clear();
-        this.categoriesParentInput.sendKeys(parent);
+        if (!parent.isEmpty()) {
+            this.categoriesParentInput.sendKeys(parent);
+        }
         this.categoriesNameInput.clear();
         this.categoriesNameInput.sendKeys(name);
     }

@@ -100,7 +100,8 @@ class BlogArchiveAndCategoriesIT
         assertThat(titles, hasItem(FEBRUARY_TITLE));
         assertThat(titles, not(hasItem(MAY_TITLE)));
 
-        // The listed posts lead to the post pages.
+        // The listed posts say which blog they are in, and lead to the post pages.
+        assertEquals(Collections.singletonList("Blog"), personalCategory.getPostBlogLocation(FEBRUARY_TITLE));
         BlogPostViewPage post = personalCategory.clickPost(FEBRUARY_TITLE);
         assertEquals(FEBRUARY_TITLE, post.getDocumentTitle());
         assertEquals(Collections.singletonList("Personal"), post.getCategories());

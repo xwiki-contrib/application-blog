@@ -28,6 +28,8 @@ import org.xwiki.blog.test.po.BlogHomePage;
 import org.xwiki.blog.test.po.BlogManagementPage;
 import org.xwiki.blog.test.po.BlogPostInlinePage;
 import org.xwiki.blog.test.po.BlogPostViewPage;
+import org.xwiki.blog.test.po.ManageCategoriesPage;
+import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.test.docker.junit5.TestReference;
 import org.xwiki.test.docker.junit5.UITest;
@@ -38,7 +40,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.xwiki.blog.test.ui.BlogTestData.WIKI;
 
 /**
  * Verify that a new blog can be created and that its posts are kept separate from the posts of the default blog.
@@ -50,9 +54,17 @@ class BlogManagementIT
 {
     private static final String POST_TITLE = "First post of the new blog";
 
+    private static final String WEB_HOME = "WebHome";
+
+    private static final String POSTS_LOCATION = "postsLocation";
+
+    private static final String CATEGORIES_LOCATION = "categoriesLocation";
+
+    private static final String CATEGORIES_SUFFIX = ".Categories";
+
     @Test
     @Order(1)
-    void createBlogAndPublishPostInIt(TestUtils setup, TestReference testReference)
+    void createBlogAndPublishPostInIt(TestUtils setup, TestReference testReference) throws Exception
     {
         setup.loginAsSuperAdmin();
         String blogName = getTestClassName(testReference);
@@ -80,6 +92,14 @@ class BlogManagementIT
         // The post is listed in the new blog only.
         assertEquals(Collections.singletonList(POST_TITLE), BlogHomePage.gotoPage(blog).getPostTitles());
         assertThat(BlogHomePage.gotoPage().getPostTitles(), not(hasItem(POST_TITLE)));
+
+        // The new blog stores where its posts and its categories are, and its posts are its children.
+        BlogTestData data = new BlogTestData(setup);
+        DocumentReference blogReference = new DocumentReference(WIKI, blogName, WEB_HOME);
+        assertEquals(blogName, data.getProperty(blogReference, BlogTestData.BLOG_CLASS, POSTS_LOCATION));
+        assertEquals(blogName + CATEGORIES_SUFFIX,
+            data.getProperty(blogReference, BlogTestData.BLOG_CLASS, CATEGORIES_LOCATION));
+        assertEquals(blogName + ".WebHome", data.getParent(new DocumentReference(WIKI, blogName, POST_TITLE)));
     }
 
     @Test
@@ -108,7 +128,7 @@ class BlogManagementIT
 
     @Test
     @Order(3)
-    void moveBlogAndPublishPostInIt(TestUtils setup, TestReference testReference)
+    void moveBlogAndPublishPostInIt(TestUtils setup, TestReference testReference) throws Exception
     {
         setup.loginAsSuperAdmin();
         String blogName = getTestClassName(testReference) + "Moved";
@@ -131,6 +151,59 @@ class BlogManagementIT
         BlogPostViewPage post = editPage.clickSaveAndView();
         assertEquals(newParent + "." + blogName, post.getMetaDataValue("space"));
         assertEquals(Collections.singletonList(POST_TITLE), BlogHomePage.gotoPage(movedBlog).getPostTitles());
+
+        // The locations stored by the moved blog follow it, and its new posts are its children.
+        BlogTestData data = new BlogTestData(setup);
+        DocumentReference blogReference = new DocumentReference(WIKI, Arrays.asList(newParent, blogName), WEB_HOME);
+        String location = newParent + "." + blogName;
+        assertEquals(location, data.getProperty(blogReference, BlogTestData.BLOG_CLASS, POSTS_LOCATION));
+        assertEquals(location + CATEGORIES_SUFFIX,
+            data.getProperty(blogReference, BlogTestData.BLOG_CLASS, CATEGORIES_LOCATION));
+        assertEquals(location + ".WebHome",
+            data.getParent(new DocumentReference(WIKI, Arrays.asList(newParent, blogName), POST_TITLE)));
+    }
+
+    @Test
+    @Order(4)
+    void createBlogWithADotInItsNameAndItsCategoriesAtTheTopLevel(TestUtils setup, TestReference testReference)
+        throws Exception
+    {
+        setup.loginAsSuperAdmin();
+        BlogTestData data = new BlogTestData(setup);
+        // Once the categories of the default blog have been migrated to Blog.Categories, the legacy category pages of
+        // the Blog space are gone (they are moved onto the new ones, see BLOG-275).
+        DocumentReference legacyCategory = new DocumentReference(WIKI, "Blog", "Other");
+        if (data.exists(legacyCategory)) {
+            setup.rest().delete(legacyCategory);
+        }
+        String parent = getTestClassName(testReference) + "Dotted";
+
+        BlogManagementPage managementPage = BlogManagementPage.gotoPage();
+        managementPage.setTitle("Dotted blog");
+        managementPage.setParent(parent);
+        managementPage.setName("Team.Blog");
+        managementPage.setCategoriesLocation("", "TopLevelCategories");
+        managementPage.setCreateDefaultCategories(true);
+        BlogHomePage blogHomePage = managementPage.clickCreate();
+        assertEquals("Dotted blog", blogHomePage.getDocumentTitle());
+
+        // This is a bug: the dot of the name is taken as a space separator, so the blog is created in nested spaces,
+        // Team then Blog, instead of in a space named "Team.Blog". See BLOG-282: Creating a blog whose name contains a
+        // dot creates it in nested spaces.
+        assertFalse(data.exists(new DocumentReference(WIKI, Arrays.asList(parent, "Team.Blog"), WEB_HOME)));
+        DocumentReference blogReference = new DocumentReference(WIKI, Arrays.asList(parent, "Team", "Blog"), WEB_HOME);
+        assertTrue(data.exists(blogReference));
+        assertEquals(parent + ".Team.Blog", data.getProperty(blogReference, BlogTestData.BLOG_CLASS, POSTS_LOCATION));
+
+        // Without a parent, the categories are created at the top level of the wiki, as shown by the form.
+        assertEquals("TopLevelCategories",
+            data.getProperty(blogReference, BlogTestData.BLOG_CLASS, CATEGORIES_LOCATION));
+        // This is a bug: the default categories are copies of the legacy category pages of the Blog space, so a
+        // default category whose legacy page is gone is not created (an empty page is created instead). They should be
+        // copies of the categories of the default blog, in Blog.Categories: News, Other and Personal. See BLOG-283: New
+        // blogs miss the default categories whose legacy page is gone from the Blog space.
+        assertEquals(Arrays.asList("News", "Personal"), ManageCategoriesPage
+            .gotoPage(new DocumentReference(WIKI, "TopLevelCategories", WEB_HOME)).getCategories());
     }
 
     private static String getTestClassName(TestReference testReference)

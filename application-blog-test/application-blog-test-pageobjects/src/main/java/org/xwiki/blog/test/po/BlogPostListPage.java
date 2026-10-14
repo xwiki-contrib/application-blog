@@ -96,4 +96,37 @@ public class BlogPostListPage extends ViewPage
         getDriver().findElementWithoutWaiting(By.xpath(POST_TITLE_LINKS_XPATH + "[. = '" + title + "']")).click();
         return new BlogPostViewPage();
     }
+
+    /**
+     * @param title the title of one of the listed blog posts
+     * @return the path to the blog of the post, as displayed after "Posted in" below the post (the last element is the
+     *         blog itself); empty when the blog of the post is not displayed
+     * @since 9.15.15
+     */
+    public List<String> getPostBlogLocation(String title)
+    {
+        String xpath = "//div[@id = 'xwikicontent']//*[contains(concat(' ', @class, ' '), ' hentry ')]"
+            + "[.//*[contains(concat(' ', @class, ' '), ' entry-title ')]//a[. = '" + title + "']]"
+            + "//*[contains(concat(' ', @class, ' '), ' blogrefpath ')]//li";
+        return getDriver().findElementsWithoutWaiting(By.xpath(xpath)).stream().map(WebElement::getText)
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * @return the "Blog Categories" panel of the page
+     * @since 9.15.15
+     */
+    public CategoriesPanel getCategoriesPanel()
+    {
+        return new CategoriesPanel();
+    }
+
+    /**
+     * @return the "Related Blogs" panel of the page
+     * @since 9.15.15
+     */
+    public RelatedBlogsPanel getRelatedBlogsPanel()
+    {
+        return new RelatedBlogsPanel();
+    }
 }
