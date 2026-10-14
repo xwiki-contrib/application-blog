@@ -19,9 +19,13 @@
  */
 package org.xwiki.blog.test.po;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.xwiki.model.reference.EntityReference;
 import org.xwiki.test.ui.po.BasePage;
 
 /**
@@ -56,6 +60,32 @@ public class ManageCategoriesPage extends BasePage
     {
         getUtil().gotoPage("Blog", "ManageCategories", "view");
         return new ManageCategoriesPage();
+    }
+
+    /**
+     * Open the page that manages the categories of a categories space, as linked from the categories panel of the
+     * blog that uses them.
+     *
+     * @param categoriesHome the home page of the categories space
+     * @return the category management page
+     * @since 9.15.15
+     */
+    public static ManageCategoriesPage gotoPage(EntityReference categoriesHome)
+    {
+        getUtil().gotoPage(categoriesHome, "view", "action=manage");
+        return new ManageCategoriesPage();
+    }
+
+    /**
+     * @return the names of the listed categories, without their number of posts, in the order in which they are
+     *         displayed (subcategories follow their parent)
+     * @since 9.15.15
+     */
+    public List<String> getCategories()
+    {
+        return getDriver().findElementsWithoutWaiting(By.xpath("//span[@class='blog-category']"
+            + "//span[@class='wikilink']/a")).stream()
+            .map(link -> link.getText().replaceFirst("\\s*\\(\\d+\\)$", "")).collect(Collectors.toList());
     }
 
     /**
@@ -125,9 +155,10 @@ public class ManageCategoriesPage extends BasePage
         getDriver().findElement(renamePath).click();
         getDriver().waitUntilElementIsVisible(By.className("category-rename-form"));
 
-        // rename and wait for result
+        // rename and wait for result (the target category may exist already)
         this.nameInput.sendKeys(toName);
         this.renameButton.submit();
+        getDriver().waitUntilElementDisappears(categoryLocator(fromName));
         getDriver().waitUntilElementIsVisible(categoryLocator(toName));
     }
 

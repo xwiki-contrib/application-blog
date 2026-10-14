@@ -205,6 +205,24 @@ public class BlogPostInlinePage extends InlinePage
     }
 
     /**
+     * Saves the blog post without selecting a category, in a blog that asks for a category before saving: answers
+     * "No" to the question so that the post gets the default category of its blog.
+     *
+     * @return the saved blog post
+     * @since 9.15.15
+     */
+    public BlogPostViewPage clickSaveAndViewWithDefaultCategory()
+    {
+        By useDefaultCategoryButton = By.cssSelector("#checkCategorySelection .modal-footer .btn-danger");
+        getDriver().addPageNotYetReloadedMarker();
+        getSaveAndViewButton().click();
+        getDriver().waitUntilElementIsVisible(useDefaultCategoryButton);
+        getDriver().findElement(useDefaultCategoryButton).click();
+        getDriver().waitUntilPageIsReloaded();
+        return new BlogPostViewPage();
+    }
+
+    /**
      * Clicks a check box after scrolling it to the middle of the window, so that it isn't covered by the bar of form
      * buttons that sticks to the bottom of the window.
      *

@@ -63,6 +63,8 @@ class BlogPostListMacroIT
 
     private static final String AUGUST_TITLE = "Bread and butter";
 
+    private static final String SEPTEMBER_TITLE = "Post outside of the blog";
+
     private static final List<String> LAYOUTS = Arrays.asList("full", "link", "compact", "cards", "image");
 
     private static final String DATE_FILTER = "dateFilter";
@@ -70,6 +72,8 @@ class BlogPostListMacroIT
     private static final String CATEGORY_FILTER = "categoryFilter";
 
     private static final String LAYOUT_PREFIX = "layout-";
+
+    private static final String AGGREGATED = "aggregated";
 
     /**
      * Restricts the listed posts to the July 2015 posts, i.e. to the post created by this test with that date.
@@ -89,6 +93,10 @@ class BlogPostListMacroIT
         new BlogPostFixture(setup, new LocalDocumentReference("Blog", testClassName + "August"), AUGUST_TITLE)
             .withPublishDate(new GregorianCalendar(2015, 7, 20).getTime()).withCategory("Blog.Categories.Personal")
             .create();
+        // A post outside of any blog, in a category of the default blog.
+        new BlogPostFixture(setup, new LocalDocumentReference(testClassName + "Elsewhere", "September"),
+            SEPTEMBER_TITLE).withPublishDate(new GregorianCalendar(2015, 8, 10).getTime())
+                .withCategory("Blog.Categories.News").create();
 
         StringBuilder content = new StringBuilder();
         appendMacroCall(content, DATE_FILTER, "link", JULY_PARAMETERS);
@@ -97,6 +105,7 @@ class BlogPostListMacroIT
         for (String layout : LAYOUTS) {
             appendMacroCall(content, LAYOUT_PREFIX + layout, layout, JULY_PARAMETERS);
         }
+        appendMacroCall(content, AGGREGATED, "link", "fromDate=\"2015-09-01\" toDate=\"2015-09-30\"");
         setup.createPage(testReference, content.toString(), testReference.getLastSpaceReference().getName());
         BlogPostListMacroPage page = new BlogPostListMacroPage();
 
@@ -106,6 +115,8 @@ class BlogPostListMacroIT
             assertTrue(page.isPostDisplayed(LAYOUT_PREFIX + layout, JULY_TITLE),
                 "The post title is not displayed by the [" + layout + "] layout");
         }
+        // The default blog lists the posts in its categories, wherever they are.
+        assertEquals(Collections.singletonList(SEPTEMBER_TITLE), page.getPostLinkTexts(AGGREGATED));
     }
 
     private void appendMacroCall(StringBuilder content, String containerId, String layout, String parameters)

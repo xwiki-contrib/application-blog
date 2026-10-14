@@ -46,6 +46,11 @@ class AllIT
     }
 
     @Nested
+    class NestedBlogLocationIT extends BlogLocationIT
+    {
+    }
+
+    @Nested
     class NestedBlogManagementIT extends BlogManagementIT
     {
     }

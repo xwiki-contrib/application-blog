@@ -28,6 +28,7 @@ import org.xwiki.blog.test.po.BlogHomePage;
 import org.xwiki.blog.test.po.BlogPostInlinePage;
 import org.xwiki.blog.test.po.BlogPostViewPage;
 import org.xwiki.blog.test.po.CreateBlogPostPane;
+import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.test.docker.junit5.TestReference;
 import org.xwiki.test.docker.junit5.UITest;
 import org.xwiki.test.ui.TestUtils;
@@ -35,6 +36,7 @@ import org.xwiki.test.ui.TestUtils;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.xwiki.blog.test.ui.BlogTestData.WIKI;
 
 /**
  * Functional tests for blog posts.
@@ -61,7 +63,7 @@ class BlogPostIT
      */
     @Test
     @Order(1)
-    void createAndEditBlogPost(TestUtils setup, TestReference testReference)
+    void createAndEditBlogPost(TestUtils setup, TestReference testReference) throws Exception
     {
         String testMethodName = testReference.getLastSpaceReference().getName();
         String testClassName = testReference.getLastSpaceReference().getParent().getName();
@@ -90,6 +92,9 @@ class BlogPostIT
         assertEquals("Test blog content", blogPostViewPage.getContent());
         assertEquals(Collections.singletonList("Personal"), blogPostViewPage.getCategories());
         assertFalse(blogPostViewPage.isPublished());
+        // The post is created in the space of the default blog, as a child of the blog.
+        assertEquals("Blog.WebHome",
+            new BlogTestData(setup).getParent(new DocumentReference(WIKI, "Blog", testMethodName)));
 
         // Edit the blog post.
         blogPostInlinePage = blogPostViewPage.clickEditBlogPostIcon();
