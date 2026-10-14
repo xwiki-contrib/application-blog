@@ -19,16 +19,54 @@
  */
 package org.xwiki.blog.test.ui;
 
-import org.junit.runner.RunWith;
-import org.xwiki.test.ui.PageObjectSuite;
+import org.junit.jupiter.api.Nested;
+import org.xwiki.test.docker.junit5.UITest;
 
 /**
- * Runs all functional tests found in the classpath. This allows to start/stop XWiki only once.
- * 
+ * All UI tests for the Blog application, run as nested classes so that XWiki is started only once.
+ *
  * @version $Id$
- * @since 7.1M1
  */
-@RunWith(PageObjectSuite.class)
-public class AllTests
+@UITest
+class AllIT
 {
+    @Nested
+    class NestedBlogArchiveAndCategoriesIT extends BlogArchiveAndCategoriesIT
+    {
+    }
+
+    @Nested
+    class NestedBlogCalendarDisplayIT extends BlogCalendarDisplayIT
+    {
+    }
+
+    @Nested
+    class NestedBlogCategoriesIT extends BlogCategoriesIT
+    {
+    }
+
+    @Nested
+    class NestedBlogManagementIT extends BlogManagementIT
+    {
+    }
+
+    @Nested
+    class NestedBlogPostIT extends BlogPostIT
+    {
+    }
+
+    @Nested
+    class NestedBlogPostListMacroIT extends BlogPostListMacroIT
+    {
+    }
+
+    @Nested
+    class NestedBlogPostVisibilityIT extends BlogPostVisibilityIT
+    {
+    }
+
+    @Nested
+    class NestedBlogTitleSecurityIT extends BlogTitleSecurityIT
+    {
+    }
 }

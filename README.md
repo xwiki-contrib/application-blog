@@ -18,8 +18,8 @@ Create and manage blog posts.
 * Release
 
 ```
-mvn release:prepare -Pintegration-tests,legacy
-mvn release:perform -Pintegration-tests,legacy
+mvn release:prepare -Pintegration-tests,legacy,docker
+mvn release:perform -Pintegration-tests,legacy,docker
 ```
 
 * Update https://extensions.xwiki.org/xwiki/bin/view/Extension/Blog+Application

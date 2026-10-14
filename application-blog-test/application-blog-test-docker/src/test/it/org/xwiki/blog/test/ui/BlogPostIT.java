@@ -22,49 +22,63 @@ package org.xwiki.blog.test.ui;
 import java.util.Arrays;
 import java.util.Collections;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.xwiki.test.ui.AbstractTest;
-import org.xwiki.test.ui.browser.IgnoreBrowser;
-import org.xwiki.test.ui.browser.IgnoreBrowsers;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.xwiki.blog.test.po.BlogHomePage;
 import org.xwiki.blog.test.po.BlogPostInlinePage;
 import org.xwiki.blog.test.po.BlogPostViewPage;
 import org.xwiki.blog.test.po.CreateBlogPostPane;
+import org.xwiki.test.docker.junit5.TestReference;
+import org.xwiki.test.docker.junit5.UITest;
+import org.xwiki.test.ui.TestUtils;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Functional tests for blog posts.
- * 
+ *
  * @version $Id$
- * @since 3.2M3
  */
-public class BlogPostTest extends AbstractTest
+@UITest(
+    properties = {
+        // The weekly and monthly blog displays use the JodaTime plugin.
+        "xwikiCfgPlugins=com.xpn.xwiki.plugin.jodatime.JodaTimePlugin"
+    },
+    extraJARs = {
+        // A plugin listed in xwiki.cfg is loaded at startup, before extensions get installed, so its JAR has to be
+        // in WEB-INF/lib.
+        "org.xwiki.platform:xwiki-platform-jodatime"
+    },
+    // Resolve the version of the extra JAR from the dependencies of the POM (it's not the version of this module).
+    resolveExtraJARs = true
+)
+class BlogPostIT
 {
     /**
      * Tests how a blog post is created and then edited.
      */
     @Test
-    @IgnoreBrowsers({
-    @IgnoreBrowser(value = "internet.*", version = "8\\.*", reason="See http://jira.xwiki.org/browse/XE-1146"),
-    @IgnoreBrowser(value = "internet.*", version = "9\\.*", reason="See http://jira.xwiki.org/browse/XE-1177")
-    })
-    public void testCreateAndEditBlogPost()
+    @Order(1)
+    void createAndEditBlogPost(TestUtils setup, TestReference testReference)
     {
-        getUtil().deletePage(getTestClassName(), getTestMethodName());
-        getUtil().deletePage("XWiki", getTestClassName() + "_" + getTestMethodName());
+        String testMethodName = testReference.getLastSpaceReference().getName();
+        String testClassName = testReference.getLastSpaceReference().getParent().getName();
+
         // Login as superadmin to create a new user.
-        getUtil().loginAsSuperAdmin();
+        setup.loginAsSuperAdmin();
         // Now login as a simple user to verify normal users can create blog posts. Since the Blog PO consider that
         // WYISWYG is enable, we need to force our user to use the WYSIWYG editor (since there's no
         // XWiki.XWikiPreferences set that would set it in our minimal instance).
-        getUtil().createUserAndLogin(getTestClassName() + "_" + getTestMethodName(), "password", "editor", "Wysiwyg");
+        setup.createUserAndLogin(testClassName + "_" + testMethodName, "password", "editor", "Wysiwyg");
 
         // Create the blog post.
         CreateBlogPostPane createBlogPostPane = BlogHomePage.gotoPage().getCreateBlogPostPane();
-        createBlogPostPane.setTitle(getTestMethodName());
+        createBlogPostPane.setTitle(testMethodName);
         BlogPostInlinePage blogPostInlinePage = createBlogPostPane.clickCreateButton();
 
-        Assert.assertEquals(getTestMethodName(), blogPostInlinePage.getTitle());
+        assertEquals(testMethodName, blogPostInlinePage.getTitle());
 
         blogPostInlinePage.setTitle("Test blog title");
         blogPostInlinePage.setContent("Test blog content");
@@ -72,18 +86,18 @@ public class BlogPostTest extends AbstractTest
         BlogPostViewPage blogPostViewPage = blogPostInlinePage.clickSaveAndView();
 
         // Assert the result.
-        Assert.assertEquals("Test blog title", blogPostViewPage.getDocumentTitle());
-        Assert.assertEquals("Test blog content", blogPostViewPage.getContent());
-        Assert.assertEquals(Collections.singletonList("Personal"), blogPostViewPage.getCategories());
-        Assert.assertFalse(blogPostViewPage.isPublished());
+        assertEquals("Test blog title", blogPostViewPage.getDocumentTitle());
+        assertEquals("Test blog content", blogPostViewPage.getContent());
+        assertEquals(Collections.singletonList("Personal"), blogPostViewPage.getCategories());
+        assertFalse(blogPostViewPage.isPublished());
 
         // Edit the blog post.
         blogPostInlinePage = blogPostViewPage.clickEditBlogPostIcon();
 
-        Assert.assertEquals("Test blog title", blogPostInlinePage.getTitle());
-        Assert.assertEquals("Test blog content", blogPostInlinePage.getContent());
-        Assert.assertEquals(Collections.singletonList("Personal"), blogPostInlinePage.getCategories());
-        Assert.assertFalse(blogPostInlinePage.isPublished());
+        assertEquals("Test blog title", blogPostInlinePage.getTitle());
+        assertEquals("Test blog content", blogPostInlinePage.getContent());
+        assertEquals(Collections.singletonList("Personal"), blogPostInlinePage.getCategories());
+        assertFalse(blogPostInlinePage.isPublished());
 
         // Modify the blog post.
         blogPostInlinePage.setTitle("Modified title");
@@ -94,10 +108,10 @@ public class BlogPostTest extends AbstractTest
         // Assert the result.
         blogPostViewPage = blogPostInlinePage.clickSaveAndView();
 
-        Assert.assertEquals("Modified title", blogPostViewPage.getDocumentTitle());
-        Assert.assertEquals("Modified content", blogPostViewPage.getContent());
-        Assert.assertEquals(Arrays.asList("News", "Personal"), blogPostViewPage.getCategories());
-        Assert.assertTrue(blogPostViewPage.isPublished());
-        Assert.assertFalse(blogPostViewPage.isHidden());
+        assertEquals("Modified title", blogPostViewPage.getDocumentTitle());
+        assertEquals("Modified content", blogPostViewPage.getContent());
+        assertEquals(Arrays.asList("News", "Personal"), blogPostViewPage.getCategories());
+        assertTrue(blogPostViewPage.isPublished());
+        assertFalse(blogPostViewPage.isHidden());
     }
 }
