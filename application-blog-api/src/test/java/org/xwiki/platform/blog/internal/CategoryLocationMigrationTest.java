@@ -55,12 +55,14 @@ import com.xpn.xwiki.test.reference.ReferenceComponentList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -253,7 +255,7 @@ class CategoryLocationMigrationTest
         assertEquals(Arrays.asList("Blog.Categories.Personal", "Blog.Categories.Travel"), getCategories(POST));
         assertEquals(Arrays.asList("Blog.Categories.Europe"), getCategories(otherPost));
         // The links to the legacy category are updated by the rename.
-        verify(this.xwiki).renameDocument(LEGACY_TRAVEL, TRAVEL, true, Arrays.asList(LINKING_PAGE),
+        verify(this.xwiki).renameDocument(LEGACY_TRAVEL, TRAVEL, false, Arrays.asList(LINKING_PAGE),
             Collections.emptyList(), this.context);
     }
 
@@ -264,21 +266,61 @@ class CategoryLocationMigrationTest
         saveCategory(subcategory, "Blog.News", "");
         saveBlogPost(POST, "Blog.Other", "Blog.Categories.Sub");
         DocumentReference legacyNews = new DocumentReference(XWIKI, "Blog", "News");
+        DocumentReference news = new DocumentReference(XWIKI, CATEGORIES_SPACE, "News");
+        // The default categories are shipped by the extension at both locations.
+        saveCategory(legacyNews, "Blog.Categories", "");
+        saveCategory(news, "Blog.Categories.WebHome", "");
         backlinks(legacyNews, LINKING_PAGE);
 
         migrate(XWIKI);
 
         assertEquals("Blog.Categories.News", getDocument(subcategory).getParent());
         assertEquals(Arrays.asList("Blog.Categories.Sub", "Blog.Categories.Other"), getCategories(POST));
-        verify(this.referenceUpdater).update(LINKING_PAGE, legacyNews,
-            new DocumentReference(XWIKI, CATEGORIES_SPACE, "News"));
-        // The default legacy categories are not moved: there is a new one shipped for each of them.
+        // The default categories go through both the default and the custom categories passes. The backlinks are
+        // mocked, so they are still found by the second pass, which they are not once updated in a real wiki.
+        verify(this.referenceUpdater, atLeastOnce()).update(LINKING_PAGE, legacyNews, news);
+        // The default legacy categories are not moved over the shipped new ones.
         verify(this.xwiki, never()).renameDocument(eq(legacyNews), any(DocumentReference.class), anyBoolean(),
             anyList(), anyList(), any(XWikiContext.class));
     }
 
     @Test
-    void migrateReplacesTheShippedCategoriesWithTheShippedLegacyOnes() throws Exception
+    void migrateMovesTheDefaultLegacyCategoryWhoseNewPageIsGone() throws Exception
+    {
+        DocumentReference legacyNews = new DocumentReference(XWIKI, "Blog", "News");
+        DocumentReference news = new DocumentReference(XWIKI, CATEGORIES_SPACE, "News");
+        saveCategory(legacyNews, "Blog.Categories", "legacy");
+        saveBlogPost(POST, "Blog.News");
+
+        migrate(XWIKI);
+
+        // The blog posts don't point to a missing category.
+        assertTrue(getDocument(legacyNews).isNew());
+        assertEquals("legacy", getDescription(news));
+        assertEquals(Arrays.asList("Blog.Categories.News"), getCategories(POST));
+        verify(this.xwiki).renameDocument(legacyNews, news, false, Collections.emptyList(), Collections.emptyList(),
+            this.context);
+    }
+
+    @Test
+    void migrateNeverMovesTheLegacyCategoriesHome() throws Exception
+    {
+        DocumentReference legacyCategoriesHome = new DocumentReference(XWIKI, "Blog", "Categories");
+        saveCategory(legacyCategoriesHome, "Blog.WebHome", "legacy");
+        saveBlogPost(POST, "Blog.Categories");
+
+        migrate(XWIKI);
+
+        // The new categories home page doesn't become a category, even when it is missing.
+        assertEquals("legacy", getDescription(legacyCategoriesHome));
+        assertTrue(getDocument(new DocumentReference(XWIKI, CATEGORIES_SPACE, "WebHome")).isNew());
+        assertEquals(Arrays.asList("Blog.Categories.WebHome"), getCategories(POST));
+        verify(this.xwiki, never()).renameDocument(any(DocumentReference.class), any(DocumentReference.class),
+            anyBoolean(), anyList(), anyList(), any(XWikiContext.class));
+    }
+
+    @Test
+    void migrateKeepsTheShippedCategoriesAndTheShippedLegacyOnes() throws Exception
     {
         // The pages of the default categories, shipped by the extension both at the legacy and at the new location.
         DocumentReference legacyNews = new DocumentReference(XWIKI, "Blog", "News");
@@ -294,13 +336,35 @@ class CategoryLocationMigrationTest
 
         migrate(XWIKI);
 
-        // The legacy pages are renamed over the new ones, which are lost, and the categories home page becomes a
-        // category. The shipped legacy pages should be left aside (or removed): BLOG-275 "Migrating the blog
-        // categories replaces the shipped Blog.Categories pages with the legacy ones".
-        assertTrue(getDocument(legacyNews).isNew());
-        assertEquals("legacy", getDescription(news));
-        assertTrue(getDocument(legacyCategoriesHome).isNew());
-        assertNotNull(getDocument(categoriesHome).getXObject(CATEGORY_CLASS));
+        // BLOG-275: the shipped pages are left untouched, at both locations.
+        assertEquals("legacy", getDescription(legacyNews));
+        assertEquals("new", getDescription(news));
+        assertEquals("legacy", getDescription(legacyCategoriesHome));
+        assertNull(getDocument(categoriesHome).getXObject(CATEGORY_CLASS));
+        verify(this.xwiki, never()).renameDocument(any(DocumentReference.class), any(DocumentReference.class),
+            anyBoolean(), anyList(), anyList(), any(XWikiContext.class));
+    }
+
+    @Test
+    void migrateKeepsTheExistingCategoryOfTheSameName() throws Exception
+    {
+        saveCategory(LEGACY_TRAVEL, "Blog.Categories", "legacy");
+        saveCategory(TRAVEL, "Blog.Categories.WebHome", "new");
+        saveCategory(LEGACY_EUROPE, "Blog.Travel", "");
+        saveBlogPost(POST, "Blog.Travel");
+        backlinks(LEGACY_TRAVEL, LINKING_PAGE);
+
+        migrate(XWIKI);
+
+        // The existing category is not overwritten and the legacy one stays where it is.
+        assertEquals("new", getDescription(TRAVEL));
+        assertEquals("legacy", getDescription(LEGACY_TRAVEL));
+        verify(this.xwiki, never()).renameDocument(eq(LEGACY_TRAVEL), any(DocumentReference.class), anyBoolean(),
+            anyList(), anyList(), any(XWikiContext.class));
+        // What pointed to the legacy category now points to the existing one.
+        assertEquals(Arrays.asList("Blog.Categories.Travel"), getCategories(POST));
+        assertEquals("Blog.Categories.Travel", getDocument(EUROPE).getParent());
+        verify(this.referenceUpdater).update(LINKING_PAGE, LEGACY_TRAVEL, TRAVEL);
     }
 
     @Test

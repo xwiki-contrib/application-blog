@@ -161,12 +161,27 @@ public class CategoryLocationMigration
         Collection<DocumentReference> oldCategoryRefs =
             query.setWiki(wiki).addFilter(documentQueryFilter).execute();
         for (DocumentReference oldCategoryRef : oldCategoryRefs) {
+            // The legacy categories home page is never moved: it would turn the new categories home page into a
+            // category. What points to it is updated by migrateDefaultCategories().
+            if (CATEGORIES.equals(oldCategoryRef.getName())) {
+                continue;
+            }
             logger.info(MIGRATING_CATEGORY_START_INFO, wiki, oldCategoryRef);
             DocumentReference newCategoryRef = getNewCategoryRef(oldCategoryRef);
-            XWikiDocument oldCategoryDoc = xwiki.getDocument(oldCategoryRef, context);
-            logger.info("[{}] - [{}] category migration. Renaming to new [{}].", wiki, oldCategoryRef, newCategoryRef);
-            xwiki.renameDocument(oldCategoryRef, newCategoryRef, true, oldCategoryDoc.getBackLinkedReferences(context),
-                oldCategoryDoc.getChildrenReferences(context), context);
+            if (xwiki.exists(newCategoryRef, context)) {
+                // Never overwrite an existing category (e.g. a default category, shipped at both locations): keep it
+                // and leave the legacy page where it is, only the references to the legacy category are updated to
+                // point to the existing one.
+                logger.info("[{}] - [{}] category migration. The new [{}] already exists, it is kept and the legacy "
+                    + "category is not moved.", wiki, oldCategoryRef, newCategoryRef);
+            } else {
+                XWikiDocument oldCategoryDoc = xwiki.getDocument(oldCategoryRef, context);
+                logger.info("[{}] - [{}] category migration. Renaming to new [{}].", wiki, oldCategoryRef,
+                    newCategoryRef);
+                xwiki.renameDocument(oldCategoryRef, newCategoryRef, false,
+                    oldCategoryDoc.getBackLinkedReferences(context), oldCategoryDoc.getChildrenReferences(context),
+                    context);
+            }
             updateSubCategoriesParent(oldCategoryRef, newCategoryRef, xwiki, context, wiki);
             updateBlogPostsCategory(oldCategoryRef, newCategoryRef, xwiki, context, wiki);
             updateBackLinks(oldCategoryRef, newCategoryRef, context, xwiki, wiki);
