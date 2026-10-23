@@ -37,6 +37,7 @@ import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.test.docker.junit5.UITest;
 import org.xwiki.test.ui.TestUtils;
+import org.xwiki.test.ui.po.RenamePage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -57,7 +58,8 @@ import static org.xwiki.blog.test.ui.BlogTestData.WIKI;
  * <li>E: a nested blog whose space name contains a dot, {@code ]]} and {@code ~}, storing no location;</li>
  * <li>F: a blog page that is neither the {@code WebHome} nor the {@code Blog} page of its space, sharing the categories
  * of the default blog ({@code Blog.Categories}) explicitly;</li>
- * <li>G: a whole-space blog sharing the categories of the default blog explicitly too.</li>
+ * <li>G: a whole-space blog sharing the categories of the default blog explicitly too;</li>
+ * <li>J: a whole-space blog storing its posts location with a wiki prefix ({@code xwiki:BlogLocationJ}).</li>
  * </ul>
  *
  * @version $Id$
@@ -85,6 +87,8 @@ class BlogLocationIT
     private static final String F = "BlogLocationF";
 
     private static final String G = "BlogLocationG";
+
+    private static final String J = "BlogLocationJ";
 
     private static final String DEFAULT_BLOG = "Blog.WebHome";
 
@@ -339,6 +343,45 @@ class BlogLocationIT
         assertTrue(data.exists(go));
         assertEquals("BlogLocationCCategories.WebHome", data.getParent(go));
         assertThat(ManageCategoriesPage.gotoPage(CATEGORIES_HOME_B).getCategories(), not(hasItem("Go")));
+    }
+
+    @Test
+    @Order(4)
+    void blogWithAWikiPrefixedPostsLocation(TestUtils setup) throws Exception
+    {
+        setup.loginAsSuperAdmin();
+        BlogTestData data = new BlogTestData(setup);
+        DocumentReference blogJ = new DocumentReference(WIKI, J, WEB_HOME);
+        String prefixedLocation = WIKI + ':' + J;
+        data.createBlog(blogJ, "Blog J", prefixedLocation, "", false);
+
+        // A new post is created in the space named by the prefixed posts location, the space of the blog.
+        String title = "Post of J";
+        CreateBlogPostPane createPane = BlogHomePage.gotoPage(blogJ).getCreateBlogPostPane();
+        createPane.setTitle(title);
+        BlogPostInlinePage editPage = createPane.clickCreateButton();
+        editPage.setPublished(true);
+        BlogPostViewPage post = editPage.clickSaveAndView();
+        assertEquals(title, post.getDocumentTitle());
+        DocumentReference postReference = new DocumentReference(WIKI, J, title);
+        assertTrue(data.exists(postReference));
+        assertEquals(J + ".WebHome", data.getParent(postReference));
+
+        // This is a bug: the blog looks for its posts in a space whose name is the stored value, wiki prefix included,
+        // so it lists none. The blog should list the post. See BLOG-286: Move the logic that resolves where a blog's
+        // posts and categories are located to Java.
+        assertEquals(Collections.emptyList(), BlogHomePage.gotoPage(blogJ).getPostTitles());
+
+        // This is a bug: moving the blog doesn't update its prefixed posts location, which still names the old space.
+        // It should name the new location of the blog, BlogLocationJParent.BlogLocationJ. See BLOG-286.
+        String newParent = J + "Parent";
+        setup.createPage(new DocumentReference(WIKI, newParent, WEB_HOME), "", newParent);
+        RenamePage renamePage = BlogHomePage.gotoPage(blogJ).rename();
+        renamePage.getDocumentPicker().setParent(newParent);
+        renamePage.clickRenameButton().waitUntilFinished();
+        DocumentReference movedBlogJ = new DocumentReference(WIKI, Arrays.asList(newParent, J), WEB_HOME);
+        assertTrue(data.exists(movedBlogJ));
+        assertEquals(prefixedLocation, data.getProperty(movedBlogJ, BlogTestData.BLOG_CLASS, "postsLocation"));
     }
 
     private void assertCategoriesPanelLinks(TestUtils setup, CategoriesPanel panel, DocumentReference categoriesHome)
