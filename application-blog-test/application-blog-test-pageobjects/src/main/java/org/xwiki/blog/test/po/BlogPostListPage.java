@@ -19,6 +19,7 @@
  */
 package org.xwiki.blog.test.po;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -126,6 +127,25 @@ public class BlogPostListPage extends ViewPage
             + "//*[contains(concat(' ', @class, ' '), ' blogrefpath ')]//li";
         return getDriver().findElementsWithoutWaiting(By.xpath(xpath)).stream().map(WebElement::getText)
             .collect(Collectors.toList());
+    }
+
+    /**
+     * @param title the title of one of the listed blog posts
+     * @return the categories of the post, as displayed below the post; empty when the post is not listed
+     * @since 9.15.16
+     */
+    public List<String> getPostCategories(String title)
+    {
+        String postXPath = "//div[@id = 'xwikicontent']//*[contains(concat(' ', @class, ' '), ' hentry ')]";
+        String titleXPath = ".//*[contains(concat(' ', @class, ' '), ' entry-title ')]//a";
+        for (WebElement post : getDriver().findElementsWithoutWaiting(By.xpath(postXPath))) {
+            List<WebElement> titleLinks = getDriver().findElementsWithoutWaiting(post, By.xpath(titleXPath));
+            if (!titleLinks.isEmpty() && title.equals(titleLinks.get(0).getText())) {
+                return getDriver().findElementsWithoutWaiting(post, By.xpath(".//a[@rel = 'tag']")).stream()
+                    .map(WebElement::getText).collect(Collectors.toList());
+            }
+        }
+        return Collections.emptyList();
     }
 
     /**

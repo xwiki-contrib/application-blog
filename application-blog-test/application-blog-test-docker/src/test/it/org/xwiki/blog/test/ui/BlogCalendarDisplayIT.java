@@ -20,12 +20,15 @@
 package org.xwiki.blog.test.ui;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.xwiki.blog.test.po.BlogHomePage;
 import org.xwiki.blog.test.po.BlogPostFixture;
 import org.xwiki.blog.test.po.BlogPostViewPage;
+import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.test.docker.junit5.TestReference;
 import org.xwiki.test.docker.junit5.UITest;
@@ -62,29 +65,42 @@ class BlogCalendarDisplayIT
      */
     private static final String POST_TITLE = "Fish & \"Chips\" l'été";
 
+    private static final String CATEGORY_NAME = "Rock 'n' Roll & \"Jazz\" été";
+
     private static final String BLOG_CLASS = "Blog.BlogClass";
 
     private static final String DISPLAY_TYPE = "displayType";
 
     @Test
     @Order(1)
-    void postTitlesWithSpecialCharacters(TestUtils setup, TestReference testReference)
+    void postTitlesAndCategoriesWithSpecialCharacters(TestUtils setup, TestReference testReference) throws Exception
     {
         setup.loginAsSuperAdmin();
         String testClassName = testReference.getLastSpaceReference().getParent().getName();
         LocalDocumentReference post = new LocalDocumentReference("Blog", testClassName);
-        new BlogPostFixture(setup, post, POST_TITLE).create();
+        DocumentReference category =
+            new DocumentReference("xwiki", Arrays.asList("Blog", "Categories"), testClassName + "Category");
+        new BlogTestData(setup).createCategory(category, CATEGORY_NAME, "Blog.Categories.WebHome");
+        new BlogPostFixture(setup, post, POST_TITLE).withCategory("Blog.Categories." + testClassName + "Category")
+            .create();
+        List<String> categories = Collections.singletonList(CATEGORY_NAME);
 
         // The post page.
-        assertEquals(POST_TITLE, BlogPostViewPage.gotoPage(post).getDocumentTitle());
+        BlogPostViewPage postPage = BlogPostViewPage.gotoPage(post);
+        assertEquals(POST_TITLE, postPage.getDocumentTitle());
+        assertEquals(categories, postPage.getCategories());
 
         // The default display of the blog home page, which uses the image layout.
-        assertThat(BlogHomePage.gotoPage().getPostTitles(), hasItem(POST_TITLE));
+        BlogHomePage homePage = BlogHomePage.gotoPage();
+        assertThat(homePage.getPostTitles(), hasItem(POST_TITLE));
+        assertEquals(categories, homePage.getPostCategories(POST_TITLE));
 
         for (String displayType : Arrays.asList("weekly", "monthly")) {
             setup.updateObject("Blog", "WebHome", BLOG_CLASS, 0, DISPLAY_TYPE, displayType);
             try {
-                assertThat(displayType, BlogHomePage.gotoPage().getPostTitles(), hasItem(POST_TITLE));
+                homePage = BlogHomePage.gotoPage();
+                assertThat(displayType, homePage.getPostTitles(), hasItem(POST_TITLE));
+                assertEquals(categories, homePage.getPostCategories(POST_TITLE), displayType);
             } finally {
                 // The other tests list the posts of the default blog through its paginated display.
                 setup.updateObject("Blog", "WebHome", BLOG_CLASS, 0, DISPLAY_TYPE, "paginated");
