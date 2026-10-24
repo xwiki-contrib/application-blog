@@ -57,4 +57,43 @@ public class BlogPostListMacroPage extends ViewPage
         return getDriver().hasElementWithoutWaiting(
             By.xpath("//*[@id = '" + containerId + "']//a[contains(normalize-space(.), '" + title + "')]"));
     }
+
+    /**
+     * @param containerId the id of the element wrapping the macro call
+     * @return the text displayed by the macro
+     * @since 9.15.16
+     */
+    public String getText(String containerId)
+    {
+        return getContainer(containerId).getText();
+    }
+
+    /**
+     * @param containerId the id of the element wrapping the macro call
+     * @return the error messages displayed by the macro
+     * @since 9.15.16
+     */
+    public List<String> getErrorMessages(String containerId)
+    {
+        return getDriver()
+            .findElementsWithoutWaiting(getContainer(containerId),
+                By.xpath(".//*[contains(concat(' ', @class, ' '), ' errormessage ')]"))
+            .stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    /**
+     * @param containerId the id of the element wrapping the macro call
+     * @return the texts displayed in bold by the macro
+     * @since 9.15.16
+     */
+    public List<String> getBoldTexts(String containerId)
+    {
+        return getDriver().findElementsWithoutWaiting(getContainer(containerId), By.xpath(".//strong")).stream()
+            .map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    private WebElement getContainer(String containerId)
+    {
+        return getDriver().findElementWithoutWaiting(By.id(containerId));
+    }
 }

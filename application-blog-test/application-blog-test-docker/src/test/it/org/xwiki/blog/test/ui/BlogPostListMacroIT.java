@@ -24,15 +24,22 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.xwiki.blog.test.po.BlogHomePage;
 import org.xwiki.blog.test.po.BlogPostFixture;
 import org.xwiki.blog.test.po.BlogPostListMacroPage;
+import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.test.docker.junit5.TestReference;
 import org.xwiki.test.docker.junit5.UITest;
 import org.xwiki.test.ui.TestUtils;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -80,6 +87,21 @@ class BlogPostListMacroIT
      */
     private static final String JULY_PARAMETERS = "fromDate=\"2015-07-01\" toDate=\"2015-07-31\"";
 
+    private static final String WIKI = "xwiki";
+
+    private static final String CUSTOM_LAYOUT = "highlights";
+
+    private static final String HIGHLIGHTED_POST = "Highlighted post: ";
+
+    /**
+     * A layout name made of the characters that end a macro call, followed by wiki syntax.
+     */
+    private static final String LAYOUT_WITH_SPECIAL_CHARACTERS = "full/}}**Layout name**";
+
+    private static final String BOLD_TEXT = "Layout name";
+
+    private static final String SPECIAL_LAYOUT = "specialLayout";
+
     @Test
     @Order(1)
     void blogPostListFiltersAndLayouts(TestUtils setup, TestReference testReference)
@@ -117,6 +139,75 @@ class BlogPostListMacroIT
         }
         // The default blog lists the posts in its categories, wherever they are.
         assertEquals(Collections.singletonList(SEPTEMBER_TITLE), page.getPostLinkTexts(AGGREGATED));
+    }
+
+    @Test
+    @Order(2)
+    void customLayouts(TestUtils setup, TestReference testReference) throws Exception
+    {
+        setup.loginAsSuperAdmin();
+        String testClassName = testReference.getLastSpaceReference().getParent().getName();
+        BlogTestData data = new BlogTestData(setup);
+
+        // A custom layout is a wiki macro whose name is the layout name prefixed by "blogPostLayout".
+        data.createPostLayout(new DocumentReference(WIKI, testClassName + "Layout", "WebHome"),
+            "blogPostLayoutHighlights");
+
+        // The custom layout is used when its name is given to the macro (relies on the posts of the previous test).
+        StringBuilder content = new StringBuilder();
+        appendMacroCall(content, CUSTOM_LAYOUT, CUSTOM_LAYOUT, JULY_PARAMETERS);
+        setup.createPage(testReference, content.toString(), testReference.getLastSpaceReference().getName());
+        assertEquals(HIGHLIGHTED_POST + "Blog." + testClassName + "July",
+            new BlogPostListMacroPage().getText(CUSTOM_LAYOUT));
+
+        // The custom layout is used to display the posts of a blog configured with it.
+        String blogSpace = testClassName + "Highlights";
+        data.createBlog(new DocumentReference(WIKI, blogSpace, "WebHome"), "Highlights", CUSTOM_LAYOUT);
+        new BlogPostFixture(setup, new LocalDocumentReference(blogSpace, "Post"), "Highlighted").create();
+        assertThat(BlogHomePage.gotoPage(new LocalDocumentReference(blogSpace, "WebHome")).getContent(),
+            containsString(HIGHLIGHTED_POST + blogSpace + ".Post"));
+    }
+
+    @Test
+    @Order(3)
+    void layoutNamesWithSpecialCharacters(TestUtils setup, TestReference testReference) throws Exception
+    {
+        String testClassName = testReference.getLastSpaceReference().getParent().getName();
+        String user = testClassName + "Author";
+        String password = "password";
+        BlogTestData data = new BlogTestData(setup);
+
+        // The pages are created by a regular user.
+        setup.loginAsSuperAdmin();
+        setup.createUserAndLogin(user, password);
+        UsernamePasswordCredentials credentials =
+            setup.setDefaultCredentials(new UsernamePasswordCredentials(user, password));
+        String blogSpace = testClassName + "Special";
+        DocumentReference blog = new DocumentReference(WIKI, blogSpace, "WebHome");
+        try {
+            // The layout name is given to the macro (relies on the posts of the first test)...
+            StringBuilder content = new StringBuilder();
+            appendMacroCall(content, SPECIAL_LAYOUT, LAYOUT_WITH_SPECIAL_CHARACTERS.replaceAll("[}~\"]", "~$0"),
+                JULY_PARAMETERS);
+            data.createPage(testReference, content.toString(), testReference.getLastSpaceReference().getName());
+
+            // ... or stored in the configuration of a blog, which the user interface doesn't allow.
+            data.createBlog(blog, "Special layout", LAYOUT_WITH_SPECIAL_CHARACTERS);
+        } finally {
+            setup.setDefaultCredentials(credentials);
+        }
+        new BlogPostFixture(setup, new LocalDocumentReference(blogSpace, "Post"), "Special layout post").create();
+
+        setup.forceGuestUser();
+
+        // The layout name is rejected and displayed as it is.
+        setup.gotoPage(testReference);
+        BlogPostListMacroPage page = new BlogPostListMacroPage();
+        assertThat(page.getBoldTexts(SPECIAL_LAYOUT), not(hasItem(BOLD_TEXT)));
+        assertThat(page.getErrorMessages(SPECIAL_LAYOUT), hasItem(containsString(LAYOUT_WITH_SPECIAL_CHARACTERS)));
+
+        // The stored layout name doesn't change the content of the blog home page.
+        assertThat(BlogHomePage.gotoPage(blog).getBoldTexts(), not(hasItem(BOLD_TEXT)));
     }
 
     private void appendMacroCall(StringBuilder content, String containerId, String layout, String parameters)

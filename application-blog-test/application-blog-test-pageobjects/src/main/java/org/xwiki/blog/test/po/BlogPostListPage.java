@@ -156,4 +156,14 @@ public class BlogPostListPage extends ViewPage
     {
         return new AllBlogsPanel();
     }
+
+    /**
+     * @return the texts displayed in bold in the content of the page
+     * @since 9.15.16
+     */
+    public List<String> getBoldTexts()
+    {
+        return getDriver().findElementsWithoutWaiting(By.xpath("//div[@id = 'xwikicontent']//strong")).stream()
+            .map(WebElement::getText).collect(Collectors.toList());
+    }
 }
