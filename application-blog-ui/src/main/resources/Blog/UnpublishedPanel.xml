@@ -187,16 +187,14 @@
   #panelheader($services.localization.render('blog.unpublished.entries'))
   #displayBlogPostsBasedOnContext($doc 'unpublished' 'link' '' 5)
 
-  #set($viewAllTarget = 'Blog.Unpublished')
-  #if($isCategoryPage)
-    #set($viewAllTarget = "${doc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
-  #elseif($isCategoriesHomePage)
-    #set($viewAllTarget = "${doc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
+  #if ($isCategoryPage || $isCategoriesHomePage)
+    #set ($viewAllReference = $doc.documentReference)
   #else
     #getBlogDocument($doc.space $blogDoc)
-    #set($viewAllTarget = "${blogDoc.fullName}||queryString='sheet=Blog.UnpublishedPostsSheet'")
+    #set ($viewAllReference = $blogDoc.documentReference)
   #end
-  [[$services.localization.render('blog.unpublished.viewall') (% class="itemCount" %)($count)(%%)&gt;&gt;$viewAllTarget]]
+  #set ($viewAllTarget = $services.rendering.escape("doc:$services.model.serialize($viewAllReference, 'default')", $xwiki.currentContentSyntaxId))
+  [[$services.localization.render('blog.unpublished.viewall') (% class="itemCount" %)($count)(%%)&gt;&gt;$viewAllTarget||queryString="sheet=Blog.UnpublishedPostsSheet"]]
   #panelfooter()
 #end
 {{/velocity}}</content>

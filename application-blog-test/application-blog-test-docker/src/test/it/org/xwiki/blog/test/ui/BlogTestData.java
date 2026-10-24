@@ -67,6 +67,30 @@ class BlogTestData
 
     private static final String OUTPUT_SYNTAX = "outputSyntax";
 
+    private static final String CATEGORIES = "Categories";
+
+    private static final String SHEET_BINDING_CLASS = "XWiki.DocumentSheetBinding";
+
+    private static final String SHEET = "sheet";
+
+    private static final String CATEGORIES_SHEET = "Blog.CategoriesSheet";
+
+    private static final String DESCRIPTION = "description";
+
+    private static final String DESCRIPTION_PREFIX = "Description of ";
+
+    private static final String PREFERENCES_CLASS = "XWiki.XWikiPreferences";
+
+    private static final String SHOW_RIGHT_PANELS = "showRightPanels";
+
+    private static final String RIGHT_PANELS = "rightPanels";
+
+    /**
+     * The panels displayed by {@code Blog.Management} next to the pages of a new blog.
+     */
+    private static final String BLOG_PANELS = "Blog.RecentPostsPanel,Blog.UnpublishedPanel,Blog.CategoriesPanel,"
+        + "Blog.ArchivePanel,Blog.RelatedBlogsPanel,Blog.AllBlogsPanel";
+
     private static final String PLAIN = "plain";
 
     /**
@@ -126,7 +150,7 @@ class BlogTestData
     void createBlog(DocumentReference reference, String title, String postsLocation, String categoriesLocation,
         boolean forceCategorySelection) throws Exception
     {
-        if (this.setup.serializeReference(reference).matches(".*[\\[\\]].*")) {
+        if (hasSquareBrackets(reference)) {
             // The REST client of the tests can't build a URL with square brackets: use the browser instead.
             this.setup.createPage(reference, "", title);
             this.setup.addObject(reference, BLOG_CLASS, "title", title, "postsLocation", postsLocation,
@@ -153,9 +177,14 @@ class BlogTestData
      */
     void createCategoriesHome(DocumentReference reference) throws Exception
     {
-        createPage(reference, "", "Categories");
-        Object binding = this.setup.rest().object(reference, "XWiki.DocumentSheetBinding");
-        binding.getProperties().add(property("sheet", "Blog.CategoriesSheet"));
+        if (hasSquareBrackets(reference)) {
+            this.setup.createPage(reference, "", CATEGORIES);
+            this.setup.addObject(reference, SHEET_BINDING_CLASS, SHEET, CATEGORIES_SHEET);
+            return;
+        }
+        createPage(reference, "", CATEGORIES);
+        Object binding = this.setup.rest().object(reference, SHEET_BINDING_CLASS);
+        binding.getProperties().add(property(SHEET, CATEGORIES_SHEET));
         this.setup.rest().add(binding);
     }
 
@@ -166,6 +195,11 @@ class BlogTestData
      */
     void createCategory(DocumentReference reference, String name, String parent) throws Exception
     {
+        if (hasSquareBrackets(reference)) {
+            this.setup.createPage(reference, "", name, "xwiki/2.1", parent);
+            this.setup.addObject(reference, CATEGORY_CLASS, "name", name, DESCRIPTION, DESCRIPTION_PREFIX + name);
+            return;
+        }
         Page page = this.setup.rest().page(reference);
         page.setTitle(name);
         page.setContent("");
@@ -173,7 +207,7 @@ class BlogTestData
         this.setup.rest().save(page);
         Object category = this.setup.rest().object(reference, CATEGORY_CLASS);
         category.getProperties().add(property("name", name));
-        category.getProperties().add(property("description", "Description of " + name));
+        category.getProperties().add(property(DESCRIPTION, DESCRIPTION_PREFIX + name));
         this.setup.rest().add(category);
     }
 
@@ -197,18 +231,22 @@ class BlogTestData
     }
 
     /**
-     * Displays the blog panels (categories and related blogs) on the pages of a space, as {@code Blog.Management}
-     * does for a new blog.
+     * Displays the blog panels on the pages of a space, as {@code Blog.Management} does for a new blog.
      *
      * @param space the space
      */
     void enablePanels(SpaceReference space) throws Exception
     {
         DocumentReference preferences = new DocumentReference("WebPreferences", space);
+        if (hasSquareBrackets(preferences)) {
+            this.setup.createPage(preferences, "", "");
+            this.setup.addObject(preferences, PREFERENCES_CLASS, SHOW_RIGHT_PANELS, 1, RIGHT_PANELS, BLOG_PANELS);
+            return;
+        }
         createPage(preferences, "", "");
-        Object object = this.setup.rest().object(preferences, "XWiki.XWikiPreferences");
-        object.getProperties().add(property("showRightPanels", 1));
-        object.getProperties().add(property("rightPanels", "Blog.CategoriesPanel,Blog.RelatedBlogsPanel"));
+        Object object = this.setup.rest().object(preferences, PREFERENCES_CLASS);
+        object.getProperties().add(property(SHOW_RIGHT_PANELS, 1));
+        object.getProperties().add(property(RIGHT_PANELS, BLOG_PANELS));
         this.setup.rest().add(object);
     }
 
@@ -225,6 +263,14 @@ class BlogTestData
         Object object = this.setup.rest().object(preferences, "Blog.EnablePanelsConfigurationClass");
         object.getProperties().add(property("blog", blog));
         this.setup.rest().add(object);
+    }
+
+    /**
+     * @return whether the reference contains square brackets, which the REST client of the tests can't put in a URL
+     */
+    private boolean hasSquareBrackets(DocumentReference reference)
+    {
+        return this.setup.serializeReference(reference).matches(".*[\\[\\]].*");
     }
 
     void createPage(DocumentReference reference, String content, String title) throws Exception
@@ -333,7 +379,7 @@ class BlogTestData
     {
         Map<String, String> parameters = new LinkedHashMap<>();
         parameters.put("xpage", PLAIN);
-        parameters.put("sheet", "Blog.CategoryRss");
+        parameters.put(SHEET, "Blog.CategoryRss");
         if (!category.isEmpty()) {
             parameters.put(CATEGORY, category);
         }

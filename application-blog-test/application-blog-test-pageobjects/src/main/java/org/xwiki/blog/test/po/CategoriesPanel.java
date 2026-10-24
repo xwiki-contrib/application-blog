@@ -97,6 +97,16 @@ public class CategoriesPanel extends BaseElement
         return getContainer().findElement(MANAGE_LINK).getAttribute(HREF);
     }
 
+    /**
+     * @return the texts displayed in bold in the panel
+     * @since 9.15.16
+     */
+    public List<String> getBoldTexts()
+    {
+        return getContainer().findElements(By.xpath(".//strong")).stream().map(WebElement::getText)
+            .collect(Collectors.toList());
+    }
+
     private WebElement getAllCategories()
     {
         return getContainer().findElement(ALL_CATEGORIES);

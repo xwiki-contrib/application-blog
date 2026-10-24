@@ -184,12 +184,9 @@
 #panelheader($services.localization.render('blog.allblogspanel.title'))
 #foreach($item in $results)
   #set ($blogDocument = $xwiki.getDocument($item))
-  #getBlogTitle($blogDocument $title)
-  #if($title != '')
-    * [[$services.rendering.escape($title,$mySyntax)&gt;&gt;$services.rendering.escape($blogDocument.fullName,$mySyntax)]]
-  #else
-    * [[$services.rendering.escape($item.displayTitle,$mySyntax)&gt;&gt;$services.rendering.escape($blogDocument.fullName,$mySyntax)]]
-  #end
+  ## The title of the blog is displayed as plain text. Link content requires double escaping.
+  #set ($escapedTitle = $services.rendering.escape($services.rendering.escape($blogDocument.plainTitle, $mySyntax), $mySyntax))
+  * [[$escapedTitle&gt;&gt;$services.rendering.escape($blogDocument.fullName,$mySyntax)]]
 #end
 #if ($hasAdmin)
 

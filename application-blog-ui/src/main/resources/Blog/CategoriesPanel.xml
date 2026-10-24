@@ -189,9 +189,11 @@
 #else
   #set ($rssQueryString = "&amp;sheet=Blog.BlogRss")
 #end
-#set ($allLink = $xwiki.getURL("${categoriesLocation}.WebHome"))
+#set ($categoriesHomeReference = $services.model.createDocumentReference('WebHome', $services.model.resolveSpace($categoriesLocation)))
+#set ($categoriesHomeTarget = $services.rendering.escape("doc:$services.model.serialize($categoriesHomeReference, 'default')", $xwiki.currentContentSyntaxId))
+#set ($allLink = $services.rendering.escape($xwiki.getURL($categoriesHomeReference), $xwiki.currentContentSyntaxId))
 {{html wiki="true"}}
-* (% class="blog-category-level" %)((( [[#toolImage('rss')&gt;&gt;${categoriesLocation}.WebHome||queryString="xpage=plain${rssQueryString}" title="RSS"]] &lt;span class="wikilink"&gt;&lt;a href="$allLink"&gt;$services.localization.render('blog.categories.all')&lt;/a&gt;&lt;/span&gt;)))
+* (% class="blog-category-level" %)((( [[#toolImage('rss')&gt;&gt;${categoriesHomeTarget}||queryString="xpage=plain${rssQueryString}" title="RSS"]] &lt;span class="wikilink"&gt;&lt;a href="$allLink"&gt;$services.localization.render('blog.categories.all')&lt;/a&gt;&lt;/span&gt;)))
 {{/html}}
 
 #getCategoriesHierarchy($categoriesLocation $tree)
@@ -201,7 +203,7 @@
 #if($xwiki.hasAdminRights())
   #set ($manageCategoriesPage = 'Blog.ManageCategories')
   #if ($categoriesLocation != $defaultBlogSpace)
-    #set ($manageCategoriesPage = "${categoriesLocation}.WebHome")
+    #set ($manageCategoriesPage = $categoriesHomeTarget)
     #set ($manageCategoriesLinkQueryString = 'action=manage')
   #end
   (% class="edit-categories" %)(((~([[$services.localization.render('blog.categories.edit')&gt;&gt;$manageCategoriesPage||queryString="$!manageCategoriesLinkQueryString"]]~))))

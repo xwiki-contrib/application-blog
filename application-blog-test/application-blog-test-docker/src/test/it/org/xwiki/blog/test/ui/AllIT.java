@@ -61,6 +61,11 @@ class AllIT
     }
 
     @Nested
+    class NestedBlogPanelsIT extends BlogPanelsIT
+    {
+    }
+
+    @Nested
     class NestedBlogPostIT extends BlogPostIT
     {
     }
