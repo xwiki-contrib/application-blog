@@ -40,6 +40,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -101,6 +102,25 @@ class BlogPostListMacroIT
     private static final String BOLD_TEXT = "Layout name";
 
     private static final String SPECIAL_LAYOUT = "specialLayout";
+
+    /**
+     * A title made of characters that have a meaning in HTML and of accented characters.
+     */
+    private static final String TITLE_WITH_SPECIAL_CHARACTERS = "Fish & \"Chips\" l'été";
+
+    /**
+     * Restricts the listed posts to the October 2015 posts, i.e. to the post created by this test with that date.
+     */
+    private static final String OCTOBER_PARAMETERS = "fromDate=\"2015-10-01\" toDate=\"2015-10-31\"";
+
+    /**
+     * A text made of HTML markup, wiki syntax and characters that have a meaning in HTML.
+     */
+    private static final String TEXT_WITH_MARKUP = "Fish & \"Chips\" l'été <b>bold</b> **x**";
+
+    private static final String BOLD_MARKUP_TEXT = "bold";
+
+    private static final String MARKUP_COMPACT = "markup-compact";
 
     @Test
     @Order(1)
@@ -208,6 +228,75 @@ class BlogPostListMacroIT
 
         // The stored layout name doesn't change the content of the blog home page.
         assertThat(BlogHomePage.gotoPage(blog).getBoldTexts(), not(hasItem(BOLD_TEXT)));
+    }
+
+    @Test
+    @Order(4)
+    void specialCharactersInPostTitles(TestUtils setup, TestReference testReference)
+    {
+        setup.loginAsSuperAdmin();
+        String testClassName = testReference.getLastSpaceReference().getParent().getName();
+        new BlogPostFixture(setup, new LocalDocumentReference("Blog", testClassName + "October"),
+            TITLE_WITH_SPECIAL_CHARACTERS).withPublishDate(new GregorianCalendar(2015, 9, 10).getTime()).create();
+
+        StringBuilder content = new StringBuilder();
+        for (String layout : LAYOUTS) {
+            appendMacroCall(content, LAYOUT_PREFIX + layout, layout, OCTOBER_PARAMETERS);
+        }
+        setup.createPage(testReference, content.toString(), testReference.getLastSpaceReference().getName());
+        BlogPostListMacroPage page = new BlogPostListMacroPage();
+
+        // The special characters are displayed verbatim by each layout.
+        for (String layout : LAYOUTS) {
+            if ("cards".equals(layout)) {
+                // The link of a card also contains the publication date.
+                assertThat(layout, page.getPostLinkTexts(LAYOUT_PREFIX + layout),
+                    hasItem(containsString(TITLE_WITH_SPECIAL_CHARACTERS)));
+            } else {
+                assertThat(layout, page.getPostLinkTexts(LAYOUT_PREFIX + layout),
+                    hasItem(TITLE_WITH_SPECIAL_CHARACTERS));
+            }
+        }
+    }
+
+    @Test
+    @Order(5)
+    void markupIsDisplayedVerbatim(TestUtils setup, TestReference testReference)
+    {
+        setup.loginAsSuperAdmin();
+        String testClassName = testReference.getLastSpaceReference().getParent().getName();
+        LocalDocumentReference post = new LocalDocumentReference("Blog", testClassName + "Markup");
+        new BlogPostFixture(setup, post, TEXT_WITH_MARKUP).create();
+
+        // Lists the most recent post, i.e. the post created above.
+        StringBuilder content = new StringBuilder();
+        appendMacroCall(content, MARKUP_COMPACT, "compact", "limit=\"1\"");
+        setup.createPage(testReference, content.toString(), testReference.getLastSpaceReference().getName());
+
+        try {
+            setup.forceGuestUser();
+
+            // The compact layout.
+            setup.gotoPage(testReference);
+            BlogPostListMacroPage page = new BlogPostListMacroPage();
+            List<String> compactBoldTexts = page.getBoldTexts(MARKUP_COMPACT);
+            List<String> compactLinkTexts = page.getPostLinkTexts(MARKUP_COMPACT);
+
+            // The blog home page, which uses the image layout.
+            BlogHomePage homePage = BlogHomePage.gotoPage();
+            List<String> homeBoldTexts = homePage.getBoldTexts();
+            List<String> homeTitles = homePage.getPostTitles();
+
+            assertAll(
+                () -> assertThat(compactBoldTexts, not(hasItem(BOLD_MARKUP_TEXT))),
+                () -> assertThat(compactLinkTexts, hasItem(TEXT_WITH_MARKUP)),
+                () -> assertThat(homeBoldTexts, not(hasItem(BOLD_MARKUP_TEXT))),
+                () -> assertThat(homeTitles, hasItem(TEXT_WITH_MARKUP)));
+        } finally {
+            // Don't list this post in the other tests.
+            setup.loginAsSuperAdmin();
+            setup.deletePage(post);
+        }
     }
 
     private void appendMacroCall(StringBuilder content, String containerId, String layout, String parameters)
