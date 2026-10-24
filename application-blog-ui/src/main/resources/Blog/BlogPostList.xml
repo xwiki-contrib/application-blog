@@ -332,7 +332,17 @@
   #end
 #end
 
-#if ("$!blogDescriptorParam" != '' &amp;&amp; !$isValidBlog)
+## The layout is the name of a wiki macro (blogPostLayout followed by the capitalized layout), so only letters and
+## digits are accepted.
+#if ("$!layoutParam" != '' &amp;&amp; !$layoutParam.matches('^[a-zA-Z0-9]+$'))
+  #set ($XDOMList = [])
+  #set ($escapedLayout = $services.rendering.escape($layoutParam, $xwiki.getCurrentContentSyntaxId()))
+  #set ($errorMsg = $services.localization.render('blog.blogpostlist.invalid_layout', [$escapedLayout]))
+  #set ($toParse = "{{error}}${errorMsg}{{/error}}")
+  #set ($xdom = $services.rendering.parse($toParse, $xwiki.getCurrentContentSyntaxId()).getChildren())
+  #set ($discard = $XDOMList.addAll($xdom))
+  #set($xcontext.macro.result = $XDOMList)
+#elseif ("$!blogDescriptorParam" != '' &amp;&amp; !$isValidBlog)
   #set ($XDOMList = [])
   #set ($escapedRef = $services.rendering.escape($blogDescriptorParam, $xwiki.getCurrentContentSyntaxId()))
   #set ($errorMsg = $services.localization.render('blog.blogpostlist.descriptor_not_found', [$escapedRef]))
@@ -459,7 +469,6 @@
 
   #if ("$!layoutParam" != '')
     #set ($blogPostLayoutMacro = "${blogPostLayoutPrefix}${layoutParam.substring(0, 1).toUpperCase()}${layoutParam.substring(1)}")
-    #set ($blogPostLayoutMacro = $blogPostLayoutMacro.replaceAll('~', '~~').replaceAll('"', '~"'))
   #end
 
   #set ($results = [])

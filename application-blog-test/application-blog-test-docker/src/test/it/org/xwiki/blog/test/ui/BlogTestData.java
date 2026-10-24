@@ -26,6 +26,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -167,6 +168,55 @@ class BlogTestData
         blog.getProperties().add(property("itemsPerPage", 10));
         blog.getProperties().add(property("forceCategorySelection", forceCategorySelection ? 1 : 0));
         this.setup.rest().add(blog);
+    }
+
+    /**
+     * Creates a blog descriptor with the given posts layout, through REST, which stores the layout as it is given.
+     *
+     * @param reference the blog page
+     * @param title the title of the blog
+     * @param postsLayout the stored posts layout
+     */
+    void createBlog(DocumentReference reference, String title, String postsLayout) throws Exception
+    {
+        createPage(reference, "", title);
+        Object blog = this.setup.rest().object(reference, BLOG_CLASS);
+        blog.getProperties().add(property("title", title));
+        blog.getProperties().add(property("postsLayout", postsLayout));
+        blog.getProperties().add(property("displayType", "paginated"));
+        blog.getProperties().add(property("itemsPerPage", 10));
+        this.setup.rest().add(blog);
+    }
+
+    /**
+     * Creates a custom blog post layout, i.e. a wiki macro named {@code blogPostLayout<Name>} that displays the
+     * reference of the blog post it is given, after {@code Highlighted post: }.
+     *
+     * @param reference the page holding the wiki macro
+     * @param macroId the identifier of the wiki macro
+     */
+    void createPostLayout(DocumentReference reference, String macroId) throws Exception
+    {
+        // The macro is a script and is visible in the whole wiki: its author needs script and admin rights.
+        UsernamePasswordCredentials credentials = this.setup.setDefaultCredentials(TestUtils.SUPER_ADMIN_CREDENTIALS);
+        try {
+            createPage(reference, "", macroId);
+            Object macro = this.setup.rest().object(reference, "XWiki.WikiMacroClass");
+            macro.getProperties().add(property("id", macroId));
+            macro.getProperties().add(property("name", macroId));
+            macro.getProperties().add(property("contentType", "No content"));
+            macro.getProperties().add(property("visibility", "Current Wiki"));
+            macro.getProperties().add(property("code", "{{velocity}}Highlighted post: "
+                + "$services.rendering.escape($xcontext.macro.params.reference, 'xwiki/2.1'){{/velocity}}"));
+            this.setup.rest().add(macro);
+            for (String parameter : Arrays.asList("reference", "params")) {
+                Object macroParameter = this.setup.rest().object(reference, "XWiki.WikiMacroParameterClass");
+                macroParameter.getProperties().add(property("name", parameter));
+                this.setup.rest().add(macroParameter);
+            }
+        } finally {
+            this.setup.setDefaultCredentials(credentials);
+        }
     }
 
     /**
