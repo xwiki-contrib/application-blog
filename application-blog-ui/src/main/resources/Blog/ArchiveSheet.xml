@@ -128,7 +128,11 @@
           #getEntryObject($entryDoc $entryObj)
           #isPublished($entryObj $isPublished)
           #isHidden($entryObj $isHidden)
-          * [[$entryDoc.getValue('title')&gt;&gt;$entryDoc]]#if(!$isPublished) $services.localization.render('blog.archive.unpublished')#elseif($isHidden) $services.localization.render('blog.archive.hidden')#end
+          ## The label of a link is parsed as wiki syntax once the link is parsed, so it has to be escaped twice.
+          #set ($postTitle = $services.rendering.escape("$!entryDoc.getValue('title')", $xwiki.currentContentSyntaxId))
+          #set ($postTitle = $services.rendering.escape($postTitle, $xwiki.currentContentSyntaxId))
+          #set ($postTarget = $services.rendering.escape("doc:$services.model.serialize($entryDoc.documentReference, 'default')", $xwiki.currentContentSyntaxId))
+          * [[$postTitle&gt;&gt;$postTarget]]#if(!$isPublished) $services.localization.render('blog.archive.unpublished')#elseif($isHidden) $services.localization.render('blog.archive.hidden')#end
 
         #end
       #end
