@@ -19,10 +19,13 @@
  */
 package org.xwiki.blog.test.ui;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.xwiki.blog.test.po.BlogHomePage;
 import org.xwiki.blog.test.po.BlogPostFixture;
+import org.xwiki.blog.test.po.BlogPostViewPage;
 import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.test.docker.junit5.TestReference;
 import org.xwiki.test.docker.junit5.UITest;
@@ -30,9 +33,11 @@ import org.xwiki.test.ui.TestUtils;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Verify the blog home page when the posts are displayed by week or by month.
+ * Verify the display of the blog posts on their page and on the blog home page, whether the posts are displayed by
+ * page, by week or by month.
  *
  * @version $Id$
  */
@@ -51,7 +56,11 @@ import static org.hamcrest.Matchers.hasItem;
 )
 class BlogCalendarDisplayIT
 {
-    private static final String POST_TITLE = "Fish & \"Chips\"";
+    /**
+     * A title made of characters that have a meaning in HTML, which used to be displayed escaped twice by some
+     * displays (see BLOG-252), and of accented characters.
+     */
+    private static final String POST_TITLE = "Fish & \"Chips\" l'été";
 
     private static final String BLOG_CLASS = "Blog.BlogClass";
 
@@ -59,18 +68,27 @@ class BlogCalendarDisplayIT
 
     @Test
     @Order(1)
-    void weeklyDisplayShowsThePostTitles(TestUtils setup, TestReference testReference)
+    void postTitlesWithSpecialCharacters(TestUtils setup, TestReference testReference)
     {
         setup.loginAsSuperAdmin();
         String testClassName = testReference.getLastSpaceReference().getParent().getName();
-        new BlogPostFixture(setup, new LocalDocumentReference("Blog", testClassName), POST_TITLE).create();
+        LocalDocumentReference post = new LocalDocumentReference("Blog", testClassName);
+        new BlogPostFixture(setup, post, POST_TITLE).create();
 
-        setup.updateObject("Blog", "WebHome", BLOG_CLASS, 0, DISPLAY_TYPE, "weekly");
-        try {
-            assertThat(BlogHomePage.gotoPage().getPostTitles(), hasItem(POST_TITLE));
-        } finally {
-            // The other tests list the posts of the default blog through its paginated display.
-            setup.updateObject("Blog", "WebHome", BLOG_CLASS, 0, DISPLAY_TYPE, "paginated");
+        // The post page.
+        assertEquals(POST_TITLE, BlogPostViewPage.gotoPage(post).getDocumentTitle());
+
+        // The default display of the blog home page, which uses the image layout.
+        assertThat(BlogHomePage.gotoPage().getPostTitles(), hasItem(POST_TITLE));
+
+        for (String displayType : Arrays.asList("weekly", "monthly")) {
+            setup.updateObject("Blog", "WebHome", BLOG_CLASS, 0, DISPLAY_TYPE, displayType);
+            try {
+                assertThat(displayType, BlogHomePage.gotoPage().getPostTitles(), hasItem(POST_TITLE));
+            } finally {
+                // The other tests list the posts of the default blog through its paginated display.
+                setup.updateObject("Blog", "WebHome", BLOG_CLASS, 0, DISPLAY_TYPE, "paginated");
+            }
         }
     }
 }

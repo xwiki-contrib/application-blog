@@ -179,7 +179,8 @@ public class BlogPostListPage extends ViewPage
      */
     public List<String> getBoldTexts()
     {
-        return getDriver().findElementsWithoutWaiting(By.xpath("//div[@id = 'xwikicontent']//strong")).stream()
+        return getDriver()
+            .findElementsWithoutWaiting(By.xpath("//div[@id = 'xwikicontent']//*[self::strong or self::b]")).stream()
             .map(WebElement::getText).collect(Collectors.toList());
     }
 }

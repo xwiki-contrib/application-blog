@@ -736,15 +736,16 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * @param entryObj The xobject of the blog post, an instance of the &lt;tt&gt;Blog.BlogPostClass&lt;/tt&gt; xclass.
  *###
 #macro(displayEntryTitle $entryDoc $entryObj)
-  ## This is executed in the context of a global HTML macro, so we need to escape html too
-  #set ($escapedRenderedTitle = $services.rendering.escape($entryDoc.getValue('title'), $xwiki.getCurrentContentSyntaxId()))
+  ## This macro is called both from wiki syntax and from HTML macros that render wiki syntax (e.g. the image layout),
+  ## so the title is output as escaped HTML, which is displayed the same way in both cases. The XML escaping also
+  ## escapes the curly brackets, so the title can't end the HTML macro.
+  #set ($escapedTitle = $escapetool.xml($entryDoc.getValue('title')))
   #if($doc.fullName == $entryDoc.fullName)
     (% class="entry-title" %)
-    = $escapedRenderedTitle =
+    = {{html wiki="false" clean="false"}}$!escapedTitle{{/html}} =
   #else
     (% class="entry-title" %)
-    ## Link content requires double escaping.
-    === [[$services.rendering.escape($escapedRenderedTitle,$xwiki.getCurrentContentSyntaxId())&gt;&gt;doc:$services.rendering.escape($services.model.serialize($entryDoc.getDocumentReference(),'default'),$xwiki.getCurrentContentSyntaxId())]] ===
+    === {{html wiki="false" clean="false"}}&lt;span class="wikilink"&gt;&lt;a href="$escapetool.xml($entryDoc.getURL())"&gt;$!escapedTitle&lt;/a&gt;&lt;/span&gt;{{/html}} ===
   #end
 #end
 ##

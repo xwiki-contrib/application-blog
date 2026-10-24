@@ -88,7 +88,8 @@ public class BlogPostListMacroPage extends ViewPage
      */
     public List<String> getBoldTexts(String containerId)
     {
-        return getDriver().findElementsWithoutWaiting(getContainer(containerId), By.xpath(".//strong")).stream()
+        return getDriver()
+            .findElementsWithoutWaiting(getContainer(containerId), By.xpath(".//*[self::strong or self::b]")).stream()
             .map(WebElement::getText).collect(Collectors.toList());
     }
 
