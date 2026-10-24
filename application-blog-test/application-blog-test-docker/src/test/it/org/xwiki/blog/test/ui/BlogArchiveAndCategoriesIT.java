@@ -24,17 +24,20 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.xwiki.blog.test.po.BlogPostFixture;
 import org.xwiki.blog.test.po.BlogPostListPage;
 import org.xwiki.blog.test.po.BlogPostViewPage;
+import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.test.docker.junit5.TestReference;
 import org.xwiki.test.docker.junit5.UITest;
 import org.xwiki.test.ui.TestUtils;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -69,6 +72,21 @@ class BlogArchiveAndCategoriesIT
     private static final String MAY_TITLE = "Archived news post";
 
     private static final List<String> CATEGORIES_SPACE = Arrays.asList("Blog", "Categories");
+
+    private static final String WIKI = "xwiki";
+
+    private static final String MARCH_NEWS_TITLE = "Archived news of March";
+
+    private static final String MARCH_PERSONAL_TITLE = "Archived personal post of March";
+
+    private static final String COMPACT_TITLE = "Archived post of a compact blog";
+
+    private static final String SPECIAL_LAYOUT_TITLE = "Archived post of a blog with a special layout";
+
+    /**
+     * A layout name made of the characters that end a macro parameter and a macro call, followed by wiki syntax.
+     */
+    private static final String LAYOUT_WITH_SPECIAL_CHARACTERS = "full\" /}}**Archive layout**";
 
     @Test
     @Order(1)
@@ -105,5 +123,68 @@ class BlogArchiveAndCategoriesIT
         BlogPostViewPage post = personalCategory.clickPost(FEBRUARY_TITLE);
         assertEquals(FEBRUARY_TITLE, post.getDocumentTitle());
         assertEquals(Collections.singletonList("Personal"), post.getCategories());
+    }
+
+    @Test
+    @Order(2)
+    void archiveOfAMonthOfAnotherBlogAndOfACategory(TestUtils setup, TestReference testReference) throws Exception
+    {
+        setup.loginAsSuperAdmin();
+        String testClassName = testReference.getLastSpaceReference().getParent().getName();
+
+        new BlogPostFixture(setup, new LocalDocumentReference("Blog", testClassName + "MarchNews"), MARCH_NEWS_TITLE)
+            .withPublishDate(new GregorianCalendar(YEAR, 2, 10).getTime()).withCategory("Blog.Categories.News")
+            .create();
+        new BlogPostFixture(setup, new LocalDocumentReference("Blog", testClassName + "MarchPersonal"),
+            MARCH_PERSONAL_TITLE).withPublishDate(new GregorianCalendar(YEAR, 2, 20).getTime())
+                .withCategory("Blog.Categories.Personal").create();
+
+        // A blog displaying its posts with another layout than the default one.
+        String blogSpace = testClassName + "Compact";
+        DocumentReference blog = new DocumentReference(WIKI, blogSpace, "WebHome");
+        new BlogTestData(setup).createBlog(blog, "Compact blog", "compact");
+        new BlogPostFixture(setup, new LocalDocumentReference(blogSpace, "Post"), COMPACT_TITLE)
+            .withPublishDate(new GregorianCalendar(YEAR, 2, 15).getTime()).create();
+
+        // The archive of a month of that blog lists only the posts of that blog published that month.
+        assertEquals(Collections.singletonList(COMPACT_TITLE),
+            BlogPostListPage.gotoArchiveOf(blog, YEAR, 3).getPostTitles());
+
+        // The archive of a month of a category lists only the posts of that category published that month.
+        assertEquals(Collections.singletonList(MARCH_NEWS_TITLE), BlogPostListPage
+            .gotoArchiveOf(new LocalDocumentReference(CATEGORIES_SPACE, "News"), YEAR, 3).getPostTitles());
+    }
+
+    @Test
+    @Order(3)
+    void archiveOfAMonthOfABlogWithASpecialLayoutName(TestUtils setup, TestReference testReference)
+        throws Exception
+    {
+        String testClassName = testReference.getLastSpaceReference().getParent().getName();
+        String user = testClassName + "Author";
+        String password = "password";
+
+        // The blog and its post are created by a regular user, the layout being stored through REST since the user
+        // interface doesn't allow it.
+        setup.loginAsSuperAdmin();
+        setup.createUserAndLogin(user, password);
+        String blogSpace = testClassName + "Special";
+        DocumentReference blog = new DocumentReference(WIKI, blogSpace, "WebHome");
+        UsernamePasswordCredentials credentials =
+            setup.setDefaultCredentials(new UsernamePasswordCredentials(user, password));
+        try {
+            new BlogTestData(setup).createBlog(blog, "Special layout", LAYOUT_WITH_SPECIAL_CHARACTERS);
+        } finally {
+            setup.setDefaultCredentials(credentials);
+        }
+        new BlogPostFixture(setup, new LocalDocumentReference(blogSpace, "Post"), SPECIAL_LAYOUT_TITLE)
+            .withPublishDate(new GregorianCalendar(YEAR, 5, 10).getTime()).create();
+
+        // The archive of a month of that blog lists its posts, and the stored layout name doesn't change the content
+        // of the page.
+        setup.forceGuestUser();
+        BlogPostListPage archive = BlogPostListPage.gotoArchiveOf(blog, YEAR, 6);
+        assertEquals(Collections.singletonList(SPECIAL_LAYOUT_TITLE), archive.getPostTitles());
+        assertThat(archive.getContent(), not(containsString("Archive layout")));
     }
 }
