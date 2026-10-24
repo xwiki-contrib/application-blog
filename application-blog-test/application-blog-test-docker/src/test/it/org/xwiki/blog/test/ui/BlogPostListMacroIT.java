@@ -261,12 +261,19 @@ class BlogPostListMacroIT
 
     @Test
     @Order(5)
-    void markupIsDisplayedVerbatim(TestUtils setup, TestReference testReference)
+    void markupIsDisplayedVerbatim(TestUtils setup, TestReference testReference) throws Exception
     {
         setup.loginAsSuperAdmin();
         String testClassName = testReference.getLastSpaceReference().getParent().getName();
+        DocumentReference category =
+            new DocumentReference(WIKI, Arrays.asList("Blog", "Categories"), testClassName + "Markup");
+        new BlogTestData(setup).createCategory(category, TEXT_WITH_MARKUP, "Blog.Categories.WebHome");
+        String categoryName = "Blog.Categories." + testClassName + "Markup";
+        LocalDocumentReference categorizedPost = new LocalDocumentReference("Blog", testClassName + "Categorized");
+        String categorizedPostTitle = testClassName + " categorized";
+        new BlogPostFixture(setup, categorizedPost, categorizedPostTitle).withCategory(categoryName).create();
         LocalDocumentReference post = new LocalDocumentReference("Blog", testClassName + "Markup");
-        new BlogPostFixture(setup, post, TEXT_WITH_MARKUP).create();
+        new BlogPostFixture(setup, post, TEXT_WITH_MARKUP).withCategory(categoryName).create();
 
         // Lists the most recent post, i.e. the post created above.
         StringBuilder content = new StringBuilder();
@@ -286,16 +293,20 @@ class BlogPostListMacroIT
             BlogHomePage homePage = BlogHomePage.gotoPage();
             List<String> homeBoldTexts = homePage.getBoldTexts();
             List<String> homeTitles = homePage.getPostTitles();
+            List<String> homeCategories = homePage.getPostCategories(categorizedPostTitle);
 
             assertAll(
                 () -> assertThat(compactBoldTexts, not(hasItem(BOLD_MARKUP_TEXT))),
                 () -> assertThat(compactLinkTexts, hasItem(TEXT_WITH_MARKUP)),
                 () -> assertThat(homeBoldTexts, not(hasItem(BOLD_MARKUP_TEXT))),
-                () -> assertThat(homeTitles, hasItem(TEXT_WITH_MARKUP)));
+                () -> assertThat(homeTitles, hasItem(TEXT_WITH_MARKUP)),
+                () -> assertEquals(Collections.singletonList(TEXT_WITH_MARKUP), homeCategories));
         } finally {
             // Don't list this post in the other tests.
             setup.loginAsSuperAdmin();
             setup.deletePage(post);
+            setup.deletePage(categorizedPost);
+            setup.deletePage(category);
         }
     }
 
