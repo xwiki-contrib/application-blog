@@ -43,6 +43,7 @@
 ##
 ##
 #macro(displayBlogFullArchive $targetDocument)
+  #set ($archiveTarget = $services.rendering.escape("doc:$services.model.serialize($targetDocument.documentReference, 'default')", $xwiki.currentContentSyntaxId))
   #getAllBlogPostsQueryBasedOnDisplayContext($targetDocument $query $queryParams)
   #set ($discard = $queryParams.put('creator', $xcontext.user))
   #set ($query = "$!{query} and (doc.creator = :creator or (isPublished.value = 1 and hidden.value = 0))")
@@ -76,7 +77,7 @@
       #set($yearArticleCount = $yearArticleCountQueryObj.count())
       #if($yearArticleCount &gt; 0)
         #set ($queryString = "sheet=Blog.ArchiveSheet&amp;year=${year}")
-        * [[$year ($yearArticleCount)&gt;&gt;${targetDocument.fullName}||queryString="${queryString}"]]
+        * [[$year ($yearArticleCount)&gt;&gt;${archiveTarget}||queryString="${queryString}"]]
         #foreach($month in [1..12])
           #set ($statement = "${query} and year(publishDate.value) = $year and month(publishDate.value) = $month")
           #set ($monthArticleCountQueryObj = $services.query.hql($statement).addFilter('unique'))
@@ -85,7 +86,7 @@
           #if($monthArticleCount &gt; 0)
             $tempDate.setMonthOfYear($month)
             #set($queryString = "sheet=Blog.ArchiveSheet&amp;year=${year}&amp;month=${month}")
-            ** [[$monthFormatter.print($tempDate) (${monthArticleCount})&gt;&gt;${targetDocument.fullName}||queryString="${queryString}"]]
+            ** [[$monthFormatter.print($tempDate) (${monthArticleCount})&gt;&gt;${archiveTarget}||queryString="${queryString}"]]
           #end
         #end
       #end
@@ -99,6 +100,7 @@
 ##
 #macro(displayBlogYearArchive $targetDocument $year)
   #displayBlogYearArchiveSubTitle($targetDocument $year)
+  #set ($archiveTarget = $services.rendering.escape("doc:$services.model.serialize($targetDocument.documentReference, 'default')", $xwiki.currentContentSyntaxId))
   #getAllBlogPostsQueryBasedOnDisplayContext($targetDocument $query $queryParams)
   #set ($discard = $queryParams.put('creator', $xcontext.user))
   #set ($query = "$!{query} and (doc.creator = :creator or (isPublished.value = 1 and hidden.value = 0))")
@@ -119,7 +121,7 @@
         $tempDate.setMonthOfYear($month)
         #set($queryString = "sheet=Blog.ArchiveSheet&amp;year=${year}&amp;month=${month}")
 (% class="blog-sub-title" %)
-=== [[$monthFormatter.print($tempDate) (${monthArticleCount})&gt;&gt;${targetDocument.fullName}||queryString="${queryString}"]] ===
+=== [[$monthFormatter.print($tempDate) (${monthArticleCount})&gt;&gt;${archiveTarget}||queryString="${queryString}"]] ===
         #set ($monthArticleQueryObj = $services.query.hql("${query} and month(publishDate.value) = $month order by publishDate.value").addFilter('unique'))
         #bindQueryParameters($monthArticleQueryObj $queryParams)
         #foreach($entryDoc in $xwiki.wrapDocs($monthArticleQueryObj.execute()))

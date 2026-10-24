@@ -36,6 +36,11 @@ class AllIT
     }
 
     @Nested
+    class NestedBlogArchiveIT extends BlogArchiveIT
+    {
+    }
+
+    @Nested
     class NestedBlogCalendarDisplayIT extends BlogCalendarDisplayIT
     {
     }
