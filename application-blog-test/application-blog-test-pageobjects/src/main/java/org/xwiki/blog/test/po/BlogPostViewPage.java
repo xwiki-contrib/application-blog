@@ -134,4 +134,31 @@ public class BlogPostViewPage extends ViewPage
     {
         return new CategoriesPanel();
     }
+
+    /**
+     * @return the "Blog Archive" panel of the page
+     * @since 9.15.16
+     */
+    public ArchivePanel getArchivePanel()
+    {
+        return new ArchivePanel();
+    }
+
+    /**
+     * @return the "Unpublished Blog Posts" panel of the page
+     * @since 9.15.16
+     */
+    public UnpublishedPanel getUnpublishedPanel()
+    {
+        return new UnpublishedPanel();
+    }
+
+    /**
+     * @return the "All Blogs" panel of the page
+     * @since 9.15.16
+     */
+    public AllBlogsPanel getAllBlogsPanel()
+    {
+        return new AllBlogsPanel();
+    }
 }

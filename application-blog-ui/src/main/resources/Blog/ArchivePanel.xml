@@ -188,11 +188,12 @@
 #end
 #if ($displayArchivePanel)
   #if ($isCategoryPage || $isCategoriesHomePage)
-    #set ($archivePage = $doc.fullName)
+    #set ($archiveDocumentReference = $doc.documentReference)
   #else
     #getBlogDocument($doc.space $blogDoc)
-    #set ($archivePage = $blogDoc.fullName)
+    #set ($archiveDocumentReference = $blogDoc.documentReference)
   #end
+  #set ($archivePage = $services.rendering.escape("doc:$services.model.serialize($archiveDocumentReference, 'default')", $xwiki.currentContentSyntaxId))
   #panelheader($services.localization.render('blog.archive.paneltitle'))
   ## Create a Jodatime date formatter that will be used to format dates
   #set ($monthFormatter = $xwiki.jodatime.getDateTimeFormatterForPattern('MMMM'))
