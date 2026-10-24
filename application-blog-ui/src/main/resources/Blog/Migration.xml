@@ -39,6 +39,7 @@
   <content>{{velocity filter="none"}}
 #if($request.migrate &amp;&amp; $!{services.csrf.isTokenValid("$!{request.getParameter('form_token')}")})
   #set($newContent = '#includeForm("Blog.BlogPostSheet")')
+  #set ($syntaxId = $xwiki.currentContentSyntaxId)
   #set($query = ", BaseObject obj where obj.name = doc.fullName and obj.className = 'XWiki.ArticleClass'")
   #foreach($article in $services.query.hql($query).execute())
     #if($xwiki.hasAccessLevel('edit', $xcontext.user, $article))
@@ -54,9 +55,22 @@
       #set($discard = $articleDoc.removeObjects('XWiki.ArticleClass'))
       $articleDoc.setContent($newContent)
       $!articleDoc.save($services.localization.render('blog.migration.migrated'), true)
-      * $services.localization.render('blog.migration.updated') [[$entryObj.title&gt;&gt;${article}]] ($services.localization.render('blog.migration.inspace') [[$articleDoc.space&gt;&gt;${articleDoc.space}.WebHome]])
+      ## Link labels are parsed as wiki syntax once the link itself is parsed: escape them twice.
+      #set ($articleLabel = $services.rendering.escape("$!entryObj.getProperty('title').value", $syntaxId))
+      #set ($articleLabel = $services.rendering.escape($articleLabel, $syntaxId))
+      #set ($articleTarget = "doc:$services.model.serialize($articleDoc.documentReference, 'default')")
+      #set ($articleTarget = $services.rendering.escape($articleTarget, $syntaxId))
+      #set ($spaceLabel = $services.rendering.escape($articleDoc.space, $syntaxId))
+      #set ($spaceLabel = $services.rendering.escape($spaceLabel, $syntaxId))
+      #set ($spaceReference = $articleDoc.documentReference.lastSpaceReference)
+      #set ($spaceHomeReference = $services.model.createDocumentReference('WebHome', $spaceReference))
+      #set ($spaceTarget = "doc:$services.model.serialize($spaceHomeReference, 'default')")
+      #set ($spaceTarget = $services.rendering.escape($spaceTarget, $syntaxId))
+      * $services.localization.render('blog.migration.updated') [[$articleLabel&gt;&gt;$articleTarget]] ($services.localization.render('blog.migration.inspace') [[$spaceLabel&gt;&gt;$spaceTarget]])
     #else
-      * $services.localization.render('blog.migration.skipping') [[$article]]
+      #set ($articleTarget = "doc:$services.model.serialize($services.model.resolveDocument($article), 'default')")
+      #set ($articleTarget = $services.rendering.escape($articleTarget, $syntaxId))
+      * $services.localization.render('blog.migration.skipping') [[$articleTarget]]
     #end
   #end
   $services.localization.render('blog.migration.done') [[$services.localization.render('blog.migration.backtoblog')&gt;&gt;Blog.WebHome]]
