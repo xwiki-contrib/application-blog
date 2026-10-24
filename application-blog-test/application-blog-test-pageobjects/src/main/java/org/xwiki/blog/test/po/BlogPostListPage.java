@@ -54,6 +54,22 @@ public class BlogPostListPage extends ViewPage
     }
 
     /**
+     * Opens a page displayed with the archive sheet for the given month, which lists the posts of the blog or the
+     * category of that page published that month.
+     *
+     * @param page the page displayed with the archive sheet, e.g. a blog or a category page
+     * @param year the year of the archived posts
+     * @param month the month of the archived posts, from 1 to 12
+     * @return the page listing the posts published in the given month
+     * @since 9.15.16
+     */
+    public static BlogPostListPage gotoArchiveOf(EntityReference page, int year, int month)
+    {
+        getUtil().gotoPage(page, "view", "sheet=Blog.ArchiveSheet&year=" + year + "&month=" + month);
+        return new BlogPostListPage();
+    }
+
+    /**
      * Opens a category page, which lists the posts of that category.
      *
      * @param category the reference of the category page

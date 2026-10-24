@@ -1244,10 +1244,14 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  * 
  * @param blogDoc The blog document. It should contain a &lt;tt&gt;Blog.BlogClass&lt;/tt&gt; object with the &lt;tt&gt;postsLayout&lt;/tt&gt;
  *        property set.
- * @param postsLayout The resulting string. If the blog object does not define anything, it is considered full (default).
+ * @param postsLayout The resulting string. If the blog object does not define anything, or defines a layout whose name
+ *        is not made only of letters and digits, it is considered full (default).
  *###
 #macro(getBlogPostsLayout $blogDoc $postsLayout)
   #getBlogProperty($blogDoc 'postsLayout' 'full' $res)
+  #if (!$res.matches('^[a-zA-Z0-9]+$'))
+    #set ($res = 'full')
+  #end
   #set ($postsLayout = $NULL)
   #setVariable ("$postsLayout" $res)
 #end
