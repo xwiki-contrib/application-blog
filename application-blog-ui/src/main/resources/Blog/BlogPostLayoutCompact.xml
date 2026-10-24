@@ -492,8 +492,9 @@
       &lt;/div&gt;
     #end
     &lt;div class="col-xs-12 #if($displayImage &amp;&amp; $imageAtt)col-sm-8 col-md-8#end hentry"&gt;## in case the image display is not enabled, the title is displayed on 100% of the curent row width
-      #set ($escapedRenderedTitle = $services.rendering.escape($postDoc.getValue('title'), $xwiki.getCurrentContentSyntaxId()))
-      #set ($escapedURL = $services.rendering.escape($postDoc.URL, $xwiki.getCurrentContentSyntaxId()))
+      ## The title and the URL are displayed in an HTML macro that renders wiki syntax, so escape both syntaxes.
+      #set ($escapedRenderedTitle = $escapetool.xml($services.rendering.escape($postDoc.getValue('title'), $xwiki.getCurrentContentSyntaxId())))
+      #set ($escapedURL = $escapetool.xml($services.rendering.escape($postDoc.URL, $xwiki.getCurrentContentSyntaxId())))
       &lt;div class="entry-title"&gt;&lt;span class="wikilink"&gt;&lt;a href="$escapedURL"&gt;$escapedRenderedTitle&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
       &lt;div class="entry-author-date pull-right"&gt;
         #set($dateStr = $datetool.format('long', $postDate, $xcontext.locale))
