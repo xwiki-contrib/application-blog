@@ -83,6 +83,20 @@ class BlogArchiveIT
 
     private static final String TEAM_TITLE = "Team meeting";
 
+    /**
+     * Another year in which no other test publishes posts, used by the test about the titles of the posts.
+     */
+    private static final int TITLES_YEAR = 2013;
+
+    /**
+     * A post title containing wiki syntax, expected to be displayed as is.
+     */
+    private static final String TITLE_WITH_WIKI_SYNTAX = "Notes]] with **bold** and {{info}}box{{/info}} [[syntax";
+
+    private static final String SPECIAL_NAME_TITLE = "Post with a special page name";
+
+    private static final String PASSWORD = "password";
+
     @Test
     @Order(1)
     void archiveListsTheYearsAndMonthsOfThePosts(TestUtils setup, TestReference testReference) throws Exception
@@ -188,6 +202,31 @@ class BlogArchiveIT
         archivePage = BlogArchivePage.gotoArchiveOf(page, PAGE_NAMES_YEAR);
         assertEquals(Collections.singletonList("May (1)"), archivePage.getMonthHeadings());
         assertEquals(getArchiveURL(setup, page, PAGE_NAMES_YEAR, 5), archivePage.getMonthHeadingURL("May (1)"));
+        assertEquals(Collections.emptyList(), archivePage.getBoldTexts());
+    }
+
+    @Test
+    @Order(4)
+    void archiveOfAYearDisplaysTheTitlesOfThePostsVerbatim(TestUtils setup, TestReference testReference)
+    {
+        String prefix = getTestClassName(testReference);
+
+        // The posts are created by a regular user.
+        setup.loginAsSuperAdmin();
+        setup.createUserAndLogin(prefix + "Author", PASSWORD);
+        DocumentReference post = new DocumentReference(WIKI, BLOG, prefix + " wiki syntax title");
+        new BlogPostFixture(setup, post, TITLE_WITH_WIKI_SYNTAX)
+            .withPublishDate(new GregorianCalendar(TITLES_YEAR, 2, 10).getTime()).create();
+        // The name of this post contains the characters that end a link, followed by wiki syntax.
+        DocumentReference specialNamePost = new DocumentReference(WIKI, BLOG, prefix + "]] **Bold** post");
+        new BlogPostFixture(setup, specialNamePost, SPECIAL_NAME_TITLE)
+            .withPublishDate(new GregorianCalendar(TITLES_YEAR, 2, 20).getTime()).create();
+
+        BlogArchivePage archivePage = BlogArchivePage.gotoPage(TITLES_YEAR);
+        assertEquals(Arrays.asList(TITLE_WITH_WIKI_SYNTAX, SPECIAL_NAME_TITLE), archivePage.getPosts("March (2)"));
+        assertEquals(BlogTestData.getViewURL(setup, post, ""), archivePage.getPostURL(TITLE_WITH_WIKI_SYNTAX));
+        assertEquals(BlogTestData.getViewURL(setup, specialNamePost, ""),
+            archivePage.getPostURL(SPECIAL_NAME_TITLE));
         assertEquals(Collections.emptyList(), archivePage.getBoldTexts());
     }
 
