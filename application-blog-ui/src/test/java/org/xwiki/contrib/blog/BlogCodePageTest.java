@@ -19,6 +19,9 @@
  */
 package org.xwiki.contrib.blog;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -94,6 +97,7 @@ class BlogCodePageTest extends PageTest
         loadPage(new DocumentReference("xwiki", "Blog", "BlogParameters"));
         loadPage(new DocumentReference("xwiki", "Blog", "BlogCode"));
         loadPage(new DocumentReference(WIKI, BLOG, "BlogPostClass"));
+        loadPage(new DocumentReference(WIKI, BLOG, "CategoryClass"));
     }
 
     @ParameterizedTest
@@ -152,12 +156,42 @@ class BlogCodePageTest extends PageTest
         }
     }
 
+    @ParameterizedTest
+    @ValueSource(booleans = { true, false })
+    void listCategoriesWithSpecialCharacters(boolean insideHTML) throws Exception
+    {
+        DocumentReference categoryReference = new DocumentReference(WIKI, Arrays.asList(BLOG, "Categories"), "Food");
+        XWikiDocument categoryDocument = new XWikiDocument(categoryReference);
+        BaseObject categoryObject =
+            categoryDocument.newXObject(new DocumentReference(WIKI, BLOG, "CategoryClass"), this.context);
+        categoryObject.setStringValue("name", SPECIAL_TEXT);
+        this.xwiki.saveDocument(categoryDocument, this.context);
+        createPost();
+
+        XWikiDocument document = new XWikiDocument(new DocumentReference(WIKI, BLOG, "Listing"));
+        document.setSyntax(Syntax.XWIKI_2_1);
+        document.setContent(getContent(insideHTML,
+            "#listCategories($xwiki.getDocument('Blog.Post').getObject('" + BLOG_POST_CLASS + "'))"));
+        this.xwiki.saveDocument(document, this.context);
+
+        this.context.setDoc(document);
+        Document html = renderHTMLPage(document);
+
+        Elements links = html.select("a[rel=tag]");
+        assertEquals(1, links.size(), html.html());
+        Element link = links.first();
+        assertTrue(link.select("b, strong").isEmpty(), link.html());
+        assertEquals(SPECIAL_TEXT, link.text());
+        assertEquals(this.xwiki.getURL(categoryReference, "view", this.context), link.attr("href"));
+    }
+
     private XWikiDocument createPost() throws Exception
     {
         XWikiDocument postDocument = new XWikiDocument(POST_REFERENCE);
         BaseObject postObject =
             postDocument.newXObject(new DocumentReference(WIKI, BLOG, "BlogPostClass"), this.context);
         postObject.setStringValue("title", SPECIAL_TEXT);
+        postObject.setStringListValue("category", Collections.singletonList("Blog.Categories.Food"));
         this.xwiki.saveDocument(postDocument, this.context);
         return this.xwiki.getDocument(POST_REFERENCE, this.context);
     }

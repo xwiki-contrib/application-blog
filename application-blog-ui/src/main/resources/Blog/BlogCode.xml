@@ -883,10 +883,11 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
           #else
             , ##
           #end##
-          #set($escapedName = $services.rendering.escape($categoryDoc.getObject($blogCategoryClassname).getValue('name'), $xwiki.getCurrentContentSyntaxId()))
-          #set($escapedName = $services.rendering.escape($escapedName, $xwiki.getCurrentContentSyntaxId()))
-          #set($escapedCategory = $services.rendering.escape($category, $xwiki.getCurrentContentSyntaxId()))
-          [[$!{escapedName}&gt;&gt;${escapedCategory}||rel='tag']]##
+          ## This macro is called both from wiki syntax and from HTML macros that render wiki syntax (e.g. the image
+          ## layout), so the link is output as escaped HTML, which is displayed the same way in both cases. The XML
+          ## escaping also escapes the curly brackets, so the category name can't end the HTML macro.
+          #set($escapedName = $escapetool.xml($categoryDoc.getObject($blogCategoryClassname).getValue('name')))
+          {{html wiki="false" clean="false"}}&lt;span class="wikilink"&gt;&lt;a rel="tag" href="$escapetool.xml($categoryDoc.getURL())"&gt;$!escapedName&lt;/a&gt;&lt;/span&gt;{{/html}}##
         #end##
       #end##
     #end
