@@ -88,6 +88,11 @@ class AllIT
     }
 
     @Nested
+    class NestedBlogPanelsConfigurationIT extends BlogPanelsConfigurationIT
+    {
+    }
+
+    @Nested
     class NestedBlogPanelsIT extends BlogPanelsIT
     {
     }
