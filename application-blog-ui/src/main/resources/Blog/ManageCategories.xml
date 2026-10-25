@@ -46,20 +46,36 @@
 ######################################################
 ## Execute actions
 ######################################################
-#if ("$!request.xaction" == 'delete')
+#set ($categoryActions = ['delete', 'rename', 'create'])
+#if ($categoryActions.contains("$!request.xaction") &amp;&amp; !$services.csrf.isTokenValid("$!request.form_token"))
+  ## The actions that modify the categories require a valid form token.
+  #if ($request.ajax)
+    #blog__actionResponseError(403, 'blog.manageCategories.error.invalidFormToken', [])
+  #else
+    $response.sendRedirect($services.csrf.resubmissionURL)
+  #end
+#elseif ("$!request.xaction" == 'delete')
   #foreach($item in $request.getParameterValues('category'))
     #deleteCategory($item)
   #end
 #elseif("$!request.xaction" == 'rename')
   #set ($newFullName = "$!{request.newCategoryName}")
+  #set ($renamedCategoryDoc = $xwiki.getDocument("$!request.category"))
+  #isManagedCategory($renamedCategoryDoc $isCategory)
+  #if ($isCategory)
+    ## The category is renamed in its own space, see #renameCategory.
+    #set ($newCategoryReference = $services.model.resolveDocument("${renamedCategoryDoc.space}.${newFullName}"))
+  #end
   #if($newFullName.trim().equals(''))
     #blog__actionResponseError(400, 'blog.manageCategories.create.error.emptyName', [])
-  #elseif(!$xwiki.exists($request.category))
+  #elseif(!$isCategory)
     #blog__actionResponseError(404, 'blog.manageCategories.create.error.notExists', [])
-  #elseif($xwiki.exists($newFullName))
-    #blog__actionResponseError(409, 'blog.manageCategories.create.error.alreadyExists', [$newFullName, $xwiki.getURL($newFullName)])
-  #elseif(!$xwiki.hasAccessLevel('edit', $xcontext.user, $newFullName))
+  #elseif($xwiki.exists($newCategoryReference))
+    #blog__actionResponseError(409, 'blog.manageCategories.create.error.alreadyExists', [$newFullName, $xwiki.getURL($newCategoryReference)])
+  #elseif(!$services.security.authorization.hasAccess('edit', $newCategoryReference))
     #blog__actionResponseError(403, 'blog.manageCategories.create.error.targetNotWritable', [$newFullName])
+  #elseif(!$services.security.authorization.hasAccess('delete', $renamedCategoryDoc.documentReference))
+    #blog__actionResponseError(403, 'blog.manageCategories.rename.error.notAllowed', [])
   #else
     #renameCategory($request.category, $newFullName)
   #end
@@ -101,7 +117,7 @@
       "${blogCategoryClassname}_0_description": '',
       'xredirect': $xredirect,
       'xhidden': 1,
-      'form_token': "$!{services.csrf.getToken()}"
+      'form_token': "$!request.form_token"
     })))
   #end ## empty title
 #end

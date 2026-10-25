@@ -147,6 +147,27 @@ public class ManageCategoriesPage extends BasePage
      */
     public void renameCategory(String fromName, String toName)
     {
+        submitRenameForm(fromName, toName);
+        getDriver().waitUntilElementDisappears(categoryLocator(fromName));
+        getDriver().waitUntilElementIsVisible(categoryLocator(toName));
+    }
+
+    /**
+     * Try to rename a category, the rename being refused.
+     *
+     * @param fromName source category name, must exist
+     * @param toName target category name
+     * @param expectedError the error message displayed when the rename is refused
+     * @since 9.15.16
+     */
+    public void renameCategoryWithError(String fromName, String toName, String expectedError)
+    {
+        submitRenameForm(fromName, toName);
+        waitForNotificationErrorMessage(expectedError);
+    }
+
+    private void submitRenameForm(String fromName, String toName)
+    {
         // show the rename form
         By renamePath =
             By.xpath("//a[@class='tool rename' and contains(@href, '" + getUtil().escapeURL(fromName) + "')]");
@@ -155,11 +176,8 @@ public class ManageCategoriesPage extends BasePage
         getDriver().findElement(renamePath).click();
         getDriver().waitUntilElementIsVisible(By.className("category-rename-form"));
 
-        // rename and wait for result (the target category may exist already)
         this.nameInput.sendKeys(toName);
         this.renameButton.submit();
-        getDriver().waitUntilElementDisappears(categoryLocator(fromName));
-        getDriver().waitUntilElementIsVisible(categoryLocator(toName));
     }
 
     /**

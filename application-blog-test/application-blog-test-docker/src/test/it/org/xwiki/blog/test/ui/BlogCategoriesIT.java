@@ -20,6 +20,8 @@
 package org.xwiki.blog.test.ui;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -34,6 +36,7 @@ import org.xwiki.test.ui.TestUtils;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -50,6 +53,17 @@ class BlogCategoriesIT
     private static final String BLOG = "Blog";
 
     private static final String CATEGORIES_HOME = "Blog.Categories.WebHome";
+
+    private static final String WEB_HOME = "WebHome";
+
+    private static final String PASSWORD = "password";
+
+    private static final String CATEGORY_PARAMETER = "category";
+
+    private static final String FORM_TOKEN = "form_token";
+
+    private static final DocumentReference MANAGE_CATEGORIES =
+        new DocumentReference(WIKI, BLOG, "ManageCategories");
 
     /**
      * We make sure to have spaces and special chars to ensure categories can be named with any char.
@@ -95,15 +109,17 @@ class BlogCategoriesIT
         createCategory(data, orphanChild, "Blog.Categories.OrphanParent");
 
         ManageCategoriesPage categoriesPage = ManageCategoriesPage.gotoPage();
-        categoriesPage.renameCategory(source.getName(), target.getName());
-        // This is a bug: the renamed category is lost, the existing one being kept as is. The rename should be
-        // refused, keeping both categories. See BLOG-271: Renaming a category to the name of an existing category is
-        // not refused.
-        assertFalse(data.exists(source));
+        // Renaming a category to the name of an existing category is refused, keeping both categories.
+        categoriesPage.renameCategoryWithError(source.getName(), target.getName(),
+            "Target page already exists, please choose a different name");
+        assertTrue(data.exists(source));
+        assertEquals("Description of RenameSource",
+            data.getProperty(source, BlogTestData.CATEGORY_CLASS, "description"));
         assertEquals("Description of RenameTarget",
             data.getProperty(target, BlogTestData.CATEGORY_CLASS, "description"));
 
         // The subcategories of a deleted category are moved to its parent.
+        categoriesPage = ManageCategoriesPage.gotoPage();
         categoriesPage.deleteCategory(parent.getName());
         assertFalse(data.exists(parent));
         assertEquals(CATEGORIES_HOME, data.getParent(child));
@@ -193,6 +209,165 @@ class BlogCategoriesIT
         // Without blog posts assigned to legacy categories, the categories of the default blog are back in
         // Blog.Categories.
         assertEquals("Blog.WebHome|Blog|Blog.Categories|Blog.WebHome", data.resolve(BLOG));
+    }
+
+    /**
+     * Renaming and deleting a category update the blog posts in it, and the actions sent without the forms of the
+     * category management page (but with a valid form token) behave as the forms.
+     */
+    @Test
+    @Order(4)
+    void renameAndDeleteUpdateThePostsOfTheCategory(TestUtils setup) throws Exception
+    {
+        setup.loginAsSuperAdmin();
+        BlogTestData data = new BlogTestData(setup);
+        DocumentReference categoriesHome = new DocumentReference(WIKI, "BlogCategoriesITActions", WEB_HOME);
+        DocumentReference gardening = new DocumentReference(WIKI, "BlogCategoriesITActions", "Gardening");
+        DocumentReference plants = new DocumentReference(WIKI, "BlogCategoriesITActions", "Plants");
+        DocumentReference post = new DocumentReference(WIKI, "BlogCategoriesITActionsPosts", "Gardening post");
+        data.createCategoriesHome(categoriesHome);
+        createCategory(data, gardening, "BlogCategoriesITActions.WebHome");
+        data.createPost(post, "Gardening post", "BlogCategoriesITActions.Gardening");
+
+        ManageCategoriesPage categoriesPage = ManageCategoriesPage.gotoPage(categoriesHome);
+        categoriesPage.renameCategory(gardening.getName(), plants.getName());
+        assertEquals("BlogCategoriesITActions.Plants", data.getPostCategory(post));
+        categoriesPage = ManageCategoriesPage.gotoPage(categoriesHome);
+        categoriesPage.deleteCategory(plants.getName());
+        assertFalse(data.exists(plants));
+        assertEquals("", data.getPostCategory(post));
+
+        // When a space is given, only the subcategories and the blog posts of that space are updated.
+        String space = "BlogCategoriesITShared";
+        DocumentReference cooking = new DocumentReference(WIKI, space, "Cooking");
+        DocumentReference baking = new DocumentReference(WIKI, space, "Baking");
+        DocumentReference postInSpace = new DocumentReference(WIKI, space, "Cooking post");
+        DocumentReference postElsewhere = new DocumentReference(WIKI, "BlogCategoriesITSharedPosts", "Cooking post");
+        createCategory(data, cooking, space + ".WebHome");
+        createCategory(data, baking, space + ".Cooking");
+        data.createPost(postInSpace, "Cooking post", space + ".Cooking");
+        data.createPost(postElsewhere, "Other cooking post", space + ".Cooking");
+        sendCategoryAction(setup, "xaction", "delete", CATEGORY_PARAMETER, space + ".Cooking", "space", space,
+            FORM_TOKEN, setup.getSecretToken());
+        assertFalse(data.exists(cooking));
+        assertEquals(space + ".WebHome", data.getParent(baking));
+        assertEquals("", data.getPostCategory(postInSpace));
+        assertEquals(space + ".Cooking", data.getPostCategory(postElsewhere));
+
+        // A category created without the add form is created where requested, and the user is sent back to the
+        // category management page.
+        sendCategoryAction(setup, "xaction", "create", "newCategoryName", "Travel", "newCategoryParent",
+            space + ".WebHome", FORM_TOKEN, setup.getSecretToken());
+        assertEquals("xwiki:Blog.ManageCategories", new ManageCategoriesPage().getMetaDataValue("reference"));
+        DocumentReference travel = new DocumentReference(WIKI, space, "Travel");
+        assertTrue(data.exists(travel));
+        assertEquals(space + ".WebHome", data.getParent(travel));
+    }
+
+    /**
+     * The categories of a space whose name contains an apostrophe are managed as the others.
+     */
+    @Test
+    @Order(5)
+    void deleteACategoryOfASpaceWithAnApostrophe(TestUtils setup) throws Exception
+    {
+        setup.loginAsSuperAdmin();
+        BlogTestData data = new BlogTestData(setup);
+        String space = "Team's categories";
+        DocumentReference projects = new DocumentReference(WIKI, space, "Projects");
+        DocumentReference archived = new DocumentReference(WIKI, space, "Archived");
+        DocumentReference post = new DocumentReference(WIKI, space, "Kickoff");
+        createCategory(data, projects, space + ".WebHome");
+        createCategory(data, archived, space + ".Projects");
+        data.createPost(post, "Kickoff", space + ".Projects");
+
+        sendCategoryAction(setup, "xaction", "delete", CATEGORY_PARAMETER, space + ".Projects", "space", space,
+            FORM_TOKEN, setup.getSecretToken());
+        assertFalse(data.exists(projects));
+        assertEquals(space + ".WebHome", data.getParent(archived));
+        assertEquals("", data.getPostCategory(post));
+    }
+
+    @Test
+    @Order(6)
+    void categoryActionsRequireAValidFormToken(TestUtils setup) throws Exception
+    {
+        setup.loginAsSuperAdmin();
+        BlogTestData data = new BlogTestData(setup);
+        String space = "BlogCategoriesITPages";
+        DocumentReference page = new DocumentReference(WIKI, space, "Ordinary page");
+        DocumentReference otherPage = new DocumentReference(WIKI, space, "Other ordinary page");
+        DocumentReference category = new DocumentReference(WIKI, space, "Music");
+        DocumentReference post = new DocumentReference(WIKI, space, "Music post");
+        data.createPage(page, "Ordinary content", "Ordinary page");
+        data.createPage(otherPage, "Ordinary content", "Other ordinary page");
+        createCategory(data, category, space + ".WebHome");
+        data.createPost(post, "Music post", space + ".Music");
+
+        sendCategoryAction(setup, "xaction", "delete", CATEGORY_PARAMETER, space + ".Ordinary page");
+        sendCategoryAction(setup, "xaction", "delete", CATEGORY_PARAMETER, space + ".Music");
+        sendCategoryAction(setup, "xaction", "create", "newCategoryName", "Unrequested", "newCategoryParent",
+            space + ".WebHome");
+        sendCategoryAction(setup, "xaction", "delete", CATEGORY_PARAMETER, space + ".Other ordinary page",
+            FORM_TOKEN, setup.getSecretToken());
+
+        assertAll(
+            // Without a form token, the page and the category are kept.
+            () -> assertTrue(data.exists(page), "the page is kept"),
+            () -> assertTrue(data.exists(category), "the category is kept"),
+            () -> assertEquals(space + ".Music", data.getPostCategory(post)),
+            // Without a form token, nothing is created.
+            () -> assertFalse(data.exists(new DocumentReference(WIKI, space, "Unrequested")),
+                "no category is created"),
+            // Only categories can be deleted from the category management page.
+            () -> assertTrue(data.exists(otherPage), "the page that is not a category is kept"));
+    }
+
+    @Test
+    @Order(7)
+    void renameChecksTheRightsOnTheRenamedCategory(TestUtils setup) throws Exception
+    {
+        String user = "BlogCategoriesITEditor";
+        String space = "BlogCategoriesITProtected";
+        DocumentReference source = new DocumentReference(WIKI, space, "Drafts");
+        DocumentReference post = new DocumentReference(WIKI, "BlogCategoriesITProtectedPosts", "Draft post");
+        setup.loginAsSuperAdmin();
+        BlogTestData data = new BlogTestData(setup);
+        setup.createUser(user, PASSWORD, null);
+        createCategory(data, source, space + ".WebHome");
+        data.createPost(post, "Draft post", space + ".Drafts");
+        // The user can edit and delete the category, but can't create pages next to it.
+        DocumentReference preferences = new DocumentReference(WIKI, space, "WebPreferences");
+        data.createPage(preferences, "", "");
+        setup.addObject(preferences, "XWiki.XWikiGlobalRights", "users", "XWiki." + user, "levels", "edit",
+            "allow", 0);
+        setup.addObject(source, "XWiki.XWikiRights", "users", "XWiki." + user, "levels", "edit,delete", "allow", 1);
+
+        setup.login(user, PASSWORD);
+        setup.recacheSecretToken();
+        sendCategoryAction(setup, "xaction", "rename", CATEGORY_PARAMETER, space + ".Drafts", "newCategoryName",
+            "Published", FORM_TOKEN, setup.getSecretToken());
+
+        // The rename is refused: nothing is changed.
+        assertAll(
+            () -> assertTrue(data.exists(source), "the category is kept"),
+            () -> assertFalse(data.exists(new DocumentReference(WIKI, space, "Published"))),
+            () -> assertEquals("Drafts", data.getProperty(source, BlogTestData.CATEGORY_CLASS, "name")),
+            () -> assertEquals(space + ".Drafts", data.getPostCategory(post)));
+    }
+
+    /**
+     * Opens the category management page with the given request parameters, as a link or a bookmark would.
+     *
+     * @param parameters the request parameters, as name-value pairs
+     */
+    private static void sendCategoryAction(TestUtils setup, String... parameters)
+    {
+        Map<String, String> queryString = new LinkedHashMap<>();
+        for (int i = 0; i + 1 < parameters.length; i += 2) {
+            queryString.put(parameters[i], parameters[i + 1]);
+        }
+        setup.gotoPage(MANAGE_CATEGORIES, "view", queryString);
     }
 
     private static DocumentReference getCategory(String name)
