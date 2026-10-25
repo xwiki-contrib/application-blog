@@ -47,8 +47,10 @@ obj1.name=doc1.fullName and obj1.className='Blog.BlogPostClass' and obj1.id=cate
 #set ($query = ", BaseObject as obj where doc.fullName &lt;&gt; 'Blog.BlogPostTemplate' and
 obj.name=doc.fullName and obj.className='Blog.BlogPostClass' and doc.fullName not in ($excludedPostsQuery)")
 #set ($results = $services.query.hql($query).execute())
+## The migration is started only by a request with a valid form token.
+#set ($confirmed = "$!request.confirm" == 'true' &amp;&amp; $services.csrf.isTokenValid("$!request.form_token"))
 
-#if ("$!request.confirm" == 'true')
+#if ($confirmed)
   #set ($logger = $services.logging.getLogger("org.xwiki.contrib.blog.${doc.fullName}"))
   #set ($discard = $logger.info('Migration started...'))
   #set ($migrated = false)
@@ -81,8 +83,9 @@ obj.name=doc.fullName and obj.className='Blog.BlogPostClass' and doc.fullName no
   #end
 #end
 
-#if ("$!request.confirm" != 'true' &amp;&amp; $results.size() &gt; 0)
-  {{html}}&lt;a href="$doc.getURL('view', 'confirm=true')" class='button'&gt;Start&lt;/a&gt;{{/html}}
+#if (!$confirmed &amp;&amp; $results.size() &gt; 0)
+  #set ($startURL = $doc.getURL('view', "confirm=true&amp;form_token=$escapetool.url($services.csrf.token)"))
+  {{html}}&lt;a href="$escapetool.xml($startURL)" class='button'&gt;Start&lt;/a&gt;{{/html}}
 #end
 #else
 {{error}}You are not allowed to execute the blog posts migration{{/error}}
