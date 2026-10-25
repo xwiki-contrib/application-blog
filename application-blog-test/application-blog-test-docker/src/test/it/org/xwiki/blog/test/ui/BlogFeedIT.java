@@ -35,14 +35,28 @@ import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.xwiki.blog.test.ui.BlogTestData.WIKI;
 
 /**
- * Verify the feeds of the blogs: the feed of a blog and the feed of a category.
+ * Verify the feeds of the blogs: the feed of a blog, the feed of a category and the feed of all the blog posts of the
+ * wiki.
  *
  * @version $Id$
  */
-@UITest
+@UITest(
+    properties = {
+        // The feed of all the blog posts of the wiki uses the Feed plugin.
+        "xwikiCfgPlugins=com.xpn.xwiki.plugin.feed.FeedPlugin"
+    },
+    extraJARs = {
+        // A plugin listed in xwiki.cfg is loaded at startup, before extensions get installed, so its JAR has to be
+        // in WEB-INF/lib.
+        "org.xwiki.platform:xwiki-platform-feed-api"
+    },
+    // Resolve the version of the extra JAR from the dependencies of the POM (it's not the version of this module).
+    resolveExtraJARs = true
+)
 class BlogFeedIT
 {
     private static final String BLOG = "Blog";
@@ -81,6 +95,13 @@ class BlogFeedIT
     private static final String POST_A_TITLE = "Feed post of blog A";
 
     private static final String POST_B_TITLE = "Feed post of blog B";
+
+    private static final String WIKI_POST_TITLE = "Feed post of the wiki";
+
+    /**
+     * A text made of characters that have a meaning in XML or in wiki syntax.
+     */
+    private static final String SPECIAL_TEXT = "Fish & <Chips> {{/html}}**bold**";
 
     @Test
     @Order(1)
@@ -161,6 +182,42 @@ class BlogFeedIT
         data.createCategoriesHome(new DocumentReference(WIKI, Arrays.asList(BLOG_A_SPACE, "Categories"), WEB_HOME));
         feed = new Feed(data.getFeed(mainPage, CATEGORY_RSS, CATEGORY, "BlogFeedA.Categories.WebHome"));
         assertEquals("BlogFeedA/Categories/", feed.getChannelPage());
+
+        setup.deletePage(post);
+    }
+
+    @Test
+    @Order(3)
+    void feedOfTheWiki(TestUtils setup) throws Exception
+    {
+        setup.loginAsSuperAdmin();
+        BlogTestData data = new BlogTestData(setup);
+        DocumentReference post = new DocumentReference(WIKI, "BlogFeedWiki", "Post");
+        new BlogPostFixture(setup, post, WIKI_POST_TITLE).create();
+
+        String content = data.getFeed(new DocumentReference(WIKI, BLOG, "GlobalBlogRss"), "");
+        // The texts of the feed are written as escaped XML text.
+        assertFalse(content.contains("<![CDATA["), content);
+        Feed feed = new Feed(content);
+        assertEquals("Most recent blog posts in the wiki", feed.getChannelText(DESCRIPTION));
+        assertThat(feed.getItemTitles(), hasItem(WIKI_POST_TITLE));
+
+        setup.deletePage(post);
+    }
+
+    @Test
+    @Order(4)
+    void postTitleWithSpecialCharactersIsDisplayedVerbatimInTheFeedOfTheWiki(TestUtils setup) throws Exception
+    {
+        setup.loginAsSuperAdmin();
+        setup.createUserAndLogin("BlogFeedAuthor", "password");
+        DocumentReference post = new DocumentReference(WIKI, "BlogFeedWiki", "SpecialPost");
+        new BlogPostFixture(setup, post, SPECIAL_TEXT).create();
+
+        setup.loginAsSuperAdmin();
+        Feed feed = new Feed(new BlogTestData(setup).getFeed(new DocumentReference(WIKI, BLOG, "GlobalBlogRss"), ""));
+        assertThat(feed.getItemTitles(), hasItem(SPECIAL_TEXT));
+        assertFalse(feed.containsElement("strong"));
 
         setup.deletePage(post);
     }
