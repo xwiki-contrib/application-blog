@@ -195,6 +195,7 @@ blog.manage.locationPreview.hint=Ort in der Seitenhierarchie, an dem dieser neue
 blog.manage.categoriesLocationPreview.hint=Ort in der Seitenhierarchie, an dem diese neuen Blog-Kategorien erstellt werden.
 blog.manage.post.layout=Beitragslayout
 blog.blogpostlist.descriptor_not_found=Blog-Deskriptor im Dokument nicht gefunden [{0}]
+blog.blogpostlist.invalid_layout=Ungültiges Layout [{0}]: Der Name eines Layouts darf nur Buchstaben und Ziffern enthalten.
 blog.categories.webhome.title=Alle Kategorien
 blog.category.posts.count={0} {0,choice,0#Beiträge|1#Beitrag|1&lt;Beiträge}
 blog.blogpostlayout.notpost=[{0}] ist kein Blogbeitrag!
