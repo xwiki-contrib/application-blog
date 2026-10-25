@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.xwiki.blog.test.ui.BlogTestData.WIKI;
 
 /**
- * Verify the feeds of the blogs.
+ * Verify the feeds of the blogs: the feed of a blog and the feed of a category.
  *
  * @version $Id$
  */
@@ -51,9 +51,13 @@ class BlogFeedIT
 
     private static final String BLOG_RSS = "Blog.BlogRss";
 
+    private static final String CATEGORY_RSS = "Blog.CategoryRss";
+
     private static final String TITLE = "title";
 
     private static final String DESCRIPTION = "description";
+
+    private static final String CATEGORY = "category";
 
     private static final String BLOG_PARAMETER = "blog";
 
@@ -122,5 +126,42 @@ class BlogFeedIT
         assertEquals(List.of(POST_B_TITLE), feed.getItemTitles());
 
         setup.deletePage(defaultBlogPost);
+    }
+
+    @Test
+    @Order(2)
+    void feedsOfTheCategories(TestUtils setup) throws Exception
+    {
+        setup.loginAsSuperAdmin();
+        BlogTestData data = new BlogTestData(setup);
+        DocumentReference news = new DocumentReference(WIKI, Arrays.asList(BLOG, "Categories"), "News");
+        DocumentReference post = new DocumentReference(WIKI, BLOG, "BlogFeedNewsPost");
+        new BlogPostFixture(setup, post, "Feed post in News").withCategory("Blog.Categories.News").create();
+
+        Feed feed = new Feed(data.getFeed(news, CATEGORY_RSS));
+        assertEquals("Blog/Categories/News", feed.getChannelPage());
+        assertEquals("News", feed.getChannelText(TITLE));
+        assertEquals("Most recent blog posts in the News category", feed.getChannelText(DESCRIPTION));
+        assertThat(feed.getItemTitles(), hasItem("Feed post in News"));
+
+        // The feed of the default categories home. It has no sheet binding value, so the feed displays the name of its
+        // category, which it doesn't have.
+        feed = new Feed(data.getFeed(new DocumentReference(WIKI, Arrays.asList(BLOG, "Categories"), WEB_HOME),
+            CATEGORY_RSS));
+        assertEquals("Blog/Categories/", feed.getChannelPage());
+        assertEquals("", feed.getChannelText(TITLE));
+
+        // The feed of the category given in the request.
+        DocumentReference mainPage = new DocumentReference(WIKI, "Main", WEB_HOME);
+        feed = new Feed(data.getFeed(mainPage, CATEGORY_RSS, CATEGORY, "Blog.Categories.News"));
+        assertEquals("Blog/Categories/News", feed.getChannelPage());
+        assertEquals("News", feed.getChannelText(TITLE));
+
+        // The feed of the categories home given in the request.
+        data.createCategoriesHome(new DocumentReference(WIKI, Arrays.asList(BLOG_A_SPACE, "Categories"), WEB_HOME));
+        feed = new Feed(data.getFeed(mainPage, CATEGORY_RSS, CATEGORY, "BlogFeedA.Categories.WebHome"));
+        assertEquals("BlogFeedA/Categories/", feed.getChannelPage());
+
+        setup.deletePage(post);
     }
 }
