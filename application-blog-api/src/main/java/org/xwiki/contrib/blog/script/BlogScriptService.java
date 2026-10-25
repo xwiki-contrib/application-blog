@@ -27,9 +27,11 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.localization.ContextualLocalizationManager;
 import org.xwiki.model.reference.EntityReferenceSerializer;
+import org.xwiki.model.reference.WikiReference;
 import org.xwiki.platform.blog.internal.CategoryLocationMigration;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.LinkBlock;
@@ -38,6 +40,8 @@ import org.xwiki.rendering.listener.reference.DocumentResourceReference;
 import org.xwiki.rendering.renderer.BlockRenderer;
 import org.xwiki.rendering.renderer.printer.DefaultWikiPrinter;
 import org.xwiki.script.service.ScriptService;
+import org.xwiki.security.authorization.ContextualAuthorizationManager;
+import org.xwiki.security.authorization.Right;
 import org.xwiki.stability.Unstable;
 
 import com.xpn.xwiki.XWikiContext;
@@ -82,6 +86,12 @@ public class BlogScriptService implements ScriptService
 
     @Inject
     private CategoryLocationMigration categoryLocationMigration;
+
+    @Inject
+    private ContextualAuthorizationManager authorization;
+
+    @Inject
+    private Logger logger;
 
     /**
      * @param document the document containing the attachment
@@ -199,7 +209,8 @@ public class BlogScriptService implements ScriptService
     }
 
     /**
-     * Initiates the migration of category locations within the wiki farm.
+     * Initiates the migration of category locations within the wiki farm. The migration is done only when the current
+     * user has admin right on the wiki.
      *
      * @param wikiId the id of the wiki where the blog categories are migrated
      * @since 9.15
@@ -207,7 +218,12 @@ public class BlogScriptService implements ScriptService
     @Unstable
     public void migrateCategoryLocation(String wikiId)
     {
-        categoryLocationMigration.migrate(wikiId);
+        if (this.authorization.hasAccess(Right.ADMIN, new WikiReference(wikiId))) {
+            this.categoryLocationMigration.migrate(wikiId);
+        } else {
+            this.logger.warn("The blog categories of the wiki [{}] are not migrated: the migration requires admin "
+                + "right on the wiki.", wikiId);
+        }
     }
 
     /**
