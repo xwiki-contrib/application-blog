@@ -25,12 +25,14 @@ import javax.inject.Provider;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InOrder;
 import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.localization.ContextualLocalizationManager;
 import org.xwiki.model.reference.DocumentReference;
+import org.xwiki.model.reference.WikiReference;
 import org.xwiki.platform.blog.internal.CategoryLocationMigration;
 import org.xwiki.rendering.internal.renderer.html5.HTML5BlockRenderer;
 import org.xwiki.rendering.internal.renderer.html5.HTML5Renderer;
@@ -41,7 +43,11 @@ import org.xwiki.rendering.internal.renderer.xhtml.link.DefaultXHTMLLinkRenderer
 import org.xwiki.rendering.internal.renderer.xhtml.link.DefaultXHTMLLinkTypeRenderer;
 import org.xwiki.rendering.syntax.Syntax;
 import org.xwiki.resource.internal.entity.EntityResourceActionLister;
+import org.xwiki.security.authorization.ContextualAuthorizationManager;
+import org.xwiki.security.authorization.Right;
+import org.xwiki.test.LogLevel;
 import org.xwiki.test.annotation.ComponentList;
+import org.xwiki.test.junit5.LogCaptureExtension;
 import org.xwiki.test.junit5.mockito.ComponentTest;
 import org.xwiki.test.junit5.mockito.InjectComponentManager;
 import org.xwiki.test.junit5.mockito.InjectMockComponents;
@@ -115,6 +121,12 @@ class BlogScriptServiceTest
 
     @MockComponent
     private EntityResourceActionLister entityResourceActionLister;
+
+    @MockComponent
+    private ContextualAuthorizationManager authorization;
+
+    @RegisterExtension
+    private LogCaptureExtension logCapture = new LogCaptureExtension(LogLevel.WARN);
 
     /**
      * Asked by the HTML renderers which elements and attributes they may output.
@@ -394,9 +406,24 @@ class BlogScriptServiceTest
     @Test
     void migrateCategoryLocation()
     {
+        when(this.authorization.hasAccess(Right.ADMIN, new WikiReference("subwiki"))).thenReturn(true);
+
         this.blogScriptService.migrateCategoryLocation("subwiki");
 
         verify(this.categoryLocationMigration).migrate("subwiki");
+    }
+
+    @Test
+    void migrateCategoryLocationRequiresAdminRightOnTheWiki()
+    {
+        // Admin right on another wiki isn't enough.
+        when(this.authorization.hasAccess(Right.ADMIN, new WikiReference("otherwiki"))).thenReturn(true);
+
+        this.blogScriptService.migrateCategoryLocation("subwiki");
+
+        verify(this.categoryLocationMigration, never()).migrate(any());
+        assertEquals("The blog categories of the wiki [subwiki] are not migrated: the migration requires admin right "
+            + "on the wiki.", this.logCapture.getMessage(0));
     }
 
     @Test

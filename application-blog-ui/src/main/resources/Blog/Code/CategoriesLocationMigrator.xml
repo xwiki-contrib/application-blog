@@ -36,7 +36,7 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{job id="{{velocity}}$!request.jobId{{/velocity}}" start="{{velocity}}$!request.confirm{{/velocity}}"}}
+  <content>{{job id="{{velocity}}$!request.jobId{{/velocity}}" start="{{velocity}}#if ($hasAdmin &amp;&amp; $services.csrf.isTokenValid($request.form_token))$!request.confirm#end{{/velocity}}"}}
 {{groovy}}
   services.blog.migrateCategoryLocation(services.wiki.currentWikiId)
 {{/groovy}}
@@ -44,7 +44,11 @@
 
 {{velocity}}
 #if ($hasAdmin &amp;&amp; $services.blog.hasLegacyCategoryAssignments())
-  #if ("$!request.jobId" == '')
+  ## The job above starts the migration only for a request with a valid form token.
+  #set ($started = "$!request.jobId" != '' &amp;&amp; "$!request.confirm" == 'true' &amp;&amp; $services.csrf.isTokenValid("$!request.form_token"))
+  #if ($started)
+    $response.sendRedirect($doc.getURL('view', "jobId=$escapetool.url($request.jobId)"))
+  #elseif ("$!request.jobId" == '' || "$!request.confirm" != '')
     #set ($jobId = "$datetool.get('yyyy-MM-dd')/$datetool.get('HH-mm-ss-SSS')")
     #set ($categoryStatement = "from doc.object(Blog.CategoryClass) as category where doc.space = 'Blog' and doc.name &lt;&gt; 'CategoryTemplate'")
     #set ($categories = $services.query.xwql($categoryStatement).execute())
@@ -54,10 +58,8 @@
       #foreach ($result in $categories)
         $result
       #end
-      [[$services.localization.render('blog.migration.start')&gt;&gt;$doc.fullName||queryString="jobId=$!{escapetool.url($jobId)}&amp;confirm=true" class="btn btn-primary"]]
+      [[$services.localization.render('blog.migration.start')&gt;&gt;$doc.fullName||queryString="jobId=$!{escapetool.url($jobId)}&amp;confirm=true&amp;form_token=$!{escapetool.url($services.csrf.token)}" class="btn btn-primary"]]
     #end
-  #elseif ($!request.confirm)
-    $response.sendRedirect($doc.getURL('view',"jobId=$request.jobId"))
   #end
 #end
 {{/velocity}}</content>
