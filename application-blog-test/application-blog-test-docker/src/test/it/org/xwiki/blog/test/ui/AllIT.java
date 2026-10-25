@@ -51,6 +51,11 @@ class AllIT
     }
 
     @Nested
+    class NestedBlogFeedIT extends BlogFeedIT
+    {
+    }
+
+    @Nested
     class NestedBlogLocationIT extends BlogLocationIT
     {
     }
