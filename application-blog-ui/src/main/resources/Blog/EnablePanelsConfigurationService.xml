@@ -37,9 +37,26 @@
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{velocity}}
-#if ($hasAdmin)
-  #set ($spaceReference = $services.model.resolveSpace($request.docSpace))
+#macro (blogPanelsConfigurationError $status $key)
+  $response.setStatus($status)
+  $services.localization.render($key)
+#end
+## The configuration is sent by the form of Blog.BlogMenuUIX, with a POST request and a form token. It's saved in the
+## WebPreferences page of the given space, which requires admin right on that space.
+#set ($docSpace = "$!request.docSpace")
+#if ($request.method != 'POST')
+  #blogPanelsConfigurationError(405 'blog.uixMenu.save.error.invalidMethod')
+#elseif (!$services.csrf.isTokenValid("$!request.form_token"))
+  #blogPanelsConfigurationError(403 'blog.uixMenu.save.error.invalidFormToken')
+#elseif ($docSpace.trim() == '')
+  #blogPanelsConfigurationError(400 'blog.uixMenu.save.error.noSpace')
+#else
+  #set ($spaceReference = $services.model.resolveSpace($docSpace))
   #set ($preferencesDocRef = $services.model.createDocumentReference('WebPreferences', $spaceReference))
+#end
+#if ($preferencesDocRef &amp;&amp; !$services.security.authorization.hasAccess('admin', $preferencesDocRef))
+  #blogPanelsConfigurationError(403 'blog.uixMenu.save.error.notAllowed')
+#elseif ($preferencesDocRef)
   #set ($preferencesDoc = $xwiki.getDocument($preferencesDocRef))
   #set ($discard = $preferencesDoc.updateObjectFromRequest('Blog.EnablePanelsConfigurationClass'))
   ## Compute the panels list that will be set as right panels in the WebPreferences page.

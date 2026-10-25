@@ -133,12 +133,17 @@
   });
   $('#enableBlogPanels').on('submit', function(event) {
     event.preventDefault();
+    var form = $(this);
+    form.find('.blog-panels-error').remove();
     $.post({
-      url : $(this).attr('action'),
-      data: $(this).serialize(),
-      success:function() {
-        location.reload();
-      }
+      url : form.attr('action'),
+      data: form.serialize()
+    }).done(function() {
+      location.reload();
+    }).fail(function(response) {
+      // Display the reason why the configuration was not saved.
+      var message = (response.responseText || '').trim() || response.statusText;
+      $('&lt;div class="box errormessage blog-panels-error"&gt;&lt;/div&gt;').text(message).prependTo(form);
     });
   });
 });</code>
@@ -321,6 +326,7 @@
               #end
             &lt;/dl&gt;
             &lt;input type="hidden" name="docSpace" value="$escapetool.xml($doc.space)"/&gt;
+            &lt;input type="hidden" name="form_token" value="$!escapetool.xml($services.csrf.token)"/&gt;
             &lt;input type="submit" class="btn btn-primary"
                 value="$escapetool.xml($services.localization.render('save'))"/&gt;
             &lt;input type="button" class="btn btn-default" data-dismiss="modal"
