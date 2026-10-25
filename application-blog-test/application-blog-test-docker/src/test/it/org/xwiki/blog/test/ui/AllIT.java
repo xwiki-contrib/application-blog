@@ -108,6 +108,11 @@ class AllIT
     }
 
     @Nested
+    class NestedBlogPostsMigrationIT extends BlogPostsMigrationIT
+    {
+    }
+
+    @Nested
     class NestedBlogPostVisibilityIT extends BlogPostVisibilityIT
     {
     }
