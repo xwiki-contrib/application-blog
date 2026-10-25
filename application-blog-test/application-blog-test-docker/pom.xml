@@ -73,6 +73,14 @@
       <version>${platform.version}</version>
       <type>xar</type>
     </dependency>
+    <!-- Provides the Feed plugin, used by the feed of all the blog posts of the wiki (Blog.GlobalBlogRss). Every XWiki
+         distribution has it, but not the minimal instance of the tests. -->
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-feed-api</artifactId>
+      <version>${platform.version}</version>
+      <scope>runtime</scope>
+    </dependency>
     <!-- Test dependencies -->
     <dependency>
       <groupId>org.xwiki.platform</groupId>

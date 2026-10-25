@@ -50,7 +50,11 @@ $response.setContentType('application/rss+xml')
   "url": $xwiki.getDocument($services.model.resolveDocument('', 'default', $doc.documentReference.extractReference('WIKI'))).externalURL
   })
 #getAllBlogPostsQuery($query)
-$xwiki.feed.getBlogFeedOutput("${query} order by publishDate.value desc", 10, 0, $feedMetadata, 'rss_2.0')
+#set ($feedQuery = "${query} order by publishDate.value desc")
+#set ($feedOutput = $xwiki.feed.getBlogFeedOutput($feedQuery, 10, 0, $feedMetadata, 'rss_2.0'))
+## The curly brackets of the feed texts are written as XML character references, which are equivalent, since curly
+## brackets have a meaning in the content of this page.
+$!feedOutput.replace('{', '&amp;#123;')
 {{/html}}
 #end
 {{/velocity}}</content>

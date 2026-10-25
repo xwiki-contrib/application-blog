@@ -27,7 +27,19 @@ import org.xwiki.test.docker.junit5.UITest;
  *
  * @version $Id$
  */
-@UITest
+@UITest(
+    properties = {
+        // The feed of all the blog posts of the wiki uses the Feed plugin.
+        "xwikiCfgPlugins=com.xpn.xwiki.plugin.feed.FeedPlugin"
+    },
+    extraJARs = {
+        // A plugin listed in xwiki.cfg is loaded at startup, before extensions get installed, so its JAR has to be
+        // in WEB-INF/lib.
+        "org.xwiki.platform:xwiki-platform-feed-api"
+    },
+    // Resolve the version of the extra JAR from the dependencies of the POM (it's not the version of this module).
+    resolveExtraJARs = true
+)
 class AllIT
 {
     @Nested
