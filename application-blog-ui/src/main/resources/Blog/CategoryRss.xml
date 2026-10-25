@@ -49,7 +49,27 @@ $response.setContentType('application/rss+xml')
 ##
 #macro(getTargetCategory $categoryDoc)
   #set($category = "$!{request.category}")
-  #if($category == '')
+  #if ($category != '')
+    ## The category given in the request has to be a category, or the home page of a categories space, that the
+    ## current user can view. Otherwise the feed is about the default categories, as when no category is given.
+    #set ($macro.categoryReference = $services.model.resolveDocument($category))
+    #set ($macro.isCategory = false)
+    #if ($services.security.authorization.hasAccess('view', $macro.categoryReference))
+      #set ($macro.requestedDoc = $xwiki.getDocument($macro.categoryReference))
+      ## The stored sheet of the sheet binding, for the home page of a categories space.
+      #set ($macro.sheet = '')
+      #set ($macro.sheetBinding = $macro.requestedDoc.getObject('XWiki.DocumentSheetBinding'))
+      #if ($macro.sheetBinding)
+        #set ($macro.sheet = "$!macro.requestedDoc.getValue('sheet', $macro.sheetBinding)")
+      #end
+      #if ("$!macro.requestedDoc.getObject($blogCategoryClassname)" != '' || $macro.sheet == $blogCategoriesSheet)
+        #set ($macro.isCategory = true)
+      #end
+    #end
+    #if (!$macro.isCategory)
+      #set ($category = $defaultCategoryParent)
+    #end
+  #else
     #set ($categoryDoc = $doc)
     ## Since 9.15, category data may exist in Blog or Blog.Categories. Code supports both paths to maintain backward compatibility.
     ## This code checks whether a category exists in its original location (e.g., Blog.News).

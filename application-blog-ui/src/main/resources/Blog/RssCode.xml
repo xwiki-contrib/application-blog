@@ -217,10 +217,14 @@
         #set ($macro.rssFeedTitle = $services.localization.render('blog.categories.webhome.title'))
       #end
     #end
-    &lt;title&gt;$!macro.rssFeedTitle&lt;/title&gt;
+    ## The feed is XML: every text value is XML-escaped.
+    &lt;title&gt;$!escapetool.xml($macro.rssFeedTitle)&lt;/title&gt;
     &lt;link&gt;$categoryDoc.getExternalURL()&lt;/link&gt;
     ## TODO: Add a Description field in the blog class
-    &lt;description&gt;$services.localization.render('blog.code.description.category', [$categoryDoc.display('name')])&lt;/description&gt;
+    #set ($macro.categoryName = "$!categoryDoc.getValue('name')")
+    #set ($macro.descriptionKey = 'blog.code.description.category')
+    #set ($macro.rssFeedDescription = $services.localization.render($macro.descriptionKey, [$macro.categoryName]))
+    &lt;description&gt;$escapetool.xml($macro.rssFeedDescription)&lt;/description&gt;
     &lt;dc:rights&gt;$escapetool.xml($xwiki.spaceCopyright)&lt;/dc:rights&gt;
     &lt;items&gt;
       &lt;rdf:Seq&gt;
