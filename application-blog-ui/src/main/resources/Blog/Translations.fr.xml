@@ -195,6 +195,7 @@ blog.manage.locationPreview.hint=Emplacement dans la hiérarchie des pages où c
 blog.manage.categoriesLocationPreview.hint=Emplacement dans la hiérarchie des pages où cette nouvelle catégorie de blog sera créée.
 blog.manage.post.layout=Disposition des articles
 blog.blogpostlist.descriptor_not_found=Impossible de trouver le descripteur de blog dans le document [{0}]
+blog.blogpostlist.invalid_layout=Disposition [{0}] invalide : seuls les lettres et les nombres sont autorisés dans le nom de la disposition.
 blog.categories.webhome.title=Toutes les catégories
 blog.category.posts.count={0} {0,choice,0#article|1#article|1&lt;articles}
 blog.blogpostlayout.notpost=[{0}] n''est pas un article de blog !
