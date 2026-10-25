@@ -36,6 +36,8 @@ import org.xwiki.query.QueryFilter;
 import org.xwiki.query.QueryManager;
 import org.xwiki.refactoring.event.DocumentRenamedEvent;
 import org.xwiki.refactoring.event.DocumentRenamingEvent;
+import org.xwiki.security.authorization.AuthorizationManager;
+import org.xwiki.security.authorization.Right;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -91,6 +93,9 @@ public class CategoryRenameListener implements EventListener
     @Inject
     @Named("document")
     private QueryFilter documentQueryFilter;
+
+    @Inject
+    private AuthorizationManager authorization;
 
     @Override
     public String getName()
@@ -158,7 +163,14 @@ public class CategoryRenameListener implements EventListener
             query.bindValue(CATEGORY, oldCategory).addFilter(documentQueryFilter).execute();
 
         for (DocumentReference blogPostRef : blogPostRefs) {
-            updateBlogPostCategory(blogPostRef, xwiki, context, oldCategory, newCategory);
+            // Only the blog posts that the user doing the rename can edit are updated.
+            if (this.authorization.hasAccess(Right.EDIT, context.getUserReference(), blogPostRef)) {
+                updateBlogPostCategory(blogPostRef, xwiki, context, oldCategory, newCategory);
+            } else {
+                this.logger.warn("The category of the blog post [{}] was not updated after the rename of [{}] to [{}] "
+                    + "because the current user is not allowed to edit it.", blogPostRef, oldCategoryRef,
+                    newCategoryRef);
+            }
         }
     }
 
