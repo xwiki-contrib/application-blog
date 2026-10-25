@@ -143,11 +143,12 @@
  *###
 #macro(printBlogRssChannelDescription $blogDoc $entries)
   &lt;channel rdf:about="$blogDoc.getURL()"&gt;
-    #getBlogTitle($blogDoc $title)
-    &lt;title&gt;$title&lt;/title&gt;
+    ## The feed is XML: every text value is XML-escaped.
+    &lt;title&gt;$escapetool.xml($blogDoc.plainTitle)&lt;/title&gt;
     &lt;link&gt;$blogDoc.getExternalURL()&lt;/link&gt;
     ## TODO: Add a Description field in the blog class
-    &lt;description&gt;$services.localization.render('blog.code.description.space', [$blogDoc.space])&lt;/description&gt;
+    #set ($macro.rssFeedDescription = $services.localization.render('blog.code.description.space', [$blogDoc.space]))
+    &lt;description&gt;$escapetool.xml($macro.rssFeedDescription)&lt;/description&gt;
     #getWikiLogo($logoUrl)
     &lt;image rdf:resource="$logoUrl"/&gt;
     &lt;dc:language&gt;$blogDoc.defaultLocale&lt;/dc:language&gt;

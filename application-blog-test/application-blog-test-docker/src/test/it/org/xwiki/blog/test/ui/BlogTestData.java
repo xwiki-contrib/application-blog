@@ -439,6 +439,25 @@ class BlogTestData
     }
 
     /**
+     * @param page the page whose feed is displayed
+     * @param sheet the feed sheet applied to the page, or empty when the page is the feed itself
+     * @param parameters the other query string parameters, as name-value pairs
+     * @return the feed, as sent by the wiki
+     */
+    String getFeed(EntityReference page, String sheet, String... parameters) throws Exception
+    {
+        Map<String, String> queryString = new LinkedHashMap<>();
+        queryString.put("xpage", PLAIN);
+        if (!sheet.isEmpty()) {
+            queryString.put(SHEET, sheet);
+        }
+        for (int i = 0; i + 1 < parameters.length; i += 2) {
+            queryString.put(parameters[i], parameters[i + 1]);
+        }
+        return getString(page, "view", queryString);
+    }
+
+    /**
      * Gets the content of a page from the test code, as the super administrator, without the browser: the URLs used by
      * the browser don't work from the test code when XWiki runs inside Docker. {@code TestUtils#getString} is not used
      * because, on the XWiki version the tests run on, it doesn't keep all the query string parameters.
