@@ -36,6 +36,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.xwiki.blog.test.ui.BlogTestData.BLOG_CLASS;
 import static org.xwiki.blog.test.ui.BlogTestData.WIKI;
 
 /**
@@ -207,7 +208,7 @@ class BlogFeedIT
 
     @Test
     @Order(4)
-    void postTitleWithSpecialCharactersIsDisplayedVerbatimInTheFeedOfTheWiki(TestUtils setup) throws Exception
+    void titlesWithSpecialCharactersAreDisplayedVerbatimInTheFeedOfTheWiki(TestUtils setup) throws Exception
     {
         setup.loginAsSuperAdmin();
         setup.createUserAndLogin("BlogFeedAuthor", "password");
@@ -215,10 +216,17 @@ class BlogFeedIT
         new BlogPostFixture(setup, post, SPECIAL_TEXT).create();
 
         setup.loginAsSuperAdmin();
-        Feed feed = new Feed(new BlogTestData(setup).getFeed(new DocumentReference(WIKI, BLOG, "GlobalBlogRss"), ""));
-        assertThat(feed.getItemTitles(), hasItem(SPECIAL_TEXT));
-        assertFalse(feed.containsElement("strong"));
-
-        setup.deletePage(post);
+        // The title of the feed is the title of the default blog.
+        setup.updateObject(BLOG, WEB_HOME, BLOG_CLASS, 0, TITLE, SPECIAL_TEXT);
+        try {
+            Feed feed =
+                new Feed(new BlogTestData(setup).getFeed(new DocumentReference(WIKI, BLOG, "GlobalBlogRss"), ""));
+            assertEquals(SPECIAL_TEXT, feed.getChannelText(TITLE));
+            assertThat(feed.getItemTitles(), hasItem(SPECIAL_TEXT));
+            assertFalse(feed.containsElement("strong"));
+        } finally {
+            setup.updateObject(BLOG, WEB_HOME, BLOG_CLASS, 0, TITLE, "");
+            setup.deletePage(post);
+        }
     }
 }

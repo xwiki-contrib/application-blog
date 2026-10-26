@@ -43,7 +43,8 @@
 $response.setContentType('application/rss+xml')
 {{html clean="false" wiki="false"}}
 #getBlogDocument($doc.space $blogDoc)
-#getBlogTitle($blogDoc $title)
+## The feed escapes its texts itself, so the title is given as plain text.
+#set ($title = $blogDoc.plainTitle)
 #set($feedMetadata = {
   "title": $title,
   "description": $services.localization.render('blog.code.description.wiki'),
