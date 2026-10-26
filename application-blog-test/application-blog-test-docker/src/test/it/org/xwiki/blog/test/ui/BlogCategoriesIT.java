@@ -33,6 +33,7 @@ import org.xwiki.blog.test.po.ManageCategoriesPage;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.test.docker.junit5.UITest;
 import org.xwiki.test.ui.TestUtils;
+import org.xwiki.test.ui.po.RenamePage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
@@ -354,6 +355,81 @@ class BlogCategoriesIT
             () -> assertFalse(data.exists(new DocumentReference(WIKI, space, "Published"))),
             () -> assertEquals("Drafts", data.getProperty(source, BlogTestData.CATEGORY_CLASS, "name")),
             () -> assertEquals(space + ".Drafts", data.getPostCategory(post)));
+    }
+
+    /**
+     * Renaming a category with the standard page rename (not the category management page) updates the blog posts in
+     * it.
+     */
+    @Test
+    @Order(8)
+    void pageRenameUpdatesThePostsOfTheCategory(TestUtils setup) throws Exception
+    {
+        String space = "BlogCategoriesITPageRename";
+        DocumentReference source = new DocumentReference(WIKI, space, "Hiking");
+        DocumentReference post = new DocumentReference(WIKI, "BlogCategoriesITPageRenamePosts", "Hiking post");
+        setup.loginAsSuperAdmin();
+        BlogTestData data = new BlogTestData(setup);
+        createCategory(data, source, space + ".WebHome");
+        data.createPost(post, "Hiking post", space + ".Hiking");
+
+        renamePage(setup, source, "Trekking");
+
+        assertAll(
+            () -> assertTrue(data.exists(new DocumentReference(WIKI, space, "Trekking")), "the category is renamed"),
+            () -> assertEquals(space + ".Trekking", data.getPostCategory(post)));
+    }
+
+    /**
+     * When the user renaming a category can't edit some of its blog posts, only the blog posts they can edit are
+     * updated.
+     */
+    @Test
+    @Order(9)
+    void pageRenameUpdatesThePostsTheUserCanEdit(TestUtils setup) throws Exception
+    {
+        String user = "BlogCategoriesITRenamer";
+        String space = "BlogCategoriesITRenamed";
+        String postsSpace = "BlogCategoriesITRenamedPosts";
+        DocumentReference source = new DocumentReference(WIKI, space, "Sailing");
+        DocumentReference editablePost = new DocumentReference(WIKI, postsSpace, "Sailing post");
+        DocumentReference readOnlyPost = new DocumentReference(WIKI, postsSpace, "Other sailing post");
+        setup.loginAsSuperAdmin();
+        BlogTestData data = new BlogTestData(setup);
+        setup.createUser(user, PASSWORD, null);
+        createCategory(data, source, space + ".WebHome");
+        data.createPost(editablePost, "Sailing post", space + ".Sailing");
+        data.createPost(readOnlyPost, "Other sailing post", space + ".Sailing");
+        // The user can edit and delete the categories, and can edit only one of the blog posts.
+        DocumentReference preferences = new DocumentReference(WIKI, space, "WebPreferences");
+        data.createPage(preferences, "", "");
+        setup.addObject(preferences, "XWiki.XWikiGlobalRights", "users", "XWiki." + user, "levels", "edit,delete",
+            "allow", 1);
+        setup.addObject(readOnlyPost, "XWiki.XWikiRights", "users", "XWiki." + user, "levels", "edit", "allow", 0);
+
+        setup.login(user, PASSWORD);
+        renamePage(setup, source, "Rowing");
+
+        assertAll(
+            () -> assertTrue(data.exists(new DocumentReference(WIKI, space, "Rowing")), "the category is renamed"),
+            () -> assertEquals(space + ".Rowing", data.getPostCategory(editablePost)),
+            () -> assertEquals(space + ".Sailing", data.getPostCategory(readOnlyPost)));
+    }
+
+    /**
+     * Renames a page with the standard rename form, in the same space, and waits for the rename to finish.
+     *
+     * @param page the page to rename
+     * @param newName the new title and name of the page
+     */
+    private static void renamePage(TestUtils setup, DocumentReference page, String newName)
+    {
+        setup.gotoPage(page, "view", "xpage=rename&step=1");
+        RenamePage renamePage = new RenamePage();
+        // The page name follows the new title.
+        renamePage.getDocumentPicker().setTitle(newName)
+            .waitForLocation(Arrays.asList("", page.getLastSpaceReference().getName(), newName));
+        renamePage.clickRenameButton().waitUntilFinished();
     }
 
     /**

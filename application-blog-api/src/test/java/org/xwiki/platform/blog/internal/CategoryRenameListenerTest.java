@@ -32,6 +32,7 @@ import org.xwiki.query.QueryException;
 import org.xwiki.query.QueryManager;
 import org.xwiki.refactoring.event.DocumentRenamedEvent;
 import org.xwiki.refactoring.event.DocumentRenamingEvent;
+import org.xwiki.security.authorization.Right;
 import org.xwiki.test.LogLevel;
 import org.xwiki.test.junit5.LogCaptureExtension;
 import org.xwiki.test.junit5.mockito.InjectMockComponents;
@@ -74,6 +75,8 @@ class CategoryRenameListenerTest
 
     private static final String PARENT_CATEGORY = "Blog.Categories.Parent";
 
+    private static final DocumentReference USER = new DocumentReference("xwiki", "XWiki", "Renamer");
+
     @InjectMockitoOldcore
     private MockitoOldcore oldcore;
 
@@ -96,6 +99,12 @@ class CategoryRenameListenerTest
         this.xwiki = this.oldcore.getSpyXWiki();
         this.context = this.oldcore.getXWikiContext();
         new InMemoryBlogQueries(this.oldcore).answer(this.queryManager);
+        this.context.setUserReference(USER);
+    }
+
+    private void allowEdit(DocumentReference reference)
+    {
+        when(this.oldcore.getMockAuthorizationManager().hasAccess(Right.EDIT, USER, reference)).thenReturn(true);
     }
 
     private XWikiDocument saveDocument(DocumentReference reference, String parent, LocalDocumentReference xclass)
@@ -181,6 +190,8 @@ class CategoryRenameListenerTest
         saveBlogPost(postInCategory, "Blog.Categories.First", "Blog.Categories.Old", "Blog.Categories.Last");
         DocumentReference otherPost = new DocumentReference("xwiki", "Blog", "OtherPost");
         saveBlogPost(otherPost, "Blog.Categories.First");
+        allowEdit(postInCategory);
+        allowEdit(otherPost);
 
         rename(OLD_CATEGORY, NEW_CATEGORY, PARENT_CATEGORY);
 
@@ -189,6 +200,26 @@ class CategoryRenameListenerTest
         assertEquals(Arrays.asList("Blog.Categories.First", "Blog.Categories.Last", "Blog.Categories.New"),
             getCategories(postInCategory));
         assertEquals(Arrays.asList("Blog.Categories.First"), getCategories(otherPost));
+    }
+
+    @Test
+    void renamingACategoryDoesNotUpdateThePostsTheUserCannotEdit() throws Exception
+    {
+        saveDocument(OLD_CATEGORY, PARENT_CATEGORY, CATEGORY_CLASS);
+        DocumentReference editablePost = new DocumentReference("xwiki", "Blog", "EditablePost");
+        saveBlogPost(editablePost, "Blog.Categories.Old");
+        DocumentReference readOnlyPost = new DocumentReference("xwiki", "Blog", "ReadOnlyPost");
+        saveBlogPost(readOnlyPost, "Blog.Categories.First", "Blog.Categories.Old");
+        allowEdit(editablePost);
+
+        rename(OLD_CATEGORY, NEW_CATEGORY, PARENT_CATEGORY);
+
+        assertEquals(Arrays.asList("Blog.Categories.New"), getCategories(editablePost));
+        assertEquals(Arrays.asList("Blog.Categories.First", "Blog.Categories.Old"), getCategories(readOnlyPost));
+        assertEquals(1, this.logCapture.size());
+        assertEquals("The category of the blog post [xwiki:Blog.ReadOnlyPost] was not updated after the rename of "
+            + "[xwiki:Blog.Categories.Old] to [xwiki:Blog.Categories.New] because the current user is not allowed to "
+            + "edit it.", this.logCapture.getMessage(0));
     }
 
     @Test
