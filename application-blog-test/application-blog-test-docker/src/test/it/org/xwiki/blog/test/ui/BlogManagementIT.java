@@ -206,6 +206,43 @@ class BlogManagementIT
             .gotoPage(new DocumentReference(WIKI, "TopLevelCategories", WEB_HOME)).getCategories());
     }
 
+    @Test
+    @Order(5)
+    void createBlogWithABackslashInItsName(TestUtils setup, TestReference testReference) throws Exception
+    {
+        setup.loginAsSuperAdmin();
+        BlogTestData data = new BlogTestData(setup);
+        String typedName = getTestClassName(testReference) + "Back\\slash";
+        String space = getTestClassName(testReference) + "Backslash";
+
+        BlogManagementPage managementPage = BlogManagementPage.gotoPage();
+        managementPage.setTitle("Backslash blog");
+        managementPage.setName(typedName);
+        BlogHomePage blogHomePage = managementPage.clickCreate();
+        assertEquals("Backslash blog", blogHomePage.getDocumentTitle());
+
+        // The name typed in the form is not escaped: its backslash is taken as an escape character and dropped, so the
+        // blog is created in a space without it, but the stored locations keep the name as typed.
+        DocumentReference blogReference = new DocumentReference(WIKI, space, WEB_HOME);
+        assertTrue(data.exists(blogReference));
+        assertEquals(typedName, data.getProperty(blogReference, BlogTestData.BLOG_CLASS, POSTS_LOCATION));
+        assertEquals(typedName + CATEGORIES_SUFFIX,
+            data.getProperty(blogReference, BlogTestData.BLOG_CLASS, CATEGORIES_LOCATION));
+
+        // A post created in the blog is created in the space of the blog.
+        blogHomePage.getCreateBlogPostPane().setTitle(POST_TITLE);
+        BlogPostInlinePage editPage = blogHomePage.getCreateBlogPostPane().clickCreateButton();
+        editPage.setPublished(true);
+        BlogPostViewPage post = editPage.clickSaveAndView();
+        assertEquals(space, post.getMetaDataValue("space"));
+        assertEquals(space + ".WebHome", data.getParent(new DocumentReference(WIKI, space, POST_TITLE)));
+
+        // This is a bug: the blog looks for its posts in the stored posts location, a space name that no page has, so
+        // it lists none. The blog should list the post. See BLOG-286: Move the logic that resolves where a blog's posts
+        // and categories are located to Java.
+        assertEquals(Collections.emptyList(), BlogHomePage.gotoPage(blogReference).getPostTitles());
+    }
+
     private static String getTestClassName(TestReference testReference)
     {
         return testReference.getLastSpaceReference().getParent().getName();
