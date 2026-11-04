@@ -180,6 +180,54 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
       </published>
+      <sharedGroups>
+        <cache>0</cache>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <freeText/>
+        <hint>Groups whose members can view the post while it is not published or hidden.</hint>
+        <multiSelect>1</multiSelect>
+        <name>sharedGroups</name>
+        <number>10</number>
+        <picker>1</picker>
+        <prettyName>Share with groups</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators/>
+        <size>20</size>
+        <sort/>
+        <unmodifiable>0</unmodifiable>
+        <usesList>0</usesList>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.GroupsClass</classType>
+      </sharedGroups>
+      <sharedUsers>
+        <cache>0</cache>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <freeText/>
+        <hint>Users who can view the post while it is not published or hidden.</hint>
+        <multiSelect>1</multiSelect>
+        <name>sharedUsers</name>
+        <number>9</number>
+        <picker>1</picker>
+        <prettyName>Share with users</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators/>
+        <size>20</size>
+        <sort/>
+        <unmodifiable>0</unmodifiable>
+        <usesList>0</usesList>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.UsersClass</classType>
+      </sharedUsers>
       <title>
         <customDisplay/>
         <disabled>0</disabled>
@@ -216,6 +264,12 @@
     </property>
     <property>
       <published>0</published>
+    </property>
+    <property>
+      <sharedGroups/>
+    </property>
+    <property>
+      <sharedUsers/>
     </property>
     <property>
       <title>Enter your title here</title>

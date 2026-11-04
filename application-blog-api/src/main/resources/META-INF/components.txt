@@ -2,6 +2,7 @@ org.xwiki.platform.blog.internal.BlogDocumentSavingListener
 org.xwiki.platform.blog.internal.BlogMoveListener
 org.xwiki.platform.blog.internal.BlogTitleMigration
 org.xwiki.platform.blog.internal.BlogUpgradeEventListener
+org.xwiki.platform.blog.internal.BlogVisibilityRestrictionMigration
 org.xwiki.platform.blog.internal.CategoryLocationMigration
 org.xwiki.platform.blog.internal.CategoryRenameListener
 org.xwiki.platform.blog.internal.DefaultBlogVisibilityMigration
