@@ -137,4 +137,40 @@ class BlogPostVisibilityIT
         assertThat(BlogHomePage.gotoPage().getPostTitles(), hasItem(title));
         assertEquals(title, BlogPostViewPage.gotoPage(draft).getDocumentTitle());
     }
+
+    /**
+     * BLOG-173: the users a draft is shared with can view it from a link and publish it.
+     */
+    @Test
+    @Order(3)
+    void draftSharedWithAnotherUserCanBeViewedAndPublishedByThem(TestUtils setup, TestReference testReference)
+    {
+        String testClassName = testReference.getLastSpaceReference().getParent().getName();
+        String author = testClassName + "_" + testReference.getLastSpaceReference().getName();
+        String collaborator = author + "_Collaborator";
+        LocalDocumentReference draft = new LocalDocumentReference("Blog", testClassName + "SharedDraft");
+        String title = "Visibility draft shared with another user";
+
+        setup.loginAsSuperAdmin();
+        setup.createUserAndLogin(collaborator, PASSWORD);
+        setup.loginAsSuperAdmin();
+        setup.createUserAndLogin(author, PASSWORD);
+        new BlogPostFixture(setup, draft, title).withPublished(false).withSharedUsers("XWiki." + collaborator)
+            .create();
+
+        // Guests still cannot see the draft.
+        setup.forceGuestUser();
+        setup.gotoPage(draft);
+        new LoginPage().assertOnPage();
+
+        // The collaborator opens the draft from a link, and publishes it.
+        setup.login(collaborator, PASSWORD);
+        assertEquals(title, BlogPostViewPage.gotoPage(draft).getDocumentTitle());
+        BlogPostInlinePage editPage = BlogPostViewPage.gotoPage(draft).clickEditBlogPostIcon();
+        editPage.setPublished(true);
+        assertTrue(editPage.clickSaveAndView().isPublished());
+
+        setup.forceGuestUser();
+        assertEquals(title, BlogPostViewPage.gotoPage(draft).getDocumentTitle());
+    }
 }

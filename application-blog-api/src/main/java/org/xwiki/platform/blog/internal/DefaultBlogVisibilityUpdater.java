@@ -19,8 +19,12 @@
  */
 package org.xwiki.platform.blog.internal;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -104,9 +108,19 @@ public class DefaultBlogVisibilityUpdater implements BlogVisibilityUpdater
     private static final String RIGHTS_ALLOWDENY = "allow";
 
     /**
-     * Matches a users property that holds exactly one user, i.e. a non-empty value without list separator.
+     * The property of the blog post class that lists the users who can view the post while it is hidden.
      */
-    private static final Pattern SINGLE_USER = Pattern.compile("[^,|]+");
+    private static final String SHARED_USERS = "sharedUsers";
+
+    /**
+     * The property of the blog post class that lists the groups whose members can view the post while it is hidden.
+     */
+    private static final String SHARED_GROUPS = "sharedGroups";
+
+    /**
+     * Separates the values of a users or groups list property.
+     */
+    private static final Pattern LIST_SEPARATOR = Pattern.compile("[,|]");
 
     @Inject
     private Provider<XWikiContext> contextProvider;
@@ -135,7 +149,7 @@ public class DefaultBlogVisibilityUpdater implements BlogVisibilityUpdater
                 document.setHidden(hidden);
                 try {
                     if (hidden) {
-                        restrictVisibilityToCreator(document);
+                        restrictVisibility(document, blogPost);
                     } else {
                         removeVisibilityRestrictions(document);
                     }
@@ -148,46 +162,88 @@ public class DefaultBlogVisibilityUpdater implements BlogVisibilityUpdater
     }
 
     /**
-     * Tell whether the given rights object has the shape of a visibility restriction added by this component: it
-     * allows only the "view" right, to a single user and no group.
+     * Tell whether the given rights object is a visibility restriction added by this component. Such a restriction
+     * allows only the "view" right, and either lists the creator of the blog post as its first user, or is given to a
+     * single user and no group, like the restrictions that older versions added for each user who saved the post
+     * (BLOG-172).
      *
      * @param rights the rights object to check, can be {@code null}
+     * @param creator the serialized reference of the creator of the blog post, can be {@code null}
      * @return {@code true} if the given rights object is a visibility restriction
      */
-    static boolean isVisibilityRestriction(BaseObject rights)
+    static boolean isVisibilityRestriction(BaseObject rights, String creator)
     {
-        if (rights == null || rights.getIntValue(RIGHTS_ALLOWDENY) != 1) {
-            return false;
-        }
-        return VIEW_RIGHT.equals(rights.getStringValue(RIGHTS_LEVELS))
-            && rights.getStringValue(RIGHTS_GROUPS).isEmpty()
-            && SINGLE_USER.matcher(rights.getStringValue(RIGHTS_USERS)).matches();
+        return isViewAllowance(rights) && (isCreatorLock(rights, creator) || isSingleUserLock(rights));
+    }
+
+    private static boolean isViewAllowance(BaseObject rights)
+    {
+        return rights != null && rights.getIntValue(RIGHTS_ALLOWDENY) == 1
+            && VIEW_RIGHT.equals(rights.getStringValue(RIGHTS_LEVELS));
+    }
+
+    private static boolean isCreatorLock(BaseObject rights, String creator)
+    {
+        List<String> users = parseList(rights.getStringValue(RIGHTS_USERS));
+        return !users.isEmpty() && users.get(0).equals(creator);
+    }
+
+    private static boolean isSingleUserLock(BaseObject rights)
+    {
+        return parseList(rights.getStringValue(RIGHTS_USERS)).size() == 1
+            && rights.getStringValue(RIGHTS_GROUPS).isEmpty();
+    }
+
+    private static List<String> parseList(String value)
+    {
+        return LIST_SEPARATOR.splitAsStream(value).map(String::trim).filter(item -> !item.isEmpty())
+            .collect(Collectors.toList());
     }
 
     /**
-     * Give the creator of the blog post the "view" right, which denies it to everybody else who is not an admin. The
-     * restriction belongs to the creator, not to the current user, so that the other users who save the post do not
-     * each add their own restriction (BLOG-172).
+     * Give the "view" right to the creator of the blog post and to the users and groups the post is shared with, which
+     * denies it to everybody else who is not an admin. The restriction does not depend on the current user, so that
+     * the other users who save the post do not each add their own restriction (BLOG-172).
      */
-    private void restrictVisibilityToCreator(XWikiDocument document) throws XWikiException
+    private void restrictVisibility(XWikiDocument document, BaseObject blogPost) throws XWikiException
     {
-        XWikiContext context = contextProvider.get();
-        DocumentReference creatorReference = document.getCreatorReference();
-        String creator = stringSerializer.serialize(
-            creatorReference != null ? creatorReference : context.getUserReference());
-        if (getVisibilityRestrictions(document).stream()
-            .anyMatch(rights -> creator.equals(rights.getStringValue(RIGHTS_USERS)))) {
+        String creator = getCreator(document);
+        Set<String> users = new LinkedHashSet<>();
+        users.add(creator);
+        users.addAll(parseList(blogPost.getStringValue(SHARED_USERS)));
+        Set<String> groups = new LinkedHashSet<>(parseList(blogPost.getStringValue(SHARED_GROUPS)));
+
+        // Only replace the lock of the creator: single user view rights, which an admin may also have set by hand,
+        // stay until the post is published.
+        List<BaseObject> restrictions = getRightObjects(document).stream()
+            .filter(rights -> isViewAllowance(rights) && isCreatorLock(rights, creator))
+            .collect(Collectors.toList());
+        if (restrictions.size() == 1 && grantsViewTo(restrictions.get(0), users, groups)) {
             return;
         }
+        removeVisibilityRestrictions(document, restrictions);
 
+        XWikiContext context = contextProvider.get();
         BaseObject rightsObject = document.newXObject(RIGHTS_CLASS, context);
         rightsObject.set(RIGHTS_ALLOWDENY, 1, context);
-        PropertyClass usersPropClass = (PropertyClass) rightsObject.getXClass(context).get(RIGHTS_USERS);
-        BaseProperty<?> usersProperty = usersPropClass.fromStringArray(new String[] { creator });
-        rightsObject.set(RIGHTS_USERS, usersProperty.getValue(), context);
-        PropertyClass levelsPropClass = (PropertyClass) rightsObject.getXClass(context).get(RIGHTS_LEVELS);
-        BaseProperty<?> levelsProperty = levelsPropClass.fromStringArray(new String[] { VIEW_RIGHT });
-        rightsObject.set(RIGHTS_LEVELS, levelsProperty.getValue(), context);
+        setList(rightsObject, RIGHTS_USERS, users, context);
+        if (!groups.isEmpty()) {
+            setList(rightsObject, RIGHTS_GROUPS, groups, context);
+        }
+        setList(rightsObject, RIGHTS_LEVELS, Collections.singletonList(VIEW_RIGHT), context);
+    }
+
+    private boolean grantsViewTo(BaseObject restriction, Set<String> users, Set<String> groups)
+    {
+        return parseList(restriction.getStringValue(RIGHTS_USERS)).equals(new ArrayList<>(users))
+            && parseList(restriction.getStringValue(RIGHTS_GROUPS)).equals(new ArrayList<>(groups));
+    }
+
+    private void setList(BaseObject object, String property, Collection<String> values, XWikiContext context)
+    {
+        PropertyClass propertyClass = (PropertyClass) object.getXClass(context).get(property);
+        BaseProperty<?> value = propertyClass.fromStringArray(values.toArray(new String[0]));
+        object.set(property, value.getValue(), context);
     }
 
     /**
@@ -197,21 +253,35 @@ public class DefaultBlogVisibilityUpdater implements BlogVisibilityUpdater
      */
     private void removeVisibilityRestrictions(XWikiDocument document)
     {
-        for (BaseObject restriction : getVisibilityRestrictions(document)) {
+        removeVisibilityRestrictions(document, getVisibilityRestrictions(document, getCreator(document)));
+    }
+
+    private void removeVisibilityRestrictions(XWikiDocument document, List<BaseObject> restrictions)
+    {
+        for (BaseObject restriction : restrictions) {
             if (!document.removeXObject(restriction)) {
-                logger.error("failed to remove visibility restriction for blog post [{}] on publication",
+                logger.error("failed to remove visibility restriction for blog post [{}]",
                     stringSerializer.serialize(document.getDocumentReference()));
             }
         }
     }
 
-    private List<BaseObject> getVisibilityRestrictions(XWikiDocument document)
+    private List<BaseObject> getVisibilityRestrictions(XWikiDocument document, String creator)
+    {
+        return getRightObjects(document).stream().filter(rights -> isVisibilityRestriction(rights, creator))
+            .collect(Collectors.toList());
+    }
+
+    private List<BaseObject> getRightObjects(XWikiDocument document)
     {
         List<BaseObject> rightObjects = document.getXObjects(RIGHTS_CLASS);
-        if (rightObjects == null) {
-            return Collections.emptyList();
-        }
-        return rightObjects.stream().filter(DefaultBlogVisibilityUpdater::isVisibilityRestriction)
-            .collect(Collectors.toList());
+        return rightObjects != null ? rightObjects : Collections.emptyList();
+    }
+
+    private String getCreator(XWikiDocument document)
+    {
+        DocumentReference creatorReference = document.getCreatorReference();
+        return stringSerializer.serialize(
+            creatorReference != null ? creatorReference : contextProvider.get().getUserReference());
     }
 }

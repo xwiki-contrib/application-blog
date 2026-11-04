@@ -31,6 +31,7 @@ import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.DocumentReferenceResolver;
 import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.WikiReference;
 import org.xwiki.platform.blog.BlogVisibilityUpdater;
 import org.xwiki.query.Query;
@@ -73,6 +74,10 @@ class BlogVisibilityRestrictionMigrationTest
 
     private static final DocumentReference BLOG_POST = new DocumentReference("chocolate", "Blog", "HelloWorld");
 
+    private static final DocumentReference CREATOR_REFERENCE = new DocumentReference("chocolate", "XWiki", "Alice");
+
+    private static final String CREATOR = "chocolate:XWiki.Alice";
+
     private static final String SAVE_COMMENT = "Remove the view restrictions left on the published blog post "
         + "(BLOG-172).";
 
@@ -93,6 +98,9 @@ class BlogVisibilityRestrictionMigrationTest
 
     @MockComponent
     private BlogVisibilityUpdater blogVisibilityUpdater;
+
+    @MockComponent
+    private EntityReferenceSerializer<String> serializer;
 
     @RegisterExtension
     private LogCaptureExtension logCapture = new LogCaptureExtension(LogLevel.INFO);
@@ -126,6 +134,8 @@ class BlogVisibilityRestrictionMigrationTest
         this.document = mock(XWikiDocument.class);
         when(this.xwiki.getDocument(BLOG_POST, this.context)).thenReturn(this.loadedDocument);
         when(this.loadedDocument.clone()).thenReturn(this.document);
+        when(this.document.getCreatorReference()).thenReturn(CREATOR_REFERENCE);
+        when(this.serializer.serialize(CREATOR_REFERENCE)).thenReturn(CREATOR);
     }
 
     private static BaseObject rightsObject(String users, String groups)
@@ -158,8 +168,10 @@ class BlogVisibilityRestrictionMigrationTest
     void executeLeavesTheRightsSetByUsersUntouched() throws Exception
     {
         when(this.query.<String>execute()).thenReturn(Collections.singletonList("Blog.HelloWorld"));
+        // Neither lists the creator first, nor is given to a single user and no group.
         when(this.document.getXObjects(RIGHTS_CLASS)).thenReturn(Arrays.asList(
-            rightsObject("chocolate:XWiki.Alice,chocolate:XWiki.Bob", ""),
+            rightsObject("chocolate:XWiki.Bob," + CREATOR, ""),
+            rightsObject("chocolate:XWiki.Bob", "chocolate:XWiki.XWikiAllGroup"),
             rightsObject("", "chocolate:XWiki.XWikiAllGroup")));
 
         this.migration.execute(WIKI);

@@ -49,9 +49,12 @@ import com.xpn.xwiki.objects.classes.BaseClass;
 import com.xpn.xwiki.objects.classes.PropertyClass;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -133,6 +136,13 @@ class DefaultBlogVisibilityUpdaterTest
     {
         when(this.blogPostObject.getIntValue("published")).thenReturn(published ? 1 : 0);
         when(this.blogPostObject.getIntValue("hidden")).thenReturn(hidden ? 1 : 0);
+        mockSharing("", "");
+    }
+
+    private void mockSharing(String users, String groups)
+    {
+        when(this.blogPostObject.getStringValue("sharedUsers")).thenReturn(users);
+        when(this.blogPostObject.getStringValue("sharedGroups")).thenReturn(groups);
     }
 
     private BaseObject rightsObject(int allow, String users, String groups, String levels)
@@ -203,16 +213,21 @@ class DefaultBlogVisibilityUpdaterTest
 
     private BaseObject mockNewRightsObject(String user) throws Exception
     {
+        return mockNewRightsObject(new String[] { user }, new String[0]);
+    }
+
+    /**
+     * Mock the creation of a rights object. The mocked list properties hold their values joined with a comma.
+     */
+    private BaseObject mockNewRightsObject(String[] users, String[] groups) throws Exception
+    {
         BaseObject newRights = mock(BaseObject.class);
         when(this.document.newXObject(RIGHTS_CLASS, this.context)).thenReturn(newRights);
         BaseClass rightsClass = mock(BaseClass.class);
         when(newRights.getXClass(this.context)).thenReturn(rightsClass);
 
-        PropertyClass usersClass = mock(PropertyClass.class);
-        when(rightsClass.get("users")).thenReturn(usersClass);
-        BaseProperty<?> usersProperty = mock(BaseProperty.class);
-        when(usersClass.fromStringArray(new String[] { user })).thenReturn(usersProperty);
-        when(usersProperty.getValue()).thenReturn(user);
+        mockListProperty(rightsClass, "users", users);
+        mockListProperty(rightsClass, "groups", groups);
 
         PropertyClass levelsClass = mock(PropertyClass.class);
         when(rightsClass.get("levels")).thenReturn(levelsClass);
@@ -221,6 +236,74 @@ class DefaultBlogVisibilityUpdaterTest
         when(levelsProperty.getValue()).thenReturn(Arrays.asList("view"));
 
         return newRights;
+    }
+
+    private void mockListProperty(BaseClass rightsClass, String name, String[] values)
+    {
+        PropertyClass propertyClass = mock(PropertyClass.class);
+        when(rightsClass.get(name)).thenReturn(propertyClass);
+        BaseProperty<?> property = mock(BaseProperty.class);
+        when(propertyClass.fromStringArray(values)).thenReturn(property);
+        when(property.getValue()).thenReturn(String.join(",", values));
+    }
+
+    @Test
+    void synchronizeHiddenMetadataRestrictsViewToCreatorAndSharedUsersAndGroups() throws Exception
+    {
+        mockBlogPost(false, false);
+        // The creator is not repeated when the post is also shared with them.
+        mockSharing("XWiki.Carol, XWiki.Dave|" + USER, "XWiki.Editors");
+        BaseObject newRights =
+            mockNewRightsObject(new String[] { USER, "XWiki.Carol", "XWiki.Dave" }, new String[] { "XWiki.Editors" });
+
+        this.updater.synchronizeHiddenMetadata(this.document);
+
+        verify(this.document).setHidden(true);
+        verify(newRights).set("allow", 1, this.context);
+        verify(newRights).set("users", USER + ",XWiki.Carol,XWiki.Dave", this.context);
+        verify(newRights).set("groups", "XWiki.Editors", this.context);
+        verify(newRights).set("levels", Arrays.asList("view"), this.context);
+    }
+
+    @Test
+    void synchronizeHiddenMetadataKeepsRestrictionWhenSharingIsUnchanged() throws Exception
+    {
+        BaseObject restriction = rightsObject(1, USER + ",XWiki.Carol", "XWiki.Editors", "view");
+        this.rightsObjects.add(restriction);
+        mockBlogPost(false, false);
+        mockSharing("XWiki.Carol", "XWiki.Editors");
+
+        this.updater.synchronizeHiddenMetadata(this.document);
+
+        verify(this.document, never()).newXObject(any(EntityReference.class), any(XWikiContext.class));
+        assertRightsObjects(restriction);
+    }
+
+    @Test
+    void synchronizeHiddenMetadataReplacesRestrictionWhenSharingChanges() throws Exception
+    {
+        // A single user view right, set by hand or by an older version for another editor, stays until publication.
+        BaseObject deny = rightsObject(0, USER, "", "view");
+        BaseObject otherUser = rightsObject(1, CREATOR, "", "view");
+        this.rightsObjects.addAll(Arrays.asList(viewRestriction(), deny, otherUser));
+        mockBlogPost(false, false);
+        mockSharing("XWiki.Carol", "");
+        BaseObject newRights = mockNewRightsObject(new String[] { USER, "XWiki.Carol" }, new String[0]);
+
+        this.updater.synchronizeHiddenMetadata(this.document);
+
+        verify(newRights).set("users", USER + ",XWiki.Carol", this.context);
+        verify(newRights, never()).set(eq("groups"), any(), any(XWikiContext.class));
+        assertRightsObjects(deny, otherUser);
+    }
+
+    @Test
+    void isVisibilityRestrictionWithoutCreator()
+    {
+        assertTrue(DefaultBlogVisibilityUpdater.isVisibilityRestriction(rightsObject(1, CREATOR, "", "view"), null));
+        assertFalse(DefaultBlogVisibilityUpdater.isVisibilityRestriction(
+            rightsObject(1, CREATOR + ",XWiki.Carol", "", "view"), null));
+        assertFalse(DefaultBlogVisibilityUpdater.isVisibilityRestriction(null, null));
     }
 
     @Test
@@ -300,19 +383,21 @@ class DefaultBlogVisibilityUpdaterTest
     @Test
     void synchronizeHiddenMetadataRemovesRestrictionsOfAllEditorsWhenPublished()
     {
+        // Alice is the creator. Only the rights that do not start with her and are not given to a single user stay.
         BaseObject deny = rightsObject(0, USER, "", "view");
         BaseObject otherLevel = rightsObject(1, USER, "", "edit");
-        BaseObject withGroups = rightsObject(1, USER, "XWiki.XWikiAdminGroup", "view");
-        BaseObject severalUsers = rightsObject(1, USER + ',' + CREATOR, "", "view");
+        BaseObject withGroups = rightsObject(1, CREATOR, "XWiki.XWikiAdminGroup", "view");
+        BaseObject severalUsers = rightsObject(1, CREATOR + ',' + USER, "", "view");
         BaseObject noUser = rightsObject(1, "", "", "view");
+        BaseObject shared = rightsObject(1, USER + ",XWiki.Carol", "XWiki.Editors", "view");
         this.rightsObjects.addAll(Arrays.asList(rightsObject(1, CREATOR, "", "view"), null, viewRestriction(), deny,
-            otherLevel, withGroups, severalUsers, noUser, viewRestriction()));
+            otherLevel, withGroups, severalUsers, noUser, shared, viewRestriction()));
         mockBlogPost(true, false);
 
         this.updater.synchronizeHiddenMetadata(this.document);
 
         verify(this.document).setHidden(false);
-        verify(this.document, times(3)).removeXObject(any(BaseObject.class));
+        verify(this.document, times(4)).removeXObject(any(BaseObject.class));
         assertRightsObjects(null, deny, otherLevel, withGroups, severalUsers, noUser);
     }
 
@@ -341,7 +426,7 @@ class DefaultBlogVisibilityUpdaterTest
         verify(this.document).setHidden(false);
         verify(this.document).removeXObject(restriction);
         assertEquals(1, this.logCapture.size());
-        assertEquals("failed to remove visibility restriction for blog post [chocolate:Blog.HelloWorld] "
-            + "on publication", this.logCapture.getMessage(0));
+        assertEquals("failed to remove visibility restriction for blog post [chocolate:Blog.HelloWorld]",
+            this.logCapture.getMessage(0));
     }
 }

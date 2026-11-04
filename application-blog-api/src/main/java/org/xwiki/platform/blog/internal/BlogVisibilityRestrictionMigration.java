@@ -29,6 +29,7 @@ import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.DocumentReferenceResolver;
 import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.WikiReference;
 import org.xwiki.platform.blog.BlogVisibilityUpdater;
 import org.xwiki.query.Query;
@@ -66,6 +67,9 @@ public class BlogVisibilityRestrictionMigration
     private Provider<XWikiContext> contextProvider;
 
     @Inject
+    private EntityReferenceSerializer<String> serializer;
+
+    @Inject
     private BlogVisibilityUpdater blogVisibilityUpdater;
 
     @Inject
@@ -92,8 +96,9 @@ public class BlogVisibilityRestrictionMigration
                 DocumentReference documentReference = referenceResolver.resolve(docName, wikiReference);
                 XWikiDocument document = xwiki.getDocument(documentReference, context).clone();
                 // The query also matches the "allow" rights that users set themselves, so check the exact shape.
+                String creator = serializer.serialize(document.getCreatorReference());
                 if (document.getXObjects(RIGHTS_CLASS).stream()
-                    .anyMatch(DefaultBlogVisibilityUpdater::isVisibilityRestriction)) {
+                    .anyMatch(rights -> DefaultBlogVisibilityUpdater.isVisibilityRestriction(rights, creator))) {
                     blogVisibilityUpdater.synchronizeHiddenMetadata(document);
                     xwiki.saveDocument(document,
                         "Remove the view restrictions left on the published blog post (BLOG-172).", context);
