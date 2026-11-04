@@ -173,4 +173,33 @@ class BlogPostVisibilityIT
         setup.forceGuestUser();
         assertEquals(title, BlogPostViewPage.gotoPage(draft).getDocumentTitle());
     }
+
+    /**
+     * BLOG-53: an admin can hide a post published by another user, and the post stays visible to its author.
+     */
+    @Test
+    @Order(4)
+    void adminCanHidePostOfAnotherUser(TestUtils setup, TestReference testReference)
+    {
+        String testClassName = testReference.getLastSpaceReference().getParent().getName();
+        String author = testClassName + "_" + testReference.getLastSpaceReference().getName();
+        LocalDocumentReference post = new LocalDocumentReference("Blog", testClassName + "HiddenByAdmin");
+        String title = "Visibility post hidden by an admin";
+
+        setup.loginAsSuperAdmin();
+        setup.createUserAndLogin(author, PASSWORD);
+        new BlogPostFixture(setup, post, title).create();
+
+        setup.loginAsSuperAdmin();
+        assertTrue(BlogPostViewPage.gotoPage(post).clickHideBlogPostIcon().isHidden());
+
+        setup.login(author, PASSWORD);
+        BlogPostViewPage authorView = BlogPostViewPage.gotoPage(post);
+        assertEquals(title, authorView.getDocumentTitle());
+        assertTrue(authorView.isHidden());
+
+        setup.forceGuestUser();
+        setup.gotoPage(post);
+        new LoginPage().assertOnPage();
+    }
 }
