@@ -71,6 +71,9 @@ class BlogUpgradeEventListenerTest
     private BlogVisibilityMigration blogVisibilityMigration;
 
     @MockComponent
+    private BlogVisibilityRestrictionMigration blogVisibilityRestrictionMigration;
+
+    @MockComponent
     private BlogTitleMigration blogTitleMigration;
 
     @MockComponent
@@ -270,15 +273,64 @@ class BlogUpgradeEventListenerTest
         }
     }
 
+    @ParameterizedTest
+    @CsvSource({
+        "org.xwiki.platform:xwiki-platform-blog-ui, 8.2, true",
+        "org.xwiki.contrib.blog:application-blog-ui, 9.10, true",
+        "org.xwiki.contrib.blog:application-blog-ui, 9.15.15, true",
+        "org.xwiki.contrib.blog:application-blog-ui, 9.15.16, false",
+        "org.xwiki.contrib.blog:application-blog-ui, 10.0, false"
+    })
+    void restrictionMigrationVersionBounds(String extensionId, String previousVersion, boolean executedExpected)
+        throws Exception
+    {
+        this.listener.onEvent(event("wiki:chocolate"), null,
+            Collections.singletonList(extension(extensionId, previousVersion)));
+
+        if (executedExpected) {
+            verify(this.blogVisibilityRestrictionMigration).execute(WIKI);
+        } else {
+            verifyNoInteractions(this.blogVisibilityRestrictionMigration);
+        }
+    }
+
     @Test
-    void bothMigrationsFromOldPlatformVersion() throws Exception
+    void restrictionMigrationOnAllWikisWithNoNamespace() throws Exception
+    {
+        when(this.wikiDescriptorManager.getAllIds()).thenReturn(Arrays.asList("wiki1", "wiki2"));
+
+        this.listener.onEvent(event(null), null, Collections.singletonList(extension(EXTENSION_ID, "9.15.15")));
+
+        verify(this.blogVisibilityRestrictionMigration).execute(new WikiReference("wiki1"));
+        verify(this.blogVisibilityRestrictionMigration).execute(new WikiReference("wiki2"));
+        verifyNoInteractions(this.blogVisibilityMigration, this.blogTitleMigration);
+    }
+
+    @Test
+    void titleMigrationRunsWhenRestrictionMigrationFails() throws Exception
+    {
+        doThrow(new Exception("Restriction failure")).when(this.blogVisibilityRestrictionMigration).execute(any());
+
+        this.listener.onEvent(event("wiki:chocolate"), null,
+            Collections.singletonList(extension(EXTENSION_ID, "9.15.10")));
+
+        verify(this.blogTitleMigration).execute(WIKI);
+        assertEquals(1, this.logCapture.size());
+        assertEquals("Failed to remove the view restrictions left on published blog posts on the wiki [chocolate].",
+            this.logCapture.getMessage(0));
+    }
+
+    @Test
+    void allMigrationsFromOldPlatformVersion() throws Exception
     {
         this.listener.onEvent(event("wiki:chocolate"), null,
             Collections.singletonList(extension(PREVIOUS_EXTENSION_ID, "8.2")));
 
-        // The visibility migration runs first, then the title migration.
-        InOrder inOrder = inOrder(this.blogVisibilityMigration, this.blogTitleMigration);
+        // The visibility migration runs first, then the restriction migration, then the title migration.
+        InOrder inOrder =
+            inOrder(this.blogVisibilityMigration, this.blogVisibilityRestrictionMigration, this.blogTitleMigration);
         inOrder.verify(this.blogVisibilityMigration).execute(WIKI);
+        inOrder.verify(this.blogVisibilityRestrictionMigration).execute(WIKI);
         inOrder.verify(this.blogTitleMigration).execute(WIKI);
     }
 
