@@ -19,7 +19,10 @@
  */
 package org.xwiki.platform.blog.internal;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -100,6 +103,11 @@ public class DefaultBlogVisibilityUpdater implements BlogVisibilityUpdater
      */
     private static final String RIGHTS_ALLOWDENY = "allow";
 
+    /**
+     * Matches a users property that holds exactly one user, i.e. a non-empty value without list separator.
+     */
+    private static final Pattern SINGLE_USER = Pattern.compile("[^,|]+");
+
     @Inject
     private Provider<XWikiContext> contextProvider;
 
@@ -127,9 +135,9 @@ public class DefaultBlogVisibilityUpdater implements BlogVisibilityUpdater
                 document.setHidden(hidden);
                 try {
                     if (hidden) {
-                        restrictVisibilityToCurrentUser(document);
+                        restrictVisibilityToCreator(document);
                     } else {
-                        unrestrictVisibilityToCurrentUser(document);
+                        removeVisibilityRestrictions(document);
                     }
                 } catch (XWikiException e) {
                     logger.warn("could not set/clear user rights on blog post [{}]",
@@ -140,23 +148,42 @@ public class DefaultBlogVisibilityUpdater implements BlogVisibilityUpdater
     }
 
     /**
-     * Give the current user the "view" right, restricting view to this user only.
-     * This assumes there are no other "view" rights set yet; if this is the case, this method will
-     * not work as expected. leaving this possibility aside for now
+     * Tell whether the given rights object has the shape of a visibility restriction added by this component: it
+     * allows only the "view" right, to a single user and no group.
+     *
+     * @param rights the rights object to check, can be {@code null}
+     * @return {@code true} if the given rights object is a visibility restriction
      */
-    private void restrictVisibilityToCurrentUser(XWikiDocument document) throws XWikiException
+    static boolean isVisibilityRestriction(BaseObject rights)
     {
-        BaseObject existingRightsObject = findVisibilityToCurrentUserRestriction(document);
-        if (existingRightsObject != null) {
+        if (rights == null || rights.getIntValue(RIGHTS_ALLOWDENY) != 1) {
+            return false;
+        }
+        return VIEW_RIGHT.equals(rights.getStringValue(RIGHTS_LEVELS))
+            && rights.getStringValue(RIGHTS_GROUPS).isEmpty()
+            && SINGLE_USER.matcher(rights.getStringValue(RIGHTS_USERS)).matches();
+    }
+
+    /**
+     * Give the creator of the blog post the "view" right, which denies it to everybody else who is not an admin. The
+     * restriction belongs to the creator, not to the current user, so that the other users who save the post do not
+     * each add their own restriction (BLOG-172).
+     */
+    private void restrictVisibilityToCreator(XWikiDocument document) throws XWikiException
+    {
+        XWikiContext context = contextProvider.get();
+        DocumentReference creatorReference = document.getCreatorReference();
+        String creator = stringSerializer.serialize(
+            creatorReference != null ? creatorReference : context.getUserReference());
+        if (getVisibilityRestrictions(document).stream()
+            .anyMatch(rights -> creator.equals(rights.getStringValue(RIGHTS_USERS)))) {
             return;
         }
 
-        XWikiContext context = contextProvider.get();
         BaseObject rightsObject = document.newXObject(RIGHTS_CLASS, context);
         rightsObject.set(RIGHTS_ALLOWDENY, 1, context);
         PropertyClass usersPropClass = (PropertyClass) rightsObject.getXClass(context).get(RIGHTS_USERS);
-        BaseProperty<?> usersProperty = usersPropClass.fromStringArray(new String[] {
-            stringSerializer.serialize(context.getUserReference()) });
+        BaseProperty<?> usersProperty = usersPropClass.fromStringArray(new String[] { creator });
         rightsObject.set(RIGHTS_USERS, usersProperty.getValue(), context);
         PropertyClass levelsPropClass = (PropertyClass) rightsObject.getXClass(context).get(RIGHTS_LEVELS);
         BaseProperty<?> levelsProperty = levelsPropClass.fromStringArray(new String[] { VIEW_RIGHT });
@@ -164,48 +191,27 @@ public class DefaultBlogVisibilityUpdater implements BlogVisibilityUpdater
     }
 
     /**
-     * Remove the visibility restriction for the given blog post.
-     * This assumes the restriction has been set by a previous call
-     * to {@link #restrictVisibilityToCurrentUser(XWikiDocument)}
-     * and has not been modified in between.
+     * Remove all the visibility restrictions from the given blog post, whoever they were added for. Older versions
+     * added one for each user who saved the post while it was hidden, and publishing removed only the one of the
+     * publisher (BLOG-172).
      */
-    private void unrestrictVisibilityToCurrentUser(XWikiDocument document)
+    private void removeVisibilityRestrictions(XWikiDocument document)
     {
-        for (int tries = 0; tries < 5; tries++) {
-            BaseObject rightsObjectToRemove = findVisibilityToCurrentUserRestriction(document);
-            if (rightsObjectToRemove != null) {
-                boolean result = document.removeXObject(rightsObjectToRemove);
-                if (!result) {
-                    logger.error("failed to remove visibility restriction for blog post [{}] on publication",
-                        stringSerializer.serialize(document.getDocumentReference()));
-                }
-            } else {
-                break;
+        for (BaseObject restriction : getVisibilityRestrictions(document)) {
+            if (!document.removeXObject(restriction)) {
+                logger.error("failed to remove visibility restriction for blog post [{}] on publication",
+                    stringSerializer.serialize(document.getDocumentReference()));
             }
         }
     }
 
-    private BaseObject findVisibilityToCurrentUserRestriction(XWikiDocument document)
+    private List<BaseObject> getVisibilityRestrictions(XWikiDocument document)
     {
-        XWikiContext context = contextProvider.get();
-        String userRef = stringSerializer.serialize(context.getUserReference());
-        BaseObject rightsObject = null;
         List<BaseObject> rightObjects = document.getXObjects(RIGHTS_CLASS);
-        if (rightObjects != null) {
-            for (BaseObject rObj : rightObjects) {
-                if (rObj != null) {
-                    if (rObj.getIntValue(RIGHTS_ALLOWDENY) == 1
-                        && userRef.equals(rObj.getStringValue(RIGHTS_USERS))
-                        && VIEW_RIGHT.equals(rObj.getStringValue(RIGHTS_LEVELS))
-                        && rObj.getStringValue(RIGHTS_GROUPS).isEmpty()
-                        ) {
-                        rightsObject = rObj;
-                        break;
-                    }
-                }
-            }
+        if (rightObjects == null) {
+            return Collections.emptyList();
         }
-
-        return rightsObject;
+        return rightObjects.stream().filter(DefaultBlogVisibilityUpdater::isVisibilityRestriction)
+            .collect(Collectors.toList());
     }
 }

@@ -107,4 +107,34 @@ class BlogPostVisibilityIT
         assertThat(BlogHomePage.gotoPage().getPostTitles(), hasItem(UNPUBLISHED_TITLE));
         assertEquals(UNPUBLISHED_TITLE, BlogPostViewPage.gotoPage(unpublishedPost).getDocumentTitle());
     }
+
+    /**
+     * BLOG-172: publishing a draft that another user also saved must make it visible to everyone.
+     */
+    @Test
+    @Order(2)
+    void draftEditedByAnotherUserIsVisibleToEveryoneOncePublished(TestUtils setup, TestReference testReference)
+    {
+        String testClassName = testReference.getLastSpaceReference().getParent().getName();
+        String author = testClassName + "_" + testReference.getLastSpaceReference().getName();
+        LocalDocumentReference draft = new LocalDocumentReference("Blog", testClassName + "EditedDraft");
+        String title = "Visibility draft edited by another user";
+
+        setup.loginAsSuperAdmin();
+        setup.createUserAndLogin(author, PASSWORD);
+        new BlogPostFixture(setup, draft, title).withPublished(false).create();
+
+        // An admin edits the draft before the author publishes it.
+        setup.loginAsSuperAdmin();
+        BlogPostViewPage.gotoPage(draft).clickEditBlogPostIcon().clickSaveAndView();
+
+        setup.login(author, PASSWORD);
+        BlogPostInlinePage editPage = BlogPostViewPage.gotoPage(draft).clickEditBlogPostIcon();
+        editPage.setPublished(true);
+        assertTrue(editPage.clickSaveAndView().isPublished());
+
+        setup.forceGuestUser();
+        assertThat(BlogHomePage.gotoPage().getPostTitles(), hasItem(title));
+        assertEquals(title, BlogPostViewPage.gotoPage(draft).getDocumentTitle());
+    }
 }
