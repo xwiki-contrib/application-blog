@@ -107,4 +107,99 @@ class BlogPostVisibilityIT
         assertThat(BlogHomePage.gotoPage().getPostTitles(), hasItem(UNPUBLISHED_TITLE));
         assertEquals(UNPUBLISHED_TITLE, BlogPostViewPage.gotoPage(unpublishedPost).getDocumentTitle());
     }
+
+    /**
+     * BLOG-172: publishing a draft that another user also saved must make it visible to everyone.
+     */
+    @Test
+    @Order(2)
+    void draftEditedByAnotherUserIsVisibleToEveryoneOncePublished(TestUtils setup, TestReference testReference)
+    {
+        String testClassName = testReference.getLastSpaceReference().getParent().getName();
+        String author = testClassName + "_" + testReference.getLastSpaceReference().getName();
+        LocalDocumentReference draft = new LocalDocumentReference("Blog", testClassName + "EditedDraft");
+        String title = "Visibility draft edited by another user";
+
+        setup.loginAsSuperAdmin();
+        setup.createUserAndLogin(author, PASSWORD);
+        new BlogPostFixture(setup, draft, title).withPublished(false).create();
+
+        // An admin edits the draft before the author publishes it.
+        setup.loginAsSuperAdmin();
+        BlogPostViewPage.gotoPage(draft).clickEditBlogPostIcon().clickSaveAndView();
+
+        setup.login(author, PASSWORD);
+        BlogPostInlinePage editPage = BlogPostViewPage.gotoPage(draft).clickEditBlogPostIcon();
+        editPage.setPublished(true);
+        assertTrue(editPage.clickSaveAndView().isPublished());
+
+        setup.forceGuestUser();
+        assertThat(BlogHomePage.gotoPage().getPostTitles(), hasItem(title));
+        assertEquals(title, BlogPostViewPage.gotoPage(draft).getDocumentTitle());
+    }
+
+    /**
+     * BLOG-173: the users a draft is shared with can view it from a link and publish it.
+     */
+    @Test
+    @Order(3)
+    void draftSharedWithAnotherUserCanBeViewedAndPublishedByThem(TestUtils setup, TestReference testReference)
+    {
+        String testClassName = testReference.getLastSpaceReference().getParent().getName();
+        String author = testClassName + "_" + testReference.getLastSpaceReference().getName();
+        String collaborator = author + "_Collaborator";
+        LocalDocumentReference draft = new LocalDocumentReference("Blog", testClassName + "SharedDraft");
+        String title = "Visibility draft shared with another user";
+
+        setup.loginAsSuperAdmin();
+        setup.createUserAndLogin(collaborator, PASSWORD);
+        setup.loginAsSuperAdmin();
+        setup.createUserAndLogin(author, PASSWORD);
+        new BlogPostFixture(setup, draft, title).withPublished(false).withSharedUsers("XWiki." + collaborator)
+            .create();
+
+        // Guests still cannot see the draft.
+        setup.forceGuestUser();
+        setup.gotoPage(draft);
+        new LoginPage().assertOnPage();
+
+        // The collaborator opens the draft from a link, and publishes it.
+        setup.login(collaborator, PASSWORD);
+        assertEquals(title, BlogPostViewPage.gotoPage(draft).getDocumentTitle());
+        BlogPostInlinePage editPage = BlogPostViewPage.gotoPage(draft).clickEditBlogPostIcon();
+        editPage.setPublished(true);
+        assertTrue(editPage.clickSaveAndView().isPublished());
+
+        setup.forceGuestUser();
+        assertEquals(title, BlogPostViewPage.gotoPage(draft).getDocumentTitle());
+    }
+
+    /**
+     * BLOG-53: an admin can hide a post published by another user, and the post stays visible to its author.
+     */
+    @Test
+    @Order(4)
+    void adminCanHidePostOfAnotherUser(TestUtils setup, TestReference testReference)
+    {
+        String testClassName = testReference.getLastSpaceReference().getParent().getName();
+        String author = testClassName + "_" + testReference.getLastSpaceReference().getName();
+        LocalDocumentReference post = new LocalDocumentReference("Blog", testClassName + "HiddenByAdmin");
+        String title = "Visibility post hidden by an admin";
+
+        setup.loginAsSuperAdmin();
+        setup.createUserAndLogin(author, PASSWORD);
+        new BlogPostFixture(setup, post, title).create();
+
+        setup.loginAsSuperAdmin();
+        assertTrue(BlogPostViewPage.gotoPage(post).clickHideBlogPostIcon().isHidden());
+
+        setup.login(author, PASSWORD);
+        BlogPostViewPage authorView = BlogPostViewPage.gotoPage(post);
+        assertEquals(title, authorView.getDocumentTitle());
+        assertTrue(authorView.isHidden());
+
+        setup.forceGuestUser();
+        setup.gotoPage(post);
+        new LoginPage().assertOnPage();
+    }
 }

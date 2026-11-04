@@ -189,6 +189,54 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
       </published>
+      <sharedGroups>
+        <cache>0</cache>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <freeText/>
+        <hint>Groups whose members can view the post while it is not published or hidden.</hint>
+        <multiSelect>1</multiSelect>
+        <name>sharedGroups</name>
+        <number>10</number>
+        <picker>1</picker>
+        <prettyName>Share with groups</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators/>
+        <size>20</size>
+        <sort/>
+        <unmodifiable>0</unmodifiable>
+        <usesList>0</usesList>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.GroupsClass</classType>
+      </sharedGroups>
+      <sharedUsers>
+        <cache>0</cache>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <freeText/>
+        <hint>Users who can view the post while it is not published or hidden.</hint>
+        <multiSelect>1</multiSelect>
+        <name>sharedUsers</name>
+        <number>9</number>
+        <picker>1</picker>
+        <prettyName>Share with users</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators/>
+        <size>20</size>
+        <sort/>
+        <unmodifiable>0</unmodifiable>
+        <usesList>0</usesList>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.UsersClass</classType>
+      </sharedUsers>
       <title>
         <customDisplay/>
         <disabled>0</disabled>
@@ -214,9 +262,9 @@
       <content>This is your wiki's blog first post. Its goal is to provide a short description of your blog's main features.
 
 * You can **create new blog posts** through the input field located on [[your Blog's homepage&gt;&gt;Blog.WebHome]]. The status of a blog post may be any one of the following:
-** //Unpublished//: your post is still a draft. It can be seen by its creator and by administrators. Once you have clicked publish, you cannot unpublish a post. However, you can choose to hide it.
+** //Unpublished//: your post is still a draft. It can be seen by its creator, by the users and groups it is shared with, and by administrators. Once you have clicked publish, you cannot unpublish a post. However, you can choose to hide it.
 ** //Published//: your post can be read by every user that has access to your blog.
-** //Published &amp; hidden//: your post is published but only its creator and admins can see it. This is useful if you need to make modifications on a post that has already been published by mistake.
+** //Published &amp; hidden//: your post is published but only its creator, the users and groups it is shared with, and admins can see it. This is useful if you need to make modifications on a post that has already been published by mistake.
 
 * Every blog article can be **tagged** and/or **categorized**:
 ** You will be able to browse posts by category using the panel located on the left of the page
@@ -245,6 +293,12 @@ Happy blogging!</content>
     </property>
     <property>
       <published>1</published>
+    </property>
+    <property>
+      <sharedGroups/>
+    </property>
+    <property>
+      <sharedUsers/>
     </property>
     <property>
       <title>First blog post</title>
