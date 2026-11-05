@@ -58,6 +58,8 @@ class BlogPostVisibilityIT
 
     private static final String HIDDEN_TITLE = "Visibility hidden post";
 
+    private static final String TOGGLED_TITLE = "Visibility toggled post";
+
     @Test
     @Order(1)
     void unpublishedAndHiddenPostsAreVisibleOnlyToTheirAuthorUntilPublished(TestUtils setup,
@@ -106,5 +108,37 @@ class BlogPostVisibilityIT
         setup.forceGuestUser();
         assertThat(BlogHomePage.gotoPage().getPostTitles(), hasItem(UNPUBLISHED_TITLE));
         assertEquals(UNPUBLISHED_TITLE, BlogPostViewPage.gotoPage(unpublishedPost).getDocumentTitle());
+    }
+
+    /**
+     * @see <a href="https://jira.xwiki.org/browse/BLOG-112">BLOG-112: Blog post visibility settings are not saved
+     *      properly</a>
+     */
+    @Test
+    @Order(2)
+    void toggledVisibilityIsSavedWithoutReloadingThePage(TestUtils setup, TestReference testReference)
+    {
+        String testClassName = testReference.getLastSpaceReference().getParent().getName();
+        String author = testClassName + "_" + testReference.getLastSpaceReference().getName();
+        LocalDocumentReference post = new LocalDocumentReference("Blog", testClassName + "Toggled");
+
+        setup.loginAsSuperAdmin();
+        setup.createUserAndLogin(author, PASSWORD);
+        new BlogPostFixture(setup, post, TOGGLED_TITLE).create();
+
+        // Each click saves the opposite of what the previous click saved on the same page.
+        BlogPostViewPage viewPage = BlogPostViewPage.gotoPage(post);
+        viewPage.clickHideIcon();
+        viewPage.clickShowIcon();
+        assertFalse(BlogPostViewPage.gotoPage(post).isHidden());
+
+        viewPage = BlogPostViewPage.gotoPage(post);
+        viewPage.clickHideIcon();
+        viewPage.clickShowIcon();
+        viewPage.clickHideIcon();
+        assertTrue(BlogPostViewPage.gotoPage(post).isHidden());
+
+        setup.forceGuestUser();
+        assertThat(BlogHomePage.gotoPage().getPostTitles(), not(hasItem(TOGGLED_TITLE)));
     }
 }

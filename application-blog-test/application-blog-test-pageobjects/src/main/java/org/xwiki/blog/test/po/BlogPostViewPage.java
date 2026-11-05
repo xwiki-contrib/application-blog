@@ -116,6 +116,35 @@ public class BlogPostViewPage extends ViewPage
     }
 
     /**
+     * Clicks on the lock icon that hides the published blog post from the other users, and waits until the change is
+     * saved.
+     *
+     * @since 9.15.16
+     */
+    public void clickHideIcon()
+    {
+        toggleVisibility("blog-tool-hide", "blog-tool-show");
+    }
+
+    /**
+     * Clicks on the unlock icon that makes the hidden blog post visible to the other users again, and waits until the
+     * change is saved.
+     *
+     * @since 9.15.16
+     */
+    public void clickShowIcon()
+    {
+        toggleVisibility("blog-tool-show", "blog-tool-hide");
+    }
+
+    private void toggleVisibility(String currentToolClass, String nextToolClass)
+    {
+        entry.findElement(By.cssSelector(".blog-entry-toolbox a." + currentToolClass)).click();
+        // The link is hidden while the change is saved, and shown again with the opposite action once it is saved.
+        getDriver().waitUntilElementIsVisible(entry, By.cssSelector(".blog-entry-toolbox a." + nextToolClass));
+    }
+
+    /**
      * Clicks on the edit blog post icon.
      * 
      * @return the "Inline form" edit page used for editing the blog post
