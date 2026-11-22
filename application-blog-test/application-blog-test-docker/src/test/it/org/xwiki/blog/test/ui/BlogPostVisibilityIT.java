@@ -131,7 +131,8 @@ class BlogPostVisibilityIT
         setup.login(author, PASSWORD);
         BlogPostInlinePage editPage = BlogPostViewPage.gotoPage(draft).clickEditBlogPostIcon();
         editPage.setPublished(true);
-        assertTrue(editPage.clickSaveAndView().isPublished());
+        BlogPostViewPage publishedPage = editPage.clickSaveAndView();
+        assertTrue(publishedPage.isPublished());
 
         setup.forceGuestUser();
         assertThat(BlogHomePage.gotoPage().getPostTitles(), hasItem(title));
