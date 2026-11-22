@@ -169,7 +169,8 @@ class BlogPostVisibilityIT
         assertEquals(title, BlogPostViewPage.gotoPage(draft).getDocumentTitle());
         BlogPostInlinePage editPage = BlogPostViewPage.gotoPage(draft).clickEditBlogPostIcon();
         editPage.setPublished(true);
-        assertTrue(editPage.clickSaveAndView().isPublished());
+        BlogPostViewPage publishedPage = editPage.clickSaveAndView();
+        assertTrue(publishedPage.isPublished());
 
         setup.forceGuestUser();
         assertEquals(title, BlogPostViewPage.gotoPage(draft).getDocumentTitle());
