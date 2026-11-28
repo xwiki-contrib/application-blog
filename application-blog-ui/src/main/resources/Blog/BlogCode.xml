@@ -104,6 +104,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
       #displayProperty($blogDoc 'postsLayout')
       #displayProperty($blogDoc 'postsLayoutParameters')
       #displayProperty($blogDoc 'forceCategorySelection')
+      #displayProperty($blogDoc 'draftSharedUsers')
+      #displayProperty($blogDoc 'draftSharedGroups')
     #else
       $blogDoc.display('description')
     #end
@@ -649,7 +651,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
 ##
 ##
 #**
- * Displays the publish button to the entry &lt;strong&gt;creator&lt;/strong&gt;, if the article is not published yet.
+ * Displays the publish button to the users who can edit the entry, if the article is not published yet. Only its
+ * creator, the users and groups it is shared with, and admins can view an entry that is not published.
  * 
  * @param entryDoc The xdocument of the blog post. Each post resides in its own document.
  * @param entryObj The xobject of the blog post, an instance of the &lt;tt&gt;Blog.BlogPostClass&lt;/tt&gt; xclass.
@@ -657,7 +660,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
  *###
 #macro(displayPublishButton $entryDoc $entryObj)
   #isPublished($entryObj $isPublished)
-  #if(!$isPublished &amp;&amp; $entryDoc.creator == $xcontext.user &amp;&amp; $xwiki.hasAccessLevel('edit', $xcontext.user, $entryDoc.fullName))
+  #if(!$isPublished &amp;&amp; $xwiki.hasAccessLevel('edit', $xcontext.user, $entryDoc.fullName))
     [[#toolImage('world')&gt;&gt;path:$blogPublisher.getURL('view', "entryName=${escapetool.url($entryDoc.fullName)}&amp;xredirect=${escapetool.url($thisURL)}&amp;form_token=$!{services.csrf.getToken()}")||title="$services.localization.render('blog.code.notpublished')"]]##
   #end
 #end
@@ -665,7 +668,8 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
 ##
 ##
 #**
- * Displays the hide or show button to the entry &lt;strong&gt;creator&lt;/strong&gt;, if the article is already published.
+ * Displays the hide or show button to the users who can edit the entry, if the article is already published. A hidden
+ * entry is restricted to the same users as an unpublished one, whoever hides it.
  * 
  * @param entryDoc The xdocument of the blog post. Each post resides in its own document.
  * @param entryObj The xobject of the blog post, an instance of the &lt;tt&gt;Blog.BlogPostClass&lt;/tt&gt; xclass.
@@ -674,7 +678,7 @@ $!xwiki.jsx.use($blogScriptsDocumentName)##
   #isPublished($entryObj $isPublished)
   #isHidden($entryObj $isHidden)
   ## Only published articles can be hidden. Unpublished articles are considered already hidden.
-  #if($isPublished &amp;&amp; $entryDoc.creator == $xcontext.user &amp;&amp; $xwiki.hasAccessLevel('edit', $xcontext.user, $entryDoc.fullName))
+  #if($isPublished &amp;&amp; $xwiki.hasAccessLevel('edit', $xcontext.user, $entryDoc.fullName))
     #set ($queryString = {
       'xredirect'  : $thisURL, 
       'form_token' : $services.csrf.getToken()

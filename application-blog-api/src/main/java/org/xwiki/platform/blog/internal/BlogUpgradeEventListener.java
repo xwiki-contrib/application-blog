@@ -80,8 +80,17 @@ public class BlogUpgradeEventListener extends AbstractEventListener
      */
     private static final VersionConstraint TITLE_VERSION_CONSTRAINT = new DefaultVersionConstraint("(,9.15.11)");
 
+    /**
+     * Publishing a blog post removes the view restrictions of all its editors since 9.15.16 (BLOG-172), so published
+     * posts of an earlier version may still be restricted to some of their editors.
+     */
+    private static final VersionConstraint RESTRICTION_VERSION_CONSTRAINT = new DefaultVersionConstraint("(,9.15.16)");
+
     @Inject
     private BlogVisibilityMigration blogVisibilityMigration;
+
+    @Inject
+    private BlogVisibilityRestrictionMigration blogVisibilityRestrictionMigration;
 
     @Inject
     private BlogTitleMigration blogTitleMigration;
@@ -111,24 +120,30 @@ public class BlogUpgradeEventListener extends AbstractEventListener
         // The blog title existed under both the current and the previous (platform) extension id, so check both.
         boolean titleMigrationNeeded = isConstraintMatched(previous, EXTENSION_ID, TITLE_VERSION_CONSTRAINT)
             || isConstraintMatched(previous, PREVIOUS_EXTENSION_ID, TITLE_VERSION_CONSTRAINT);
+        boolean restrictionMigrationNeeded =
+            isConstraintMatched(previous, EXTENSION_ID, RESTRICTION_VERSION_CONSTRAINT)
+            || isConstraintMatched(previous, PREVIOUS_EXTENSION_ID, RESTRICTION_VERSION_CONSTRAINT);
 
-        if (visibilityMigrationNeeded || titleMigrationNeeded) {
+        if (visibilityMigrationNeeded || restrictionMigrationNeeded || titleMigrationNeeded) {
             String namespace = extensionUpgradedEvent.getNamespace();
             if (namespace == null) {
                 // When the namespace is null, it means the application is installed on the root namespace, ie. on
                 // the farm.
-                migrateAllWikis(visibilityMigrationNeeded, titleMigrationNeeded);
+                migrateAllWikis(visibilityMigrationNeeded, restrictionMigrationNeeded, titleMigrationNeeded);
             } else if (namespace.startsWith("wiki:")) {
-                migrateWiki(new WikiReference(namespace.substring(5)), visibilityMigrationNeeded, titleMigrationNeeded);
+                migrateWiki(new WikiReference(namespace.substring(5)), visibilityMigrationNeeded,
+                    restrictionMigrationNeeded, titleMigrationNeeded);
             }
         }
     }
 
-    private void migrateAllWikis(boolean visibilityMigrationNeeded, boolean titleMigrationNeeded)
+    private void migrateAllWikis(boolean visibilityMigrationNeeded, boolean restrictionMigrationNeeded,
+        boolean titleMigrationNeeded)
     {
         try {
             for (String wikiId : wikiDescriptorManager.getAllIds()) {
-                migrateWiki(new WikiReference(wikiId), visibilityMigrationNeeded, titleMigrationNeeded);
+                migrateWiki(new WikiReference(wikiId), visibilityMigrationNeeded, restrictionMigrationNeeded,
+                    titleMigrationNeeded);
             }
         } catch (WikiManagerException e) {
             logger.warn("Failed to migrate the blogs.", e);
@@ -136,13 +151,21 @@ public class BlogUpgradeEventListener extends AbstractEventListener
     }
 
     private void migrateWiki(WikiReference wikiReference, boolean visibilityMigrationNeeded,
-        boolean titleMigrationNeeded)
+        boolean restrictionMigrationNeeded, boolean titleMigrationNeeded)
     {
         if (visibilityMigrationNeeded) {
             try {
                 blogVisibilityMigration.execute(wikiReference);
             } catch (Exception e) {
                 logger.warn("Failed to migrate the visibility of non published blog posts on the wiki [{}].",
+                    wikiReference.getName(), e);
+            }
+        }
+        if (restrictionMigrationNeeded) {
+            try {
+                blogVisibilityRestrictionMigration.execute(wikiReference);
+            } catch (Exception e) {
+                logger.warn("Failed to remove the view restrictions left on published blog posts on the wiki [{}].",
                     wikiReference.getName(), e);
             }
         }

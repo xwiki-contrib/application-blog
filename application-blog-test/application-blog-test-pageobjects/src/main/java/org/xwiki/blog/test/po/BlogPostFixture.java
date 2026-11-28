@@ -28,7 +28,7 @@ import org.xwiki.test.ui.TestUtils;
 /**
  * Creates blog posts directly, without going through the blog post creation UI, so that functional tests can set up
  * the posts they need quickly. The posts are created by the user currently logged in the browser, who becomes their
- * author: an unpublished or hidden post is visible only to that user.
+ * author: an unpublished or hidden post is visible only to that user and to the users it is shared with.
  *
  * @version $Id$
  * @since 9.15.13
@@ -55,6 +55,8 @@ public class BlogPostFixture
     private boolean published = true;
 
     private boolean hidden;
+
+    private String sharedUsers = "";
 
     /**
      * @param testUtils the utilities used to create the post
@@ -109,6 +111,17 @@ public class BlogPostFixture
     }
 
     /**
+     * @param sharedUsers the users who can view the post while it is not published or hidden, e.g.
+     *     {@code XWiki.Alice}; defaults to none
+     * @return this fixture
+     */
+    public BlogPostFixture withSharedUsers(String... sharedUsers)
+    {
+        this.sharedUsers = String.join(",", sharedUsers);
+        return this;
+    }
+
+    /**
      * Creates the blog post, replacing any existing page with the same reference.
      */
     public void create()
@@ -121,6 +134,7 @@ public class BlogPostFixture
             "publishDate", new SimpleDateFormat(PUBLISH_DATE_FORMAT).format(this.publishDate),
             "category", this.category,
             "published", this.published ? 1 : 0,
-            "hidden", this.hidden ? 1 : 0);
+            "hidden", this.hidden ? 1 : 0,
+            "sharedUsers", this.sharedUsers);
     }
 }

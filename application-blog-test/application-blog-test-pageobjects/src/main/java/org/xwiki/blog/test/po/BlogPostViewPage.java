@@ -127,6 +127,18 @@ public class BlogPostViewPage extends ViewPage
     }
 
     /**
+     * Clicks on the icon that hides the displayed published blog post.
+     *
+     * @return the blog post page, displayed again once the post is hidden
+     * @since 9.15.16
+     */
+    public BlogPostViewPage clickHideBlogPostIcon()
+    {
+        getDriver().findElement(By.className("blog-tool-hide")).click();
+        return new BlogPostViewPage();
+    }
+
+    /**
      * @return the "Blog Categories" panel of the page
      * @since 9.15.15
      */
