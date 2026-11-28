@@ -343,14 +343,14 @@ require(['jquery'], function ($) {
          'icon'       : "$escapetool.javascript($services.icon.renderHTML('unlock'))",
          'comment'    : "$escapetool.javascript($services.localization.render('blog.code.madevisible'))",
          'title'      : "$escapetool.javascript($services.localization.render('blog.code.makevisible'))",
-         'hiddenValue': '1',
+         'hiddenValue': '0',
          'css'        : 'blog-tool-show'
        },
       'hide': {
         'icon'       : "$escapetool.javascript($services.icon.renderHTML('lock'))",
         'comment'    : "$escapetool.javascript($services.localization.render('blog.code.hid'))",
         'title'      : "$escapetool.javascript($services.localization.render('blog.code.hide'))",
-        'hiddenValue': '0',
+        'hiddenValue': '1',
         'css'        : 'blog-tool-hide'
       }
     };
