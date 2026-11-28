@@ -63,6 +63,13 @@ $xwiki.ssx.use('Blog.ManageCategories')##
     ## the page title).
     #set ($discard = $entryObj.set('title', $request.title))
   #end
+  #if ($doc.isNew() &amp;&amp; !$request.getParameterMap().containsKey('Blog.BlogPostClass_0_sharedUsers') &amp;&amp; "$!entryObj.getValue('sharedUsers')$!entryObj.getValue('sharedGroups')" == '')
+    ## Share the new post with the users and groups configured on its blog. The author can change them. The
+    ## request holds the share fields when coming back from preview, and they must not be filled again.
+    #getBlogDocument($doc.space $postBlogDoc)
+    #set ($discard = $entryObj.set('sharedUsers', "$!postBlogDoc.getValue('draftSharedUsers')"))
+    #set ($discard = $entryObj.set('sharedGroups', "$!postBlogDoc.getValue('draftSharedGroups')"))
+  #end
   #getBlogCategoriesLocation($doc.space $categoriesLocation)
   #set ($defaultPostCategory = "${categoriesLocation}.WebHome")
   ## Since 9.15, category data may exist in Blog or Blog.Categories. Code supports both paths to maintain backward compatibility.
@@ -112,6 +119,11 @@ $xwiki.ssx.use('Blog.ManageCategories')##
       &lt;/dl&gt;
     &lt;/div&gt;
   &lt;/div&gt;
+
+  ; &lt;label&gt;{{translation key='blog.sheet.sharedUsers'/}}&lt;/label&gt; &lt;span class="xHint"&gt;{{translation key='blog.sheet.share.hint'/}}&lt;/span&gt;
+  : $doc.display('sharedUsers', 'edit', $entryObj)
+  ; &lt;label&gt;{{translation key='blog.sheet.sharedGroups'/}}&lt;/label&gt;
+  : $doc.display('sharedGroups', 'edit', $entryObj)
   {{/html}}
 )))
   #if ($doc.isNew())

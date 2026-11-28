@@ -109,6 +109,54 @@
         <values>paginated=Paginated|weekly=Group posts weekly|monthly=Group posts monthly|all=Show all posts</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </displayType>
+      <draftSharedGroups>
+        <cache>0</cache>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <freeText/>
+        <hint>Groups whose members can view the new posts of this blog while they are not published or hidden. The author of a post can change this list.</hint>
+        <multiSelect>1</multiSelect>
+        <name>draftSharedGroups</name>
+        <number>11</number>
+        <picker>1</picker>
+        <prettyName>Share new posts with groups</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators/>
+        <size>20</size>
+        <sort/>
+        <unmodifiable>0</unmodifiable>
+        <usesList>0</usesList>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.GroupsClass</classType>
+      </draftSharedGroups>
+      <draftSharedUsers>
+        <cache>0</cache>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <freeText/>
+        <hint>Users who can view the new posts of this blog while they are not published or hidden. The author of a post can change this list.</hint>
+        <multiSelect>1</multiSelect>
+        <name>draftSharedUsers</name>
+        <number>10</number>
+        <picker>1</picker>
+        <prettyName>Share new posts with users</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators/>
+        <size>20</size>
+        <sort/>
+        <unmodifiable>0</unmodifiable>
+        <usesList>0</usesList>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.UsersClass</classType>
+      </draftSharedUsers>
       <forceCategorySelection>
         <customDisplay/>
         <defaultValue/>
@@ -232,6 +280,12 @@
     </property>
     <property>
       <displayType>paginated</displayType>
+    </property>
+    <property>
+      <draftSharedGroups/>
+    </property>
+    <property>
+      <draftSharedUsers/>
     </property>
     <property>
       <forceCategorySelection>0</forceCategorySelection>
